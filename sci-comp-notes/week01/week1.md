@@ -1,4 +1,3 @@
-
 Week 1 Notes
 =============
 
@@ -55,7 +54,7 @@ Remember if you solve \\(a{x}^{2}+bx+c=0\\), the the quadratic formula finds the
 
 Use the quadratic formula to solve \\({x}^{2}-x-110=0\\).
 
-Next, let's consider the quadratic equation \\(12.242{x}^{2}+42.382x+36.671=0\\)
+Next, let's consider the quadratic equation \\(12.242{x}^{2}+42.382x+0.0012=0\\)
 
 We are going to solve this using the quadratic equation in julia
 
@@ -71,21 +70,21 @@ We are going to solve this using the quadratic equation in julia
 2. Solve the equation above using 64-bit floating point.  
 
 	```
-	qSolution(12.242,42.382,36.671)
+	qSolution(12.242,42.382,0.0012)
 	```
 	leads to
 	```
-	(-1.7013188808020496,-1.760697129653758)
+	(-2.831413841486606e-5,-3.461987696317393)
 	```
 
 3. Find the solution if the coefficients are 16-bit floating points.
 
 	```
-	qSolution(float16(12.242),float16(42.382),float16(36.671))
+	qSolution(float16(12.242),float16(42.382),float16(0.0012))
 	```
 	leads to 
 	```
-	(-1.6900733f0,-1.771318f0)
+	(0.0001448952f0,-3.4615362f0)
 	```
 
 4. Assume that the 64-bit answer is correct.  Find the absolute and relative errors for the two solutions. 
@@ -107,8 +106,23 @@ It's crucial to have a good sense of the problem (whether it be mathematical or 
 Let's reexamine the quadratic formula.  The problem arose due to roundoff.  
 
 
+Let's change the quadratic formula
+--------------
+
+I'm going to assume that \\(b>0\\) and let \\(d=\sqrt{b^{2}-4ac}\\). The roundoff occurs when the value of \\(b\\) and \\(d\\) are close to each other.  In the case above, b=42.382 and \\(d=\sqrt{b^{2}-4ac}=42.38130675663505\\).  Notice that the other root (solution) was correct to many decimal places. 
+
+To change the quadratic formula we are going to exchange the addition with a subtraction (however we will not have the catastrophic subtraction error we saw above).  "How can you do that you ask?" Here we go...
+
+Start with the quadratic formula (only the + root):
+\\[ x=\frac{-b + \sqrt{{b}^{2}-4ac}} {2a}\\] 
+
+Multiply by a convenient form of 1
+\\[ x=\frac{-b + \sqrt{{b}^{2}-4ac}} {2a} \cdot \frac{-b-\sqrt{b^{2}-4ac}}{-b-\sqrt{b^{2}-4ac}}\\] 
 
 
-<script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+\\[ x = \frac{-b^{2}+b^{2}-4ac}{2a(-b-\sqrt{b^{2}-4ac})}\\] 
+
+
+\\[ x = \frac{2c}{b+\sqrt{b^{2}-4ac}}\\] 
+
+and now let's try a new quadratic formula: 

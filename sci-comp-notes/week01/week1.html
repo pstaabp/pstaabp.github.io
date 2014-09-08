@@ -15,7 +15,7 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 </style>
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="week-1-notes----">Week 1 Notes    </h1>
 
@@ -73,7 +73,7 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 
 <p>Use the quadratic formula to solve \({x}^{2}-x-110=0\).</p>
 
-<p>Next, let&rsquo;s consider the quadratic equation \(12.242{x}^{2}+42.382x+36.671=0\)</p>
+<p>Next, let&rsquo;s consider the quadratic equation \(12.242{x}^{2}+42.382x+0.0012=0\)</p>
 
 <p>We are going to solve this using the quadratic equation in julia</p>
 
@@ -86,16 +86,16 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
        end</code></pre></p></li>
 <li><p>Solve the equation above using 64-bit floating point.</p>
 
-<p> <pre><code class="(null)">qSolution(12.242,42.382,36.671)</code></pre>  <br/>
+<p> <pre><code class="(null)">qSolution(12.242,42.382,0.0012)</code></pre>  <br/>
 to</p>
 
-<p>  <pre><code class="(null)">(-1.7013188808020496,-1.760697129653758)</code></pre></p></li>
+<p>  <pre><code class="(null)">(-2.831413841486606e-5,-3.461987696317393)</code></pre></p></li>
 <li><p>Find the solution if the coefficients are 16-bit floating points.</p>
 
-<p> <pre><code class="(null)">qSolution(float16(12.242),float16(42.382),float16(36.671))</code></pre>  <br/>
+<p> <pre><code class="(null)">qSolution(float16(12.242),float16(42.382),float16(0.0012))</code></pre>  <br/>
 to</p>
 
-<p>  <pre><code class="(null)">(-1.6900733f0,-1.771318f0)</code></pre></p></li>
+<p>  <pre><code class="(null)">(0.0001448952f0,-3.4615362f0)</code></pre></p></li>
 <li><p>Assume that the 64-bit answer is correct.  Find the absolute and relative errors for the two solutions.</p></li>
 </ol>
 
@@ -110,12 +110,23 @@ to</p>
 
 <p>Let&rsquo;s reexamine the quadratic formula.  The problem arose due to roundoff.</p>
 
-<script type="text/javascript"    
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">    
-</script>
+<h2 id="let-s-change-the-quadratic-formula----">Let&rsquo;s change the quadratic formula    </h2>
 
+<p>I&rsquo;m going to assume that \(b>0\) and let \(d=\sqrt{b^{2}-4ac}\). The roundoff occurs when the value of \(b\) and \(d\) are close to each other.  In the case above, b=42.382 and \(d=\sqrt{b^{2}-4ac}=42.38130675663505\).  Notice that the other root (solution) was correct to many decimal places.</p>
 
-<p></p>
+<p>To change the quadratic formula we are going to exchange the addition with a subtraction (however we will not have the catastrophic subtraction error we saw above).  &ldquo;How can you do that you ask?&rdquo; Here we go&hellip;</p>
+
+<p>Start with the quadratic formula (only the + root):  <br/>
+\[ x=\frac{-b + \sqrt{{b}^{2}-4ac}} {2a}\]</p>
+
+<p>Multiply by a convenient form of 1  <br/>
+\[ x=\frac{-b + \sqrt{{b}^{2}-4ac}} {2a} \cdot \frac{-b-\sqrt{b^{2}-4ac}}{-b-\sqrt{b^{2}-4ac}}\]</p>
+
+<p>\[ x = \frac{-b^{2}+b^{2}-4ac}{2a(-b-\sqrt{b^{2}-4ac})}\]</p>
+
+<p>\[ x = \frac{2c}{b+\sqrt{b^{2}-4ac}}\]</p>
+
+<p>and now let&rsquo;s try a new quadratic formula:</p>
 
 <div style="display:none">    
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->    
