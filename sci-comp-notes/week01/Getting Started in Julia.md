@@ -17,3 +17,25 @@ Try Entering the following
 * \\(\ln(7)\\)
 * \\(e^{7}\\)
 * \\(2^{\sqrt{3}}\\)
+
+Loops
+--------
+
+* For loops
+
+	```
+	for i=1:10
+	  println(i)
+	end
+	```
+
+* while loop:
+	```
+	i=1;
+	while i<10
+	  println(i)
+	  i+=1
+	end
+	```
+
+More information is at [Julia's manual on loops](http://docs.julialang.org/en/release-0.3/manual/control-flow/#repeated-evaluation-loops)
