@@ -7,11 +7,13 @@ Introduction to Scientific Computing
 -------------
 
 Scientific Computing is
-* a field in which problem solving is done via writing programs (algorithms and code) to solve the problems. 
-* Requires math or science knowledge to be effective.
+
+* a field of study in which problem solving is done via writing programs (algorithms and code) to solve the problems. 
+* a field which requires math or science knowledge to be effective.
 
 
 Scientific Computing is not
+
 * just writing code
 * a substitute for math or science
 * a magic bullet to solve any problem
