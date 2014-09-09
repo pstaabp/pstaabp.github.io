@@ -40,22 +40,228 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 <h2 id="loops----">Loops    </h2>
 
 <ul>
-<li><p>For loops</p>
-
-<p>  <pre><code class="(null)">for i=1:10
-  println(i)
-end</code></pre></p></li>
-<li><p>while loop:</p>
-
-<p>  <pre><code class="(null)">i=1;
-while i&lt;10
-  println(i)
-  i+=1
-end</code></pre></p></li>
+<li>For loops</li>
 </ul>
 
 
+<pre><code class="(null)">for i=1:10  
+  println(i)  
+end</code></pre>
+
+
+<p></p>
+
+<ul>
+<li>while loop:</li>
+</ul>
+
+
+<pre><code class="(null)">i=1;  
+while i&lt;10  
+  println(i)  
+  i+=1  
+end</code></pre>
+
+
+<p></p>
+
 <p>More information is at <a href="http://docs.julialang.org/en/release-0.3/manual/control-flow/#repeated-evaluation-loops">Julia&rsquo;s manual on loops</a></p>
+
+<h2 id="arrays----">Arrays    </h2>
+
+<p>A fundamental data type of any language is that of an array or a rectangular grid of numbers (or mathematically a matrix). These are defined with [ ] and more information can be found in <a href="http://docs.julialang.org/en/release-0.3/manual/arrays/">Julia&rsquo;s manual on arrays</a> Right now, we will just look at arrays to be entered by hand and using the : syntax.</p>
+
+<pre><code class="(null)">[1 2 3]</code></pre>
+
+
+<p></p>
+
+<p>is an array with 1 row and 3 columns  (or a 1 by 3 array or mathematically a row vector).  An array with 3 rows and 1 column is</p>
+
+<pre><code class="(null)">[1;2;3]</code></pre>
+
+
+<p></p>
+
+<h2 id="creating-arrays----">Creating Arrays    </h2>
+
+<p>There are many, many ways to create arrays in Julia depending on what you need to do.  Here&rsquo;s a few examples:</p>
+
+<pre><code class="(null)">[1:10]</code></pre>
+
+
+<p></p>
+
+<p>creates a 10 by 1 array with the numbers 1 to 10.</p>
+
+<pre><code class="(null)">[1:2:9]</code></pre>
+
+
+<p></p>
+
+<p>creates a 5 by 1 array with the odds less than 10.</p>
+
+<pre><code class="(null)">[i^2 for i=1:10]</code></pre>
+
+
+<p></p>
+
+<p>creates a 10 by 1 array with the squares up to 100.</p>
+
+<p>(Exercises)</p>
+
+<ul>
+<li>create an array of all even numbers up to 30</li>
+<li>create the following [4,9,14,19,24,&hellip;.,99] without typing all of the numbers in</li>
+</ul>
+
+
+<p>Note: we will see a lot more about arrays upcoming, but let&rsquo;s not get too overwhelmed.</p>
+
+<h2 id="functions----">Functions    </h2>
+
+<p>Functions play a huge role in both mathematics and programming.  Julia has a very robust function as we will see or you can investigate in <a href="http://docs.julialang.org/en/release-0.3/manual/functions/">Julia&rsquo;s Manual on functions</a> .  To define a function use the <code>function</code> keyword as in the example:</p>
+
+<pre><code class="(null)">function f(x,y)  
+  x+y  
+end</code></pre>
+
+
+<p></p>
+
+<p>or the compact notation of</p>
+
+<pre><code class="(null)">g(x,y)=x*y</code></pre>
+
+
+<p></p>
+
+<p>(Exercise)</p>
+
+<p>Write a function that returns the mean (average of 3 numbers)</p>
+
+<h2 id="multiple-return-values----">Multiple Return Values    </h2>
+
+<p>A very nice feature of Julia functions is that of multiple return values.  Instead of only being able to return a single number (or requiring to send an array or object), you can return more than 1 number (or other data type). For example.</p>
+
+<pre><code class="(null)">function h(x,y)  
+  x+y,x-y  
+end</code></pre>
+
+
+<p></p>
+
+<p>and if you call this, say <code>h(3,5)</code> you will get the result <code>(8,-2)</code> or if you say</p>
+
+<pre><code class="(null)">p,q=h(3,5)</code></pre>
+
+
+<p></p>
+
+<p>the p will take on the value 8 and q will be equal to -2.</p>
+
+<h2 id="anonymous-functions----">Anonymous Functions    </h2>
+
+<p>Another feature that is common to more modern languages is that of an anonymous function.  Although as the name suggests, these functions are not named, however, they are typically passed as arguments to other functions.  For example,</p>
+
+<pre><code class="(null)">x-&gt;x^2</code></pre>
+
+
+<p></p>
+
+<p>returns <code>anonymous function</code> and since it doesn&rsquo;t have a name it hard to do anything with it (although you can name it and then use it like a standard function).  Why is it useful then? If we take an array, do something to each element and get a new array from this.  (This is called a map)</p>
+
+<p>For example, if we have the array</p>
+
+<pre><code class="(null)">A=[1:10]</code></pre>
+
+
+<p></p>
+
+<p>And we want to return an array in which every element is shifted by 1 number, we can do that with</p>
+
+<pre><code class="(null)">map(x-&gt;x+1,A)</code></pre>
+
+
+<p></p>
+
+<p>or if we want to return if each number is even (true) or odd (false):</p>
+
+<pre><code class="(null)">map(x-&gt;x+2==0,A)</code></pre>
+
+
+<p></p>
+
+<p>(exercise)</p>
+
+<p>Produce a array of length 40 using map with the pattern [1,0,-1,0,1,0,-1,&hellip;]</p>
+
+<h2 id="reducing-and-folding----">Reducing and Folding    </h2>
+
+<p>Another wonderful example is that of reducing an array or folding it. This means that we want a single number that is found by performing some operation repeatedly.  More information about doing operations like this is found in the <a href="http://docs.julialang.org/en/release-0.3/stdlib/base/?highlight=reduce#iterable-collections">Julia Manual on Iterable Collections</a>.</p>
+
+<p>A simple example of reducing a array is that of summing all of the elements of the array.  The function <code>reduce(op,vo,itr)</code> is what we will use, where <code>op</code> is the anonymous function, <code>vo</code> is the initial value and <code>itr</code> is the array.  If we use the array A given above, then</p>
+
+<pre><code class="(null)">reduce(*,1,A)</code></pre>
+
+
+<p></p>
+
+<p>or</p>
+
+<pre><code class="(null)">reduce((x,y)-&gt;x*y,1,A)</code></pre>
+
+
+<p></p>
+
+<p>returns 3628800, the product of the elements.  Without such functions like map and reduce, one usually needs to write for loops. For example:</p>
+
+<pre><code class="(null)">p=1  
+for i=1:10  
+  p*=i;  
+end  
+p</code></pre>
+
+
+<p></p>
+
+<p>and the answer is the same.  Since the product of numbers is important enough, julia has it built-in.  That is, if you type <code>prod(A)</code> you get the same result.</p>
+
+<p>We will explore some differences between these different methods in the homework.</p>
+
+<p>(Exercise)</p>
+
+<p>Write a function that sums the reciprocals of the first 100 counting numbers using <code>reduce</code>.</p>
+
+<h2 id="finding-the-time-of-a-function----">Finding the time of a function    </h2>
+
+<p>Another important aspect of scientific computing is how long functions or programs take to run.  (When you run a program for hours on an expensive supercomputer, time is money).  Julia has some nice ways of running these.</p>
+
+<p>Let&rsquo;s say we have a function that takes a little bit of time to run like:</p>
+
+<pre><code class="(null)">function function_to_time()  
+  timedwait(()-&gt;false,5*rand())  
+end</code></pre>
+
+
+<p></p>
+
+<p>which can take up to 5 seconds to run.</p>
+
+<p>To determine the actual amount of time to run, try:</p>
+
+<pre><code class="(null)">tic();function_to_time();toc()</code></pre>
+
+
+<p></p>
+
+<p>and this will report the amount of time it runs.</p>
+
+<p>To test your code for timing information, try inserting some other code in the function called <code>function_to_time</code>.</p>
+
+<p>(Exercise)</p>
+
+<p>Type in this code and run it a few times.  What results do you get?</p>
 
 <div style="display:none">    
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->    

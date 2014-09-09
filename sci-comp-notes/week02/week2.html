@@ -31,9 +31,59 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 
 <p>This cubic actually factors, but finding those factors is quite difficult to do in general.  We then look at using <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton&rsquo;s method</a> to solve this.</p>
 
+<p>Newton&rsquo;s method starts with a &ldquo;guess&rdquo; at the root and then refines it.  Let \(x_0\) be the guess, then  <br/>
+\[x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}\]</p>
+
+<p>Let&rsquo;s look at this in Julia for the function above.</p>
+
+<pre><code class="(null)">f(x)=15x^3-143x^2+226x+280</code></pre>
+
+
+<p></p>
+
+<p>and we need the derivaitve so</p>
+
+<pre><code class="(null)">df(x)=45x^2-286x+226</code></pre>
+
+
+<p></p>
+
+<p>Let&rsquo;s say that x0=0 and find x1 using Newton&rsquo;s method:</p>
+
+<pre><code class="(null)">x0=0
+x1 = x0-f(x0)/df(x0)</code></pre>
+
+
+<p></p>
+
+<p>returns <code>-1.238938053097345</code>.  If we then let x0=x1 and repeat we get a sequence that hopefully gets close to a root (solution). After a few iterations, you should get <code>-0.8</code></p>
+
+<p>(exercise)</p>
+
+<ul>
+<li><p>Try to find the other two solutions to this function.  (Hint: try different values for x0)</p></li>
+<li><p>Write a function using the arguemnts f,df and x0 and returns the root.</p></li>
+</ul>
+
+
+<h2 id="complex-numbers----">Complex Numbers    </h2>
+
+<p>Last week we briefly saw complex numbers. A site called purplemath.com has a <a href="http://www.purplemath.com/modules/complex.htm">nice overview of complex numbers</a>.  Here&rsquo;s a few example using Julia to do complex arithmetic.</p>
+
+<p>Entering the number \(a+bi\) is put in with <code>a+b*im</code>.  For example <code>-2+im</code> or <code>0.5*1.5im</code>.</p>
+
+<p>Operations with complex numbers:</p>
+
+<pre><code class="(null)">(-2+im)^2
+(-2+im)*(7+4im)
+(-2+im)/(7+4im)</code></pre>
+
+
+<p></p>
+
 <div style="display:none">    
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->    
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>    
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>    
 </div>
 
 
