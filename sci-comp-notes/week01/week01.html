@@ -15,11 +15,11 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 </style>
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="week-1-notes----">Week 1 Notes    </h1>
 
-<p>These are the notes for week 1 of Math 3001.</p>
+<p>These are the notes for week 1 of Math 3001.  <a href="../index.html">Return to all notes</a></p>
 
 <h2 id="introduction-to-scientific-computing----">Introduction to Scientific Computing    </h2>
 
@@ -40,7 +40,7 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 </ul>
 
 
-<h2 id="where-is-scientific-computing-used----">Where is Scientific Computing Used    </h2>
+<p>Where is Scientific Computing Used</p>
 
 <ul>
 <li>making predictions (weather, stock market, traffic, etc.)</li>
@@ -71,99 +71,6 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 <li><a href="http://docs.julialang.org/en/latest/manual/arrays/">julila doc for arrays</a></li>
 </ul>
 
-
-<h2 id="rounding-errors-and-the-quadratic-formula----">Rounding Errors and the Quadratic Formula    </h2>
-
-<p>The following example shows how a well-know formula (the quadratic formula) can lead to incorrect results due to rounding errors.</p>
-
-<p>Remember if you solve \(a{x}^{2}+bx+c=0\), the the quadratic formula finds the solution:  <br/>
-\[ x=\frac{-b \pm \sqrt{{b}^{2}-4ac}} {2a}\]</p>
-
-<p>Use the quadratic formula to solve \({x}^{2}-x-110=0\).</p>
-
-<p>Next, let&rsquo;s consider the quadratic equation \(12.242{x}^{2}+42.382x+0.0012=0\)</p>
-
-<p>We are going to solve this using the quadratic equation in julia</p>
-
-<ol>
-<li>Write a function for the quadratic formula.</li>
-</ol>
-
-
-<pre><code class="(null)"> qSolution = function(a,b,c)  
-       d=sqrt(b^2-4*a*c)  
-       return (-b+d)/(2*a),(-b-d)/(2*a)  
-       end</code></pre>
-
-
-<ol>
-<li>Solve the equation above using 64-bit floating point.</li>
-</ol>
-
-
-<pre><code class="(null)">qSolution(12.242,42.382,0.0012)</code></pre>
-
-
-<p></p>
-
-<pre><code>leads to    
-</code></pre>
-
-<pre><code class="(null)">(-2.831413841486606e-5,-3.461987696317393)</code></pre>
-
-
-<p></p>
-
-<ol>
-<li>Find the solution if the coefficients are 16-bit floating points.</li>
-</ol>
-
-
-<pre><code class="(null)">qSolution(float16(12.242),float16(42.382),float16(0.0012))</code></pre>
-
-
-<p></p>
-
-<pre><code>leads to    
-</code></pre>
-
-<pre><code class="(null)">(0.0001448952f0,-3.4615362f0)</code></pre>
-
-
-<p></p>
-
-<ol>
-<li>Assume that the 64-bit answer is correct.  Find the absolute and relative errors for the two solutions.</li>
-</ol>
-
-
-<h2 id="be-skeptical-of-numerical-answers----">Be skeptical of numerical answers    </h2>
-
-<p>Even though the example above was manufactured to produce bad results, you never know if a numerical solution is accurate or not.</p>
-
-<h2 id="can-we-ever-be-confident-of-answers-----">Can we ever be confident of answers?    </h2>
-
-<p>It&rsquo;s crucial to have a good sense of the problem (whether it be mathematical or a scientific question).  Additionally, testing is an important part of the solution process.</p>
-
-<p>Let&rsquo;s reexamine the quadratic formula.  The problem arose due to roundoff.</p>
-
-<h2 id="let-s-change-the-quadratic-formula----">Let&rsquo;s change the quadratic formula    </h2>
-
-<p>I&rsquo;m going to assume that \(b>0\) and let \(d=\sqrt{b^{2}-4ac}\). The roundoff occurs when the value of \(b\) and \(d\) are close to each other.  In the case above, b=42.382 and \(d=\sqrt{b^{2}-4ac}=42.38130675663505\).  Notice that the other root (solution) was correct to many decimal places.</p>
-
-<p>To change the quadratic formula we are going to exchange the addition with a subtraction (however we will not have the catastrophic subtraction error we saw above).  &ldquo;How can you do that you ask?&rdquo; Here we go&hellip;</p>
-
-<p>Start with the quadratic formula (only the + root):  <br/>
-\[ x=\frac{-b + \sqrt{{b}^{2}-4ac}} {2a}\]</p>
-
-<p>Multiply by a convenient form of 1  <br/>
-\[ x=\frac{-b + \sqrt{{b}^{2}-4ac}} {2a} \cdot \frac{-b-\sqrt{b^{2}-4ac}}{-b-\sqrt{b^{2}-4ac}}\]</p>
-
-<p>\[ x = \frac{-b^{2}+b^{2}-4ac}{2a(-b-\sqrt{b^{2}-4ac})}\]</p>
-
-<p>\[ x = \frac{2c}{b+\sqrt{b^{2}-4ac}}\]</p>
-
-<p>and now let&rsquo;s try a new quadratic formula:</p>
 
 <div style="display:none">    
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->    
