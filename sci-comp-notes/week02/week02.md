@@ -28,7 +28,7 @@ We are going to solve this using the quadratic equation in julia
 	       end
 	```
 
-	(exercise)
+	(Exercise)
 
 	Use the quadratic formula to solve \\({x}^{2}-x-110=0\\).
 
@@ -114,7 +114,7 @@ qSol2 = function(a,b,c)
 end
 ```
 
-(exercise)
+### Exercise
 
 * Use the new quadratic formula (`qSol2`) to find the roots of \\(x^{2}-x-110=0\\).  Do you get the same results as above?
 
@@ -142,7 +142,7 @@ Let's look at this in Julia for the function above.
 f(x)=15x^3-143x^2+226x+280
 ```
 
-and we need the derivaitve so
+and we need the derivative so
 
 ```
 df(x)=45x^2-286x+226
@@ -151,17 +151,111 @@ df(x)=45x^2-286x+226
 Let's say that x0=0 and find x1 using Newton's method:
 
 ```
-x0=0
+x0 = 0
 x1 = x0-f(x0)/df(x0)
 ```
 
 returns `-1.238938053097345`.  If we then let x0=x1 and repeat we get a sequence that hopefully gets close to a root (solution). After a few iterations, you should get `-0.8` 
 
-(exercise)
+### Exercise
 
 * Try to find the other two solutions to this function.  (Hint: try different values for x0)
 
-* Write a function using the arguemnts f,df and x0 and returns the root.
+* Write a function using the arguments f,df and x0 and returns the root.
+
+
+Packages in Julia
+-------
+
+As with most languages, you can add extra functionality to Julia via a package.  [A list of all of the packages](http://pkg.julialang.org) shows over 200 currently (Sept 2014).  To add a package, generally it's done with 
+
+```
+Pkg.add(name)
+```
+
+where name is a string. If there are other packages that are dependencies, Julia takes care of those also.  Type
+
+```
+Pkg.update()
+```
+
+to update all packages, which is a good idea to do often as things are changing quickly in the Julia world. And to list all of the packages you have installed, type
+
+```
+Pkg.status()
+```
+
+
+For example, if you want to load in the Calculus package, type
+
+```
+Pkg.add("Calculus")
+```
+
+And now you will have some Calculus functionality. For example,
+
+```
+using Calculus
+f(x)=x^2
+f'(1)
+```
+
+returns close to 2.  (It doesn't calculate derivatives exactly.)  Note: the first line loads in the package.  (similar to the with statement in Maple).
+
+Plots in Julia 
+--------
+
+There are a number of plotting packages in Julia.  One of the simpler ones in called Winston and one of the more robust ones is called PyPlot.  We'll first look at some examples in Winston.  First, make sure the packages is added.
+
+```
+Pkg.add("Winston")
+```
+
+(this might take a while).  Then create two 1D arrays (vectors) for x and y and plot. 
+
+```
+x=[-2:0.1:2]
+y=map(a->a^2,x)
+plot(x,y)
+```
+
+### Exercise
+
+Try plotting some other functions, like \\(\sin x\\), \\(e^x\\), \\(\ln x\\) and play with the plotting domain (x values of the plot).
+
+
+For additional documentation on Winston, you can find a link from the [Julia packages website](http://pkg.julialang.org) 
+
+
+
+
+
+Newton's Method to find all the roots
+------
+
+Newton's method generally finds a single root based on an input (though this is not guaranteed).  What if we want to find all of the roots?   We could generate an array of initial points and apply Newton's method to every point. Here's one approach.  
+
+Note: assume that we have a function called `newton` that given a function, its derivative and an initial point, returns the root.  (I will provide one soon).
+
+Let's produce an array of initial values:
+
+```
+x0=[-10:1:10]
+```
+
+To find the point with that initial point, we can use the `map` function
+```
+x=map(a->newton(f,df,a),x0)
+```
+
+will return an array of the root that the function went to.  Now to get a more visual sense of where the points go:
+
+```
+plot(x0,x)
+```
+
+shows for each x value (the initial point) which root the function goes to.  
+
 
 
 Complex Numbers
@@ -186,6 +280,8 @@ e^(-5.42+32.3im)=exp(-5.42+32.3im)
 ```
 
 however, these may not make sense (unless you seen some complex analysis).
+
+
 
 
 

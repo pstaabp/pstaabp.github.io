@@ -15,7 +15,7 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 </style>
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="week-2-notes----">Week 2 Notes    </h1>
 
@@ -33,43 +33,81 @@ body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,A
 <p>We are going to solve this using the quadratic equation in julia</p>
 
 <ol>
-<li><p>Write a function for the quadratic formula.</p>
-
-<p> <pre><code class="(null)"> qSol = function(a,b,c)
-       d=sqrt(b^2-4*a*c)
-       return (-b+d)/(2*a),(-b-d)/(2*a)
-       end</code></pre></p>
-
-<p> (exercise)</p>
-
-<p> Use the quadratic formula to solve \({x}^{2}-x-110=0\).</p></li>
-<li><p>Solve the equation above using 64-bit floating point.</p>
-
-<p> <pre><code class="(null)">x1a,x1b = qSol(12.242,42.382,0.0012)</code></pre>  <br/>
-to</p>
-
-<p>  <pre><code class="(null)">(-2.831413841486606e-5,-3.461987696317393)</code></pre></p></li>
-<li><p>Find the solution if the coefficients are 16-bit floating points.</p>
-
-<p> <pre><code class="(null)">x2a,x2b = qSol(float16(12.242),float16(42.382),float16(0.0012))</code></pre>  <br/>
-to</p>
-
-<p>  <pre><code class="(null)">(0.0001448952f0,-3.4615362f0)</code></pre></p></li>
-<li><p>Assume that the 64-bit answer is correct.  Find the absolute and relative errors for the two solutions.</p>
-
-<p> The absolute errors are</p>
-
-<p> <pre><code class="(null)">abs(x1a-x2a) = 0.00017320933367737267
-abs(x1b-x2b) = 0.0004515272652687585</code></pre></p>
-
-<p> and the relative errors are:</p>
-
-<p> <pre><code class="(null)">abs(x1a-x2a)/abs(x1a) = 6.117414951479887
-abs(x1b-x2b)/abs(x1b) = 0.00013044129635438729</code></pre></p>
-
-<p> This shows that the first answer is far off in relative terms.</p></li>
+<li>Write a function for the quadratic formula.</li>
 </ol>
 
+
+<pre><code class="(null)"> qSol = function(a,b,c)  
+       d=sqrt(b^2-4*a*c)  
+       return (-b+d)/(2*a),(-b-d)/(2*a)  
+       end</code></pre>
+
+
+<pre><code>(exercise)  
+
+Use the quadratic formula to solve \\({x}^{2}-x-110=0\\).  
+</code></pre>
+
+<ol>
+<li>Solve the equation above using 64-bit floating point.</li>
+</ol>
+
+
+<pre><code class="(null)">x1a,x1b = qSol(12.242,42.382,0.0012)</code></pre>
+
+
+<p></p>
+
+<pre><code>leads to    
+</code></pre>
+
+<pre><code class="(null)">(-2.831413841486606e-5,-3.461987696317393)</code></pre>
+
+
+<p></p>
+
+<ol>
+<li>Find the solution if the coefficients are 16-bit floating points.</li>
+</ol>
+
+
+<pre><code class="(null)">x2a,x2b = qSol(float16(12.242),float16(42.382),float16(0.0012))</code></pre>
+
+
+<p></p>
+
+<pre><code>leads to    
+</code></pre>
+
+<pre><code class="(null)">(0.0001448952f0,-3.4615362f0)</code></pre>
+
+
+<p></p>
+
+<ol>
+<li><p>Assume that the 64-bit answer is correct.  Find the absolute and relative errors for the two solutions.</p>
+
+<p> The absolute errors are</p></li>
+</ol>
+
+
+<pre><code class="(null)">abs(x1a-x2a) = 0.00017320933367737267  
+abs(x1b-x2b) = 0.0004515272652687585</code></pre>
+
+
+<p></p>
+
+<pre><code>and the relative errors are:    
+</code></pre>
+
+<pre><code class="(null)">abs(x1a-x2a)/abs(x1a) = 6.117414951479887  
+abs(x1b-x2b)/abs(x1b) = 0.00013044129635438729</code></pre>
+
+
+<p></p>
+
+<pre><code>This shows that the first answer is far off in relative terms.    
+</code></pre>
 
 <h2 id="be-skeptical-of-numerical-answers----">Be skeptical of numerical answers    </h2>
 
@@ -99,9 +137,9 @@ abs(x1b-x2b)/abs(x1b) = 0.00013044129635438729</code></pre></p>
 
 <p>and there is a similar solution if the - root is taken above.  So an alternative quadratic formula is:</p>
 
-<pre><code class="(null)">qSol2 = function(a,b,c)
-  d=sqrt(b^2-4*a*c)
-  return 2*c/(b+d),(2*c)/(b-d)
+<pre><code class="(null)">qSol2 = function(a,b,c)  
+  d=sqrt(b^2-4*a*c)  
+  return 2*c/(b+d),(2*c)/(b-d)  
 end</code></pre>
 
 
@@ -135,7 +173,7 @@ end</code></pre>
 
 <p></p>
 
-<p>and we need the derivaitve so</p>
+<p>and we need the derivative so</p>
 
 <pre><code class="(null)">df(x)=45x^2-286x+226</code></pre>
 
@@ -144,7 +182,7 @@ end</code></pre>
 
 <p>Let&rsquo;s say that x0=0 and find x1 using Newton&rsquo;s method:</p>
 
-<pre><code class="(null)">x0=0
+<pre><code class="(null)">x0=0  
 x1 = x0-f(x0)/df(x0)</code></pre>
 
 
@@ -156,7 +194,7 @@ x1 = x0-f(x0)/df(x0)</code></pre>
 
 <ul>
 <li><p>Try to find the other two solutions to this function.  (Hint: try different values for x0)</p></li>
-<li><p>Write a function using the arguemnts f,df and x0 and returns the root.</p></li>
+<li><p>Write a function using the arguments f,df and x0 and returns the root.</p></li>
 </ul>
 
 
@@ -168,8 +206,8 @@ x1 = x0-f(x0)/df(x0)</code></pre>
 
 <p>Operations with complex numbers:</p>
 
-<pre><code class="(null)">(-2+im)^2
-(-2+im)*(7+4im)
+<pre><code class="(null)">(-2+im)^2  
+(-2+im)*(7+4im)  
 (-2+im)/(7+4im)</code></pre>
 
 
@@ -177,8 +215,8 @@ x1 = x0-f(x0)/df(x0)</code></pre>
 
 <p>Other operations/mathematical functions work as well</p>
 
-<pre><code class="(null)">sqrt(-1+0im)
-sin(-2+im)
+<pre><code class="(null)">sqrt(-1+0im)  
+sin(-2+im)  
 e^(-5.42+32.3im)=exp(-5.42+32.3im)</code></pre>
 
 
