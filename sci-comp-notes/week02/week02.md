@@ -221,7 +221,7 @@ plot(x,y)
 
 ### Exercise
 
-Try plotting some other functions, like \\(\sin x\\), \\(e^x\\), \\(\ln x\\) and play with the plotting domain (x values of the plot).
+Try plotting some other functions, like \\(\sin x\\), \\(e^{x}\\), \\(\ln x\\) and play with the plotting domain (x values of the plot).
 
 
 For additional documentation on Winston, you can find a link from the [Julia packages website](http://pkg.julialang.org) 
