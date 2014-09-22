@@ -164,6 +164,23 @@ returns `-1.238938053097345`.  If we then let x0=x1 and repeat we get a sequence
 * Write a function using the arguments f,df and x0 and returns the root.
 
 
+Newton's Method
+------
+
+This is the function that we derived in class:
+```
+function newton(f,df,x0)
+    local found = false, x=x0,n=0
+    while(!found && (n<50))
+        n+=1
+        x=x-f(x)/df(x)
+        found = abs(f(x))<1.0e-12
+    end
+    return x
+end
+```
+
+
 Packages in Julia
 -------
 
@@ -258,28 +275,6 @@ shows for each x value (the initial point) which root the function goes to.
 
 
 
-Complex Numbers
------------
-
-Last week we briefly saw complex numbers. A site called purplemath.com has a [nice overview of complex numbers](http://www.purplemath.com/modules/complex.htm).  Here's a few example using Julia to do complex arithmetic. 
-
-Entering the number \\(a+bi\\) is put in with `a+b*im`.  For example `-2+im` or `0.5*1.5im`.
-
-Operations with complex numbers:
-```
-(-2+im)^2
-(-2+im)*(7+4im)
-(-2+im)/(7+4im)
-```
-
-Other operations/mathematical functions work as well
-```
-sqrt(-1+0im)
-sin(-2+im)
-e^(-5.42+32.3im)=exp(-5.42+32.3im)
-```
-
-however, these may not make sense (unless you seen some complex analysis).
 
 
 
