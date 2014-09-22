@@ -127,7 +127,7 @@ However, if we type `newton(f,df,1im)`, the the solution 0.0 + 2.236067977499978
 
 ###Exercise
 
-The equation \\(x^3-1==0\\) has one real root and two complex ones.  Use newton's method to find all of them.  
+The equation \\(x^{3}-1=0\\) has one real root and two complex ones.  Use newton's method to find all of them.  
 
 
 
