@@ -26,7 +26,7 @@ save it in a file called `newton.jl` somewhere.
 
 To use it in a julia session, type
 ```
-require('newton')
+require("newton")
 ```
 
 as long as the file is in the same directory as the julia session. If it isn't found, type out the absolute path. 
@@ -37,6 +37,13 @@ newton(x->x^2-4,x->2x,1)
 ```
 
 which will return 2.0.  
+
+Note:  If you make changes to the file you need to reload it with the command 
+```
+reload("newton")
+``` 
+
+(or the full path) 
 
 ### Exercise
 
@@ -73,7 +80,7 @@ Complex Solution to the quadratic equation
 Recall that we used the quadratic formula to solve \\(ax^{2}+bx+c=0\\)
 
 ```
- qSol = function(a,b,c)
+ function qSol(a,b,c)
        d=sqrt(b^2-4*a*c)
        return (-b+d)/(2*a),(-b-d)/(2*a)
  end
@@ -111,7 +118,7 @@ Newton's method works great with complex numbers as well.  In short, we just nee
 (Note: the interpretation of using the tangent line to estimate the root isn't quite the same as with real numbers, but it still converges to a root.)
 
 
-Let's use this to solve \\(x^2+5=0\\), which should have the solution \\(x=\pm i\sqrt{5}\\).  First, define
+Let's use this to solve \\(x^{2}+5=0\\), which should have the solution \\(x=\pm i\sqrt{5}\\).  First, define
 ```
 f(x)=x^2+5
 ```
@@ -130,6 +137,28 @@ However, if we type `newton(f,df,1im)`, the the solution 0.0 + 2.236067977499978
 The equation \\(x^{3}-1=0\\) has one real root and two complex ones.  Use newton's method to find all of them.  
 
 
+Running iJulia
+-------
+
+iJulia is an interactive way of running julia.  It appears in a browser and has a lot of nice features.  You need to have loaded anaconda (see [Installing Julia](https://github.com/pstaabp/scicomp) for info on this.)
+
+If you have anaconda installed then open julia and type:
+
+```
+Pkg.add("IJulia")
+Pkg.add("PyPlot")
+```
+
+(this may take some time)
+
+If all runs without errors, then try
+
+```
+using IJulia
+notebook()
+```
+
+and (fingers crossed) you will get a tab open in your default browser with a listing of your current directory.  
 
 
 
