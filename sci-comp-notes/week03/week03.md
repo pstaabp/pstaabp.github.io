@@ -158,7 +158,9 @@ using IJulia
 notebook()
 ```
 
-and (fingers crossed) you will get a tab open in your default browser with a listing of your current directory.  
+and (fingers crossed) you will get a tab open in your default browser with a listing of your current directory.  Click the "New Notebook" button in the upper right to get a new interactive notebook running julia.
+
+
 
 
 
