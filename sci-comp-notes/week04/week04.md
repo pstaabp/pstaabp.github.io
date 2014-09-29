@@ -12,7 +12,7 @@ This is a discussion on how images are stored in general as well as in julia.  F
 Pkg.add("Images")
 Pkg.add("Color")
 Pkg.add("ImageView")
-Pkg.add("FloatingPointNumbers")
+Pkg.add("FixedPointNumbers")
 Pkg.add("TestImages")
 ```
 
