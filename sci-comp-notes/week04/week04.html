@@ -140,7 +140,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </style>
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="week-4-notes--">Week 4 Notes  </h1>
 
@@ -276,7 +276,7 @@ apply the function and fill as an array:</p>
 
 <p>Next create an array of complex numbers.  We can do this via</p>
 
-<pre><code class="(null)">Z=[x*y*im for x=-1:0.2:1, y=-1:0.2:1]</code></pre>
+<pre><code class="(null)">Z=[x+y*im for x=-1:0.2:1, y=-1:0.2:1]</code></pre>
 
 
 <p>and the run newton&rsquo;s method for the function \(f(x)=x^{3}-1\) on each point:</p>

@@ -145,7 +145,7 @@ and you should get 2.0 (to within roundoff).
 Next create an array of complex numbers.  We can do this via
 
 ```
-Z=[x*y*im for x=-1:0.2:1, y=-1:0.2:1]
+Z=[x+y*im for x=-1:0.2:1, y=-1:0.2:1]
 ```
 
 and the run newton's method for the function \\(f(x)=x^{3}-1\\) on each point:
