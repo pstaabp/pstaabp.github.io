@@ -247,6 +247,21 @@ end
 
 which is just an array of cards.  (Note: there is nothing here that specifies that the Hand has to be 5 cards, but that could be included.)
 
+Next are functions that retun the rank and suit of a card:
+
+```
+function cardrank(c::Card)
+    return c.rank
+end
+```
+
+```
+function cardsuit(c::Card)
+    return c.suit
+end
+```
+
+
 Let's create a Hand by typing
 ```
 h=Hand([Card(2,3),Card(12,1),Card(10,1),Card(10,4),Card(5,2)])

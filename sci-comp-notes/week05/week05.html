@@ -140,7 +140,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </style>
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="week-5-6-notes--">Week 5/6 Notes  </h1>
 
@@ -384,6 +384,20 @@ end</code></pre>
 
 
 <p>which is just an array of cards.  (Note: there is nothing here that specifies that the Hand has to be 5 cards, but that could be included.)</p>
+
+<p>Next are functions that retun the rank and suit of a card:</p>
+
+<pre><code class="(null)">function cardrank(c::Card)
+    return c.rank
+end</code></pre>
+
+
+
+
+<pre><code class="(null)">function cardsuit(c::Card)
+    return c.suit
+end</code></pre>
+
 
 <p>Let&rsquo;s create a Hand by typing</p>
 
