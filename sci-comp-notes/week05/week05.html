@@ -142,9 +142,9 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </head>
 <body class="normal firstload">
   <div id="wrapper">
-      <h1 id="week-5-notes--">Week 5 Notes  </h1>
+      <h1 id="week-5-6-notes--">Week 5/6 Notes  </h1>
 
-<p>These are the notes for week 5 of Math 3001. <a href="../index.html">Return to all notes</a></p>
+<p>These are the notes for weeks 5 and 6 of Math 3001. <a href="../index.html">Return to all notes</a></p>
 
 <h2 id="monte-carlo-simulations--">Monte Carlo Simulations  </h2>
 
@@ -219,7 +219,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 <p>First, the main commands that are built-in to Julia are listed in the <a href="http://docs.julialang.org/en/release-0.3/stdlib/base/?highlight=findfirst#random-numbers">Julia Manual for Random Numbers</a>.  We can generate 100 random numbers between 1 and 6 using</p>
 
-<pre><code class="(null)">S=random(1:6,100)</code></pre>
+<pre><code class="(null)">S=rand(1:6,100)</code></pre>
 
 
 <p>and notice that if you rerun the command, you&rsquo;ll get a different sequence of random numbers.  We can check that this is doing what we expect by checking the probabilty that we get a 1 (or any other number).</p>
@@ -237,7 +237,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 <p>Let&rsquo;s look a floating point random numbers between 0 and 1.  To generate a sequence (array) of such numbers, type</p>
 
-<pre><code class="(null)">S=random(100)</code></pre>
+<pre><code class="(null)">S=rand(100)</code></pre>
 
 
 <p>and we can check the number of values less than 0.1 with the command:</p>
@@ -281,16 +281,155 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 <li><code>S2=count(a-&gt;a&lt;1,mapslices(a-&gt;a[1]^2+a[2]^2,S1,[2]))</code> or<br/>
 <code>S2=count(a-&gt;a&lt;1,mapslices(sumabs2,S1,[2]))</code></li>
 <li><code>fr=S2/100</code></li>
-<li><code>est=4*fr</code></li>
+<li><p><code>est=4*fr</code></p>
+
+<p> or combine all of these into one command:</p>
+
+<p> <pre><code class="(null)">4*count(a-&gt;a&lt;1,mapslices(sumabs2,rand(100,2),[2]))/100</code></pre></p></li>
 </ol>
-
-
-<p>  or combine all of these into one command:</p>
-
-<pre><code>  <pre><code class="(null)">4*count(a-&gt;a&lt;1,mapslices(sumabs2,rand(100,2),[2]))/100</code></pre>
-</code></pre></li>
+</li>
 </ul>
 
+
+<h2 id="other-examples--">Other Examples  </h2>
+
+<h3 id="rolling-2-dice">Rolling 2 dice</h3>
+
+<p>How do we handle the rolling of two dice?  Here&rsquo;s an array with each row having 2 dice.</p>
+
+<pre><code class="(null)">S=rand(1:6,100,2)</code></pre>
+
+
+<p>and then to find the sum of the dice:</p>
+
+<pre><code class="(null)">dicesum = mapslices(sum,S,[2])</code></pre>
+
+
+<p>which sums along the rows.  This is  100 rolls of 2 dice with the sum recorded.  We can then count how many 2&rsquo;s 3&rsquo;s, etc. there are in this array, but Julia actually has that built-in, called <code>hist</code>.</p>
+
+<pre><code class="(null)">theRange, counts = hist(dicesum)</code></pre>
+
+
+<p>and if we want an array of fractions each roll comes up:</p>
+
+<pre><code class="(null)">counts/100</code></pre>
+
+
+<p>A nice way to visualize this is using a histogram.  I found such a way to do this using <a href="http://gadflyjl.org/">a package called Gadfly</a> which you&rsquo;ll need to add</p>
+
+<pre><code class="(null)">Pkg.add(&quot;Gadfly&quot;)</code></pre>
+
+
+<p>and maybe update other packages.  Then import the package</p>
+
+<pre><code class="(null)">using Gadfly</code></pre>
+
+
+<p>and finally you can plot it:</p>
+
+<pre><code class="(null)">plot(x=[2:12],y=counts/10000,Geom.bar)</code></pre>
+
+
+<p>to get the following plot:</p>
+
+<p><img src="hist.png"></img></p>
+
+<h3 id="exercise">Exercise</h3>
+
+<p>Change the code above to use 1000 dice rolls. Estimate the probablity that you roll a 7.  Roll a 10 or greater.   Roll an even number.  (Is it 50%?)</p>
+
+<h2 id="composite-data-types-in-julia--">Composite Data Types in Julia  </h2>
+
+<p>We will start to look at playing cards (poker) probabilities below.  Before that, let&rsquo;s look at a different datatype in Julia that allows us to store more that one variable together.  This is often called a composite type or a struct (from C) and similar to an object however you can&rsquo;t have a function as a member of the type.</p>
+
+<h3 id="card-datatype">Card datatype</h3>
+
+<p>For our playing card example, a card has a rank (1 to 13 corresponding to Ace, 2, through 10, J, Q, K) and a suit (1 to 4 corresponding to the suits &ldquo;clubs&rdquo;, &ldquo;spades&rdquo;, &ldquo;diamonds&rdquo; and &ldquo;hearts&rdquo;), which we define</p>
+
+<pre><code class="(null)">ranks = [&quot;A&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;T&quot;,&quot;J&quot;,&quot;Q&quot;,&quot;K&quot;];
+suits = [&quot;C&quot;,&quot;S&quot;,&quot;D&quot;,&quot;H&quot;];</code></pre>
+
+
+<p>We can define this using a Julia type <a href="http://docs.julialang.org/en/release-0.3/manual/types/">See the julia manual on composite types</a>.</p>
+
+<pre><code class="(null)">type Card
+    rank::Int
+    suit::Int
+    Card(r::Int,s::Int)=new(r,s)
+    Card(i::Int) = i%13==0? new(13,int(ceil(i/13))) : new(i%13,int(ceil(i/13)))
+end</code></pre>
+
+
+<p>and if we type</p>
+
+<pre><code class="(null)">Card(3,2)</code></pre>
+
+
+<p>this will create a card of rank 3 and suit 2 (spades).  Since this isn&rsquo;t very easy to read we produce a function that prints the card.</p>
+
+<pre><code class="(null)">function printCard(c::Card)
+    return ranks[c.rank]*suits[c.suit];
+end</code></pre>
+
+
+<p>And for example typing <code>printCard(Card(3,2))</code>  returns &ldquo;3S&rdquo; or 3 of spades.  Note: the <code>*</code> in julia with string will concantenate.</p>
+
+<p>You may notice that there is also a way to create a card from a single integer.  For example, <code>printCard(Card(45))</code> returns &ldquo;6H&rdquo;, which would be the 45th card in an ordered deck.  This method will be useful when we get to a deck of cards.</p>
+
+<p>Since a Hand is also helpful in playing card games, we will define a hand in the following way:</p>
+
+<pre><code class="(null)">type Hand
+    cards::Array{Card,1}
+end</code></pre>
+
+
+<p>which is just an array of cards.  (Note: there is nothing here that specifies that the Hand has to be 5 cards, but that could be included.)</p>
+
+<p>Let&rsquo;s create a Hand by typing</p>
+
+<pre><code class="(null)">h=Hand([Card(2,3),Card(12,1),Card(10,1),Card(10,4),Card(5,2)])</code></pre>
+
+
+<p>and then we can print out a hand by defining a printHand function</p>
+
+<pre><code class="(null)">function printHand(h::Hand)
+    join(map(printCard,h.cards),&quot;,&quot;)
+end</code></pre>
+
+
+<p>and with the above hand:</p>
+
+<pre><code class="(null)">printHand(h)</code></pre>
+
+
+<p>returns &ldquo;2D,QC,TC,TH,5S&rdquo;</p>
+
+<h3 id="find-probabilities-of-poker-hands">Find Probabilities of Poker Hands</h3>
+
+<p>Let&rsquo;s actually look at determining if a hand is a particular poker hand.  Some of them are fairly difficult to test for. Let&rsquo;s first try a full house:</p>
+
+<pre><code class="(null)">function isFullHouse(h::Hand)
+	local cranks=sort(map(cardrank,h.cards))
+	return cranks[2]==cranks[1] &amp;&amp; cranks[5]==cranks[4] &amp;&amp; (cranks[3]==cranks[2] || cranks[4]==cranks[3]);
+end</code></pre>
+
+
+<p>Now, let&rsquo;s perform a Monte Carlo simulation on a large number of poker hands and test if this gives the result we want:</p>
+
+<pre><code class="(null)">deck=[1:52];
+numhands=0;
+trials = 100000
+for i=1:trials
+    shuffle!(deck)
+    h = Hand(map(Card,deck[1:5]))
+    if(isFullHouse(h))
+        numhands+=1
+    end
+end
+numflushes/trials</code></pre>
+
+
+<p>will create 100,000 poker hands and test how many are full house.</p>
 
 <div style="display:none">  
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->  
