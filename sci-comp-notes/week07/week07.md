@@ -32,7 +32,7 @@ Before we get started with this, let's determine the number of processors/cores 
 
 ###Set a Shortcut on windows (thanks to Daniel Beaulac)
 
-1. Open Julia normally, and type CPU_CORE. This determines the number of cores that your processor has. Make a note of this number, and close Julia.
+1. Open Julia normally, and type CPU_CORES. This determines the number of cores that your processor has. Make a note of this number, and close Julia.
 2. Find the shortcut that you use to open Julia. Right-click on it, and select Properties.
 3. Click on the Shortcut tab. Find the box called Target.
 4. Click in that box, and at the end of the string, add -p n (with n being the number of cores that you found earlier). If the string is enclosed with quotation marks, add -p n after the quotation marks.
