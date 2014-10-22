@@ -140,7 +140,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </style>
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="week-7-notes--">Week 7 Notes  </h1>
 
@@ -154,23 +154,98 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 testHand(1000000,isFullHouse)</code></pre>
 
 
+<p>You should see something like: <code>1459</code> as a result.  This is the total number of full house hands.  The fraction can be found by dividing this by 1000000.</p>
+
 <h2 id="parallel-computing--">Parallel Computing  </h2>
 
-<p>(General Discussion of Parallel Computing)</p>
+<p><a href="https://en.wikipedia.org/wiki/Parallel_computing">Parallel computing</a> is a general term about running computer code on multiple computers or processors or processor cores in order to reduce the total time a program runs.  Julia has some nice built-in methods for handling parallel computing in a relatively easy manner.</p>
 
-<p><a href="count_heads.jl">Link to count_heads.jl</a></p>
+<p>Generally the hard part of parallel computing is to handle the way that data is saved/retrieved or passed between processes.  In the case of Monte carlo simultations, we typically don&rsquo;t need to pass data between processes and thus parallel computing is relatively simple as we will see.</p>
 
-<pre><code class="(null)">require(&quot;count_heads&quot;)
+<p>Before we get started with this, let&rsquo;s determine the number of processors/cores in your computer.  In julia, type <code>CPU_CORES</code> and will return an integer which is the number of cores in your computer (2, 4 or 8 are common these days).  We will also return to julia running in a command or terminal window (instead of as iJulia).  This is because we need to tell Julia how processors that we can run on.  There are two ways we can do this.</p>
 
-a = @spawn count_heads(100000000)
-b = @spawn count_heads(100000000)
-c = @spawn count_heads(100000000)
-d = @spawn count_heads(100000000)
+<h3 id="open-up-a-terminal-window">Open up a terminal window</h3>
 
-fetch(a)+fetch(b)+fetch(c)+fetch(d)</code></pre>
+<p>(Terminal on the mac/linux, cmd on windows).  If julia is in the path, just type <code>julia -p 4</code>, where 4 is the number of cores.</p>
+
+<h3 id="set-a-shortcut-on-windows--thanks-to-daniel-beaulac-">Set a Shortcut on windows (thanks to Daniel Beaulac)</h3>
+
+<ol>
+<li>Open Julia normally, and type CPU_CORE. This determines the number of cores that your processor has. Make a note of this number, and close Julia.</li>
+<li>Find the shortcut that you use to open Julia. Right-click on it, and select Properties.</li>
+<li>Click on the Shortcut tab. Find the box called Target.</li>
+<li>Click in that box, and at the end of the string, add -p n (with n being the number of cores that you found earlier). If the string is enclosed with quotation marks, add -p n after the quotation marks.</li>
+<li>Click Apply and OK at the bottom of the Properties window.</li>
+<li>Open Julia with the shortcut that you just modified. Test to see if the arguments worked by doing the count heads exercise in the Week 7 notes. If the first number in RemoteRef() is different in each case, then the arguments have been applied correctly.</li>
+</ol>
 
 
+<p>There are other ways as well.</p>
 
+<h2 id="running-some-parallel-code-in-julia--">Running some parallel code in Julia  </h2>
+
+<p>First, let&rsquo;s run the example in the <a href="http://docs.julialang.org/en/release-0.3/manual/parallel-computing/">Julia Manual on parallel computing</a>.  The <a href="count_heads.jl">count_heads.jl</a> file contains the following:</p>
+
+<pre><code class="(null)">function count_heads(n)
+    c::Int = 0
+    for i=1:n
+        c += randbool()
+    end
+    c
+end</code></pre>
+
+
+<p>is a coin flipping algorithm and returns the number of heads from out of n coin flips.  Note:  although this is a short function, you will need to save it as a file in order to run this in a parallel manner.</p>
+
+<p>Let&rsquo;s first just run this code in a standard way. If we type:</p>
+
+<pre><code class="(null)">require(&quot;count_heads&quot;)</code></pre>
+
+
+<p>then</p>
+
+<pre><code class="(null)">count_heads(100000000)</code></pre>
+
+
+<p>you should get a number close to 500000000.  (half of the 100 billion). Also if you open up Activity Monitor on Mac, Task Manager on windows or something similar on linux, you should see that your CPU isn&rsquo;t maxed out but the julia process is.  This means that julia is running as fast as possible on one core.</p>
+
+<p>Next, we&rsquo;ll run the same code in a parallel manner.</p>
+
+<ol>
+<li>Open julia with the -p 4  flag in a terminal (or use a shortcut)</li>
+<li><p>Make sure that you load the count_heads file via</p>
+
+<p> <pre><code class="(null)">require(&quot;count_heads&quot;)</code></pre></p>
+
+<p> or put in the absolute path if needed.</p></li>
+<li><p>Run the following code:</p></li>
+</ol>
+
+
+<pre><code class="(null)">N=100000000;a = @spawn count_heads(N);b = @spawn count_heads(N);c = @spawn count_heads(N);d = @spawn count_heads(N); fetch(a)+fetch(b)+fetch(c)+fetch(d)</code></pre>
+
+
+<p>all on one line.  If you open up Activity Monitor on Mac, Task Manager on windows or something similar on linux, you should see that your CPU is maxed out.</p>
+
+<p>The @spawn commands will spawn a new process with that function spawned in it.  It returns a reference to the process (not the value of the function).  To get the value of the function called, we use the fetch command.</p>
+
+<h2 id="how-much-does-this-speed-things-up---">How much does this speed things up?  </h2>
+
+<p>Let&rsquo;s first stay with <code>N=1000000000</code>  (1 billion) and then count the number of heads on 4 billion and time it.</p>
+
+<pre><code class="(null)">tic(); count_heads(4*N);toc()</code></pre>
+
+
+<p>Running on my machine I get 15.27 seconds.</p>
+
+<p>Next, let&rsquo;s time the parallel code:</p>
+
+<pre><code class="(null)">tic();a = @spawn count_heads(N);b = @spawn count_heads(N);c = @spawn count_heads(N);d = @spawn count_heads(N); fetch(a)+fetch(b)+fetch(c)+fetch(d);toc()</code></pre>
+
+
+<p>I got 5.19 seconds (which is about 3 times faster.)</p>
+
+<h2 id="parallel-computing-the-mandelbrot-set--">Parallel Computing the Mandelbrot Set  </h2>
 
 <div style="display:none">  
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->  
