@@ -116,8 +116,45 @@ I got 5.19 seconds (which is about 3 times faster.)
 Parallel Computing the Mandelbrot Set
 ------
 
+The Mandelbrot Set is another case where parallel computing works easily.  This is because any region in the complex plane is independent of any other part.  Therefore one can break up the code so that the given region in the complex plane is broken into 4 subregions (for a 4-core machine).  
 
+Here's some pseudocode for this (to keep the details secret) and this and S, which defines the colormap is defined in the file "mandel.jl"
 
+```
+function parallelMandelPlot(lowerleft::Complex{Float64},upperright::Complex{Float64},size::Int)
+   #create an array Z of all complex numbers from lowerleft to upper right
+   im1=@spawn uint8(mandelIterate(Z[1:ysize/2,1:xsize/2]))
+   im2=@spawn uint8(mandelIterate(Z[ysize/2+1:ysize,1:xsize/2]))
+   im3=@spawn uint8(mandelIterate(Z[1:ysize/2,xsize/2+1:xsize]))
+   im4=@spawn uint8(mandelIterate(Z[ysize/2+1:ysize,xsize/2+1:xsize]))
+   Images.ImageCmap([fetch(im1) fetch(im3); fetch(im2) fetch(im4)],S)
+end
+```
+
+Note: ysize and xsize are determined beforehand and need to be even numbers.  mandelIterate is a function that takes a complex number as an input and returns the number of iterations to leave the circle of radius (or 255 if it appears to be bounded.)
+
+This can then be run in a julia shell (not iJulia) in the following manner. 
+
+```
+require("mandel.jl");
+```
+
+then 
+```
+image = buildMSParallel(-2.0-im,1.0+im,2400)
+```
+
+and if we time it
+```
+tic();image = buildMSParallel(-2.0-im,1.0+im,2400);toc();
+```
+
+I was able to get 41.8 seconds.  And running a nonparallel code:
+```
+tic();image = buildMS(-2.0-im,1.0+im,2400);toc();
+```
+
+the results took 
 
 
 

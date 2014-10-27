@@ -61,7 +61,8 @@ convert(Image,grays)
 
 and you should see an image with black/white/gray dots randomly dispersed. 
 
-<img src="random.png"></img>
+![random dots](random.png)
+
 
 
 A nonrandom image
