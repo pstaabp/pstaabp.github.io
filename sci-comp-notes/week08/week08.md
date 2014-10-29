@@ -63,7 +63,7 @@ In this case, there aren't that many total paths.  With 5 nodes, there are a tot
 
 First, let's put the distances into an array:
 ```
-distances=
+distances5=
 [0 26 19 39 23; 
 26 0 13 21 42; 
 19 13 0 32 25; 
@@ -76,12 +76,21 @@ where we've assumed that the distance of a node to itself is 0 and the matrix is
 Next, let's define a function that finds the total distance given a array of node numbers: 
 
 ```
-function totalDistance(nodes::Array{Int,1})
-	#(to be generated in class)
+function totalDistance(nodes::Array{Int,1},distArray::Array{Int,2})
+    sum=0;
+    for i=1:length(nodes)-1
+        sum+=distArray[nodes[i],nodes[i+1]];
+    end
+    sum + distArray[nodes[1],nodes[end]]
 end
 ```
 
 As a test if we pass the totalDistance the array [1 2 3 4 5], we should get the result 111.  
+
+```
+totalDistance([1:5],distances5)
+```
+
 
 ####Permutations
 
@@ -101,7 +110,7 @@ we use the `nthperm` command which needs a vector and an integer.
 ###Exploring all cases of the TSP
 In the case above, there are 5!=120 permutations.  An exhaustive search of the TSP is simply passing every permutation of the vector [1 2 3 4 5] to the totalDistance function.  Then you search for the smallest total distance.  In the case above, we can find all distances via:
 ```
-d=map(k->totalDistance(nthperm([1:5],k)),[1:120])
+d=map(k->totalDistance(nthperm([1:5],k),distances5),[1:120])
 ```
 
 where the vector d now has the total distance for each permultation.  The smallest one is given by:
@@ -125,7 +134,7 @@ As we showed above, any solution will have each node in it.  We can then always 
 
 If we repeat our seach using:
 ```
-d=map(k->totalDistance(nthperm([1:5],k)),[1:24])
+d=map(k->totalDistance(nthperm([1:5],k),distances5),[1:24])
 ```
 
 and then find the smallest value:
@@ -143,27 +152,27 @@ we get the same result.
 Let's try a larger example.  This is for 10 cities, but can be extended easily.  First, let's just generate a matrix with some nice numbers that have the same properties as the distances from above. 
 
 ```
-distances=rand(5:20,10,10)
+distances10=rand(5:20,10,10)
 ```
 
 will generate a 10 by 10 array of integers in the range 5:20.  To make this symmetric we can add the transpose of the array (the flip over the main diagonal).
 
 ```
-distances=distances+transpose(distances)
+distances10=distances10+transpose(distances10)
 ```
 
 and then zero out the main diagonal. 
 ```
 for i=1:10
-  distances[i,i]=0
+  distances10[i,i]=0
 end
 ```
 
-and if you examine the distances array, you can see it has the properties we want. 
+and if you examine the distances10 array, you can see it has the properties we want. 
 
 Now, let's compute the totalDistance for all paths:
 ```
-d=map(k->totalDistance(nthperm([1:10],k)),[1:factorial(9)])
+d=map(k->totalDistance(nthperm([1:10],k),distances10),[1:factorial(9)])
 ```
 
 and if you look for the smallest
@@ -191,7 +200,12 @@ The examples we've done so far are for relatively small n.  If you try the metho
 
 A different way to think about this is to start with a path and then tweak it.  Let's try looking at the N=5 case. 
 
-If we start with the case `path=[1:5]` then the total distance is 120. 
+If we start with the case `path=[1:5]` then the total distance is 
+```
+distance=totalDistance(path,distances5)
+```
+
+(or 120)
 
 Next we will swap two elements at random.  Here's a helpful function to do the swap:
 ```
@@ -205,8 +219,63 @@ and by typing
 swapEls(path,rand(1:5),rand(1:5))
 ```
 
-and then there will be a new path. 
+and then there will be a new path.  We'll check what the value of the distance is.  If it is smaller than distance (currently 120), then we'll store the path and the distance. 
 
+This is then repeated a large number of times (but generally smaller than checking all permutations.)
+
+
+
+(Here's a function that will do everything)
+
+
+
+```
+function SATSP(N::Int,distances::Array{Int,2})
+    path=[1:N]
+    minPath=path
+    minDist = totalDistance(path,distances)
+    for i=1:10000
+        local m
+        swapEls!(path,rand(1:N),rand(1:N))
+        m = totalDistance(path,distances)
+        if m<minDist
+            minDist=m
+            minPath=path
+        end
+    end
+    return minDist,minPath
+end
+```
+
+
+###Simulated Annealing for finding mins of smooth functions
+
+
+
+
+```
+a=0
+b=10
+xmin=newton(df,d2f,0.5*(a+b))
+fmin=f(xmin)
+found=false
+iters=0
+while !found
+    xNext=newton(df,d2f,xmin-0.5*rand()*(b-a))
+    fNext=f(xNext)
+    println(xNext," ",fNext," ",xmin," ",fmin)
+    if a<xNext<b && fNext<fmin
+        xmin=xNext
+        fmin=fNext
+        iters=0
+    else
+        iters+=1
+        if(iters>500)
+            found=true
+        end
+    end
+end
+```
 
 
 
