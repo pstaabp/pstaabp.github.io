@@ -198,84 +198,32 @@ The examples we've done so far are for relatively small n.  If you try the metho
 
 ###Simultated Annealing
 
-A different way to think about this is to start with a path and then tweak it.  Let's try looking at the N=5 case. 
-
-If we start with the case `path=[1:5]` then the total distance is 
-```
-distance=totalDistance(path,distances5)
-```
-
-(or 120)
-
-Next we will swap two elements at random.  Here's a helpful function to do the swap:
+A different way to think about this is to start with a path and then tweak it.  Before we get to the details, it is helpful to have the following function that performs a swap of two elements in the array.
 ```
 function swapEls!(A,i,j)
     tmp=A[i];A[i]=A[j];A[j]=tmp;
 end
 ```
 
-and by typing 
+Let's try looking at the N=5 case. 
+
+If we start with the case `path=[1:5]` then the total distance is 
 ```
-swapEls(path,rand(1:5),rand(1:5))
-```
-
-and then there will be a new path.  We'll check what the value of the distance is.  If it is smaller than distance (currently 120), then we'll store the path and the distance. 
-
-This is then repeated a large number of times (but generally smaller than checking all permutations.)
-
-
-
-(Here's a function that will do everything)
-
-
-
-```
-function SATSP(N::Int,distances::Array{Int,2})
-    path=[1:N]
-    minPath=path
-    minDist = totalDistance(path,distances)
-    for i=1:10000
-        local m
-        swapEls!(path,rand(1:N),rand(1:N))
-        m = totalDistance(path,distances)
-        if m<minDist
-            minDist=m
-            minPath=path
-        end
-    end
-    return minDist,minPath
-end
+distance=totalDistance(path,distances5)
 ```
 
+which is 111. 
 
-###Simulated Annealing for finding mins of smooth functions
-
-
-
-
+Next we will swap two elements at random by typing 
 ```
-a=0
-b=10
-xmin=newton(df,d2f,0.5*(a+b))
-fmin=f(xmin)
-found=false
-iters=0
-while !found
-    xNext=newton(df,d2f,xmin-0.5*rand()*(b-a))
-    fNext=f(xNext)
-    println(xNext," ",fNext," ",xmin," ",fmin)
-    if a<xNext<b && fNext<fmin
-        xmin=xNext
-        fmin=fNext
-        iters=0
-    else
-        iters+=1
-        if(iters>500)
-            found=true
-        end
-    end
-end
+swapEls!(path,rand(1:5),rand(1:5)); path
 ```
+
+and then there will be a new path.  We'll check what the value of the distance is.  If it is smaller than distance (currently 111), then we'll store the path and the distance. 
+
+
+
+
 
 
 
