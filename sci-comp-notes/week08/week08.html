@@ -140,7 +140,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </style>
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="week-8-notes--">Week 8 Notes  </h1>
 
@@ -160,7 +160,8 @@ f(1.55)=-286.73819204421756
 f(-9.18) = 4040.4494543269093</code></pre>
 
 
-<p>and so the absolute minimum is -286.74 (about x=1.55) and the absolute max is 11960 at x=10.</p>
+<p>
+so the absolute minimum is -286.74 (about x=1.55) and the absolute max is 11960 at x=10.</p>
 
 <h3 id="extrema-problems-of-function-of-more-than-one-variable">Extrema Problems of function of more than one variable</h3>
 
@@ -254,10 +255,10 @@ f(-9.18) = 4040.4494543269093</code></pre>
 <p>First, let&rsquo;s put the distances into an array:</p>
 
 <pre><code class="(null)">distances5=
-[0 26 19 39 23;
-26 0 13 21 42;
-19 13 0 32 25;
-39 21 32 0 17;
+[0 26 19 39 23; 
+26 0 13 21 42; 
+19 13 0 32 25; 
+39 21 32 0 17; 
 23 42 25 17 0]</code></pre>
 
 
@@ -413,7 +414,7 @@ end</code></pre>
             minpath=path
         end
     end
-    return (minpath,mindist)
+    return (minpath,mindist) 
 end</code></pre>
 
 
@@ -517,7 +518,8 @@ end</code></pre>
 <pre><code class="(null)">x1=x0-0.2df(x0)</code></pre>
 
 
-<p>returns 9.711114366835263 and the derivative at this point is 0.3562184409754395</p>
+<p>
+9.711114366835263 and the derivative at this point is 0.3562184409754395</p>
 
 <p>(a few iterations of this will find a local minimum)</p>
 
@@ -528,7 +530,41 @@ end</code></pre>
 <pre><code class="(null)">x0=x+gamma*(2*rand()-1)</code></pre>
 
 
-<p>and repeat.</p>
+<p>
+repeat.</p>
+
+<h3 id="a-function-to-do-this">A function to do this</h3>
+
+<pre><code class="(null)">function findMin(a,b,f,df,c,err,itermax)
+    local xmin=localMin(0.5*(a+b),f,df,c,err)
+    local fmin=f(xmin)
+    local found=false
+    local iters=0, xNext,fNext
+    while !found
+        xNext=localMin(xmin-0.5*rand()*(b-a),df,d2f,0.2,1e-8)
+        fNext=f(xNext)
+        #println(xNext,&quot; &quot;,fNext,&quot; &quot;,xmin,&quot; &quot;,fmin)
+        if a&lt;xNext&lt;b &amp;&amp; fNext&lt;fmin
+            xmin=xNext
+            fmin=fNext
+            iters=0
+        else
+            iters+=1
+            if(iters&gt;itermax)
+                found=true
+            end
+        end
+    end
+    return (xmin,fmin)
+end</code></pre>
+
+
+<p>and calling it with</p>
+
+<pre><code class="(null)">findMin(0,10,f,df,0.2,1e-8,500)</code></pre>
+
+
+<p>returns the same result as above.</p>
 
 <div style="display:none">  
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->  
