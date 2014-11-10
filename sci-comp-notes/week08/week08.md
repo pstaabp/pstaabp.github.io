@@ -366,6 +366,43 @@ and repeat.
 
 
 
+###A function to do this
+
+```
+function findMin(a,b,f,df,c,err,itermax)
+    local xmin=localMin(0.5*(a+b),f,df,c,err)
+    local fmin=f(xmin)
+    local found=false
+    local iters=0, xNext,fNext
+    while !found
+        xNext=localMin(xmin-0.5*rand()*(b-a),df,d2f,0.2,1e-8)
+        fNext=f(xNext)
+        #println(xNext," ",fNext," ",xmin," ",fmin)
+        if a<xNext<b && fNext<fmin
+            xmin=xNext
+            fmin=fNext
+            iters=0
+        else
+            iters+=1
+            if(iters>itermax)
+                found=true
+            end
+        end
+    end
+    return (xmin,fmin)
+end
+```
+
+and calling it with 
+```
+findMin(0,10,f,df,0.2,1e-8,500)
+```
+
+returns the same result as above.  
+
+
+
+
 
 
 
