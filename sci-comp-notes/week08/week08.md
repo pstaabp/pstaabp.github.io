@@ -223,6 +223,148 @@ and then there will be a new path.  We'll check what the value of the distance i
 
 
 
+The resulting function that does all of this is:
+```
+function findTSP(distances::Array{Int,2},iter::Int)
+    local N=size(distances,1)  #number of rows in distances array
+    local path=[1:N]
+    local minpath=path
+    local mindist=totalDist(minpath,distances)
+    for i=1:iter
+        swapEls!(path,rand(1:N),rand(1:N))
+        dist=totalDist(path,distances)
+        if dist < mindist
+            mindist=dist
+            minpath=path
+        end
+    end
+    return (minpath,mindist) 
+end
+```
+
+and then we can apply this to any distance array.  For example
+```
+findTSP(distances5,100)
+```
+
+results in 
+```
+([1,4,2,5,3],93)
+```
+
+which says that the minimum path is from node 1 to 4 to 2 to 5 to 3 with total distance 93. 
+
+
+Similarly, with the distances10 array (which was created randomly)
+```
+findTSP(distances10,1000000)
+```
+
+results in 
+```
+([8,2,10,6,4,9,5,7,3,1],169)
+```
+
+which is identical to what we found by going through all paths. 
+
+###A Larger Example
+
+If we type
+```
+distances20=rand(5:20,20,20)
+```
+
+then
+```
+for i=1:20
+    distances20[i,i]=0
+end
+```
+
+then
+```
+distances20=distances20+transpose(distances20)
+```
+
+will generate a 20 by 20 distance array.  If we run:
+```
+findTSP(distances20,100000000)
+```
+
+generates (for me)
+```
+([17,20,11,13,16,3,18,15,6,10,9,1,7,2,4,19,14,8,5,12],331)
+```
+
+Note that since a distance array of this size is very large to find all paths, so we don't know if this is the minimum path.  Running it a few times will help convince you how close it is. For example, running it again results in
+```
+([19,1,6,9,16,7,3,13,8,17,15,5,14,12,4,11,18,2,10,20],362)
+```
+
+so obviously the path with distance 331 is better than this one. 
+
+## Combinations
+
+(discussion of difference between combination and permuation)
+
+```
+A=[1 2 3 4 5]
+```
+
+The following will produce all combinations of size 2 out of the items in A
+
+```
+collect(combinations(A,2))
+```
+
+
+##Return to minimizing a function
+
+###Steepest Descent
+
+We'll next examine Steepest Descent, a way to find the minimum of a function that generalizes well to functions with more than one variable, however, we'll just do functions of one variable
+
+Let's say that we want to find the minimum of 
+
+
+
+###Steepest Descent
+
+We'll next examine Steepest Descent, a way to find the minimum of a function that generalizes well to functions with more than one variable, however, we'll just do functions of one variable
+
+Let's say that we want to find the minimum of \\(f(x)=0.2\sin (5x)+\cos(0.5x) \\) on the interval [-10,10].   We'll start at the right point (for no particular reason) \\(x=10\\).  The plot of the function is
+
+![random dots](plot.png)
+
+The direction of descent is the direction that points in the direction of downhill (either left or right).  Looking at the plot it appears to be left (or in the negative direction).  We can get this information from the derivative.  
+
+
+If
+```
+x0=10
+```
+
+Then let 
+```
+x1=x0-0.2df(x0)
+```
+returns 9.711114366835263 and the derivative at this point is 0.3562184409754395
+
+(a few iterations of this will find a local minimum)
+
+
+Next, how do we get out of the local min.  (Inject some heat.  )
+
+
+Randomly pick another point nearby.  A new x0 for some parameter gamma
+
+```
+x0=x+gamma*(2*rand()-1)
+```
+and repeat. 
+
+
+
 
 
 

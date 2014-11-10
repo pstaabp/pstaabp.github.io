@@ -398,6 +398,138 @@ end</code></pre>
 
 <p>and then there will be a new path.  We&rsquo;ll check what the value of the distance is.  If it is smaller than distance (currently 111), then we&rsquo;ll store the path and the distance.</p>
 
+<p>The resulting function that does all of this is:</p>
+
+<pre><code class="(null)">function findTSP(distances::Array{Int,2},iter::Int)
+    local N=size(distances,1)  #number of rows in distances array
+    local path=[1:N]
+    local minpath=path
+    local mindist=totalDist(minpath,distances)
+    for i=1:iter
+        swapEls!(path,rand(1:N),rand(1:N))
+        dist=totalDist(path,distances)
+        if dist &lt; mindist
+            mindist=dist
+            minpath=path
+        end
+    end
+    return (minpath,mindist)
+end</code></pre>
+
+
+<p>and then we can apply this to any distance array.  For example</p>
+
+<pre><code class="(null)">findTSP(distances5,100)</code></pre>
+
+
+<p>results in</p>
+
+<pre><code class="(null)">([1,4,2,5,3],93)</code></pre>
+
+
+<p>which says that the minimum path is from node 1 to 4 to 2 to 5 to 3 with total distance 93.</p>
+
+<p>Similarly, with the distances10 array (which was created randomly)</p>
+
+<pre><code class="(null)">findTSP(distances10,1000000)</code></pre>
+
+
+<p>results in</p>
+
+<pre><code class="(null)">([8,2,10,6,4,9,5,7,3,1],169)</code></pre>
+
+
+<p>which is identical to what we found by going through all paths.</p>
+
+<h3 id="a-larger-example">A Larger Example</h3>
+
+<p>If we type</p>
+
+<pre><code class="(null)">distances20=rand(5:20,20,20)</code></pre>
+
+
+<p>then</p>
+
+<pre><code class="(null)">for i=1:20
+    distances20[i,i]=0
+end</code></pre>
+
+
+<p>then</p>
+
+<pre><code class="(null)">distances20=distances20+transpose(distances20)</code></pre>
+
+
+<p>will generate a 20 by 20 distance array.  If we run:</p>
+
+<pre><code class="(null)">findTSP(distances20,100000000)</code></pre>
+
+
+<p>generates (for me)</p>
+
+<pre><code class="(null)">([17,20,11,13,16,3,18,15,6,10,9,1,7,2,4,19,14,8,5,12],331)</code></pre>
+
+
+<p>Note that since a distance array of this size is very large to find all paths, so we don&rsquo;t know if this is the minimum path.  Running it a few times will help convince you how close it is. For example, running it again results in</p>
+
+<pre><code class="(null)">([19,1,6,9,16,7,3,13,8,17,15,5,14,12,4,11,18,2,10,20],362)</code></pre>
+
+
+<p>so obviously the path with distance 331 is better than this one.</p>
+
+<h2 id="combinations">Combinations</h2>
+
+<p>(discussion of difference between combination and permuation)</p>
+
+<pre><code class="(null)">A=[1 2 3 4 5]</code></pre>
+
+
+<p>The following will produce all combinations of size 2 out of the items in A</p>
+
+<pre><code class="(null)">collect(combinations(A,2))</code></pre>
+
+
+<h2 id="return-to-minimizing-a-function">Return to minimizing a function</h2>
+
+<h3 id="steepest-descent">Steepest Descent</h3>
+
+<p>We&rsquo;ll next examine Steepest Descent, a way to find the minimum of a function that generalizes well to functions with more than one variable, however, we&rsquo;ll just do functions of one variable</p>
+
+<p>Let&rsquo;s say that we want to find the minimum of</p>
+
+<h3 id="steepest-descent">Steepest Descent</h3>
+
+<p>We&rsquo;ll next examine Steepest Descent, a way to find the minimum of a function that generalizes well to functions with more than one variable, however, we&rsquo;ll just do functions of one variable</p>
+
+<p>Let&rsquo;s say that we want to find the minimum of \(f(x)=0.2\sin (5x)+\cos(0.5x) \) on the interval [-10,10].   We&rsquo;ll start at the right point (for no particular reason) \(x=10\).  The plot of the function is</p>
+
+<p><img src="plot.png" alt="random dots" /></p>
+
+<p>The direction of descent is the direction that points in the direction of downhill (either left or right).  Looking at the plot it appears to be left (or in the negative direction).  We can get this information from the derivative.</p>
+
+<p>If</p>
+
+<pre><code class="(null)">x0=10</code></pre>
+
+
+<p>Then let</p>
+
+<pre><code class="(null)">x1=x0-0.2df(x0)</code></pre>
+
+
+<p>returns 9.711114366835263 and the derivative at this point is 0.3562184409754395</p>
+
+<p>(a few iterations of this will find a local minimum)</p>
+
+<p>Next, how do we get out of the local min.  (Inject some heat.  )</p>
+
+<p>Randomly pick another point nearby.  A new x0 for some parameter gamma</p>
+
+<pre><code class="(null)">x0=x+gamma*(2*rand()-1)</code></pre>
+
+
+<p>and repeat.</p>
+
 <div style="display:none">  
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->  
 <script>var hljs = new function() {  
