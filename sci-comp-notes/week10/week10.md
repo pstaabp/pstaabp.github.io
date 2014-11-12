@@ -91,3 +91,22 @@ The data is a CSV file with tab delimeters and information about the data is [on
 data,header=readdlm("Gaz_ua_national.txt",'\t',String,header=true)
 ```
 
+Here's a few questions we may want to know:
+
+1. What are the top 10 areas in population
+1. Give a histogram plot in terms of population?  (What are good bin sizes?)
+2. What is the total population of all areas? 
+2. What the top 10 area in housing units?
+2. What is the total number of housing units?
+2. What is the average number of people per housing units for all areas? 
+2. For the top 10 area in population, find the average number of people per housing unit?
+2. What are the top 10 areas in land size?
+3. What are the top 10 areas in water size?
+4. What are the Massachusetts areas in the data?
+5. What is the average population, median and standard deviation  of the areas?
+
+
+
+
+
+
