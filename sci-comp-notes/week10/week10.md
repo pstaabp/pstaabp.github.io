@@ -107,6 +107,115 @@ Here's a few questions we may want to know:
 
 
 
+###Getting the data into a reasonable form:
+
+Since all of the data came is as a String  (note: we said this in the readdlm function), we now want to use the data and will need to convert it to ints and floats. First, we'll make a new array to store the data.  The function
+```
+data2=Array(Any,3592,11)
+```
+
+Creates an array of type "Any" with the dimensions the same size. Note the Any type can store different types within the same array.  Examining the data, this is what we want each column type to be:
+
+| Columns | data type|
+|---------|----------|
+| Area/Zip-like Code (col 1), Area Name (col 2), Urban or Not (col 3) | String |
+| Population (col 4), Housing Units (col 5), Area of Land and water (cols 6-9) | Int |
+| Longitude (col 10), Latitude (col 11) | Float | 
+
+###Filling the strings
+
+Fill the first 3 columns with just the columns from the data array:
+```
+data2[:,[1,2,3]]=data[:,[1,2,3]]
+```
+
+Next, fill the next 6 columns as ints
+```
+data2[:,[4:9]]=int(data[:,[4:9])
+```
+
+and then if we try the same with the final two columns:
+```
+data2[:,[10,11]]=float(data[:,[10,11]])
+```
+we'll get an error:
+
+```
+ArgumentError("float64(String): invalid number format")
+```
+
+because the last column is in a strange format. To remedy this we need to strip the last column of all white space (spaces and tabs and such). 
+
+The 10th column can be filled as expected with
+```
+data[:,10]=float(data[:,10])
+```
+
+but the 11th will need
+```
+data2[:,11]=float(map(strip,data[:,11]))
+```
+
+where the strip function (which gets rid of the white space) is applied to each element in the 11th column.  Then each is converted to a float.  Looking now at the data2 array:
+
+```
+3592x11 Array{Any,2}:
+ "00037"  …   11.283  0.116  29.9676   -92.0982
+ "00064"       4.369  0.008  34.1792   -82.3797
+ "00091"       2.071  0.005  44.9486   -90.3159
+ "00118"       2.864  0.02   33.8247   -88.5546
+ "00145"      12.742  0.096  45.4632   -98.471 
+ "00172"  …   15.443  0.745  46.9764  -123.796 
+ "00199"     131.131  3.794  39.509    -76.3034
+ "00226"       1.178  0.005  33.8305  -101.846 
+ "00253"       3.387  0.001  38.9211   -97.2208
+ "00280"      54.732  0.382  32.4285   -99.7472
+```
+
+shows a bit of it. 
+
+###Sorting an array
+
+To answer some of the other questions above, we need to sort the data.  Let's look at a simple example first.  Here's a 2D array of size 7 by 7 with random numbers in it:
+```
+A=rand(1:10,7,7)
+```
+
+and when I run this I get:
+```
+2  10  5  10  8  3  4
+8   6  5   1  1  3  8
+5   4  9   7  7  6  6
+3   7  3   8  1  4  9
+10  10  2   4  2  9  2
+7   3  1   6  6  3  4
+9   7  4   4  1  5  3
+```
 
 
+We can use the sort function to sort this.  (Look at the documentation for this).  If we do
+```
+sort(A,1)
+```
+
+Then we get each column sorted.  
+
+
+ ###Sorting the data2 array
+
+
+
+###Olympic Athletes
+
+Download the file [OlympicAthletes_0.csv](OlympicAthletes_0.csv) and save it somewhere that you can access it from Julia.  It would be a good idea to open it in a spreadsheet (like excel).
+
+You'll first need to load it in and store each data type in the correct format. 
+
+Here's some questions to answer:
+
+1. What is the total number of medals given in all Olympics in the dataset. 
+2. Collectively taking each olympics, give the top 10 athletes by number of medals. 
+3. Who had the most olympic gold medals in the Summer 2000 games?  How many medals?
+4. Who has the most Olympic Silver medals in the data set (Collectively over multiple olympics)
+5. Find some other interesting questions and answer them. 
 
