@@ -198,10 +198,74 @@ We can use the sort function to sort this.  (Look at the documentation for this)
 sort(A,1)
 ```
 
-Then we get each column sorted.  
+Then we get each column sorted.   If instead, we want to sort by rows, type
+```
+sort(A,2)
+```
+
+and then each row is sorted.  The trouble is that for our array, we don't want to sort each column or each row, but want to sort by a column.  To do this, we use the `sortrows` method. 
+
+For the array above, if we type
+```
+sortrows(A)
+```
+
+then the result is 
+```
+  2  10  5  10  8  3  4
+  3   7  3   8  1  4  9
+  5   4  9   7  7  6  6
+  7   3  1   6  6  3  4
+  8   6  5   1  1  3  8
+  9   7  4   4  1  5  3
+ 10  10  2   4  2  9  2
+```
+
+where the array A is sorted by rows by the first column. To sort by the 2nd column, we do
+```
+sortrows(A,by=x->x[2])
+```
+
+and the result is
+```
+7   3  1   6  6  3  4
+5   4  9   7  7  6  6
+8   6  5   1  1  3  8
+3   7  3   8  1  4  9
+9   7  4   4  1  5  3
+2  10  5  10  8  3  4
+10  10  2   4  2  9  2
+```
 
 
- ###Sorting the data2 array
+###Sorting the data2 array
+
+If we want to find the top 10 areas by population, then we will sort by column 4 and we'll want it sorted in reverse order so we'll use the option rev=true.  Also, we'll want to store it, so we'll set it to a variable name:
+```
+byPop=sortrows(A,by=x->x[4],rev=true)
+```
+
+which will now have the data sorted by the 4th column (the population).   If we then just print out the top 10 rows (1st, 2nd and 4th columns):
+```
+dataByPop[1:10,[1,2,4]]
+```
+
+then we get:
+```
+10x3 Array{Any,2}:
+ "63217"  "New York--Newark, NY--NJ--CT Urbanized Area"          18351295
+ "51445"  "Los Angeles--Long Beach--Anaheim, CA Urbanized Area"  12150996
+ "16264"  "Chicago, IL--IN Urbanized Area"                        8608208
+ "56602"  "Miami, FL Urbanized Area"                              5502379
+ "69076"  "Philadelphia, PA--NJ--DE--MD Urbanized Area"           5441567
+ "22042"  "Dallas--Fort Worth--Arlington, TX Urbanized Area"      5121892
+ "40429"  "Houston, TX Urbanized Area"                            4944332
+ "92242"  "Washington, DC--VA--MD Urbanized Area"                 4586770
+ "03817"  "Atlanta, GA Urbanized Area"                            4515419
+ "09271"  "Boston, MA--NH--RI Urbanized Area"                     4181019
+```
+
+showing the top 10 areas by population.  
 
 
 

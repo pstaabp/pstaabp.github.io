@@ -140,7 +140,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 </style>
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="week-10-notes--">Week 10 Notes  </h1>
 
@@ -294,8 +294,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 <pre><code class="(null)">data2[:,[10,11]]=float(data[:,[10,11]])</code></pre>
 
 
-<p>
-&rsquo;ll get an error:</p>
+<p>we&rsquo;ll get an error:</p>
 
 <pre><code class="(null)">ArgumentError(&quot;float64(String): invalid number format&quot;)</code></pre>
 
@@ -319,10 +318,10 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
  &quot;00064&quot;       4.369  0.008  34.1792   -82.3797
  &quot;00091&quot;       2.071  0.005  44.9486   -90.3159
  &quot;00118&quot;       2.864  0.02   33.8247   -88.5546
- &quot;00145&quot;      12.742  0.096  45.4632   -98.471 
- &quot;00172&quot;  …   15.443  0.745  46.9764  -123.796 
+ &quot;00145&quot;      12.742  0.096  45.4632   -98.471
+ &quot;00172&quot;  …   15.443  0.745  46.9764  -123.796
  &quot;00199&quot;     131.131  3.794  39.509    -76.3034
- &quot;00226&quot;       1.178  0.005  33.8305  -101.846 
+ &quot;00226&quot;       1.178  0.005  33.8305  -101.846
  &quot;00253&quot;       3.387  0.001  38.9211   -97.2208
  &quot;00280&quot;      54.732  0.382  32.4285   -99.7472</code></pre>
 
@@ -352,9 +351,73 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 <pre><code class="(null)">sort(A,1)</code></pre>
 
 
-<p>Then we get each column sorted.</p>
+<p>Then we get each column sorted.   If instead, we want to sort by rows, type</p>
 
-<p> ###Sorting the data2 array</p>
+<pre><code class="(null)">sort(A,2)</code></pre>
+
+
+<p>and then each row is sorted.  The trouble is that for our array, we don&rsquo;t want to sort each column or each row, but want to sort by a column.  To do this, we use the <code>sortrows</code> method.</p>
+
+<p>For the array above, if we type</p>
+
+<pre><code class="(null)">sortrows(A)</code></pre>
+
+
+<p>then the result is</p>
+
+<pre><code class="(null)">  2  10  5  10  8  3  4
+  3   7  3   8  1  4  9
+  5   4  9   7  7  6  6
+  7   3  1   6  6  3  4
+  8   6  5   1  1  3  8
+  9   7  4   4  1  5  3
+ 10  10  2   4  2  9  2</code></pre>
+
+
+<p>where the array A is sorted by rows by the first column. To sort by the 2nd column, we do</p>
+
+<pre><code class="(null)">sortrows(A,by=x-&gt;x[2])</code></pre>
+
+
+<p>and the result is</p>
+
+<pre><code class="(null)">7   3  1   6  6  3  4
+5   4  9   7  7  6  6
+8   6  5   1  1  3  8
+3   7  3   8  1  4  9
+9   7  4   4  1  5  3
+2  10  5  10  8  3  4
+10  10  2   4  2  9  2</code></pre>
+
+
+<h3 id="sorting-the-data2-array">Sorting the data2 array</h3>
+
+<p>If we want to find the top 10 areas by population, then we will sort by column 4 and we&rsquo;ll want it sorted in reverse order so we&rsquo;ll use the option rev=true.  Also, we&rsquo;ll want to store it, so we&rsquo;ll set it to a variable name:</p>
+
+<pre><code class="(null)">byPop=sortrows(A,by=x-&gt;x[4],rev=true)</code></pre>
+
+
+<p>which will now have the data sorted by the 4th column (the population).   If we then just print out the top 10 rows (1st, 2nd and 4th columns):</p>
+
+<pre><code class="(null)">dataByPop[1:10,[1,2,4]]</code></pre>
+
+
+<p>then we get:</p>
+
+<pre><code class="(null)">10x3 Array{Any,2}:
+ &quot;63217&quot;  &quot;New York--Newark, NY--NJ--CT Urbanized Area&quot;          18351295
+ &quot;51445&quot;  &quot;Los Angeles--Long Beach--Anaheim, CA Urbanized Area&quot;  12150996
+ &quot;16264&quot;  &quot;Chicago, IL--IN Urbanized Area&quot;                        8608208
+ &quot;56602&quot;  &quot;Miami, FL Urbanized Area&quot;                              5502379
+ &quot;69076&quot;  &quot;Philadelphia, PA--NJ--DE--MD Urbanized Area&quot;           5441567
+ &quot;22042&quot;  &quot;Dallas--Fort Worth--Arlington, TX Urbanized Area&quot;      5121892
+ &quot;40429&quot;  &quot;Houston, TX Urbanized Area&quot;                            4944332
+ &quot;92242&quot;  &quot;Washington, DC--VA--MD Urbanized Area&quot;                 4586770
+ &quot;03817&quot;  &quot;Atlanta, GA Urbanized Area&quot;                            4515419
+ &quot;09271&quot;  &quot;Boston, MA--NH--RI Urbanized Area&quot;                     4181019</code></pre>
+
+
+<p>showing the top 10 areas by population.</p>
 
 <h3 id="olympic-athletes">Olympic Athletes</h3>
 
