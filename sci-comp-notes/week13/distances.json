@@ -1,0 +1,59 @@
+
+   "destination_addresses" : [ "Springfield, MA, USA", "Worcester, MA, USA" ],
+   "origin_addresses" : [ "Boston, MA, USA", "Fitchburg, MA, USA" ],
+   "rows" : [
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "90.0 mi",
+                  "value" : 144816
+               },
+               "duration" : {
+                  "text" : "1 hour 28 mins",
+                  "value" : 5306
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "43.5 mi",
+                  "value" : 69950
+               },
+               "duration" : {
+                  "text" : "52 mins",
+                  "value" : 3117
+               },
+               "status" : "OK"
+            }
+         ]
+      },
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "80.1 mi",
+                  "value" : 128904
+               },
+               "duration" : {
+                  "text" : "1 hour 21 mins",
+                  "value" : 4860
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "27.8 mi",
+                  "value" : 44788
+               },
+               "duration" : {
+                  "text" : "32 mins",
+                  "value" : 1918
+               },
+               "status" : "OK"
+            }
+         ]
+      }
+   ],
+   "status" : "OK"
+}
