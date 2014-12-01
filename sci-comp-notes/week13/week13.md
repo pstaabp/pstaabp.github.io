@@ -184,6 +184,9 @@ where the key=XXX must be your key.  The following is returned as a JSON file:
 and all of the attributes are explain on the distance matrix API website listed above.  The important data is in the "rows" attribute. For each element, there is a "text" and a "value".  Although you could parse the "text", its easier to consider the "value" attribute of each one.  Reading the documenation, you can note that for distance, the "value" is listed in meters, so if you wish to convert to miles, you need to do the conversion, which is multiplying by 0.00062.  
 
 
+[Here's](distances.json) a link to the file. 
+
+
 
 
 The Chaos Game
