@@ -199,6 +199,120 @@ Consider a triangle (a equilateral one is nice, but not necessary) and label the
 
 What do we get?  
 
+From class, we developed the following code to do this:
+```
+pts=Array(Any,0)
+x=(rand(),rand())
+push!(pts,x)
+for i=1:10000
+    v=vertices[rand(1:3)]  # pick a random vertex
+    x=(0.5*(v[1]+x[1]),0.5*(v[2]+x[2]))  # take a 1/2 steps to the vertex
+    push!(pts,x)
+end
+pts
+```
+
+And this is called the Sierpinski Triangle.  Before going on, let's write this as a function:
+
+```
+function chaos(numIter::Int)
+    local pts=Array(Any,0)
+    local x=(rand(),rand())
+    push!(pts,x)
+    for i=1:numIter
+        v=vertices[rand(1:length(vertices))]  # pick a random vertex
+        x=(0.5*v[1]+0.5*x[1],0.5*v[2]+0.5*x[2])  # take a step r units to the vertex
+        push!(pts,x)
+    end
+    return pts
+end
+```
+
+and then we can plot it with
+```
+pts=chaos(10000)
+```
+
+then (making sure that Gadfly is loaded)
+```
+plot(x=map(a->a[1],pts),y=map(a->a[2],pts),Theme(default_point_size=1.5pt))
+```
+
+which results in ![this plot](sierpinski.png)
+
+
+
+Next, we will change this a bit, including
+
+1. Instead of using a triangle, let's use an n-gon (square, pentagon, hexagon, ...)
+2. Instead of going halfway to some vertex, we will go a factor of r toward the vertex. 
+3. After stepping toward the vertex, we will rotate t degrees.  
+
+
+
+### Using something other than a triangle
+
+First, let's expand the function to cover a figure with n sides. There are two ways that we are going to do this.  First, let's pass in the vertices as an array of pairs of numbers.  
+
+```
+function chaos(numIter::Int,r::Float64,vertices::Array{(Float64,Float64),1})
+    local pts=Array(Any,0), v
+    local x=(rand(),rand())
+    push!(pts,x)
+    for i=1:numIter
+        v=vertices[rand(1:length(vertices))]  # pick a random vertex
+        x=((1-r)*v[1]+r*x[1],(1-r)*v[2]+r*x[2])  # take a 1/2 steps to the vertex
+        push!(pts,x)
+    end
+    pts
+end
+```
+
+Then if we define the vertices say as
+```
+verts=[(1.0,0.0),(0.0,0.0),(0.0,1.0)]
+```
+
+and call
+```
+pts=chaos(10000,0.5,verts);
+```
+
+then if we plot (using Gadfly)
+```
+function chaos(numIter::Int,r::Float64,vertices::Array{(Float64,Float64),1})
+    local pts=Array(Any,0), v
+    local x=(rand(),rand())
+    push!(pts,x)
+    for i=1:numIter
+        v=vertices[rand(1:length(vertices))]  # pick a random vertex
+        x=((1-r)*v[1]+r*x[1],(1-r)*v[2]+r*x[2])  # take a 1/2 steps to the vertex
+        push!(pts,x)
+    end
+    pts
+end
+```
+
+we get the same Sierpinski triangle plot.  Alternatively, we can pass in an integer and generate the vertices of a polygon with that many sides.  A way to do this, is to pick points on the unit circle (circle of radius 1) that are equidistant from each other.  This can be done by first defining the angles (relative to 0, the positive x-axis) such as
+```
+angles = [90:360/n:449]
+```
+
+which will generated an array of angles starting at 90 degrees (which will be on the positive y-axis) and then equally space them n times around.  The array stops at 449 because it goes up to just shy of 90 degrees + 360 degrees.   Then the vertices can be chosen to be on the unit circle with these angles. 
+```
+vertices=map(a->(cosd(a),sind(a)),angles)
+```
+
+Note: since squares look a little funning if they are rotated, if n is even, then we can start the angles at 45 degrees instead. So 
+
+### Doing something other than halfway
+
+Let's change the function to a step of r toward each vertex
+
+###  A Rotation
+
+Let's rotate as we step toward one (or more) vertices.  
+
 
 
 
