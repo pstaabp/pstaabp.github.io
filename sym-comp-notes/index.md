@@ -1,0 +1,5 @@
+Symbolic Computation Notes (FSU, Spring 2016)
+
+* [Chapter 1](ch-01.html)
+* [Chapter 2](ch-02.html)
+* [Chapter 3](ch-03.html)

@@ -1,0 +1,205 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>ch-03</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style id="mkstylesheet">
+body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;margin:30px 0 0;padding:0;background:#fff}#wrapper{padding:20px}li{font-size:110%}li li{font-size:100%}li p{font-size:100%;margin:.5em 0}h1{color:#000}h2{color:#111}h3{color:#111;margin:0}h4{color:#111}h5{color:#111}h6{font-size:1em;line-height:1.5em;margin:1.5em 0}body,p,td,div{color:#111;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;word-wrap:break-word}a{color:#0d6ea1;text-decoration:none;-webkit-transition:color 0.2s ease-in-out;-moz-transition:color 0.2s ease-in-out;-o-transition:color 0.2s ease-in-out;-ms-transition:color 0.2s ease-in-out;transition:color 0.2s ease-in-out}a:hover{color:#3593d9}body{font-size:15px;line-height:21px;margin:0 auto}h1{font-size:37px;line-height:42px;margin-top:42px;margin-bottom:21px}h2{font-size:27px;line-height:42px;margin-top:42px;margin-bottom:21px}h3{font-size:20px;line-height:21px;margin-top:21px;margin-bottom:21px}h4{font-size:20px;line-height:21px;margin-top:21px;margin-bottom:21px}p,ul,ol,pre,table,blockquote{margin-top:21px;margin-bottom:21px}hr{border:1px solid;margin:-1px 0}ul ul,ol ol,ul ol,ol ul{margin-top:0;margin-bottom:0}b,strong,em,small,code{line-height:1}.footnote{color:#0d6ea1;font-size:.8em;vertical-align:super}abbr,acronym{border-bottom:1px dotted #aaa}#wrapper img{max-width:100%;height:auto}dd{font-size:1em;margin-bottom:1em}li>p:first-child{margin:0}ul,ol{padding-left:1.5em}ul ul,ul ol{margin-bottom:.4em}caption,col,colgroup,table,tbody,td,tfoot,th,thead,tr{border-spacing:0}table{border:1px solid rgba(0,0,0,0.25);border-collapse:collapse;display:table;empty-cells:hide;margin:-1px 0 1.3125em;padding:0;table-layout:fixed}caption{display:table-caption;font-weight:700}col{display:table-column}colgroup{display:table-column-group}tbody{display:table-row-group}tfoot{display:table-footer-group}thead{display:table-header-group}td,th{display:table-cell}tr{display:table-row}table th,table td{font-size:1.1em;line-height:1.3;padding:.5em 1em 0}table thead{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-bottom:1px solid rgba(0,0,0,0.2)}table tbody{background:rgba(0,0,0,0.05)}table tfoot{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-top:1px solid rgba(0,0,0,0.2)}figure{display:inline-block;overflow:hidden;position:relative;margin:1em 0 2em}figcaption{font-style:italic;text-align:center;background:white;color:#666}.poetry pre{display:block;font-family:Georgia,Garamond,serif !important;font-size:110% !important;font-style:italic;line-height:1.6em;margin-left:1em}.poetry pre code{font-family:Georgia,Garamond,serif !important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}blockquote p{font-size:110%;font-style:italic;line-height:1.6em}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;position:relative;vertical-align:super}sub{vertical-align:sub;top:-1px}p,h5{font-size:1.1429em;line-height:1.3125em;margin:1.3125em 0}dt,th{font-weight:700}table tr:nth-child(odd),table th:nth-child(odd),table td:nth-child(odd){background:rgba(255,255,255,0.06)}table tr:nth-child(even),table td:nth-child(even){background:rgba(200,200,200,0.25)}@media print{img,table,figure{page-break-inside:avoid}#wrapper{background:#fff;color:#303030;padding:10px;position:relative;text-indent:0}}@media screen{.inverted{background:#252a2a}.inverted #wrapper{background:#252a2a;color:#eee}.inverted hr{border-color:#333f40 !important}.inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dt,.inverted dd{color:#eee}.inverted pre{background:#ccc;color:#111}.inverted table{background:none}.inverted table tr:nth-child(odd),.inverted table td:nth-child(odd){background:none}.inverted a{color:#acd1d5}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eee}code span::selection{background-color:rgba(0,0,0,0.7) !important;color:#eee !important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}}
+#mkreplaced-toc{list-style-position:inside;padding:0;margin:0 0 0 1rem;list-style-type:none}#mkreplaced-toc li::before{content:''}#mkreplaced-toc li{font-size:1.5rem;line-height:1.5;font-weight:normal}#mkreplaced-toc li ul{font-size:1.3rem;font-weight:300;padding:.5rem 0;margin:0 0 0 1rem}#mkreplaced-toc li.missing{list-style-type:none !important}#mkreplaced-toc.max-1 ul,#mkreplaced-toc.max1 ul{display:none}#mkreplaced-toc.max-2 ul ul,#mkreplaced-toc.max2 ul ul{display:none}#mkreplaced-toc.max-3 ul ul ul,#mkreplaced-toc.max3 ul ul ul{display:none}#mkreplaced-toc.max-4 ul ul ul ul,#mkreplaced-toc.max4 ul ul ul ul{display:none}#mkreplaced-toc.max-5 ul ul ul ul ul,#mkreplaced-toc.max5 ul ul ul ul ul{display:none}
+#wrapper #generated-toc-clone, #wrapper #mkreplaced-toc, #wrapper #generated-toc-clone ul, #wrapper #mkreplaced-toc ul {
+    list-style-position: inside;
+}
+#wrapper #generated-toc-clone li.missing, #wrapper #mkreplaced-toc li.missing {
+    list-style-type: none!important;
+}
+#wrapper #generated-toc-clone, #wrapper #mkreplaced-toc {
+    list-style-type: upper-roman;
+}
+#wrapper #generated-toc-clone>li>ul, #wrapper #mkreplaced-toc>li>ul  {
+    list-style-type: decimal;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul {
+    list-style-type: decimal-leading-zero;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul>li>ul {
+    list-style-type: lower-greek;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul {
+    list-style-type: disc;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul>li>ul>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul>li>ul {
+    list-style-type: square;
+}
+#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc{list-style-position:outside!important;margin-left:2rem;}
+</style>
+
+<style id="mkprintstyles">@media print{#wrapper #generated-toc-clone,#generated-toc{display:none!important;}
+html,body,#wrapper{font-size:10pt!important;}
+}
+</style>
+
+
+</head>
+<body class="normal firstload">
+  <div id="wrapper">
+      <h1 id="moretomaplethanmeetstheeye">More to Maple than meets the eye</h1>
+
+<p>So far, we have been using Maple for doing and showing mathematics. We&#8217;ve been simplify expressions, solving equations and producing plots. In this chapter, we go beyond the basics of Maple a bit deeper to show that Maple is a powerful compting environment and if you take advantage of the power. </p>
+
+<p>We take a step back from doing mathematics with Maple and explore some of the details of how Maple works and look at the structure of Maple commands. </p>
+
+<h2 id="whatisacommand">What is a command</h2>
+
+<p>As mentioned above, many things that you do in Maple is a command. The commands that we&#8217;ve seen so far include</p>
+
+<ul>
+<li>expand</li>
+<li>simplify</li>
+<li>plot</li>
+</ul>
+
+<p>Recall that a command has the form:</p>
+<pre><code class="(null)">name(arg1,arg2,...,opt1=value1,opt2=value2,...)</code></pre>
+
+<p>an explanation of the following is:</p>
+
+<ul>
+<li><code>name</code> is the name of the command.</li>
+<li>Immediately after the name is a <code>(</code> and don&#8217;t put a space before it or you will try to multiply things.</li>
+<li>The things <code>arg1,arg2,...</code> are called the arguments (or parameters) of the function. For example, if plotting <code>arg1</code> is the expression that you wish to plot.</li>
+<li>the rest of it are called options. The are separated by commas and have the form <code>opt=value</code>, where <code>opt</code> is the name of the option and <code>value</code> is the value of it. For example, in a plot command, we saw the option <code>style=line</code>, which creates a line plot.</li>
+</ul>
+
+<h2 id="readingthehelpinmaple">Reading the Help in Maple</h2>
+
+<p>Reading the help pages will get you a long ways in Maple. Most help pages (Maple included) are pretty dull reading, if you can get a sense of how to read them, it will benefit you long term. </p>
+
+<p>To open the help pages, go to <em>Help-&gt;Help Manual</em> in Maple (or type CONTROL(CMD)-F1 ) and you will see:</p>
+
+<p>The easiest way to use the help manual is to search on a term. Let&#8217;s look at the help page of something that we have seen alread, the <code>expand</code> command. Search for this in the Help page and you should see:</p>
+
+<p>First of all, this help page is similar to many standard Maple Help pages. They include:</p>
+
+<ul>
+<li><strong>Name</strong>: this gives the name and whether it is in a library. If the name is in the form <strong>XXX[yyyy]</strong> then the name of the command is yyyy and it is in library XXX. We will cover this later.</li>
+<li><strong>Calling Sequence</strong>: this explains briefly what to type into the command to get it to run.</li>
+<li><strong>Parameters</strong>: the arguments and options that can go into the command (briefly)</li>
+<li><strong>Description</strong>: this describes the command in detail. It often will contain links to other help pages and subpages. There is often a lot of this that you may not understand. Roll with it or ask your instructor.</li>
+<li><strong>Examples</strong>: this is a list of examples. Generally, you can type the example in directly (or copy-paste them)</li>
+</ul>
+
+<h3 id="exercises">Exercises</h3>
+
+<p>Look up the expand command in the help browser and answer the following questions:<br/>
+1. What does the expand command do?<br/>
+2. How many required arguments are needed? Describe all of the required arguments.<br/>
+3. What are the options of the command. Describe what they do.<br/>
+4. Expand the expression: <span class="math">\[\cos(x+y)\]</span><br/>
+5. How would you expand the expression <span class="math">\[(x+y)^2 + \sin(a-b)\]</span> to get <span class="math">\[x^2+2xy+y^2+\sin(a-b)?\]</span></p>
+
+<h2 id="functionsinmaple:">Functions in Maple:</h2>
+
+<p>A function in Maple behaves much like a mathematical function, which has a number as an input (or multiple numbers) and returns a number. You can also think of it as a rule from an <span class="math">\(x\)</span> value to a <span class="math">\(y\)</span>. For example if we have the square function, the standard way to write it in Maple is</p>
+<pre><code class="(null)">f:=x-&gt;x^2</code></pre>
+
+<p>Note that we use := to assign something to <em>f</em> just like we did earlier. The part on the right side of the := is the function and it says that there is an input called <em>x</em> (left of the -&gt;, which is a right arrow) and the output on the the left of the -&gt;. Maple will automatically turn the -&gt; into a single character (glyph) arrow to the right. </p>
+
+<p>The great thing about functions is that they act much like mathematical functions. If you have defined the function <span class="math">\(f\)</span> as above, now we can do things to functions including</p>
+
+<ul>
+<li>evaluating functions at points.</li>
+<li>evaluating functions at other expressions like <span class="math">\(x+h\)</span>.</li>
+<li>function composition</li>
+<li>differentiating.</li>
+</ul>
+
+<p>Try the following:</p>
+
+<ul>
+<li><span class="math">\(f(2), f(-2), f(10)\)</span>.</li>
+<li><span class="math">\(f(y), f(x+1)\)</span>*</li>
+<li><span class="math">\[\frac{f(x+h)-f(x)}{h}\]</span></li>
+<li><span class="math">\(f'(2)\)</span></li>
+<li><span class="math">\(f'(x)\)</span></li>
+<li>Define <span class="math">\(g(x)=\dfrac{x}{x+1}\)</span> and find <span class="math">\(g(f(x))\)</span> and <span class="math">\(f(g(x))\)</span>.</li>
+</ul>
+
+<p>You can also enter a function in a more-typically type of notation. In standard Maple notation, you should have typed out</p>
+
+<p><code>g:=x-&gt;x/(x+1)</code></p>
+
+<p>however, if you instead typed</p>
+
+<p><code>g(x):=x/(x+1)</code></p>
+
+<p>Maple opens a &#8220;Clarify Expression&#8221; popup window and you need to determine if it is a function defintion or a table assigment. Because Maple is confused, Maple asks how to interpret things. I prefer to not get an annoying popup window and use the -&gt; style of function definition. Throughout the rest of these notes, we will use the maple style. </p>
+
+<h2 id="listsinmaple">Lists in Maple</h2>
+
+<p>Often we want to do something to a number of numbers or expressions. The best example that we have seen so far is that of plotting multiple expressions on the same axes. Recall that we may want to plot <span class="math">\(x, x^2, x^3\)</span> on the same axes. If we enter</p>
+<pre><code class="(null)">plot([x,x^2,x^3],x=-2..2,legend=[x,x^2,x^3])</code></pre>
+
+<p>we get such a plot. </p>
+
+<p>The three functions are entered as a list: <code>[x,x^2,x^3]</code>, which is just a matching pair of square brackets <code>[]</code> which each object separated by a comma. </p>
+
+<p>Another example would be to have the first 10 counting numbers:</p>
+<pre><code class="(null)">[1,2,3,4,5,6,7,8,9,10]</code></pre>
+
+<p>you can mix numbers and expression like</p>
+<pre><code class="(null)">[3/4,x^2,sin(x),-100.34,5!,pi]</code></pre>
+
+<h3 id="theseqcommand">The seq command</h3>
+
+<p>One of the </p>
+
+<h3 id="exercises">Exercises</h3>
+
+<ol>
+<li>Take a look at the <code>seq</code> command in the help browser.</li>
+<li>Create the list <code>[1,4,7,10,13,16,19,...,52]</code></li>
+<li>Use the seq command to create the list <span class="math">\([x,x^2,x^3,x^4,x^5]\)</span>.</li>
+<li>Use the seq command to find 0! through 10!</li>
+</ol>
+
+<h2 id="themapcommand">The Map command</h2>
+
+<h2 id="loadingalibrary">Loading a Library</h2>
+
+<p>Many software packages today have so much functionality that not everything can be preloaded (or built-in) when opening the software. Maple is such an example. There is a lot of functionality that exists in what are called libraries or packages. Maple has a few hundred of these and to get a scope of things if you open the Help Browser in Maple and click open the &#8220;Mathematics&#8221; section, then &#8220;Packages&#8221;, you&#8217;ll see quite a few related only to mathematics. </p>
+
+<p>For example, consider the <strong>ScientificConstants</strong> package. This has a list of a number of important scientific constants that one might need. To load the package type</p>
+<pre><code class="(null)">with(ScientificConstants)</code></pre>
+
+<p>and you will see a list of commands that have been loaded with the package. Often, you don&#8217;t care about seeing the list, so you can add a : to the end of the list to suppress the output. </p>
+
+<p>Notice that one of the comamnds is called <code>GetConstant</code>. </p>
+
+<h3 id="exercise">Exercise</h3>
+
+<ul>
+<li>Read the help page about <code>GetConstant</code></li>
+<li>Type <code>GetConstant(g)</code>. What does it tell you?</li>
+<li>find the constant that has the mass of the earth. What is it and what are its units?</li>
+</ul>
+
+<p>We will often use a Maple library in this course and typically as you go further in mathematics, if you use Maple, the necessary commands will be in a library. You can also define your own libary, which will will have information later in these notes how to do this. </p>
+
+<h2 id="theassumecommanddothislater">The Assume command (DO THIS LATER?)</h2>
+
+<p>Remember that if you use a </p>
+<div style="display:none"><br/>
+<!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.--><br/>
+ <script type="text/x-mathjax-config">  
+  MathJax.Hub.Config({
+    
+  });  
+</script><br/>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><br/>
+</div>
+<!-- ##END MARKED WRAPPER## -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>ch-01</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style id="mkstylesheet">
+body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;margin:30px 0 0;padding:0;background:#fff}#wrapper{padding:20px}li{font-size:110%}li li{font-size:100%}li p{font-size:100%;margin:.5em 0}h1{color:#000}h2{color:#111}h3{color:#111;margin:0}h4{color:#111}h5{color:#111}h6{font-size:1em;line-height:1.5em;margin:1.5em 0}body,p,td,div{color:#111;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;word-wrap:break-word}a{color:#0d6ea1;text-decoration:none;-webkit-transition:color 0.2s ease-in-out;-moz-transition:color 0.2s ease-in-out;-o-transition:color 0.2s ease-in-out;-ms-transition:color 0.2s ease-in-out;transition:color 0.2s ease-in-out}a:hover{color:#3593d9}body{font-size:15px;line-height:21px;margin:0 auto}h1{font-size:37px;line-height:42px;margin-top:42px;margin-bottom:21px}h2{font-size:27px;line-height:42px;margin-top:42px;margin-bottom:21px}h3{font-size:20px;line-height:21px;margin-top:21px;margin-bottom:21px}h4{font-size:20px;line-height:21px;margin-top:21px;margin-bottom:21px}p,ul,ol,pre,table,blockquote{margin-top:21px;margin-bottom:21px}hr{border:1px solid;margin:-1px 0}ul ul,ol ol,ul ol,ol ul{margin-top:0;margin-bottom:0}b,strong,em,small,code{line-height:1}.footnote{color:#0d6ea1;font-size:.8em;vertical-align:super}abbr,acronym{border-bottom:1px dotted #aaa}#wrapper img{max-width:100%;height:auto}dd{font-size:1em;margin-bottom:1em}li>p:first-child{margin:0}ul,ol{padding-left:1.5em}ul ul,ul ol{margin-bottom:.4em}caption,col,colgroup,table,tbody,td,tfoot,th,thead,tr{border-spacing:0}table{border:1px solid rgba(0,0,0,0.25);border-collapse:collapse;display:table;empty-cells:hide;margin:-1px 0 1.3125em;padding:0;table-layout:fixed}caption{display:table-caption;font-weight:700}col{display:table-column}colgroup{display:table-column-group}tbody{display:table-row-group}tfoot{display:table-footer-group}thead{display:table-header-group}td,th{display:table-cell}tr{display:table-row}table th,table td{font-size:1.1em;line-height:1.3;padding:.5em 1em 0}table thead{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-bottom:1px solid rgba(0,0,0,0.2)}table tbody{background:rgba(0,0,0,0.05)}table tfoot{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-top:1px solid rgba(0,0,0,0.2)}figure{display:inline-block;overflow:hidden;position:relative;margin:1em 0 2em}figcaption{font-style:italic;text-align:center;background:white;color:#666}.poetry pre{display:block;font-family:Georgia,Garamond,serif !important;font-size:110% !important;font-style:italic;line-height:1.6em;margin-left:1em}.poetry pre code{font-family:Georgia,Garamond,serif !important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}blockquote p{font-size:110%;font-style:italic;line-height:1.6em}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;position:relative;vertical-align:super}sub{vertical-align:sub;top:-1px}p,h5{font-size:1.1429em;line-height:1.3125em;margin:1.3125em 0}dt,th{font-weight:700}table tr:nth-child(odd),table th:nth-child(odd),table td:nth-child(odd){background:rgba(255,255,255,0.06)}table tr:nth-child(even),table td:nth-child(even){background:rgba(200,200,200,0.25)}@media print{img,table,figure{page-break-inside:avoid}#wrapper{background:#fff;color:#303030;padding:10px;position:relative;text-indent:0}}@media screen{.inverted{background:#252a2a}.inverted #wrapper{background:#252a2a;color:#eee}.inverted hr{border-color:#333f40 !important}.inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dt,.inverted dd{color:#eee}.inverted pre{background:#ccc;color:#111}.inverted table{background:none}.inverted table tr:nth-child(odd),.inverted table td:nth-child(odd){background:none}.inverted a{color:#acd1d5}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eee}code span::selection{background-color:rgba(0,0,0,0.7) !important;color:#eee !important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}}
+#mkreplaced-toc{list-style-position:inside;padding:0;margin:0 0 0 1rem;list-style-type:none}#mkreplaced-toc li::before{content:''}#mkreplaced-toc li{font-size:1.5rem;line-height:1.5;font-weight:normal}#mkreplaced-toc li ul{font-size:1.3rem;font-weight:300;padding:.5rem 0;margin:0 0 0 1rem}#mkreplaced-toc li.missing{list-style-type:none !important}#mkreplaced-toc.max-1 ul,#mkreplaced-toc.max1 ul{display:none}#mkreplaced-toc.max-2 ul ul,#mkreplaced-toc.max2 ul ul{display:none}#mkreplaced-toc.max-3 ul ul ul,#mkreplaced-toc.max3 ul ul ul{display:none}#mkreplaced-toc.max-4 ul ul ul ul,#mkreplaced-toc.max4 ul ul ul ul{display:none}#mkreplaced-toc.max-5 ul ul ul ul ul,#mkreplaced-toc.max5 ul ul ul ul ul{display:none}
+#wrapper #generated-toc-clone, #wrapper #mkreplaced-toc, #wrapper #generated-toc-clone ul, #wrapper #mkreplaced-toc ul {
+    list-style-position: inside;
+}
+#wrapper #generated-toc-clone li.missing, #wrapper #mkreplaced-toc li.missing {
+    list-style-type: none!important;
+}
+#wrapper #generated-toc-clone, #wrapper #mkreplaced-toc {
+    list-style-type: upper-roman;
+}
+#wrapper #generated-toc-clone>li>ul, #wrapper #mkreplaced-toc>li>ul  {
+    list-style-type: decimal;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul {
+    list-style-type: decimal-leading-zero;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul>li>ul {
+    list-style-type: lower-greek;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul {
+    list-style-type: disc;
+}
+#wrapper #generated-toc-clone>li>ul>li>ul>li>ul>li>ul>li>ul, #wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul>li>ul {
+    list-style-type: square;
+}
+#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc{list-style-position:outside!important;margin-left:2rem;}
+</style>
+
+<style id="mkprintstyles">@media print{#wrapper #generated-toc-clone,#generated-toc{display:none!important;}
+html,body,#wrapper{font-size:10pt!important;}
+}
+</style>
+
+
+</head>
+<body class="normal firstload">
+  <div id="wrapper">
+      <h1 id="introductiontosymboliccomputingandcomputeralgebrasystems">Introduction to Symbolic Computing and Computer Algebra Systems</h1>
+
+<p>This chapter explains what symbolic computing and computer algebra systems (CAS) are. It&#8217;s easier to understand these terms in context. If we consider a basic calculator, typically numbers are put in and you get numbers out. The numbers are what are called floating point numbers, but they look like decimals. For example if you enter 2, then the square root button, you will see</p>
+<pre><code class="(null)">1.414213562</code></pre>
+
+<p>Alternatively, in a CAS, if you enter the square root of two, you will get<br/>
+$$ \sqrt{2} $$<br/>
+The difference is that the decimal number above truncates to 10 or 12 decimal places, where as the output of the CAS is exactly the square root of two. You can see that if you square each of these. Using the calulator by starting with 2, then taking the square root, then squaring, you might get</p>
+<pre><code class="(null)">1.9999999989</code></pre>
+
+<p>is close to 2, but not exactly, whereas in the CAS, the answer will be 2. </p>
+
+<p>Additionally, a CAS allows one to enter in mathematical expressions and manipulate them. For example if you enter<br/>
+<span class="math">\[(x+2)^{2}\]</span> </p>
+
+<p>and then have the CAS expand it (skipping exactly how to do this until later), the CAS will return:<br/>
+<span class="math">\[x^{2}+4x+4\]</span><br/>
+which is how to expand it via the distributive law (or doing FOIL). Standard calculators can&#8217;t handle such an operation. </p>
+
+<p>Another classic example of a CAS is that of precision of numbers. Later in the course, we will discuss the number of digits in an approximation, say in finding <span class="math">\(\sqrt{2}\)</span> , but recall that the factorial of a positive integer is the product of the number and all subsequence smaller integers until reaching one. For example 5!=5·4·3·2·1=120. Maple will compute factorials easily, note that</p>
+
+<p><span class="math">\[10! = 3628800\]</span><br/>
+<span class="math">\[20! = 2432902008176640000\]</span></p>
+
+<p>and so on. Most calculators cannot display more that 12&#8211;15 digits, so 20! may not be represented accuracy. Maple however can display as many digits as there are. Note that<br/>
+<span class="math">\[50! = 30414093201713378043612608166064768844377641568960512000000000000\]</span><br/>
+<span class="math">\[100!=93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000\]</span></p>
+
+<p>Again, this is a big difference between a calculator and a CAS. If you try these on a calculator, you will probably get an error (typically an overflow error). </p>
+
+<h2 id="computeralgebrasoftware">Computer Algebra Software</h2>
+
+<p>Before we venture too much into the realm of CAS, we need to discuss some specifics of software. There are a lot of programs that fall into Computer Algebra Systems, and if you are interested in seeing the breadth of such software, visit the <a href="https://en.wikipedia.org/wiki/List_of_computer_algebra_systems">Wikipedia site that lists CAS&#8217;s</a>. The major commercial ones are <a href="http://www.wolfram.com/mathematica/">Mathematica</a> and <a href="http://www.maplesoft.com/">Maple</a> and a nice open source one is <a href="http://sagemath.org">Sage</a>. </p>
+
+<p>All of the examples here will be in Maple, however the other software is similar with different syntax. </p>
+
+<h2 id="typesofobjectsinacas">Types of Objects in a CAS</h2>
+
+<p>As we saw above with the <span class="math">\(\sqrt{2}\)</span> example, a CAS is more complicated than a calculator and a firm understanding of the basics of a CAS is needed. Before we dive into things, let&#8217;s look at some basic objects in a CAS. </p>
+
+<ul>
+<li><strong>Integer:</strong> As with mathematics, an integer in a CAS is whole number with the negative whole numbers. Examples are 10,0,&#8211;25,1234313</li>
+<li><strong>Decimal:</strong> If a number has a decimal point, we will call this a Decimal number, similar to the mathematical definition. However, a decimal on a computer is a bit different and we will explore this later. Examples of decimals are 1.0, 17.34, 3.14159</li>
+<li><strong>Rational:</strong> A rational number (like mathematically) is the quotient of two integers (the divisor can&#8217;t be zero). Examples are <span class="math">\(\frac{1}{2}, -\frac{7}{3}\)</span></li>
+<li><strong>Expression:</strong> An expression is a combination of variables (like x) and numbers with standard mathematical operators. Examples are <span class="math">\(2x, \dfrac{x}{x^2+1}, \sqrt{7y+2x}\)</span></li>
+<li><strong>Equation:</strong> One expression that equals another. Examples include <span class="math">\(x=2, 2x^3-8x=0\)</span>.</li>
+<li><strong>Other:</strong> This is not an exhaustive list. There are things like lists, matrices and plots that can be manipulated.</li>
+</ul>
+
+<h3 id="exercise">Exercise</h3>
+
+<p>For the following types of objects, what should you get in return?</p>
+
+<ol>
+<li>integer + integer</li>
+<li>integer + decimal</li>
+<li>integer / integer</li>
+<li>decimal · rational</li>
+<li>integer + expression</li>
+<li>rational + equation</li>
+</ol>
+
+<h2 id="enteringexpressionsinmaple">Entering Expressions in Maple</h2>
+
+<p>Expressions are created using a combination of the keyboard and the palettes (listed on the left side of the Maple window).</p>
+
+<ol>
+<li><p>To enter the expression: <span class="math">\((x + 2)(x + 5)\)</span>, you should type <code>(x+2)·(x+5)</code>. The <code>·</code> (multiply) symbol is entered by typing Shift then 8 or the star key. This is very important for multiplying most function expressions. Try typing out the expression without the ·. What happens?</p></li>
+<li><p>The easiest way to enter the expression: <span class="math">\(x+5+3 2−x\)</span> is to type <code>(x+5)/(2-x) + 3</code>. Note: you must use parentheses in the numerator. When you hit the / key, everything in the parentheses is automatically put into the numerator of the expression. Then 1 enter <code>2-x</code>. In order to add the +3, you must press the right arrow key in order to <em>get out</em> of the denominator of the expression.</p></li>
+<li><p>The transcendental functions must be written with parentheses around the argument. In other words, <span class="math">\(\sin x\)</span> must be typed <code>sin(x)</code> in Maple. Many of these functions also appear in the Expression Palette or other palettes.</p></li>
+<li><p>The function <span class="math">\(\sin^2(2x)\)</span> can either be entered as <code>(sin(2x))ˆ2</code> (The symbol <code>ˆ</code> is Shift&#8211;6), or <code>sinˆ2(2x)</code>. Try both ways and see that the results are the same.</p></li>
+<li><p>The absolute value of x is entered <code>|x|</code>, using the | (vertical line key), which is on the key above the Enter key on the keyboard, or use the Expression Palette. </p></li>
+<li><p>A very handy way of getting expressions (like the constants <span class="math">\(\pi\)</span> and e) in Maple without using the palette is to type the first few characters of the name of the expression then click on the ESC button (upper left corner of the keyboard). For example, try typing <code>pi</code>, then hitting ESC. You will see all Maple expressions that start with those two letters. The constant π is the first one. Click ENTER to paste it into the document. Alternatively, you can click on the e or <span class="math">\(\pi\)</span> under Common Symbols palette on the left side of the screen.</p></li>
+</ol>
+
+<h2 id="commandsinmaple">Commands in Maple</h2>
+
+<p>Generally to get Maple to do something, we will use a command. All commands in Maple have the form <code>name(param1,param2,...)</code> where <code>name</code> is the name of the command and there are some number of parameters separated by commas. </p>
+
+<p>There are thousands of commands in Maple and obviously, we won&#8217;t be going over all of them. It is good to be able to understand in general about a Maple command and the many options available as well as where to get extended help. We will cover more of this later in the course. </p>
+
+<p>Generall Maple does something to a parameter (or argument) and returns an object of a certain type. </p>
+
+<h1 id="examples">Examples</h1>
+
+<ul>
+<li>The following expands the expression <span class="math">\((x+1)(x+2)\)</span>:</li>
+</ul>
+<pre><code class="(null)">expand((x+1)·(x+2))</code></pre>
+
+<p>will be <span class="math">\(x^2+3x+2\)</span>. The return type is also an expression. </p>
+
+<ul>
+<li>The following simplifies the expression <span class="math">\(\dfrac{1}{2} + \dfrac{x}{x+1} + \dfrac{3}{x+1}\)</span></li>
+</ul>
+<pre><code class="(null)">simplify(1/2 + x/(x+1) + 3/(x+1))</code></pre>
+
+<p>results in <span class="math">\(\dfrac{2x+4}{x+1}\)</span>. And again, the return type is also an expression. </p>
+
+<h1 id="inputmodesinmaple">Input modes in Maple</h1>
+
+<p>When you create a new document in Maple there are a couple of different possibilities: a Maple Worksheet and Maple Document. A worksheet is an old style of storing Maple commands and if you&#8217;d like to read more about it, type <em>worksheet</em> in the help search. Everything in this class will be in Maple Document format. </p>
+
+<p>A Maple Document allows its author to mix mathematics and text. To create a new Maple Document, type CTRL(CMD)-N or do <em>File-&gt;New-&gt;Document Mode</em>. Don&#8217;t forget, keyboard shortcuts are more efficient. When you do this, you will get a blank document. </p>
+
+<h3 id="twomodesofinput">Two modes of input</h3>
+
+<p>There are two standard modes to input in a Maple Document: math mode and text mode. You can tell the mode you are in by the highlighted mode at the top of the document </p>
+
+<h3 id="putinimage">Put in image</h3>
+
+<p><em>As you can see, Math and Text are two of the options and the other three will be explained later, but they are not input types. </em></p>
+
+<p>It&#8217;s fairly obvious that in Math mode, you can type out mathematics and also evaluate Maple commands. In Text mode, you have many of the features of a text editor/word processor including section headers, bold and italics and spell checking. Often in this class you will be asked to explain results and when you do this, you should be using text mode. </p>
+
+<p>You can toggle between the two modes by clicking on the mode in the toolbar, but it is much easier to use the F5 key to do this. <em>Try it!</em></p>
+
+<h1 id="assigninganythinganame">Assigning Anything a Name</h1>
+
+<p>So far, we have dealt quite a bit with expressions in Maple. Often, instead of retyping an expression or copying and pasting, it is better to give the expression a name. Here’s an example of a function, that is first simplified and then plotted:</p>
+<pre><code class="(null)">f:=1/(x-1) + 3/(x+4)
+simplify(f)
+expand(f)</code></pre>
+
+<p>Note: Maple allows you to use entire words as names. Therefore, if you actually want Maple to multiply two objects, you will need to provide the appropriate operation between their names. Here&#8217;s an <a href="https://en.wikipedia.org/wiki/867-5309/Jenny">example</a>.</p>
+<pre><code class="(null)">jenny:=8675309</code></pre>
+
+<p>We can do operations with <code>jenny</code>, like <span class="math">\(jenny^4\)</span> will return</p>
+
+<p><code>5664216050642480268792921361</code></p>
+
+<p>However, since Maple is case-sensitive, <span class="math">\(Jenny^4\)</span> will return <span class="math">\(Jenny^4\)</span>, which just means that it doesn&#8217;t have a value for <span class="math">\(Jenny\)</span>.</p>
+
+<h2 id="gettinghelp">Getting Help</h2>
+
+<p>One of the best skills to learn in this program (and any other) is how to get help. There are a few ways to do this.</p>
+
+<ul>
+<li><strong>Using “?” in Maple</strong><br/>
+Say you’re trying to simplify an expression in Maple. What is the command? Try typing <code>?simplify</code>. The help browser will open and will give you a detailed explanation of the simplify command and also a number of examples.</li>
+<li><strong>Opening the Help Browser</strong><br/>
+Additionally, you can open the Maple Help Browser by Clicking Help then Maple Help. There’s a search field there.</li>
+<li><strong>The Googlemachine</strong> Of course I’m sure you’ll try to search the internet for help this semester. Although a general search on Google may give you help, however my guess is it will be frustrating. If the built-in Help Browser isn’t helping, I would try <a href="http://www.mapleprimes.com/">http://www.mapleprimes.com/</a> next. It will search Maple specific questions. I generally turn to it to find answers.</li>
+</ul>
+
+<p>We will look into the help browser in more detail in future classes. </p>
+
+<h2 id="stuffyouneedtoknowaboutmaplebeforegoingon">Stuff you need to know about Maple before going on</h2>
+
+<ul>
+<li>commands are case sensitive</li>
+<li>Some commands have an upper and lower-case version of each that do slightly different things</li>
+<li>There are often multiple ways to do the same thing. (I tend to talk more about the keyboard methods. Once you learn them, you&#8217;ll be faster at things.)</li>
+</ul>
+<div style="display:none"><br/>
+<!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.--><br/>
+ <script type="text/x-mathjax-config">  
+  MathJax.Hub.Config({
+    
+  });  
+</script><br/>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><br/>
+</div>
+<!-- ##END MARKED WRAPPER## -->
+    </div>
+</body>
+</html>
