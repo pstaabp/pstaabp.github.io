@@ -215,7 +215,9 @@ which is how to expand it via the distributive law (or doing FOIL). Standard cal
 <li><strong>Rational:</strong> A rational number (like mathematically) is the quotient of two integers (the divisor can&#8217;t be zero). Examples are <span class="math">\(\frac{1}{2}, -\frac{7}{3}\)</span></li>
 <li><strong>Expression:</strong> An expression is a combination of variables (like x) and numbers with standard mathematical operators. Examples are <span class="math">\(2x, \dfrac{x}{x^2+1}, \sqrt{7y+2x}\)</span></li>
 <li><strong>Equation:</strong> One expression that equals another. Examples include <span class="math">\(x=2, 2x^3-8x=0\)</span>.</li>
-<li><strong>Other:</strong> This is not an exhaustive list. There are things like lists, matrices and plots that can be manipulated.</li>
+<li><strong>Functions:</strong> This is much like a mathematical function in which you have an input (or inputs) and there is an output. An example is <span class="math">\(x\rightarrow x^2\)</span>, which is the square function.</li>
+<li><strong>Matrices:</strong> These are like matrices from linear algebra.</li>
+<li><strong>Other:</strong> This is not an exhaustive list. There are things like lists, arrays and plots that can be manipulated.</li>
 </ul>
 
 <h3 id="exercise">Exercise</h3>
@@ -278,11 +280,15 @@ which is how to expand it via the distributive law (or doing FOIL). Standard cal
 
 <p>There are two standard modes to input in a Maple Document: math mode and text mode. You can tell the mode you are in by the highlighted mode at the top of the document </p>
 
-<h3 id="putinimage">Put in image</h3>
+<figure>
+<img src="images/ch01/toolbar.png" alt="Maple toolbar" />
+<figcaption>Maple toolbar</figcaption>
+</figure>
 
 <p><em>As you can see, Math and Text are two of the options and the other three will be explained later, but they are not input types. </em></p>
 
-<p>It&#8217;s fairly obvious that in Math mode, you can type out mathematics and also evaluate Maple commands. In Text mode, you have many of the features of a text editor/word processor including section headers, bold and italics and spell checking. Often in this class you will be asked to explain results and when you do this, you should be using text mode. </p>
+<p>It&#8217;s fairly obvious that in Math mode, you can type out mathematics and also evaluate Maple commands. In Text mode, you have many of the features of a text ed<br/>
+itor/word processor including section headers, bold and italics and spell checking. Often in this class you will be asked to explain results and when you do this, you should be using text mode. </p>
 
 <p>You can toggle between the two modes by clicking on the mode in the toolbar, but it is much easier to use the F5 key to do this. <em>Try it!</em></p>
 
@@ -315,9 +321,25 @@ which is how to expand it via the distributive law (or doing FOIL). Standard cal
 <figcaption>Plot of <span class="math">\(x^2\)</span> for <span class="math">\(-2 \leq x \leq 2\)</span> and <span class="math">\(-2 \leq y \leq 2\)</span> </figcaption>
 </figure>
 
+<h1 id="referringtopreviouslyenteredexpressions">Referring to previously entered expressions</h1>
+
+<p>You probably have noticed as you enter things in Maple, that there will be a number in parentheses to the right of the expression. These are called equation numbers and we can use them to avoid reentering expressions.</p>
+
+<p>Let&#8217;s say that the expression <span class="math">\[(x+3)^4\]</span> has equations number (5). We can expand this expression by typing</p>
+<pre><code class="(null)">expand((5))</code></pre>
+
+<p>the <strong>(5)</strong> is entered by</p>
+
+<ol>
+<li>The menu command <em>Insert -&gt; Label</em> OR</li>
+<li>The keyboard shortcut CTRL (CMD)-L</li>
+</ol>
+
+<p>You can refer to any equation number above the current place in the document but not below it. </p>
+
 <h1 id="assigninganythinganame">Assigning Anything a Name</h1>
 
-<p>So far, we have dealt quite a bit with expressions in Maple. Often, instead of retyping an expression or copying and pasting, it is better to give the expression a name. Here’s an example of a function, that is first simplified and then plotted:</p>
+<p>Another way to avoid retyping an expression or copying and pasting, it is better to give the expression a name. Here’s an example of a function, that is first simplified and then plotted:</p>
 <pre><code class="(null)">f:=1/(x-1) + 3/(x+4)
 simplify(f)
 expand(f)</code></pre>
