@@ -356,10 +356,22 @@ plot([x^3, sin(x), dots],x=-3..3,y=-3..3)</code></pre>
 
 <p>This will produce a plot that looks like:</p>
 
+<figure>
+<img src="images/ch02/plot15.png" alt="Plot with functions and dots" />
+<figcaption>Plot with functions and dots</figcaption>
+</figure>
+
 <p>Overall, this looks good, however, the points are not draw as points, but as a sequence of lines. We can fix this by adding a style option, so change the plot command to</p>
 <pre><code class="(null)">plot([x^3, sin(x), dots],x=-3..3,y=-3..3,style=[line,line,point])</code></pre>
 
-<p>the first two are line plots (the default) and the last is a point plot. You can then add a legend as shown above.</p>
+<p>the first two are line plots (the default) and the last is a point plot. The resulting plot is</p>
+
+<figure>
+<img src="images/ch02/plot16.png" alt="Better plot with functions and dots" />
+<figcaption>Better plot with functions and dots</figcaption>
+</figure>
+
+<p>You can then add a legend as shown above. </p>
 
 <h1 id="solvingequations">Solving Equations</h1>
 
