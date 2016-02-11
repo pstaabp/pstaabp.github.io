@@ -393,6 +393,36 @@ html,body,#wrapper{font-size:10pt!important;}
 
 <p>We will often use a Maple library in this course and typically as you go further in mathematics, if you use Maple, the necessary commands will be in a library. You can also define your own library, which will have information later in these notes how to do this. </p>
 
+<h2 id="floatingpointnumbers">Floating Point Numbers</h2>
+
+<p>We have avoided decimals in Maple, because they are a bit complicated. Here&#8217;s a brief description of them. Because a computer is a finite thing (they have a finite amount of memory), decimals have to be finite, so we can only store some number of digits. In a standard computer language, the number of digits is fixed, Maple has some flexibility in doing this. For example, if we type<br/>
+<code>4.0/7.0</code><br/>
+then Maple returns <code>0.5714285714</code> or 10 digits. The way that computers store decimals is called a <a href="https://en.wikipedia.org/wiki/Floating_point">floating point number</a> and the details are covered here. </p>
+
+<p>We can change the number of digits that Maple keeps by using a constant <code>Digits</code>. To change to 20 decimals, type</p>
+<pre><code class="(null)">Digits:=20</code></pre>
+
+<p>if you evaluate <code>4.0/7.0</code> you should see <code>0.57142857142857142857</code>, which is 20 digits. Maple will accept any positive integer within reason, but changing this constant isn&#8217;t the only way to get decimal approximation as you will see. </p>
+
+<h2 id="gettingadecimalapproximationforanumber">Getting a decimal approximation for a number</h2>
+
+<p>One of the great things about a CAS is that numbers are stored in the proper way. If a number is an integer or a rational (fraction) or square root, then it is saved in an exact way. However, many times you may want to know a decimal approximation for <span class="math">\(\frac{4}{7}\)</span> or <span class="math">\(\sqrt{17}\)</span>. How do you do that?</p>
+
+<p>Consider we have the number <span class="math">\(\frac{4}{7}\)</span> stored in the variable x, like</p>
+<pre><code class="(null)">x:=4/7</code></pre>
+
+<p>will return just <span class="math">\(\frac{4}{7}\)</span> meaning that it is the fraction and not any decimal approximation. To find the approximation, you can type </p>
+<pre><code class="(null)">evalf(x)</code></pre>
+
+<p>the f in <code>evalf</code> stands for floating point. Maple will return <code>0.5714285714</code> the same as we saw above for <code>4.0/7.0</code>. If we want 20 digits, instead of changing the number of Digits that Maple store in general, we can type</p>
+<pre><code class="(null)">evalf(x,20)</code></pre>
+
+<p>you will get 20 digits of the fraction <span class="math">\(\frac{4}{7}\)</span>. </p>
+
+<h3 id="exercise">Exercise</h3>
+
+<p>Try finding the decimal approximation of <span class="math">\(\pi\)</span> or <span class="math">\(e\)</span> to 20, 100, 1000 digits. </p>
+
 <h2 id="theassumecommand">The <code>assume</code> command</h2>
 
 <p>Remember that if you use a variable that Maple doesn&#8217;t know, it assumes nothing about it. We can tell Maple additional information about it however. Here&#8217;s a few examples. </p>

@@ -167,11 +167,11 @@ html,body,#wrapper{font-size:10pt!important;}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="differentialcalculusproblemsinmaple">Differential Calculus Problems in Maple</h1>
 
-<p>This chapter covers how to perform many mathematics that arises from Calculus using a CAS like Maple. As we will see, a CAS will often do limits and derivatives quite easily, allowing us to investigate the geometry of the deriviatve using a plot or a table of values, which are often helpful for gaining intution about limits and derivatives. </p>
+<p>This chapter covers how to perform many mathematics that arises from Calculus using a CAS like Maple. As we will see, a CAS will often do limits and derivatives quite easily, allowing us to investigate the geometry of the derivative using a plot or a table of values, which are often helpful for gaining intuition about limits and derivatives. </p>
 
 <h2 id="limits">Limits</h2>
 
@@ -187,23 +187,23 @@ then <span class="math">\(L\)</span> is the value of the function <span class="m
 <p>And from the plot it appears that the limit is 1, however, you can never say precisely with a plot, but this can help verify a result. </p>
 
 <p>Another way to attack this is with a table. Let&#8217;s find the value of the function <span class="math">\(f(x)=x^2\)</span>, at the points <span class="math">\(x=0.9,0.99,0.999,1.001,1.01,1.1\)</span>. We can do this easily with the <code>map</code> function. If</p>
-<pre><code class="(null)">f:=x-&gt;x<sup>2</sup>
+<pre><code class="(null)">f:=x-&gt;x^2
 xvals := [.9, .99, .999, 1.001, 1.01, 1.1]
 map(f,xvals)</code></pre>
 
-<p>will produce the function values of all of the <span class="math">\(x\)</span> values given or </p>
+<p>produce the function values of all of the <span class="math">\(x\)</span> values given or</p>
 <pre><code class="(null)">[.81, .9801, .998001, 1.002001, 1.0201, 1.21]</code></pre>
 
-<p>It would be really nice to have a table formatted nicer. If instead we typed </p>
+<p>It would be really nice to have a table formatted nicer. If instead we typed</p>
 <pre><code class="(null)">map(x-&gt;[x,f(x)],xvals)</code></pre>
 
-<p>then we get the following: </p>
+<p>we get the following:</p>
 <pre><code class="(null)">[[.9, .81], [.99, .9801], [.999, .998001], [1.001, 1.002001], [1.01, 1.0201], [1.1, 1.21]]</code></pre>
 
-<p>which still doesn&#8217;t look nice, but if we wrap the function in <code>Matrix</code> as in: </p>
+<p>still doesn&#8217;t look nice, but if we wrap the function in <code>Matrix</code> as in:</p>
 <pre><code class="(null)">Matrix(map(x-&gt;[x,f(x)],xvals))</code></pre>
 
-<p>it will look like: $$\left[ \begin {array}{cc} 0.9&amp; 0.81\newline<br/>
+<p>will look like: $$\left[ \begin {array}{cc} 0.9&amp; 0.81\newline<br/>
 0.99&amp;0.9801\newline<br/>
 0.999&amp; 0.998001\newline<br/>
  1.001&amp; 1.002001\newline<br/>
@@ -211,13 +211,13 @@ map(f,xvals)</code></pre>
  1.1&amp; 1.21\end {array} \right]<br/>
 $$</p>
 
-<p>and then the only other addition might be to label the columns, which can be done in the following way. If we redo <code>xvals</code> to include a term <span class="math">\(x\)</span> at the front or: </p>
+<p>and then the only other addition might be to label the columns, which can be done in the following way. If we redo <code>xvals</code> to include a term <span class="math">\(x\)</span> at the front or:</p>
 <pre><code class="(null)">xvals := [x,.9, .99, .999, 1.001, 1.01, 1.1]</code></pre>
 
-<p>then rerunning: </p>
+<p>rerunning: </p>
 <pre><code class="(null)">Matrix(map(x-&gt;[x,f(x)],xvals))</code></pre>
 
-<p>will result in the matrix <span class="math">\[\left[\begin{array}{cc} x &  x^{2}\newline  
+<p>result in the matrix <span class="math">\[\left[\begin{array}{cc} x &  x^{2}\newline  
 0.9 & 0.81 \newline  
 0.99&0.9801\newline  
 0.999& 0.998001\newline  
@@ -258,10 +258,151 @@ and maple will return 1. </p>
 </figure>
 
 <p>and you can see from the plot that indeed the line passes through the given points. Also, recall to find the slope of the secant line, we&#8217;ll need to evaluate the function at the <span class="math">\(x\)</span> values. </p>
-<pre><code class="(null)">f:=x-&gt;x<sup>2</sup>
-m:=(f(2)-f(1))/(2&#8211;1)</code></pre>
+<pre><code class="(null)">f:=x-&gt;x^2
+m:=(f(2)-f(1))/(2-1)</code></pre>
 
-<p>which is 3 in this case. We can then use the point-slope form of the line with either the point <span class="math">\((1,1)\)</span> or <span class="math">\((2,4)\)</span>. </p>
+<p>is 3 in this case. We can then use the point-slope form of the line with either the point <span class="math">\((1,1)\)</span> or <span class="math">\((2,4)\)</span>. </p>
+
+<p>The reason that we discuss secant lines in Calculus, is that we want to know the tangent line, which is the line that just touches at a single point. We can&#8217;t find a line given only one point, but if we find a number of secant lines that pass through (1,1), we hopefully can find a trend that leads to the tangent line. Then we will use calculus to do this precisely. </p>
+
+<p>If instead of defining the slope of the line through <span class="math">\((1,1)\)</span> and <span class="math">\((2,4)\)</span>, instead, let&#8217;s make a function that is the slope of the line that passes through <span class="math">\((1,1)\)</span> and <span class="math">\((x,x^{2})\)</span>. </p>
+<pre><code class="(null)">m:=x-&gt;(f(x)-f(1))/(x-1)</code></pre>
+
+<p>Now this will allow us to find the slope of the secant line for any point <span class="math">\(x\)</span>. We can also build a table like above. </p>
+<pre><code class="(null)">xvals := [1.5,1.9, 1.99, 1.999, 2.001, 2.01, 2.1,2.5]
+Matrix(map)</code></pre>
+
+<p>And you will see <span class="math">\[\left[ \begin {array}{cc}  
+0.5 & 1.500000000 \newline  
+0.9& 1.900000000\newline  
+0.99 & 1.990000000\newline  
+0.999& 1.999000000\newline  
+1.001& 2.001000000\newline  
+1.01& 2.010000000\newline  
+1.1& 2.100000000\newline  
+1.5& 2.500000000  
+\end {array}\right]\]</span></p>
+
+<p>We can use this to estimate the tangent line of <span class="math">\(m=2\)</span> which we will verify below. </p>
+
+<p>Visually, we can plot the secant lines and function as well. If we type</p>
+<pre><code class="(null)">lines:=map(t-&gt;m(t)*(x-1)+1,xvals)</code></pre>
+
+<p>will get a list of lines out. We can plot these together with the function by typing:</p>
+<pre><code class="(null)">plot([x^2,op(lines)],x=-0.5..2.5</code></pre>
+
+<p>will get the following plot:</p>
+
+<figure>
+<img src="images/ch04/plot3.png" alt="Plot of $x^2$ and secant lines" />
+<figcaption>Plot of <span class="math">\(x^2\)</span> and secant lines</figcaption>
+</figure>
+
+<p>This plot is awfully busy and hard to see. However, we can animate the line by the following:</p>
+<pre><code class="(null)">plots[animate](plot, [[x^2, m(t)*(x-1)+1], x = -.1 .. 2.1], t = xvals)</code></pre>
+
+<p>(or loading in the <code>plots</code> library first). We will cover this in detail in the next chapter. After this runs, you can play it sequentially with the play button or go through the frames one by one or loop it. See the help page on <code>plots[animate]</code> for more details. </p>
+
+<h3 id="thetangentline">The tangent line</h3>
+
+<p>The actual tangent line to the curve <span class="math">\(y=x^2\)</span> can be found by taking the limit of the slopes of the secant lines or</p>
+<pre><code class="(null)">limit(m(x),x=1)</code></pre>
+
+<p>do the limit<br/>
+<span class="math">\[\lim_{x \rightarrow 1} \frac{x^2-1}{x-1}\]</span><br/>
+and return 2. Therefore the tangent line is</p>
+<pre><code class="(null)">tanLine:=2*(x-1)+1</code></pre>
+
+<p>a plot of the function with its tangent line at <span class="math">\(x=1\)</span> is given as</p>
+
+<figure>
+<img src="images/ch04/plot4.png" alt="Plot of $x^2$ and its tangent line" />
+<figcaption>Plot of <span class="math">\(x^2\)</span> and its tangent line</figcaption>
+</figure>
+
+<h2 id="asymptotes">Asymptotes</h2>
+
+<p>In precalculus you were introduced to asymptotes of functions. In generally, an asympote of a function is a line that the function approaches far from the origin. In calculus, there is a more specific definition. </p>
+
+<h3 id="horizontalasymptotes">Horizontal Asymptotes</h3>
+
+<p>The line <span class="math">\(y=L\)</span> is a <strong>horizontal asymptote</strong> of a function <span class="math">\(f(x)\)</span> if<br/>
+$$<br/>
+\lim_{x \rightarrow \infty} f(x) = L<br/>
+$$ </p>
+
+<p>or</p>
+
+<p>$$<br/>
+\lim_{x \rightarrow -\infty} f(x) = L<br/>
+$$<br/>
+and visually, you can see a horizontal asymptote by looking at a function and determining it is approaching a horizontal line as <span class="math">\(x \rightarrow \infty\)</span> or <span class="math">\(x \rightarrow -\infty\)</span>. </p>
+
+<p>For example, consider the function<br/>
+$$<br/>
+f(x) = \frac{2x&#8211;1}{x&#8211;3}$$</p>
+
+<p>A plot of this is</p>
+
+<figure>
+<img src="images/ch04/plot5.png" alt="Plot of $\frac{2x-1}{x-3}$" />
+<figcaption>Plot of <span class="math">\(\frac{2x-1}{x-3}\)</span></figcaption>
+</figure>
+
+<p>and (it&#8217;s bit hard to see), but there is a horizontal asymptote which is about <span class="math">\(y=2\)</span>. (Recall that an asymptote is a line, so you should write it as such)</p>
+
+<p>Since this is hard to see, we can use the definition above to find the limit. Doing<br/>
+$$<br/>
+\lim_{x \rightarrow \infty} \frac{2x&#8211;1}{x&#8211;3}<br/>
+$$</p>
+
+<p>and </p>
+
+<p>$$<br/>
+\lim_{x \rightarrow \infty} \frac{2x&#8211;1}{x&#8211;3}<br/>
+$$</p>
+
+<p>returns 2 in both cases. Therefore <span class="math">\(y=2\)</span> is the only horizontal asymptote. </p>
+
+<h3 id="verticalasymptotes">Vertical Asymptotes</h3>
+
+<p>The definition of a vertical asymptote is a bit more complicated. The line <span class="math">\(x=a\)</span> is a vertical asymptote of the function <span class="math">\(f(x)\)</span> if at least one of the following is true</p>
+
+<p><span class="math">\(\lim_{x \rightarrow a} f(x)=\infty\)</span> or <span class="math">\(\lim_{x \rightarrow a^+} f(x)=\infty\)</span> or <span class="math">\(\lim_{x \rightarrow a^-} f(x)=\infty\)</span> or</p>
+
+<p><span class="math">\(\lim_{x \rightarrow a} f(x)=-\infty\)</span> or <span class="math">\(\lim_{x \rightarrow a^+} f(x)=-\infty\)</span> or <span class="math">\(\lim_{x \rightarrow a^-} f(x)=-\infty\)</span></p>
+
+<p>In other words, the limit (one-sided or both-sided) is infinite. </p>
+
+<p>For the function seen above, the line <span class="math">\(x=3\)</span> is a vertical asympote because<br/>
+<span class="math">\[\lim_{x \rightarrow 3^+} \frac{2x-1}{x-3}=\infty\]</span></p>
+
+<p>Now this provides a way to prove that a vertical line is a vertical asymptote, but not how to find them. If you have a rational function (polynomial over a polynomial), then possible vertical asympotes are where the denominator is 0. For example, let&#8217;s look at the function<br/>
+$$<br/>
+R(x) = \frac{x<sup>2-1}{x</sup>3&#8211;13x+12}<br/>
+$$</p>
+
+<p>We can find the possible vertical asymptotes by finding the zeros of the denominator or</p>
+<pre><code class="(null)">solve(denom(R(x)))</code></pre>
+
+<p>returns 1,3,&#8211;4. </p>
+
+<p>If you check if each zero above is a vertical asymptotes, you will notice that the limit at <span class="math">\(x=1\)</span> is <span class="math">\(-\frac{1}{5}\)</span>, and not infinite. The left- and right-handed limits at <span class="math">\(x=3\)</span> and <span class="math">\(x=-4\)</span> are infinite, so those are vertical asympotes. This is also consistent with the plot of the function:</p>
+
+<figure>
+<img src="images/ch04/plot6.png" alt="Plot of the function $R(x)$" />
+<figcaption>Plot of the function <span class="math">\(R(x)\)</span></figcaption>
+</figure>
+
+<h3 id="usingthebuilt-inasymptotesfunction">Using the built-in Asymptotes function</h3>
+
+<p>Maple also has the ability to find all of the asympototes using a built-in function. First, let&#8217;s load the <code>Student[Calculus1]</code> package:</p>
+<pre><code class="(null)">with(Student[Calculus1]):</code></pre>
+
+<p>recall to suppress the output of all of the commands that are imported, put a colon (:) at the end of the line. Then type</p>
+<pre><code class="(null)">Asymptotes(R(x))</code></pre>
+
+<p><code>[y = 0, x = -4, x = 3]</code>, which saves a lot of work, but you should know how to find and show each is indeed an asymptote. </p>
 
 <h2 id="derivatives">Derivatives</h2>
 
