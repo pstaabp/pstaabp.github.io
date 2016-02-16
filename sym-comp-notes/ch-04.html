@@ -378,9 +378,7 @@ $$</p>
 <span class="math">\[\lim_{x \rightarrow 3^+} \frac{2x-1}{x-3}=\infty\]</span></p>
 
 <p>Now this provides a way to prove that a vertical line is a vertical asymptote, but not how to find them. If you have a rational function (polynomial over a polynomial), then possible vertical asympotes are where the denominator is 0. For example, let&#8217;s look at the function<br/>
-$$<br/>
-R(x) = \frac{x<sup>2-1}{x</sup>3&#8211;13x+12}<br/>
-$$</p>
+<span class="math">\[R(x)=\frac{x^{2}-1}{x^{3}-13x+12}\]</span></p>
 
 <p>We can find the possible vertical asymptotes by finding the zeros of the denominator or</p>
 <pre><code class="(null)">solve(denom(R(x)))</code></pre>
@@ -404,7 +402,130 @@ $$</p>
 
 <p><code>[y = 0, x = -4, x = 3]</code>, which saves a lot of work, but you should know how to find and show each is indeed an asymptote. </p>
 
+<p>Plots of functions with their asymptotes</p>
+
+<p>We have seen that remove the artificial asymptotes, we use the <code>discont=true</code> option of the plot command, we make want to put them back on the plot in a better way. Consider the function <span class="math">\[R(x) = \frac{4x^2-20x+16}{x^2+2x-15}\]</span></p>
+
+<p>There is one horizontal asymptote of <span class="math">\(y=4\)</span> and two vertical asymptotes, <span class="math">\(x=-5\)</span> and <span class="math">\(x=3\)</span>. And we&#8217;d like to plot all of those on the same axes. The line <span class="math">\(y=5\)</span> is easy to plot because it is just the function <span class="math">\(5\)</span>, however the two vertical lines are not since they are not functions. One way to do this is to find a pair of points on each line and plot the points. </p>
+<pre><code class="(null)">va1:=[[-5,-10],[-5,10]]</code></pre>
+
+<p>points on the line <span class="math">\(x=-5\)</span> and </p>
+<pre><code class="(null)">va2:=[[3,-10],[3,10]]</code></pre>
+
+<p>It would appear that if we typed:</p>
+<pre><code class="(null)">plot([R(x),5,va1,va2],discont=true)</code></pre>
+
+<p>we would get the desired result. However, we get the following error:</p>
+<pre><code class="(null)">Error, (in plot) unable to determine the discontinuities</code></pre>
+
+<p>of the two discontinuities. Alternatively, here&#8217;s how to take care of that:</p>
+<pre><code class="(null)">plot1:=plot(R(x),discont=true)
+plot2:=plot([5,va1,va2])</code></pre>
+
+<p>then put the results together as</p>
+<pre><code class="(null)">plots[display](plot1,plot2)</code></pre>
+
+<p>After adding legends to the plot (not the <code>plots[display]</code> command) and adjusting the plotting windows, the result is:</p>
+
+<figure>
+<img src="images/ch04/plot8.png" alt="Plot of a rational function and its asymptotes" />
+<figcaption>Plot of a rational function and its asymptotes</figcaption>
+</figure>
+
 <h2 id="derivatives">Derivatives</h2>
+
+<p>Since Maple can handle limits and a derivative is a limit, it should come at no surprise that Maple can handle derivatives. For example, recall that the definition of the derivative of <span class="math">\(f(x)=x^2\)</span> is<br/>
+$$ f&#8217;(x) = \lim_{x \rightarrow \infty} \frac{f(x+h)-f(x)}{h} $$</p>
+
+<p>(Note: formatting troubles if we put in <span class="math">\(f(x)=x^2\)</span>)</p>
+
+<p>If you enter in the limit into Maple, then you will get <span class="math">\(2x\)</span>. </p>
+
+<p>Of course, Maple can do the derivative directly without the use of the limit. There are two formats for the derivative (and a few ways to enter them). First, if you have a function defined, like <code>f:=x-&gt;x^2</code>, typing</p>
+<pre><code class="(null)">f&apos;(x)</code></pre>
+
+<p><span class="math">\(2x\)</span>. This is also a nice format in that if we want the derivative at a point, say <span class="math">\(x=2\)</span>, we can type <code>f'(2)</code>. </p>
+
+<p>Alternatively, we can use the <span class="math">\(\frac{d}{dx}\)</span> notation. To get this, if you type <code>diff</code>, and hit ESC, the first menu item will be the <span class="math">\(\frac{d}{dx}\)</span> notation. Type a function you will get a derivative. For example,<br/>
+<span class="math">\[\frac{d}{dx}x^2\]</span><br/>
+returns <span class="math">\(2x\)</span>. (Note: you can also get this via the palette)</p>
+
+<p>This notation and format is great if you have an expression (and not a function) already or don&#8217;t want to create a function. Note: if you use this and have more that one term separated by + or -, you need to put ( ) around the term. For example, if you type<br/>
+<span class="math">\[\frac{d}{dx}x^{3}+2x\]</span><br/>
+maple will return <span class="math">\(3x^2+2x\)</span> (not the expected <span class="math">\(3x^2+2\)</span>) This is because the derivative of <span class="math">\(2x\)</span> is not performed. To do this correctly, type<br/>
+<span class="math">\[\frac{d}{dx}(x^{3}+2x)\]</span></p>
+
+<p>which will return <span class="math">\(3x^2+2\)</span>. </p>
+
+<h2 id="plotsofafunctionwithitstangentline">Plots of a function with its tangent line</h2>
+
+<p>Consider the function <span class="math">\(f(x)=x^2\)</span>. Above, we saw the details of finding the secant line through this function to approximate the tangent line. Here, however, we will just plot a function and it&#8217;s tangent line. </p>
+
+<p>The tangent line to the function at <span class="math">\(x=1\)</span> can be written using the point-slope form as</p>
+<pre><code class="(null)">tanLine:=f&apos;(x)(x-1)+f(1)</code></pre>
+
+<p>then plotting the two is </p>
+<pre><code class="(null)">plot([f(x), tanLine], x = -1 .. 3, title = typeset(&quot;A plot of %1 and its tangent line&quot;, x^2), legend = [f(x), &quot;tangent line&quot;])</code></pre>
+
+<p>in the following plot. </p>
+
+<figure>
+<img src="images/ch04/plot7.png" alt="Plot of the function $x^2$ and its tangent line" />
+<figcaption>Plot of the function <span class="math">\(x^2\)</span> and its tangent line</figcaption>
+</figure>
+
+<h2 id="implicitdifferentiation">Implicit Differentiation</h2>
+
+<p>If we have a function, then taking the derivative is done by hand using the rules of differentiation and in Maple using one of the techniques above. However, we don&#8217;t always have a function to represent a curve. The classic example is a circle. Consider the circle with radius 5:<br/>
+<span class="math">\[x^2+y^2=25\]</span><br/>
+It isn&#8217;t a function (why not?), so we can&#8217;t differentiate it like we can with a function. And we still would like to find out geometric information like a tangent line to the curve at a point. </p>
+
+<p>This is where implicit differentiation helps us out. By hand, taking the derivative implicitly on both sides of the equation above, leads to<br/>
+<span class="math">\[2x+2y\frac{dy}{dx}=0\]</span><br/>
+and solving for <span class="math">\(dy/dx\)</span> leads to<br/>
+<span class="math">\[\frac{dy}{dx}=-\frac{x}{y}\]</span></p>
+
+<p>To do this in Maple, there&#8217;s only one important difference. We need to tell Maple that the variable <span class="math">\(y\)</span> is actually a function of <span class="math">\(x\)</span>, so whereever we see a <span class="math">\(y\)</span> in the equation, type <span class="math">\(y(x)\)</span>. </p>
+
+<p><span class="math">\[x^2+y(x)^2=1\]</span><br/>
+and then take the derivative of this using the <code>diff</code> ESC version with the line number will result in<br/>
+<span class="math">\[2x+\left(2y\frac{d}{dx}y(x)\right) = 0\]</span><br/>
+and then we can use the <code>solve</code> command to find the result for the derivative. </p>
+<pre><code class="(null)">solve((##),diff(y(x),x))</code></pre>
+
+<p>where ## is the line number of the equation above and you can leave <code>diff(y(x),x)</code> as is or ESC it to make it look nicer. Either way, you will get:<br/>
+<span class="math">\[-\frac{x}{y(x)}\]</span></p>
+
+<p>Lastly, there is another way to do this. Look at the <code>implicitdiff</code> command that is built-in to Maple. See if you can find the derivative of <span class="math">\(x^2+y^2=25\)</span> using this command. </p>
+
+<p>Let&#8217;s say we want to find the tangent line to the curve at the point <span class="math">\((3,4)\)</span>. If we plug the point into the derivative we will get <span class="math">\(m=-3/4\)</span> so the line will be <span class="math">\(y=-\frac{3}{4} (x-3)+4\)</span>. </p>
+
+<h2 id="implicitplots">Implicit Plots</h2>
+
+<p>Maple can plot curves based on equations in an implicit manner. The command <code>implicitplot</code> is a command in the <code>plots</code> package. </p>
+<pre><code class="(null)">with(plots):</code></pre>
+
+<p>we&#8217;ll plot the circle <span class="math">\(x^2+y^2=25\)</span>, then</p>
+<pre><code class="(null)">implicitplot(x^2+y^2=25,x=-6..6,y=-6..6)</code></pre>
+
+<p>give the following result.</p>
+
+<figure>
+<img src="images/ch04/plot9.png" alt="Plot of a circle of radius 5" />
+<figcaption>Plot of a circle of radius 5</figcaption>
+</figure>
+
+<p>If we also plot the tangent line to the curve using:</p>
+<pre><code class="(null)">implicitplot([x^2+y^2=25,y=-3/4(x-3)+4],x=-6..6,y=-6..6)</code></pre>
+
+<figure>
+<img src="images/ch04/plot10.png" alt="Plot of a circle of radius 5 and its tangent line" />
+<figcaption>Plot of a circle of radius 5 and its tangent line</figcaption>
+</figure>
+
+<p>where the <code>color</code> option has been used to distinguish between the curves and a legend has been added. </p>
+
+<p>Note: if you are plotting curves with the <code>implicitplot</code> command, then all curves need to be as equations. This is different than plotting with the <code>plot</code> command in that all curves must be expressions. </p>
 
 <h2 id="applicationsofderivatives">Applications of Derivatives</h2>
 <div style="display:none"><br/>
