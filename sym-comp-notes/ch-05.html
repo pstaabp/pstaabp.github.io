@@ -246,7 +246,7 @@ end proc:</code></pre>
 
 <p>The modulus of an integer is the remainder in division. For example, 7 mod 3 is 1. </p>
 
-<p>Write a procuedure call <code>isOdd</code> that take a postive integer (type <code>posint</code>) and returns boolean if the number is odd. Use the modulus with the divisor 2. </p>
+<p>Write a procedure call <code>isOdd</code> that take a positive integer (type <code>posint</code>) and returns boolean if the number is odd. Use the modulus with the divisor 2. </p>
 
 <h3 id="whileloops">while loops</h3>
 
@@ -265,9 +265,9 @@ end do:</code></pre>
    while i &lt;= n do 
      list := [op(list), i]; 
      i := i+1:
-   end do 
+   end do:
    return list: 
-end proc</code></pre>
+end proc:</code></pre>
 
 <p>Some examples:</p>
 
@@ -470,39 +470,130 @@ end proc:</code></pre>
 <pre><code class="(null)">evalf(|sqrt(2)-1.414215088|)</code></pre>
 
 <p>result in 0.000001526 or 5 digits of accuracy. </p></li>
-<li><p>Adding a parameter for the halting condition.</p></li>
-</ol>
+<li><p>Adding a parameter for the halting condition.</p>
 
 <p>If we want the halting condition to be smaller than <span class="math">\(10^{-4}\)</span>, we will make it a parameter. Here&#8217;s how that works. </p>
+<pre><code class="(null)">bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric; 
+  local mid := .5*(lhs(interval)+rhs(interval)); 
+  local inter := interval; 
+  while rhs(inter)-lhs(inter) &gt; eps do 
+    if f(lhs(inter))*f(mid) &lt; 0 then 
+      inter := lhs(inter) .. mid 
+    else 
+      inter := mid .. rhs(inter) 
+    end if; 
+    mid := .5*(lhs(inter)+rhs(inter)); 
+  end do; 
+  return mid:
+end proc:</code></pre>
 
-<p><pre><code class="(null)">bisect := proc (f::procedure, interval::range,{eps=10^(-4)})::numeric; 
-   local mid := .5*(lhs(interval)+rhs(interval)); 
-   local inter := interval; 
-   while rhs(inter)-lhs(inter) &gt; eps do 
-     if f(lhs(inter))*f(mid) &lt; 0 then 
-       inter := lhs(inter) .. mid 
-     else 
-       inter := mid .. rhs(inter) 
-     end if; 
-     mid := .5*(lhs(inter)+rhs(inter)); 
-   end do; 
-   return mid:
- end proc:</code></pre><br/>
-we have removed the print statement because all seems to be working well. Now if we call this procedure as above, </p>
-
-<p><pre><code class="(null)">bisect(x-&gt;x^2-2,0..2)</code></pre></p>
+<p>we have removed the print statement because all seems to be working well. Now if we call this procedure as above, </p>
+<pre><code class="(null)">bisect(x-&gt;x^2-2,0..2)</code></pre>
 
 <p>then we get the same result as above. </p>
 
 <p>But this allows us to get more precision. Type</p>
+<pre><code class="(null)">bisect(x-&gt;x^2-2,0..2,eps=10^(-7))</code></pre>
 
-<p><pre><code class="(null)">bisect(x-&gt;x^2-2,0..2,eps=10^(-7))</code></pre></p>
+<p>gives this time 8 digits of accuracy. </p></li>
+<li><p>Adding some help and error checking to this</p>
 
-<p>gives this time 8 digits of accuracy. </p>
+<p>It&#8217;s often helpful to add a description to the function, so here&#8217;s the final result:</p>
+<pre><code class="(null)">bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric; 
+  description &quot;This procedure performs the bisection method on the function f with given range.  The parameter eps will determine  the halting condition.&quot;
+  local mid := .5*(lhs(interval)+rhs(interval)); 
+  local inter := interval;
+  if f(rhs(inter))*f(lhs(inter))&gt;0 then
+     error &quot;A root is not guaranteed to be in this interval.&quot;:
+  end if:
+  while rhs(inter)-lhs(inter) &gt; eps do 
+    if f(lhs(inter))*f(mid) &lt; 0 then 
+      inter := lhs(inter) .. mid 
+    else 
+      inter := mid .. rhs(inter) 
+    end if; 
+    mid := .5*(lhs(inter)+rhs(inter)); 
+  end do; 
+  return mid:
+end proc:</code></pre>
+
+<p>The description is helpful to remember what the function does. If you type:</p>
+<pre><code class="(null)">Describe(bisect)</code></pre>
+
+<p>will see</p>
+<pre><code class="(null)"># This procedure performs the bisection method on the function f with given 
+# range.
+# The parameter eps will determine the halting condition.
+# The procedure returns the root of the function f within the given interval 
+# such that the 
+# interval is no wider than eps.
+bisect( f::procedure, interval::range, 
+    { eps := .1e-3 } ) :: numeric</code></pre>
+
+<p>and give a brief description of the function. </p>
+
+<p>Also, we now have error checking built it. </p></li>
+</ol>
 
 <h2 id="recursion">Recursion</h2>
 
-<h2 id="creatingalibrary">Creating a Library</h2>
+<p>Above, we saw how to compute the factorial of a number using a for loop. There&#8217;s another way to do this. We can define the factorial in the following way:<br/>
+$$ n!=\begin{cases}1&amp;n=0\newline n\cdot(n&#8211;1)!&amp;\text{otherwise}\end{cases}$$</p>
+
+<p>The big difference is that inside the function is a call to the function. This is what is called a recursive function. Often this is very helpful and the factorial is a great example of this. We can write the factorial this way in the following:</p>
+<pre><code class="(null)">factr := proc (n::integer)::posint; 
+   if n = 0 then 
+      return 1 
+   else 
+      return n*factr(n-1);
+   end if 
+end proc:</code></pre>
+
+<p>Here&#8217;s another fun example. A number <span class="math">\(n\)</span> is called <em>happy</em> by the following<br/>
+1. Take the digits of <span class="math">\(n\)</span> and square each one.<br/>
+2. Sum the squares.<br/>
+3. if the sum is 1, then the number is happy, if not repeat these steps.</p>
+
+<p>Note: it&#8217;s also helpful that if this process results in the number 4, then you can never result in a sequence that reaches 1. You can call these number <em>unhappy</em>. </p>
+
+<p>For example, 13 is a happy number because <span class="math">\(1^2+3^2=10\)</span> and <span class="math">\(1^2+0^2=1\)</span>, so the result ends in 1. The number 19 is also happy because <span class="math">\(1^2+9^2=1+81=82\)</span>, then <span class="math">\(8^2+2^2=64+4=68\)</span>, then <span class="math">\(6^2+8^2=36+64=100\)</span>, then <span class="math">\(1^2+0^2+0^2=1\)</span>. </p>
+
+<p>The number <span class="math">\(4\)</span> isn&#8217;t happy because <span class="math">\(4^2=16\)</span>, then <span class="math">\(1^2+6^2=1+36=37\)</span>, then <span class="math">\(3^2+7^2=9+49=58\)</span>, then <span class="math">\(5^2+8^2=25+64=89\)</span>, then <span class="math">\(8^2+9^2=64+81=145\)</span>, then <span class="math">\(1^2+4^2+5^2=1+16+25=42\)</span>, then <span class="math">\(4^2+2^2=16+4=20\)</span>, then <span class="math">\(2^2+0^2=4\)</span> and since we have returned to 4, this will continue cycling, so we stop and say 4 is unhappy. (It has been proven that any unhappy number will eventually hit this cycle.)</p>
+
+<p>To write this in Maple, first, it is helpful to have a procedure that splits any positive integer into its digits. Here&#1827;s such a procedure:</p>
+<pre><code class="(null)">splitDigits := proc (n::posint)::boolean;
+   local list := [], k := n; 
+   while 9 &lt; k do 
+      list := [k mod 10, op(list)]; 
+      k := iquo(k, 10) 
+   end do; 
+   return [k, op(list)] 
+end proc:</code></pre>
+
+<p>and test this a bit using some 3 and 4 digits numbers. </p>
+
+<p>Then we can write a <code>isHappy</code> procedure in the following way. </p>
+<pre><code class="(null)">isHappy := proc (n::posint)::boolean; 
+  if n = 1 then return true end if; 
+  if n = 4 then return false end if; 
+  return isHappy(add(k -&gt; k^2, splitDigits(n)))) 
+end proc:</code></pre>
+
+<p>Find the numbers less than 100 that are happy. </p>
+
+<h3 id="exercise">Exercise</h3>
+
+<p>A fibonacci number is defined as <span class="math">\(F(1)=1, F(2)=1\)</span>, then <span class="math">\(F(n)=F(n-1)+F(n-2)\)</span> for <span class="math">\(n \geq 3\)</span>. This is naturally a recursive function. Write a procedure <span class="math">\(F\)</span> that take a positive integer <span class="math">\(n\)</span> and returns the $n$th Fibonacci number using recursion. Find the first 20 Fibonacci number (hint: use the <code>map</code> command)</p>
+
+<h2 id="creatingapackageormodule">Creating a Package or Module</h2>
+
+<p>We have loaded packages using the <code>with</code> command. In this section, we will create a package of common tools. For example, many of the examples in this chapter fall into the realm of number theory, so let&#8217;s create a package called <code>NumberTheory</code>. The shell of the package will look like:</p>
+<pre><code class="(null)">NumberTheory:=module()
+
+
+end module:</code></pre>
+
+<p>once it is saved in the correct form, by typing <code>with(NumberTheory)</code>, we will get all the commands in the package/module. Let&#8217;&#8217;s start simple. We will put the <code>allfactors</code> and <code>isPrime</code> procedures in this module:</p>
 
 <h2 id="troubleshooting">Troubleshooting</h2>
 <div style="display:none"><br/>
