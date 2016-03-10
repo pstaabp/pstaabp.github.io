@@ -167,7 +167,7 @@ html,body,#wrapper{font-size:10pt!important;}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="plottinginmaple">Plotting in Maple</h1>
 
@@ -182,7 +182,9 @@ html,body,#wrapper{font-size:10pt!important;}
 
 <h2 id="functionplots">Function Plots</h2>
 
-<p>We have seen a function plot in other places. Here are some other details:</p>
+<p>We have seen a function plot in other places. Look in previous chapter for more information on these.</p>
+
+<p>(Note: add info here)</p>
 
 <h2 id="implicitplots">Implicit Plots</h2>
 
@@ -198,6 +200,51 @@ html,body,#wrapper{font-size:10pt!important;}
 <figcaption>Plot of a circle written implicitly</figcaption>
 </figure>
 
+<p>If we try the following:</p>
+<pre><code class="(null)">implicitplot((1/9)*x^2+(1/16)*y^2=1, x=-5..5, y=-5..5)</code></pre>
+
+<p>it also looks like a circle, like the plot:</p>
+
+<figure>
+<img src="images/ch06/plot03.png" alt="Plot of another curve" />
+<figcaption>Plot of another curve</figcaption>
+</figure>
+
+<p>but the curve is actually an ellipse, but doesn&#8217;t look like one. Make sure that you have the 1:1 button hit and it will look like:</p>
+
+<figure>
+<img src="images/ch06/plot04.png" alt="Plot of same curve as above, but now it looks like an ellipse" />
+<figcaption>Plot of same curve as above, but now it looks like an ellipse</figcaption>
+</figure>
+
+<h3 id="implicitcurvesdontalwayslookright">Implicit curves don&#8217;t always look right</h3>
+
+<p>If we plot the following:<br/>
+<span class="math">\[circles:=(x^2+y^2-1)(x^2+y^2-4)(x^2+y^2-9)(x^2+y^2-16) = 0\]</span></p>
+
+<p>We get the plot:</p>
+
+<figure>
+<img src="images/ch06/plot05.png" alt="Plot of the equation above" />
+<figcaption>Plot of the equation above</figcaption>
+</figure>
+
+<p>and you will see that there are jagged edges. This plot should be a set of 4 concentric circles. The reason that Maple produces the curve like this is that when making the plot, it uses a grid of points to try to determine if a point in on a curve. By default, it uses relative few points for the grid and if this case, we will want more. </p>
+
+<p>The <code>implicitplot</code> command has an option <code>gridrefine</code> that will help smooth out this curve. </p>
+
+<p>We can plot the circles above by </p>
+<pre><code class="(null)">implicitplot(circles,x=-5..5,y=-5..5,gridrefine=2)</code></pre>
+
+<p>You will get the plot:</p>
+
+<figure>
+<img src="images/ch06/plot06.png" alt="Plot of the concentric circles with gridrefine=2" />
+<figcaption>Plot of the concentric circles with gridrefine=2</figcaption>
+</figure>
+
+<p>(Note: start with gridrefine=1 or 2 and if you need a smoother curve, increase slowly)</p>
+
 <h3 id="findingthederivativeofanimplicitcurve">Finding the derivative of an implicit curve</h3>
 
 <p>Recall that we can use the <code>implicitdiff</code> command to find the derivative of an implicit curve at a point. For example, let&#8217;s say that we wish to find the tangent line to the circle above at the point <span class="math">\((3,4)\)</span>. </p>
@@ -208,14 +255,18 @@ html,body,#wrapper{font-size:10pt!important;}
 <p>we can find the derivative by typing</p>
 <pre><code class="(null)">implicitdiff(circle,y,x)</code></pre>
 
-<p>Maple returns <span class="math">\[-\frac{y}{x}\]</span>. and we can then use the <code>subs</code> command to evaluate this at a point. </p>
+<p>Maple returns <span class="math">\[-\frac{x}{y}\]</span>. and we can then use the <code>subs</code> command to evaluate this at a point. </p>
 <pre><code class="(null)">subs([x=3,y=4],(#))</code></pre>
 
-<p>(#) is the line number of the derivative. The result should be <span class="math">\(-4/3\)</span> and then you can find the tangent line using the point slope form:</p>
-<pre><code class="(null)">tanLine:=-4/3*(x-3)+4</code></pre>
+<p>(#) is the line number of the derivative. The result should be <span class="math">\(-3/4\)</span> and then you can find the tangent line using the point slope form:</p>
+<pre><code class="(null)">tanLine:=y=-3/4*(x-3)+4</code></pre>
+
+<p>where the tangent line is put in as an equation. </p>
 
 <h3 id="implicitplotofmorethanoneequation">Implicit Plot of more than one equation</h3>
-<pre><code class="(null)">implicitplot([x^2+y^2=25,y=-3/4*(x-3)+4],x=-1..2,y=-1..2,color=[red,blue])</code></pre>
+
+<p>To plot these two on the same axes, use [] like in a standard function plot. The plot of the circle and the tangent line can be found with</p>
+<pre><code class="(null)">implicitplot([circle,tanLine],x=-1..2,y=-1..2,color=[red,blue])</code></pre>
 
 <figure>
 <img src="images/ch06/plot02.png" alt="Plot of a circle and it&amp;#8217;s tangent line" />
@@ -231,17 +282,99 @@ html,body,#wrapper{font-size:10pt!important;}
 
 <h2 id="parametricplots">Parametric Plots</h2>
 
-<p>A parametric graph or parametric curve is one in which the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> coordinates depend on another variable, often <span class="math">\(t\)</span>. For example<br/>
-<span class="math">\[x=5\cos t \qquad y=5\sin t\]</span><br/>
-is another way to write a circle with center at the origin and radius of 5. </p>
+<p>A parametric graph or parametric curve is one in which the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> coordinates depend on another variable, often <span class="math">\(t\)</span>. In general, we write<br/>
+<span class="math">\[x=f(t) \qquad y=g(t)\]</span></p>
 
-<p>This is because if we plug these functions into the equation <span class="math">\(x^2+y^2=25\)</span>, then<br/>
+<p>A nice example is<br/>
+<span class="math">\[x=t^2 \qquad y=t^3-t\]</span></p>
+
+<p>For a given set of values of <span class="math">\(t\)</span>, the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> values can be found by plugging in<br/>
+<span class="math">\[\begin{array}{ccc}  
+t & x & y &  \newline \hline  
+-1.5 & 2.25 & -4.875 \newline  
+-1 & 1 & 0 \newline  
+-1/2 & 1/4 & -3/8 \newline  
+0 & 0 & 0 \newline  
+1/2 & 1/4 & 3/8 \newline  
+1 & 1 & 0 \newline  
+1.5 & 2.25 & 4.875  
+\end{array}\]</span></p>
+
+<p>We can plot this in Maple using the standard <code>plot</code> command:</p>
+<pre><code class="(null)">plot([t^2,t^3-t,t=-2..2])</code></pre>
+
+<p>it is important to note the difference in syntax. The range for <span class="math">\(t\)</span> needs to be there and <em>inside</em> the brackets. The plot should look like:</p>
+
+<figure>
+<img src="images/ch06/plot07.png" alt="Plot of a parametric Curve" />
+<figcaption>Plot of a parametric Curve</figcaption>
+</figure>
+
+<h3 id="anotherexample">Another example</h3>
+
+<p>The parametric curve given by<br/>
+<span class="math">\[x=\cos t \qquad y=\sin t\]</span><br/>
+for <span class="math">\(0\leq t \leq 2\pi\)</span> is another way to write a circle with center at the origin and radius of 1. </p>
+
+<p>This is because if we plug these functions into the equation <span class="math">\(x^2+y^2=1\)</span>, then<br/>
 $$<br/>
-(5 \cos t)^2+(5\sin t)^2=25<br/>
+(\cos t)^2+(\sin t)^2=1<br/>
 $$<br/>
-or<br/>
-<span class="math">\[25\cos^2 t+25\sin^2 t=25\]</span><br/>
 which is true for all <span class="math">\(t\)</span> because <span class="math">\(\cos^2 t + \sin^2 t =1\)</span>. </p>
+
+<p>We can shift any curve horizontally and vertically in the following way, which we&#8217;ll show using an example. If we shift the circle above right 3 and up 2, we&#8217;ll get the circle with center <span class="math">\((3,2)\)</span>. This curve can be written:<br/>
+<span class="math">\[x=3+\cos t \qquad y=2+\sin t\]</span><br/>
+and plotting with a window that includes the origin is:<br/>
+<img src="images/ch06/plot08.png" alt="Plot of a radius 1 circle with center (3,2)" /></p>
+
+<p>And we can make this an ellipse by multiplying the <span class="math">\(\cos t\)</span> and <span class="math">\(\sin t\)</span> terms by constants. For example,<br/>
+<span class="math">\[x=3+1.5\cos t \qquad y=2+0.8\sin t\]</span></p>
+
+<figure>
+<img src="images/ch06/plot09.png" alt="Plot of a an ellipse written parametrically" />
+<figcaption>Plot of a an ellipse written parametrically</figcaption>
+</figure>
+
+<h3 id="letsmakealinesegment">Let&#8217;s make a line segment</h3>
+
+<p>Any curve written in terms of <span class="math">\(y(x)\)</span> can be written parametrically in the following way. Let <span class="math">\(x=t\)</span>, then let <span class="math">\(y=y(t)\)</span>. For example, consider the line <span class="math">\(y=2x+1\)</span>. This can be written:<br/>
+<span class="math">\[x=t\qquad y=2t+1\]</span><br/>
+If we want to plot it from <span class="math">\(x=-1\)</span> to <span class="math">\(x=1\)</span>, then <span class="math">\(t\)</span> will satisfy: <span class="math">\(-1 \leq t \leq 1\)</span> and the following command:</p>
+<pre><code class="(null)">plot([t,2t+1,t=-1..1])</code></pre>
+
+<p>generate the following plot:<br/>
+<img src="images/ch06/plot10.png" alt="Plot of a line segment" /></p>
+
+<h3 id="parametricpiecewisefunctions">Parametric piecewise functions</h3>
+
+<p>Mixing parametric functions and piecewise functions gives tons of flexibility. Let&#8217;s plot both a circle and a line segment using the same function. First, let&#8217;s find the line segment connecting the points <span class="math">\((0,3)\)</span> and <span class="math">\((1,0)\)</span>. The slope of this is <span class="math">\(-3\)</span>, so the function is <span class="math">\(y=-3(x-0)+3\)</span>. Parametrically, we can write this<br/>
+<span class="math">\[x=t \qquad y=-3t+3\]</span></p>
+
+<p>We will notice later that it will be helpful to use <span class="math">\(t\)</span> values bigger than <span class="math">\(2\pi\)</span>, so an alternative is to use<br/>
+<span class="math">\[x=t-10 \qquad y=-3(t-10)+3\]</span></p>
+
+<p>If we also want a circle of radius 2, centered at (4,2), we can write that as<br/>
+<span class="math">\[x=4+2\cos t \qquad y=2+2\sin t\]</span></p>
+
+<p>Then we produce the following piecewise function by defining:</p>
+<pre><code class="(null)">x:=piecewise(0&lt;=t&lt;=2*pi,4+2*cos(t),10&lt;=t&lt;=11,t-10)
+y:=piecewise(0&lt;=t&lt;=2*pi,2+2*sin(t),10&lt;=t&lt;=11,-3*(t-10)+3)</code></pre>
+
+<p>if we plot this piecewise:</p>
+<pre><code class="(null)">plot([x,y,t=0..11],discont=true,view=[0..6,0..6])</code></pre>
+
+<p>give the plot:<br/>
+<img src="images/ch06/plot11.png" alt="Plot of a piecewise parametric" /></p>
+
+<p>and make sure that you put <code>discont=true</code> option so the line segment is not connected to the circle. </p>
+
+<h3 id="tangentlinetoaparametriccurve">Tangent line to a parametric curve</h3>
+
+<p>Here we reproduce the tangent line to the circle of radius 5 at the point <span class="math">\((3,4)\)</span>. </p>
+
+<p>The parametric curve given by<br/>
+<span class="math">\[x=5\cos t \qquad y=5\sin t\]</span><br/>
+for <span class="math">\(0\leq t \leq 2\pi\)</span> is another way to write a circle with center at the origin and radius of 5. </p>
 
 <p>To plot this in Maple, we use the <code>plot</code> command with a different syntax. </p>
 <pre><code class="(null)">plot([5*cos(t),5*sin(t),t=0..2pi])</code></pre>
@@ -254,8 +387,6 @@ which is true for all <span class="math">\(t\)</span> because <span class="math"
 </figure>
 
 <p>which is the same plot as the implicit one above. </p>
-
-<h3 id="tangentlinetoaparametriccurve">Tangent line to a parametric curve</h3>
 
 <p>To make some things easier, let&#8217;s define</p>
 <pre><code class="(null)">x:=t-&gt;5*cos(t)
@@ -283,11 +414,57 @@ and</p>
 <p>The tangent line then is the curve</p>
 <pre><code class="(null)">tanLine:=-3/4(x-3)+4</code></pre>
 
-<p>, the same as above. </p>
+<p>again, the same as above and can be written parametrically as<br/>
+$$<br/>
+x=t \qquad y=-\frac{3}{4}(x&#8211;3)+4$$</p>
+
+<p>and the following will put the circle and the line on the same axes:</p>
+<pre><code class="(null)">plot([[t, -3/4*(t-3)+4, t = -2 .. 8], [5*cos(t), 5*sin(t), t = 0 .. 2*Pi]], view = [-5 .. 8, -5 .. 8])</code></pre>
 
 <h2 id="polarplots">Polar Plots</h2>
 
-<p>It is often that one will use polar coordinates to perform a plot. We will see a few examples where this is helpful. If a function is written in polar coordinates, then it is written in the form <span class="math">\(r=f(\theta)\)</span>, </p>
+<p>It is often that one will use polar coordinates to perform a plot. We will see a few examples where this is helpful. If a function is written in polar coordinates, then it is written in the form <span class="math">\(r=f(\theta)\)</span>. </p>
+
+<p>This is a specific form of a parametric curve with the form:<br/>
+<span class="math">\[x=r \cos \theta \qquad y=r\sin \theta\]</span></p>
+
+<p>For example, the cardiod that you plotted above can be written:<br/>
+<span class="math">\[r=1+\cos(\theta)\]</span><br/>
+and we can plot it using the <code>polarplot</code> command</p>
+<pre><code class="(null)">polarplot(1+cos(theta), theta = 0 .. 2*Pi)</code></pre>
+
+<p>(and note that you can get theta to look like the greek letter, by hitting ESC after typing <code>theta</code>)</p>
+
+<p>The plot will look like:<br/>
+<img src="images/ch06/plot12.png" alt="A cardiod plotting in polar coords" /></p>
+
+<p>And altenatively, if you don&#8217;t want the polar axes shown, you can use the regular plot command with the <code>coord=polar</code> option:</p>
+<pre><code class="(null)">plot(1+cos(theta),theta=0..2*Pi,coord=polar)</code></pre>
+
+<p>will generate the plot:<br/>
+<img src="images/ch06/plot13.png" alt="A cardiod plotting in polar coords" /></p>
+
+<h3 id="atangentlinetoapolarplot.">A tangent line to a polar plot.</h3>
+
+<p>The curve <span class="math">\(r=1+2\sin \theta\)</span> passes through the origin. We will find the tangent line to the curve at the point. </p>
+
+<p>First, a plot of the curve is</p>
+
+<figure>
+<img src="images/ch06/plot14.png" alt="Plot of the curve $r=1+2\sin \theta$" />
+<figcaption>Plot of the curve <span class="math">\(r=1+2\sin \theta\)</span></figcaption>
+</figure>
+
+<h2 id="multipleplottypesandthedisplaycommand">Multiple plot types and the <code>display</code> command</h2>
+
+<p>We have seen above that if we want to plot more that one curve on the same axes. </p>
+
+<p>If we want to plot the parametric curve<br/>
+<span class="math">\[x=3\cos 2t \quad y=2\sin 3t$,  
+with the implicit curve given by  
+$$(x^2+y^2)^2-2*(x^2-y^2) = 1\]</span></p>
+
+<p>then </p>
 
 <h2 id="commonoptions">Common Options</h2>
 
@@ -296,8 +473,6 @@ and</p>
 <li><code>legend</code> which adds a legend.</li>
 <li><code>color</code> which changes the color.</li>
 </ul>
-
-<h2 id="multipleplottypesandthedisplaycommand">Multiple plot types and the <code>display</code> command</h2>
 
 <h2 id="scatterplots">Scatter Plots</h2>
 
