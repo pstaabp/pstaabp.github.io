@@ -167,14 +167,14 @@ html,body,#wrapper{font-size:10pt!important;}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="integralcalculusinacomputeralgebrasystem">Integral Calculus in a Computer Algebra System</h1>
 
 <h2 id="antiderivatives">Antiderivatives</h2>
 
-<p>Naturally, Maple and most CAS find antiderviatives. There are a few ways to do this. If we want the antiderivative of a function like <span class="math">\(x^2\)</span>, then we can type: </p>
-<pre><code class="(null)">int(x<sup>2</sup>,x)</code></pre>
+<p>Naturally, Maple and most CAS find antiderviatives. There are a few ways to do this. If we want the antiderivative of a function like <span class="math">\(x^2\)</span>, then we can type:</p>
+<pre><code class="(null)">int(x^2,x)</code></pre>
 
 <p>which returns <span class="math">\[\frac{x^3}{3}\]</span>. And note that Maple does not return an integration constant. </p>
 
@@ -189,10 +189,10 @@ results in <span class="math">\(sin(\sqrt{x^2+1})\)</span> (where subsitution ha
 ^{3}-630\,{x}^{2}+630\,x-315 \right) {{\rm e}^{2\,x}}\]</span><br/>
 in which the integration by parts formula has been applied 7 times. </p>
 
-<p>Other times, you might get strange results. If we find the antiderivative of <span class="math">\({\rm e}^{x^2}\)</span>, Maple returns<br/>
-$$\frac{1}{2}\sqrt {\pi }\, {\rm erfi}\left( x \right) $$</p>
+<p>Other times, you might get strange results. If we find the antiderivative of <span class="math">\({\rm e}^{-x^2}\)</span>, Maple returns<br/>
+$$\frac{1}{2}\sqrt {\pi }\, {\rm erf}\left( x \right) $$</p>
 
-<p>What is this erfi ? Take a look in the Help Browser. </p>
+<p>What is this erf? Take a look in the Help Browser. </p>
 
 <p>Quite amazingly, very few functions have a nice antiderivative, where nice means that you can write the result as a algebraic combination of functions that we know from Precalc and Calculus. Instead, functions, like erfi (otherwise known as the error function), are defined as solutions to a differential equation or as an antiderivative. Here&#8217;s a list of a few</p>
 
@@ -204,8 +204,8 @@ $$\frac{1}{2}\sqrt {\pi }\, {\rm erfi}\left( x \right) $$</p>
 
 <h2 id="definiteintegrals">Definite Integrals</h2>
 
-<p>Maple will also find definite integrals and there are a few ways to enter those. To enter <span class="math">\(\displaystyle \int_0^1 x^2 \, dx\)</span>, type </p>
-<pre><code class="(null)">int(x<sup>2</sup>,x=0..1)</code></pre>
+<p>Maple will also find definite integrals and there are a few ways to enter those. To enter <span class="math">\(\displaystyle \int_0^1 x^2 \, dx\)</span>, type</p>
+<pre><code class="(null)">int(x^2,x=0..1)</code></pre>
 
 <p>and it will return <span class="math">\(\frac{1}{3}\)</span>. You can also type <code>int</code>, hit ESC and select the definite integral (the one with the limits on the integral sign). </p>
 
@@ -228,13 +228,13 @@ returns 1. </p>
 <p>Let&#8217;s recall what this means. If you have any integral with an infinite limit, and if <span class="math">\(F(x)\)</span> is an antiderivative of <span class="math">\(f(x)\)</span>, then<br/>
 <span class="math">\[\int_a^{\infty} f(x) \, dx = \lim_{b \rightarrow \infty} F(b)-F(a)\]</span></p>
 
-<p>And we can let Maple help us understand this. For example using the example of <span class="math">\(\int_0^{\infty} {\rm e}^{-x} \, dx\)</span> above, the antiderivative of <span class="math">\({\rm e}^{-x}\)</span> is <span class="math">\(-{\rm e}^{-x}\)</span> and let&#8217;s define this to be <span class="math">\(F\)</span> using </p>
+<p>And we can let Maple help us understand this. For example using the example of <span class="math">\(\int_0^{\infty} {\rm e}^{-x} \, dx\)</span> above, the antiderivative of <span class="math">\({\rm e}^{-x}\)</span> is <span class="math">\(-{\rm e}^{-x}\)</span> and let&#8217;s define this to be <span class="math">\(F\)</span> using</p>
 <pre><code class="(null)">F:=x-&gt;-e^(-x)</code></pre>
 
 <p>Then we take the limit of <span class="math">\(F(b)-F(0)\)</span> </p>
 <pre><code class="(null)">limit(F(b)-F(0), b = infinity)</code></pre>
 
-<p>returns 1. { </p>
+<p>returns 1. </p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -243,7 +243,130 @@ returns 1. </p>
 <ul>
 <li><span class="math">\(\displaystyle \int_1^{\infty} \frac{1}{x} \, dx\)</span></li>
 <li><span class="math">\(\displaystyle \int_{-\infty}^{\infty} {\rm e}^{-x^2} \, dx\)</span></li>
-<li>The area between the line <span class="math">\(x=1\)</span>, the curve <span class="math">\(y=1/x^2\)</span> and the <span class="math">\(x\)</span>-axis.</li>
+</ul>
+
+<h2 id="applicationsofintegrals">Applications of Integrals</h2>
+
+<h3 id="areabetweencurves">Area between curves</h3>
+
+<p>Find the area bounded by the curves <span class="math">\(y=x^2\)</span> and <span class="math">\(y=4-x^2\)</span>.</p>
+
+<p>First, a plot of these two curves is helpful. Here&#8217;s the following plot:</p>
+
+<figure>
+<img src="images/ch08/plot01.png" alt="Plot of $x^2$ and $4-x^2$" />
+<figcaption>Plot of <span class="math">\(x^2\)</span> and <span class="math">\(4-x^2\)</span></figcaption>
+</figure>
+
+<p>To help find the appropriate integral to use we can solve for the intersection points:</p>
+<pre><code class="(null)">solve(x^2=4-x^2,x)</code></pre>
+
+<p>which returns <span class="math">\(\sqrt{2},-\sqrt{2}\)</span>. So the area is the top curve in this interval (<span class="math">\(4-x^2\)</span>) minus the other one on this interval:<br/>
+<span class="math">\[\int_{-\sqrt{2}}^{\sqrt{2}} (4-x^2-x^2) \, dx\]</span><br/>
+and Maple returns<br/>
+<span class="math">\[\frac{16}{3}\sqrt{2}\]</span><br/>
+and if we use <code>evalf</code> to find the decimal approximation of about 7.54, which looks about right from the plot. </p>
+
+<h3 id="anotherexample">Another Example</h3>
+
+<p>Find the area bounded by the curves <span class="math">\(x=y^2−1\)</span> and <span class="math">\(x=y+1\)</span>.</p>
+
+<p>Notice in this case these need to be plotted implicitly and you get the following plot: </p>
+
+<figure>
+<img src="images/ch08/plot02.png" alt="Plot of $x=y^2−1$ and $x=y+1$" />
+<figcaption>Plot of <span class="math">\(x=y^2−1\)</span> and <span class="math">\(x=y+1\)</span></figcaption>
+</figure>
+
+<p>Even though it seems clear from the plot of the intersection points, let&#8217;s make sure </p>
+<pre><code class="(null)">solve([x=y^2-1,x=y+1])</code></pre>
+
+<p>returns <code>{x = 0, y = -1}, {x = 3, y = 2}</code> or the points <span class="math">\((0,-1)\)</span> and <span class="math">\((3,2)\)</span>. </p>
+
+<p>If we slice in the vertical direction, it would be require that we write the integral in a couple of pieces. Let <span class="math">\(A_1\)</span> be the area above that is bound by the curve <span class="math">\(x=y^2-1\)</span> and <span class="math">\(x=0\)</span>. Solving for <span class="math">\(y\)</span>, we get <span class="math">\(y=\pm\sqrt{x+1}\)</span> and the area would be<br/>
+<span class="math">\[A_1 = 2 \int_{-1}^0 \sqrt{x+1} \, dx\]</span><br/>
+which is <span class="math">\(4/3\)</span></p>
+
+<p>and then the rest of the sought after area is<br/>
+<span class="math">\[A_2 = \int_0^3 (\sqrt{x+1} - (x-1)) \,dx\]</span><br/>
+which is <span class="math">\(19/6\)</span>. The total area that we&#8217;re looking for is<br/>
+<span class="math">\[A_1 +A_2 = \frac{9}{2}\]</span></p>
+
+<p>An alternative way to tackle this is to slice this horizontally. The area can then be written:<br/>
+<span class="math">\[\int_{-1}^2 (y+1)-(y^2-1))\,dx\]</span><br/>
+and the result is <span class="math">\(9/2\)</span>, just as above and easier to do. </p>
+
+<h3 id="exercises">Exercises</h3>
+
+<ul>
+<li>The area between the curves <span class="math">\(y=x^3+7x^2+2x-37\)</span> and <span class="math">\(y=-2x^2-4x+19\)</span></li>
+<li>The area between the line <span class="math">\(x=1\)</span>, the curve <span class="math">\(y={\rm e}^{-x}\)</span> and the <span class="math">\(x\)</span>-axis.</li>
+</ul>
+
+<h3 id="volumesofrevolution">Volumes of Revolution</h3>
+
+<p>Another standard application of integration is finding volumes. This will be a big topic in Multivariate Calculus, but in single variable Calculus, we can find volumes by revolving a curve <span class="math">\(y=f(x)\)</span> about an axis of revolution. Maple has some nice visualization tools to help understand this. These are located in the <code>Student[Calculus1]</code> package, so make sure that you load it.</p>
+<pre><code class="(null)">with(Student[Calculus1])</code></pre>
+
+<h4 id="example">Example</h4>
+
+<p>Find the volume formed by rotated the region bound by <span class="math">\(y=(x-1)^2\)</span>, the <span class="math">\(x\)</span>-axis and the <span class="math">\(y\)</span>-axis, and rotating the region around the <span class="math">\(x\)</span>-axis. </p>
+
+<p>First plot the region in the <span class="math">\(xy\)</span>-plane:</p>
+
+<figure>
+<img src="images/ch08/plot03.png" alt="Plot of the region in the Example above" />
+<figcaption>Plot of the region in the Example above</figcaption>
+</figure>
+
+<p>and this region will be rotated about the <span class="math">\(x\)</span>-axis. You can visualize this with the following command:</p>
+<pre><code class="(null)">VolumeOfRevolution((x-1)^2, x = 0 .. 1, output = plot)</code></pre>
+
+<p>and the result is:<br/>
+<img src="images/ch08/plot04.png" alt="Plot of the volume of revolution of the example above" /></p>
+
+<p>For this situation, this is a disk method problem and the formula is<br/>
+<span class="math">\[V = \int_a^b \pi r(x)^2 \,dx\]</span><br/>
+or in this example<br/>
+<span class="math">\[V=\int_0^1 \pi ((x-1)^2)^2\,dx\]</span><br/>
+and using Maple, we get <span class="math">\(\pi/5\)</span>. </p>
+
+<p>The command <code>VolumeOfRevolution</code> will also give the answer as well:</p>
+<pre><code class="(null)">VolumeOfRevolution((x-1)^2,x=0..1)</code></pre>
+
+<p>evaluates the same integral above with the same answer. </p>
+
+<p>Another interesting option is <code>output=animate</code> which will show either disks, washers or cylinders in an animated way. Try</p>
+<pre><code class="(null)">VolumeOfRevolution((x-1)^2, x=0..1,output=animate)</code></pre>
+
+<h4 id="examplethatusescylinders">Example that uses cylinders</h4>
+
+<p>Find the volume of the solid of revolution that by rotating the region bounded by <span class="math">\(y=1-x\)</span>, <span class="math">\(y=1-x^2\)</span> in the first quadrant around the <span class="math">\(y\)</span>-axis. </p>
+
+<figure>
+<img src="images/ch08/plot05.png" alt="region for the example above" />
+<figcaption>region for the example above</figcaption>
+</figure>
+
+<p>This example is a cylinder method problem, with the height of each cylinder <span class="math">\(h=(1-x^2)-(1-x)=x-x^2\)</span> and radius <span class="math">\(r=x\)</span>. The volume is<br/>
+<span class="math">\[V=\int_a^b 2\pi r h \, dx=\int_0^1 2\pi x (x-x^2) \,dx\]</span><br/>
+which is <span class="math">\(\pi/6\)</span>. </p>
+
+<p>We can visualize this with the following command</p>
+<pre><code class="(null)">VolumeOfRevolution(-x^2+1, 1-x, x = 0 .. 1, axis = vertical, output = plot)</code></pre>
+
+<p>where both functions have been put in and the option <code>axis=vertical</code> is used because the function is rotated around the <span class="math">\(y\)</span>-axis (which is the vertical axis). The result is:</p>
+
+<figure>
+<img src="images/ch08/plot06.png" alt="Volume of revolution for the region above" />
+<figcaption>Volume of revolution for the region above</figcaption>
+</figure>
+
+<h4 id="exercise">Exercise</h4>
+
+<ul>
+<li><p>Try to use the ouput=animation option on the example above.</p></li>
+<li><p>Find the volume formed by rotating the region bounded by <span class="math">\(y=\sqrt{x}\)</span> and <span class="math">\(y=x\)</span> about the line <span class="math">\(x=2\)</span>. (Hint: look at the <code>distancefromaxis</code> options)</p></li>
 </ul>
 
 <h2 id="differentialequations">Differential Equations</h2>
@@ -273,12 +396,12 @@ and then often we want to solve for <span class="math">\(y\)</span>, which (agai
 and solving for <span class="math">\(y\)</span> result in<br/>
 <span class="math">\[y= {\rm e}^{x+C}\]</span></p>
 
-<p>We can do this all in one shot in Maple, by entering </p>
+<p>We can do this all in one shot in Maple, by entering</p>
 <pre><code class="(null)">solve(int(1/y,y)=int(1,x)+C,y)</code></pre>
 
 <h3 id="solvingadifferentialequationusingdsolve">Solving a differential equation using <code>dsolve</code></h3>
 
-<p>Lastly, we can let Maple solve the differential equation itself. If we type </p>
+<p>Lastly, we can let Maple solve the differential equation itself. If we type</p>
 <pre><code class="(null)">dsolve(y&apos;(x)=y(x))</code></pre>
 
 <p>then Maple we return<br/>
@@ -298,8 +421,6 @@ and solving for <span class="math">\(y\)</span> result in<br/>
 <li><p>Using <code>dsolve</code>.</p></li>
 <li><p>Next find the function that satisfies the differential equation with <span class="math">\(y(3)=4\)</span>. </p></li>
 </ol>
-
-<h2 id="applicationsofintegrals">Applications of Integrals</h2>
 
 <h2 id="numericalintegration">Numerical Integration</h2>
 <div style="display:none"><br/>
