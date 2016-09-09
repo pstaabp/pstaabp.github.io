@@ -14,6 +14,8 @@ Using Julia on the Cloud
 Installing Julia on your personal machine
 ----
 
+[Return to all notes](index.html)
+
 There are precompiled versions for Mac, Windows and Linux at [the Julia Download page](http://julialang.org/downloads/).  Currently, there are versions 0.4 and 0.5 available.  The 0.4 version is more stable, but either should work fine and probably over the next couple of months the 0.5 version will be quite stable and recommended.  
 
 Once you download Julia, there should be an app that you can open up as a console (command line).  This is the basic julia installation.

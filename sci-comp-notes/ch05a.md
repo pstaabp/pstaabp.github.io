@@ -1,9 +1,3 @@
-Chapter 4:  Rootfinding
-=============
-
-[Return to all notes](../index.html)
-
-
 Using functions in a separate file
 -----------
 

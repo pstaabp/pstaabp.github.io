@@ -1,3 +1,69 @@
+
+
+Packages in Julia
+-------
+
+As with most languages, you can add extra functionality to Julia via a package.  [A list of all of the packages](http://pkg.julialang.org) shows over 200 currently (Sept 2014).  To add a package, generally it's done with
+
+```
+Pkg.add(name)
+```
+
+where name is a string. If there are other packages that are dependencies, Julia takes care of those also.  Type
+
+```
+Pkg.update()
+```
+
+to update all packages, which is a good idea to do often as things are changing quickly in the Julia world. And to list all of the packages you have installed, type
+
+```
+Pkg.status()
+```
+
+
+For example, if you want to load in the Calculus package, type
+
+```
+Pkg.add("Calculus")
+```
+
+And now you will have some Calculus functionality. For example,
+
+```
+using Calculus
+f(x)=x^2
+f'(1)
+```
+
+returns close to 2.  (It doesn't calculate derivatives exactly.)  Note: the first line loads in the package.  (similar to the with statement in Maple).
+
+Plots in Julia
+--------
+
+There are a number of plotting packages in Julia.  One of the simpler ones in called Winston and one of the more robust ones is called PyPlot.  We'll first look at some examples in Winston.  First, make sure the packages is added.
+
+```
+Pkg.add("Winston")
+```
+
+(this might take a while).  Then create two 1D arrays (vectors) for x and y and plot.
+
+```
+x=[-2:0.1:2]
+y=map(a->a^2,x)
+plot(x,y)
+```
+
+### Exercise
+
+Try plotting some other functions, like \\(\sin x\\), \\(e^{x}\\), \\(\ln x\\) and play with the plotting domain (x values of the plot).
+
+
+For additional documentation on Winston, you can find a link from the [Julia packages website](http://pkg.julialang.org)
+
+
+
 Arrays
 ------
 
@@ -57,6 +123,103 @@ g(x,y)=x*y
 ```
 
 
+
+
+Anonymous Functions
+-----------
+
+Another feature that is common to more modern languages is that of an anonymous function.  Although as the name suggests, these functions are not named, however, they are typically passed as arguments to other functions.  For example,
+```
+x->x^2
+```
+returns `anonymous function` and since it doesn't have a name it hard to do anything with it (although you can name it and then use it like a standard function).  Why is it useful then? If we take an array, do something to each element and get a new array from this.  (This is called a map)
+
+For example, if we have the array (a list of numbers that we will see in depth later)
+```
+A=[i for i=1:10]
+```
+
+And we want to return an array in which every element is shifted by 1 number, we can do that with
+```
+map(x->x+1,A)
+```
+or if we want to return if each number is even (true) or odd (false):
+```
+map(isOdd,A)
+```
+
+where `isOdd` is the function created above.
+
+Exercise
+----
+
+
+
+Packages in Julia
+-------
+
+As with most languages, you can add extra functionality to Julia via a package.  [A list of all of the packages](http://pkg.julialang.org) shows over 200 currently (Sept 2014).  To add a package, generally it's done with
+
+```
+Pkg.add(name)
+```
+
+where name is a string. If there are other packages that are dependencies, Julia takes care of those also.  Type
+
+```
+Pkg.update()
+```
+
+to update all packages, which is a good idea to do often as things are changing quickly in the Julia world. And to list all of the packages you have installed, type
+
+```
+Pkg.status()
+```
+
+
+For example, if you want to load in the Calculus package, type
+
+```
+Pkg.add("Calculus")
+```
+
+And now you will have some Calculus functionality. For example,
+
+```
+using Calculus
+f(x)=x^2
+f'(1)
+```
+
+returns close to 2.  (It doesn't calculate derivatives exactly.)  Note: the first line loads in the package.  (similar to the with statement in Maple).
+
+Plots in Julia
+--------
+
+There are a number of plotting packages in Julia.  One of the simpler ones in called Winston and one of the more robust ones is called PyPlot.  We'll first look at some examples in Winston.  First, make sure the packages is added.
+
+```
+Pkg.add("Winston")
+```
+
+(this might take a while).  Then create two 1D arrays (vectors) for x and y and plot.
+
+```
+x=[-2:0.1:2]
+y=map(a->a^2,x)
+plot(x,y)
+```
+
+### Exercise
+
+Try plotting some other functions, like \\(\sin x\\), \\(e^{x}\\), \\(\ln x\\) and play with the plotting domain (x values of the plot).
+
+
+For additional documentation on Winston, you can find a link from the [Julia packages website](http://pkg.julialang.org)
+
+
+
+* Produce a array of length 10 using map with the pattern [1,0,-1,0,1,0,-1,...].  Hint: you can generate a pattern using the sine or cosine of some numbers.  
 Reducing and Folding
 ------------
 
@@ -93,27 +256,29 @@ We will explore some differences between these different methods in the homework
 Write a function that sums the reciprocals of the first 100 counting numbers using `reduce`.  
 
 
-Finding the time of a function
-----------------
 
-Another important aspect of scientific computing is how long functions or programs take to run.  (When you run a program for hours on an expensive supercomputer, time is money).  Julia has some nice ways of running these.
+Newton's Method to find all the roots
+------
 
-Let's say we have a function that takes a little bit of time to run like:
+Newton's method generally finds a single root based on an input (though this is not guaranteed).  What if we want to find all of the roots?   We could generate an array of initial points and apply Newton's method to every point. Here's one approach.  
+
+Note: assume that we have a function called `newton` that given a function, its derivative and an initial point, returns the root.  (I will provide one soon).
+
+Let's produce an array of initial values:
+
 ```
-function function_to_time()
-  timedwait(()->false,5*rand())
-end
+x0=[-10:1:10]
 ```
-which can take up to 5 seconds to run.
 
-To determine the actual amount of time to run, try:
+To find the point with that initial point, we can use the `map` function
 ```
-tic();function_to_time();toc()
+x=map(a->newton(f,df,a),x0)
 ```
-and this will report the amount of time it runs.  
 
-To test your code for timing information, try inserting some other code in the function called `function_to_time`.  
+will return an array of the root that the function went to.  Now to get a more visual sense of where the points go:
 
-(Exercise)
+```
+plot(x0,x)
+```
 
-Type in this code and run it a few times.  What results do you get?
+shows for each x value (the initial point) which root the function goes to.  
