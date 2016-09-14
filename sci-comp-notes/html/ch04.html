@@ -180,7 +180,7 @@ html,body,#wrapper{font-size:10pt!important;}
 <p>Recall that a prime number is a positive integer whose only factors are 1 and itself. Most languages have built-in versions of testing for primes, we will write some other versions.</p>
 
 <p>Let&#8217;s first start with a method that returns all of the factors of a given integer:</p>
-<pre><code class="(null)">function allfactors(n::Integer)
+<pre><code class="(null)">function all_factors(n::Integer)
     factors = [1]
     for i=2:n-1
         if mod(n,i)==0
@@ -196,8 +196,14 @@ end</code></pre>
 
 <ul>
 <li><p>Type in the function above and test it on various positive integers</p></li>
-<li><p>Use the function above to write a function <code>isPrime</code> that returns true or false depending on if the input is prime. Hint: recall the definition of prime. </p></li>
+<li><p>Use the function above to write a function <code>is_prime</code> that returns true or false depending on if the input is prime. Hint: recall the definition of prime. </p></li>
 </ul>
+
+<p>The template for the function should be</p>
+
+<p><pre><code class="(null)">function is_prime(n::Integer)
+
+end</code></pre></p>
 
 <h2 id="findingprimes">Finding Primes</h2>
 
@@ -228,7 +234,7 @@ end</code></pre>
 <ul>
 <li>Fill in the <code>is_perfect</code> function with working code and test it on some values. Google perfect number for other examples.</li>
 <li>Write a <code>next_perfect</code> function which returns the next perfect number larger than the input.</li>
-<li>Find the first 10 ten perfect numbers and determine how long it takes to find them.</li>
+<li>Find the first 3 ten perfect numbers.</li>
 </ul>
 
 <h2 id="happynumbers">Happy Numbers</h2>
@@ -255,7 +261,33 @@ end</code></pre>
     push!(list,k)
 end</code></pre>
 
-<p>Next, let&#8217;s write a function called <code>is_happy</code> which determines if a number <code>n</code> is happy. The function should be recursive and return true if it is 1, return false if it is 4 and do the steps above otherwise. </p>
+<p>Next, let&#8217;s write a function called <code>is_happy</code> which determines if a number <code>n</code> is happy. The function should be recursive and return true if it is 1, return false if it is 4 and do the steps above otherwise. The template for the function should be</p>
+<pre><code class="(null)">function is_happy(n::Integer)
+
+end</code></pre>
+
+<h4 id="findinghappynumbers">Finding Happy numbers</h4>
+
+<p>One way to find happy numbers then is check a range of integers using the function you wrote above. For example, you can type</p>
+<pre><code class="(null)">[is_happy(n) for n=1:100]</code></pre>
+
+<p>which will return an array of true/false if the number is happy or not.</p>
+
+<p>This isn&#8217;t so helpful though if you look halfway down the list, what number is happy? A better way to do this is to use julia&#8217;s built-in function <code>filter</code>. For example,</p>
+<pre><code class="(null)">filter(is_happy, 1:100)</code></pre>
+
+<p>returns all integers between 1 and 100 that are happy. </p>
+
+<h2 id="speedingupis_prime">Speeding up <code>is_prime</code></h2>
+
+<p>If you time the <code>is_prime</code> function as we wrote above, you&#8217;ll notice how slow it is. The reason why is it relies on the <code>all_factors</code> function which checks every every number between 2 and n if it is a factor. This is very ineffeicient, so we will try some ways to speed things up.</p>
+
+<ul>
+<li>in <code>all_factors</code> stop at <code>n/2</code></li>
+<li>in <code>all_factors</code> check prime numbers and products of previous factors.</li>
+<li>don&#8217;t use <code>all_factors</code> at all. Check only odd numbers</li>
+<li>check only primes. (How to do this?)</li>
+</ul>
 
 <h2 id="primescanbebig">Primes can be big!!</h2>
 

@@ -20,10 +20,31 @@ There are precompiled versions for Mac, Windows and Linux at [the Julia Download
 
 Once you download Julia, there should be an app that you can open up as a console (command line).  This is the basic julia installation.
 
+
+
+
 Installing the Browser Version on your machine
 -----
 
 If you used JuliaBox like we saw above, that is a browser version of Julia and has a lot of nice features.  To get this, it is called IJulia.  Follow the directions at the [IJulia github site](https://github.com/JuliaLang/IJulia.jl) for information on getting it installed.  
+
+
+Using Jupyter (via JuliaBox or your local machine)
+------
+
+The browser interface to julia, called Jupyter allows some nice features.  It&#8217;s advantageous to read through the Help pull-down menu in Jupyter, but here's a few big things:
+
+* There are four modes to an input box, but only two that I will cover here: 1) `code` mode.  This allows for entering Julia code and is the default option.  2) Markdown mode.  This allows you to add formatted comments using markdown (google it).  For example, typing `### Header` produces a nice heading.
+
+* The *kernel* menu has ways to restart the kernel and run all of the
+
+* Click on the name of the file in the upper right corner of the document to change its name.
+
+* To save the file, goto *File* then *Download* and use the format of your choice. 
+
+
+
+
 
 
 
