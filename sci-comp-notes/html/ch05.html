@@ -167,7 +167,7 @@ html,body,#wrapper{font-size:10pt!important;}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="chapter5:solvingquadraticsandrootfindingingeneral">Chapter 5: Solving Quadratics and Rootfinding in General</h1>
 
@@ -199,35 +199,48 @@ and the <strong>relative error</strong> is<br/>
 <p>We are going to solve this using the quadratic equation in julia</p>
 
 <ol>
-<li><p>Write a function for the quadratic formula.</p>
+<li>Write a function for the quadratic formula.</li>
+</ol>
 <pre><code class="(null)">qSol = function(a::Number,b::Number,c::Number)
-       d=sqrt(b^2-4*a*c)
-       return (-b+d)/(2*a),(-b-d)/(2*a)
+ d=sqrt(b<sup>2</sup>&#8211;4<em>a</em>c)
+ return (-b+d)/(2<em>a),(-b-d)/(2</em>a)
 end</code></pre>
 
-<p>(Exercise) Use the quadratic formula to solve <span class="math">\({x}^{2}-x-110=0\)</span>.</p></li>
-<li><p>Solve the equation <span class="math">\(12.242{x}^{2}+42.382x+0.0012=0\)</span> using 64-bit floating point. </p>
+<p>(Exercise) Use the quadratic formula to solve <span class="math">\({x}^{2}-x-110=0\)</span>.</p>
+
+<ol>
+<li>Solve the equation <span class="math">\(12.242{x}^{2}+42.382x+0.0012=0\)</span> using 64-bit floating point.</li>
+</ol>
 <pre><code class="(null)">x1a,x1b = qSol(12.242,42.382,0.0012)</code></pre>
 
-<p>to</p>
-<pre><code class="(null)">(-2.831413841486606e-5,-3.461987696317393)</code></pre></li>
-<li><p>Find the solution if the coefficients are 16-bit floating points.</p>
+<pre><code>leads to  
+</code></pre>
+<pre><code class="(null)">(&#8211;2.831413841486606e&#8211;5,&#8211;3.461987696317393)</code></pre>
+
+<ol>
+<li>Find the solution if the coefficients are 16-bit floating points.</li>
+</ol>
 <pre><code class="(null)">x2a,x2b = qSol(Float16(12.242),Float16(42.382),Float16(0.0012))</code></pre>
 
-<p>to</p>
-<pre><code class="(null)">(0.0001448952f0,-3.4615362f0)</code></pre></li>
+<pre><code>leads to  
+</code></pre>
+<pre><code class="(null)">(0.0001448952f0,&#8211;3.4615362f0)</code></pre>
+
+<ol>
 <li><p>Assume that the 64-bit answer is correct. Find the absolute and relative errors for the two solutions.</p>
 
-<p>The absolute errors are</p>
+<p>The absolute errors are </p></li>
+</ol>
 <pre><code class="(null)">abs(x1a-x2a) = 0.00017320933367737267
 abs(x1b-x2b) = 0.0004515272652687585</code></pre>
 
-<p>and the relative errors are:</p>
+<pre><code>and the relative errors are:  
+</code></pre>
 <pre><code class="(null)">abs(x1a-x2a)/abs(x1a) = 6.117414951479887
 abs(x1b-x2b)/abs(x1b) = 0.00013044129635438729</code></pre>
 
-<p>This shows that the first answer is far off in relative terms. </p></li>
-</ol>
+<pre><code>This shows that the first answer is far off in relative terms.  
+</code></pre>
 
 <h2 id="beskepticalofnumericalanswers">Be skeptical of numerical answers</h2>
 
@@ -251,14 +264,16 @@ abs(x1b-x2b)/abs(x1b) = 0.00013044129635438729</code></pre>
 <p>Multiply by a convenient form of 1<br/>
 <span class="math">\[ x=\frac{-b + \sqrt{{b}^{2}-4ac}} {2a} \cdot \frac{-b-\sqrt{b^{2}-4ac}}{-b-\sqrt{b^{2}-4ac}}\]</span></p>
 
-<p><span class="math">\[ x = \frac{-b^{2}+b^{2}-4ac}{2a(-b-\sqrt{b^{2}-4ac})}\]</span></p>
+<p><span class="math">\[ x = \frac{b^{2}-(b^{2}-4ac)}{2a(-b-\sqrt{b^{2}-4ac})}\]</span></p>
 
-<p><span class="math">\[ x = \frac{2c}{b+\sqrt{b^{2}-4ac}}\]</span></p>
+<p><span class="math">\[ x= \frac{4ac}{2a(-b-\sqrt{b^2-4ac})}\]</span></p>
+
+<p><span class="math">\[ x = -\frac{2c}{b+\sqrt{b^{2}-4ac}}\]</span></p>
 
 <p>and there is a similar solution if the - root is taken above. So an alternative quadratic formula is:</p>
 <pre><code class="(null)">qSol2 = function(a::Number,b::Number,c::Number)
-  d=sqrt(b^2-4*a*c)
-  return 2*c/(b+d),(2*c)/(b-d)
+ d=sqrt(b<sup>2</sup>&#8211;4<em>a</em>c)
+ return &#8211;2<em>c/(b+d),(&#8211;2</em>c)/(b-d)
 end</code></pre>
 
 <h3 id="exercise">Exercise</h3>
@@ -282,10 +297,10 @@ end</code></pre>
 <span class="math">\[x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}\]</span></p>
 
 <p>Let&#8217;s look at this in Julia for the function above. </p>
-<pre><code class="(null)">f(x)=15x^3-143x^2+226x+280</code></pre>
+<pre><code class="(null)">f(x)=15x<sup>3-143x</sup>2+226x+280</code></pre>
 
 <p>and we need the derivative so</p>
-<pre><code class="(null)">df(x)=45x^2-286x+226</code></pre>
+<pre><code class="(null)">df(x)=45x<sup>2</sup>&#8211;286x+226</code></pre>
 
 <p>Let&#8217;s say that x0=0 and find x1 using Newton&#8217;s method:</p>
 <pre><code class="(null)">x0 = 0
@@ -297,10 +312,9 @@ x1 = x0-f(x0)/df(x0)</code></pre>
 
 <ul>
 <li><p>Try to find the other two solutions to this function. (Hint: try different values for x0)</p></li>
-<li><p>Write a function using the arguments f,df and x0 and returns the root. The shell of the function should look like</p></li>
+<li><p>Write a function using the arguments f,df and x0 and returns the root. The shell of the function should look like </p></li>
 </ul>
 <pre><code class="(null)">function newton(f::Function,df::Function,x0::Number)
-
 end</code></pre>
 
 <p>and if <code>f</code> and <code>df</code> are functions as defined above, then <code>newton(f,df,0)</code> should return a root of f. </p>
