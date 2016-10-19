@@ -198,8 +198,46 @@ suits = [&quot;\u2660&quot;,&quot;\u2661&quot;,&quot;\u2662&quot;,&quot;\u2663&q
 type Card
     rank::Int
     suit::Int
-    Card(r::Int,s::Int)=new(r,s)
-    Card(i::Int) = i&lt;1||i&gt;52?throw(ArgumentError(&quot;The argument must be an integer between 1 and 52&quot;)):i%13==0? new(13,Int(ceil(i/13))) : new(i%13,Int(ceil(i/13)))
+
+    # construct a card based on the rank and suit
+    function Card(r::Int,s::Int)
+        if r&lt;1||r&gt;13
+            throw(ArgumentError(&quot;The rank must be an integer between 1 and 13.&quot;))
+        end
+        if s&lt;1||s&gt;4
+            throw(ArgumentError(&quot;The suit must be an integer between 1 and 4.&quot;))
+        end
+        new(r,s)
+    end
+
+    # construct a card based on the number in a deck
+    function Card(i::Int)
+        if i&lt;1||i&gt;52
+            throw(ArgumentError(&quot;The argument must be an integer between 1 and 52&quot;))
+        end
+        if i%13==0
+            new(13,div(i,13))
+        else
+            new(i%13,div(i,13)+1)
+        end
+    end
+
+    # construct a card based on a string representation of the card
+    function Card(str::String)
+        if length(str)&gt;2
+            throw(ArgumentError(&quot;The string should only be 2 characters&quot;))
+        end
+        local r = findfirst(a-&gt;a==str[1],ranks)
+        if r&lt;1 || r&gt;13
+            throw(ArgumentError(string(&quot;The first character should be one of &quot;,join(ranks,&quot;,&quot;))))
+        end
+        local s=findfirst(a-&gt;a==str[2],suits)
+        if s&lt;1 || s&gt;4
+            throw(ArgumentError(string(&quot;The second character should be one of &quot;,join(suits,&quot;,&quot;))))
+        end
+        new(r,s)
+    end
+
 end
 
 function print_card(c::Card)
@@ -252,7 +290,8 @@ end</code></pre>
 
 <ul>
 <li><p>You should test all of your code before putting it in a module. It&#8217;s difficult to debug once it is in a module.</p></li>
-<li><p>Typing <code>using PlayingCards</code> does not reload all of the code. If you need to reload it, you should type <code>reload(PlayingCArds)</code>.</p></li>
+<li><p>Typing <code>using PlayingCards</code> does not reload all of the code. If you need to reload it, you should type <code>reload(&quot;PlayingCards&quot;)</code>.</p></li>
+<li><p>The above is supposed, but I have found doesn&#8217;t always work. You may need to do a <code>workspace()</code> command and reload using <code>using PlayingCards</code>. </p></li>
 <li><p>Make sure that you <code>export</code> only types and functions that you want to make available. Notice in the example above, we have variables called <code>ranks</code> and <code>suits</code> that are not exported and do not need to be exported. </p></li>
 </ul>
 
@@ -277,6 +316,16 @@ end</code></pre>
 <pre><code class="(null)">c3=Card(7,3);
 c4=Card(33);</code></pre>
 <pre><code class="(null)">@test isequal(c3,c4)</code></pre>
+
+<h4 id="testifanexceptionisthrown">Test if an exception is thrown</h4>
+
+<p>It&#8217;s also important to test if an exception is thrown for creating illegal cards. For example, a <code>Card(0,3)</code> does not exist and will throw an exception (try it!). To test this,</p>
+<pre><code class="(null)">@test_throws ArgumentError Card(0,3)</code></pre>
+
+<p>returns</p>
+<pre><code class="(null)">Test Passed
+  Expression: Card(0,3)
+      Thrown: ArgumentError</code></pre>
 
 <h3 id="puttingalltestsinafile">Putting all tests in a file</h3>
 
