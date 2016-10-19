@@ -167,7 +167,7 @@ html,body,#wrapper{font-size:10pt!important;}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="chapter12:creatingamoduleandperformingunittests">Chapter 12: Creating A Module and Performing Unit Tests</h1>
 
@@ -191,8 +191,8 @@ end</code></pre>
 
 export Card,print_card,Hand,print_hand,is_full_house
 
-ranks = [&quot;A&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;T&quot;,&quot;J&quot;,&quot;Q&quot;,&quot;K&quot;]
-suits = [&quot;\u2660&quot;,&quot;\u2661&quot;,&quot;\u2662&quot;,&quot;\u2663&quot;]
+ranks = [&apos;A&apos;,&apos;2&apos;,&apos;3&apos;,&apos;4&apos;,&apos;5&apos;,&apos;6&apos;,&apos;7&apos;,&apos;8&apos;,&apos;9&apos;,&apos;T&apos;,&apos;J&apos;,&apos;Q&apos;,&apos;K&apos;]
+suits = [&apos;\u2660&apos;,&apos;\u2661&apos;,&apos;\u2662&apos;,&apos;\u2663&apos;]
 
 
 type Card
@@ -254,6 +254,9 @@ end
 
 type Hand
     cards::Array{Card,1}
+    Hand(c::Array{Card,1})=new(c)
+    Hand(c::Array{String,1})=new(map(Card,c))
+    Hand(s::String)=new(map(Card,map(String,split(s,&apos;,&apos;))))
 end
 
 function print_hand(h::Hand)
