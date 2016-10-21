@@ -1,4 +1,4 @@
- List of notes for Scientific Computing (FSU, Fall 2016)
+## List of notes for Scientific Computing (FSU, Fall 2016)
 
 * [Getting Started in Julia](julia.html)
 * [Chapter 1: Introduction to Scientific Computing](ch01.html)
@@ -13,3 +13,4 @@
 * [Chapter 10: Random Numbers and Monte Carlo Simulations](ch10.html)
 * [Chapter 11: Creating New Data Types in Julia](ch11.html)
 * [Chapter 12: Creating A Module and Performing Unit Tests](ch12.html)
+* [Chpater 13: Parallel Computing](ch13.html)
