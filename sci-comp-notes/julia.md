@@ -40,15 +40,76 @@ The browser interface to julia, called Jupyter allows some nice features.  It&#8
 
 * Click on the name of the file in the upper right corner of the document to change its name.
 
-* To save the file, goto *File* then *Download* and use the format of your choice. 
+* To save the file, goto *File* then *Download* and use the format of your choice.
 
 
 
+Setting up a link to the command line version
+-----
+
+As we will see in the course, accessing the command line version of Julia is helpful.  It is a little different for doing this on the Mac/Linux and on Windows.
+
+#### Setting up julia in your path on Mac/Linux
+
+1. Open up the `Terminal`.  This is located in the `Applications` directory or search for `Terminal` in Spotlight.
+
+2. Navigate to the julia binary on your computer.  You can do
+    ```
+    cd /Applications/Julia-0.5.app/Contents/Resources/julia
+    ```
+
+    or similar (but this may not quite work) OR find the Julia app in the Finder, CTRL-click on the Julia app and select `Show Package Contents`, then navigate as shown:
+
+    ![path to julia binary](../images/ch01/julia-path.png)
+
+3. Select the `bin` directory and return to the `Terminal` and type `cd ` (put a space) then paste. Type `ls` and you should see:
+    ```
+    julia		julia-debug
+    ```
+
+4.  Now, type
+    ```
+    echo -e "\n\nexport "PATH=$PATH:$(pwd) >> ~/.bash_profile
+    ```
+
+    then
+    ```
+    source ~/.bash_profile
+    ```
+
+    If you type `julia`, you should see julia starting up.  Great.  
+
+    If it worked type `exit()`.
 
 
 
+#### Setting up julia in your path on Windows
 
+Thanks to Dan Hanmore for figuring these out:
 
+1. Open Control Panel, go to System and Security
+
+    ![](../images/ch01/win-path-01.png)
+
+2. System
+
+    ![](../images/ch01/win-path-02.png)
+
+3. Advanced System Settings
+
+    ![](../images/ch01/win-path-03.png)
+
+4. Environment Variables
+
+    ![](../images/ch01/win-path-04.png)
+
+5. Click Edit with either the user path or the system path highlighted, I just did user path and it worked fine.
+
+    ![](../images/ch01/win-path-05.png)
+
+6. Do not click New on the above screen, as naming a variable Path will replace the old path completely. If you do this, you can still Cancel out of the screen above and then reenter it. Click New on the screen below, and either enter your path manually or browse to it. Yours should look like the highlighted one, with your user account name.
+
+    ![](../images/ch01/win-path-06.png)
 
 
 Getting Atom
