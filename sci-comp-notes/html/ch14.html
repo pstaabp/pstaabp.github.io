@@ -169,7 +169,7 @@ html,body,#wrapper{font-size:10pt!important;}
 </head>
 <body class="normal firstload">
   <div id="wrapper">
-      <h1 id="chapter14:shortestpathsthroughagraphandthetravelingsalespersonproblem.">Chapter 14: Shortest Paths through a Graph and the Traveling Salesperson Problem.</h1>
+      <h1 id="chapter14:shortestpathsthroughagraphandthetravelingsalespersonproblem">Chapter 14: Shortest Paths through a Graph and the Traveling Salesperson Problem</h1>
 
 <h3 id="thetravelingsalespersonproblem">The Traveling Salesperson Problem</h3>
 
@@ -272,16 +272,18 @@ html,body,#wrapper{font-size:10pt!important;}
 <p>where we&#8217;ve assumed that the distance of a node to itself is 0 and the matrix is symmetric because the distance from A to B is the same as from B to A.</p>
 
 <p>Next, let&#8217;s define a function that finds the total distance given a array of node numbers:</p>
-<pre><code class="(null)">function totalDistance(nodes::Array{Int,1},distArray::Array{Int,2})
-    sum=0;
+<pre><code class="(null)">function function total_distance(nodes::Array{Int,1},distances::Array{Float64,2})
+    ### given the path in the argument nodes, find the total distance travelled.
+
+    local sum=0.0
     for i=1:length(nodes)-1
-        sum+=distArray[nodes[i],nodes[i+1]];
+        sum+=distances[nodes[i],nodes[i+1]]
     end
-    sum + distArray[nodes[1],nodes[end]]
+    sum+distances[nodes[1],nodes[end]]
 end</code></pre>
 
 <p>As a test if we pass the totalDistance the array [1 2 3 4 5], we should get the result 111. </p>
-<pre><code class="(null)">totalDistance(collect(1:5),distances5)</code></pre>
+<pre><code class="(null)">total_distance(collect(1:5),distances5)</code></pre>
 
 <h4 id="permutations">Permutations</h4>
 
@@ -295,16 +297,52 @@ end</code></pre>
 
 <p>we use the <code>nthperm</code> command which needs a vector and an integer. </p>
 
+<p>A vector of anything can be permuted. Here&#8217;s an array of strings.</p>
+<pre><code class="(null)">for i=1:24
+    println(nthperm([&quot;horse&quot;,&quot;zebra&quot;,&quot;camel&quot;,&quot;whale&quot;],i))
+end</code></pre>
+
+<p>which returns:</p>
+<pre><code class="(null)">String[&quot;horse&quot;,&quot;zebra&quot;,&quot;camel&quot;,&quot;whale&quot;]
+String[&quot;horse&quot;,&quot;zebra&quot;,&quot;whale&quot;,&quot;camel&quot;]
+String[&quot;horse&quot;,&quot;camel&quot;,&quot;zebra&quot;,&quot;whale&quot;]
+String[&quot;horse&quot;,&quot;camel&quot;,&quot;whale&quot;,&quot;zebra&quot;]
+String[&quot;horse&quot;,&quot;whale&quot;,&quot;zebra&quot;,&quot;camel&quot;]
+String[&quot;horse&quot;,&quot;whale&quot;,&quot;camel&quot;,&quot;zebra&quot;]
+String[&quot;zebra&quot;,&quot;horse&quot;,&quot;camel&quot;,&quot;whale&quot;]
+String[&quot;zebra&quot;,&quot;horse&quot;,&quot;whale&quot;,&quot;camel&quot;]
+String[&quot;zebra&quot;,&quot;camel&quot;,&quot;horse&quot;,&quot;whale&quot;]
+String[&quot;zebra&quot;,&quot;camel&quot;,&quot;whale&quot;,&quot;horse&quot;]
+String[&quot;zebra&quot;,&quot;whale&quot;,&quot;horse&quot;,&quot;camel&quot;]
+String[&quot;zebra&quot;,&quot;whale&quot;,&quot;camel&quot;,&quot;horse&quot;]
+String[&quot;camel&quot;,&quot;horse&quot;,&quot;zebra&quot;,&quot;whale&quot;]
+String[&quot;camel&quot;,&quot;horse&quot;,&quot;whale&quot;,&quot;zebra&quot;]
+String[&quot;camel&quot;,&quot;zebra&quot;,&quot;horse&quot;,&quot;whale&quot;]
+String[&quot;camel&quot;,&quot;zebra&quot;,&quot;whale&quot;,&quot;horse&quot;]
+String[&quot;camel&quot;,&quot;whale&quot;,&quot;horse&quot;,&quot;zebra&quot;]
+String[&quot;camel&quot;,&quot;whale&quot;,&quot;zebra&quot;,&quot;horse&quot;]
+String[&quot;whale&quot;,&quot;horse&quot;,&quot;zebra&quot;,&quot;camel&quot;]
+String[&quot;whale&quot;,&quot;horse&quot;,&quot;camel&quot;,&quot;zebra&quot;]
+String[&quot;whale&quot;,&quot;zebra&quot;,&quot;horse&quot;,&quot;camel&quot;]
+String[&quot;whale&quot;,&quot;zebra&quot;,&quot;camel&quot;,&quot;horse&quot;]
+String[&quot;whale&quot;,&quot;camel&quot;,&quot;horse&quot;,&quot;zebra&quot;]
+String[&quot;whale&quot;,&quot;camel&quot;,&quot;zebra&quot;,&quot;horse&quot;]</code></pre>
+
 <h3 id="exploringallcasesofthetsp">Exploring all cases of the TSP</h3>
 
-<p>In the case above, there are 5!=120 permutations. An exhaustive search of the TSP is simply passing every permutation of the vector [1 2 3 4 5] to the totalDistance function. Then you search for the smallest total distance. In the case above, we can find all distances via:</p>
-<pre><code class="(null)">d=map(k-&gt;totalDistance(nthperm(collect(1:5),k),distances5),1:120)</code></pre>
+<p>Returning to the Traveling Salesperson Problem (TSP), the example above has 5!=120 permutations or different paths. An exhaustive search of the TSP is simply passing every permutation of the vector [1 2 3 4 5] to the <code>total_distance</code> function. Then you search for the smallest total distance. </p>
 
-<p>where the vector d now has the total distance for each permultation. The smallest one is given by:</p>
+<p>If we first find all of the permutations:</p>
+<pre><code class="(null)">perms=map(k-&gt;nthperm(collect(1:5),k),collect(1:factorial(5)))</code></pre>
+
+<p>then we can find the distance for each:</p>
+<pre><code class="(null)">all_distances=map(p-&gt;total_distance(p,1.0*distances5),perms)</code></pre>
+
+<p>To find the smallest distance, we use:</p>
 <pre><code class="(null)">findmin(d)</code></pre>
 
 <p>which returns (93,7) meaning that the value 93 is the smallest distance and it occurs in the 7th place. To determine the path, apply the nthperm function again:</p>
-<pre><code class="(null)">nthperm(1:5,7)</code></pre>
+<pre><code class="(null)">perms[7]</code></pre>
 
 <p>which results the path [1 3 2 4 5] or A-&gt;C-&gt;B-&gt;D-&gt;E .</p>
 
@@ -312,13 +350,13 @@ end</code></pre>
 
 <h3 id="wedontneedtosearcheverything">We don&#8217;t need to search everything</h3>
 
-<p>As we showed above, any solution will have each node in it. We can then always take the first node (A or 1) to be in the first location. This way we can just seach the first 4! permutations (this will always have A first).</p>
+<p>As we showed above, any solution will have each node in it. We can then always take the first node (A or 1) to be in the first location. This way we can just search the first 4! permutations (this will always have A first).</p>
 
-<p>If we repeat our seach using:</p>
-<pre><code class="(null)">d=map(k-&gt;totalDistance(nthperm(collect(1:5),k),distances5),1:24)</code></pre>
+<p>If we repeat our search in a more compact way using:</p>
+<pre><code class="(null)">dist=map(k-&gt;total_distance(nthperm(collect(1:5),k),1.0*distances5),1:factorial(4))</code></pre>
 
 <p>and then find the smallest value:</p>
-<pre><code class="(null)">findmin(d)</code></pre>
+<pre><code class="(null)">findmin(dist)</code></pre>
 
 <p>we get the same result. </p>
 
@@ -337,11 +375,11 @@ end</code></pre>
 
 <p>and if you examine the distances10 array, you can see it has the properties we want.</p>
 
-<p>Now, let&#8217;s compute the totalDistance for all paths:</p>
-<pre><code class="(null)">d=map(k-&gt;totalDistance(nthperm(collect(1:10),k),distances10),1:factorial(9))</code></pre>
+<p>Now, let&#8217;s compute the total distance for all paths:</p>
+<pre><code class="(null)">dist=map(k-&gt;total_distance(nthperm(collect(1:10),k),1.0*distances10),1:factorial(9))</code></pre>
 
 <p>and if you look for the smallest</p>
-<pre><code class="(null)">findmin(d)</code></pre>
+<pre><code class="(null)">findmin(dist)</code></pre>
 
 <p>My results are <code>(174,3149)</code>, which means that the smallest distance is 174 and occurs for the 3149th permutation. You can find the permutation by typing</p>
 <pre><code class="(null)">nthperm([1:10],3149)</code></pre>
@@ -358,12 +396,14 @@ end</code></pre>
 
 <p>A different way to think about this is to start with a path and then tweak it. Before we get to the details, it is helpful to have the following function that performs a swap of two elements in the array.</p>
 <pre><code class="(null)">function swapEls!(A,i,j)
-    tmp=A[i];A[i]=A[j];A[j]=tmp;
+    tmp=A[i];
+    A[i]=A[j];
+    A[j]=tmp;
 end</code></pre>
 
 <p>Let&#8217;s try looking at the N=5 case.</p>
 
-<p>If we start with the case <code>path=[1:5]</code> then the total distance is</p>
+<p>If we start with the case <code>path=collect(1:5)</code> then the total distance is</p>
 <pre><code class="(null)">distance=totalDistance(path,distances5)</code></pre>
 
 <p>which is 111.</p>
@@ -374,20 +414,21 @@ end</code></pre>
 <p>and then there will be a new path. We&#8217;ll check what the value of the distance is. If it is smaller than distance (currently 111), then we&#8217;ll store the path and the distance.</p>
 
 <p>The resulting function that does all of this is:</p>
-<pre><code class="(null)">function findTSP(distances::Array{Int,2},iter::Int)
-    local N=size(distances,1)  #number of rows in distances array
-    local path=[1:N]
-    local minpath=path
-    local mindist=totalDist(minpath,distances)
+<pre><code class="(null)">function find_TSP(distances::Array{Float64,2},iter::Int)
+    ###This will run simulated annealing on the TSP and return the shortest distance after iter iterations
+
+    local N = size(distances,1)
+    local path = collect(1:N)
+    local min_dist = total_distance(path,distances)
+
     for i=1:iter
-        swapEls!(path,rand(1:N),rand(1:N))
-        dist=totalDist(path,distances)
-        if dist &lt; mindist
-            mindist=dist
-            minpath=path
+        swap_els!(path,rand(1:N),rand(1:N))
+        dist=total_distance(path,distances)
+        if dist&lt;min_dist
+            min_dist = dist
         end
     end
-    return (minpath,mindist)
+    (path,min_dist)
 end</code></pre>
 
 <p>and then we can apply this to any distance array. For example</p>
