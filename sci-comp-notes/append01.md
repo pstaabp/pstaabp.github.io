@@ -1,6 +1,9 @@
 Appendix 1:: The Google Maps Distance Matrix API
 ========
 
+[Return to all notes](../index.html)
+
+
 This appendix explains how to use the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/), a service that allows a user to get the distances between multiple locations.  
 
 Getting an API key
@@ -179,4 +182,16 @@ returns
 
 Note: the number listed in value for each leg is given in meters.  
 
-The format of result is a JSON file and we will save the file and load it into Julia to store as a matrix.  
+The format of result is a JSON file and we will save the file and load it into Julia to store as a matrix.
+
+### using the JSON package to load the data
+
+From [Chapter 15](ch15.html) we can read and parse the JSON files that come from the Google Distance Matrix API:  For example,
+
+```
+f=open("distances.json","r")
+info=JSON.parse(f)
+close(f)
+```
+
+and `f` will now be a dictionary.  
