@@ -207,12 +207,15 @@ html,body,#wrapper{font-size:10pt!important;}
 
 <h3 id="gettingdatafromafile">Getting data from a file</h3>
 
-<p>Download the file <a href="Gaz_ua_national.txt">Gaz_ua_national.txt</a> and save it somewhere that you can access it from Julia.</p>
+<p>Download the file <a href="Gaz_ua_national.txt">Gaz_ua_national.txt</a> and save it somewhere that you can access it from Julia. This file has a lot of census data that we will try to find answers. </p>
 
 <h3 id="loadinthedata">Load in the data</h3>
 
 <p>The data is a CSV file with tab delimeters and information about the data is <a href="http://www.census.gov/geo/maps-data/data/gazetteer2010.html">on the census website</a> To load it in type:</p>
-<pre><code class="(null)">data,header=readdlm(&quot;Gaz_ua_national.txt&quot;,&apos;\t&apos;,String,header=true)</code></pre>
+<pre><code class="(null)">census_data=readtable(&quot;Gaz_ua_national.txt&quot;,separator=&apos;\t&apos;)</code></pre>
+
+<p>and readtable returns a dataframe, but doesn&#8217;t print it out. It is often helpful to see the top few lines using</p>
+<pre><code class="(null)">head(census_data)</code></pre>
 
 <p>Here&#8217;s a few questions we may want to know:</p>
 
@@ -232,76 +235,12 @@ html,body,#wrapper{font-size:10pt!important;}
 
 <h3 id="gettingthedataintoareasonableform:">Getting the data into a reasonable form:</h3>
 
-<p>Since all of the data came is as a String (note: we said this in the readdlm function), we now want to use the data and will need to convert it to ints and floats. First, we&#8217;ll make a new array to store the data. The function</p>
-<pre><code class="(null)">data2=Array(Any,3592,11)</code></pre>
+<p>One of the great things about DataFrames and the <code>readtable</code> function is that it usually detects the datatype and converts it to a proper form. </p>
 
-<p>Creates an array of type &#8220;Any&#8221; with the dimensions the same size. Note the Any type can store different types within the same array. Examining the data, this is what we want each column type to be:</p>
+<p>The only issue with this is the GEOID, which should be a string instead of an Int64. We need to actually go back and reread in the data. If we</p>
+<pre><code class="(null)">census_data=readtable(&quot;Gaz_ua_national.txt&quot;,separator=&apos;\t&apos;,eltypes=[String,String,String,Int64,Int64,Int64,Int64,Float64,Float64,Float64,Float64])</code></pre>
 
-<table>
-<colgroup>
-<col style="text-align:left;"/>
-<col style="text-align:left;"/>
-</colgroup>
-
-<thead>
-<tr>
-	<th style="text-align:left;">Columns</th>
-	<th style="text-align:left;">data type</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-	<td style="text-align:left;">Area/Zip-like Code (col 1), Area Name (col 2), Urban or Not (col 3)</td>
-	<td style="text-align:left;">String</td>
-</tr>
-<tr>
-	<td style="text-align:left;">Population (col 4), Housing Units (col 5), Area of Land and water (cols 6&#8211;9)</td>
-	<td style="text-align:left;">Int</td>
-</tr>
-<tr>
-	<td style="text-align:left;">Longitude (col 10), Latitude (col 11)</td>
-	<td style="text-align:left;">Float</td>
-</tr>
-</tbody>
-</table>
-
-<h3 id="fillingthestrings">Filling the strings</h3>
-
-<p>Fill the first 3 columns with just the columns from the data array:</p>
-<pre><code class="(null)">data2[:,[1,2,3]]=data[:,[1,2,3]]</code></pre>
-
-<p>Next, fill the next 6 columns as ints</p>
-<pre><code class="(null)">data2[:,[4:9]]=int(data[:,[4:9])</code></pre>
-
-<p>and then if we try the same with the final two columns:</p>
-<pre><code class="(null)">data2[:,[10,11]]=float(data[:,[10,11]])</code></pre>
-
-<p>&#8217;ll get an error:</p>
-<pre><code class="(null)">ArgumentError(&quot;float64(String): invalid number format&quot;)</code></pre>
-
-<p>because the last column is in a strange format. To remedy this we need to strip the last column of all white space (spaces and tabs and such).</p>
-
-<p>The 10th column can be filled as expected with</p>
-<pre><code class="(null)">data[:,10]=float(data[:,10])</code></pre>
-
-<p>but the 11th will need</p>
-<pre><code class="(null)">data2[:,11]=float(map(strip,data[:,11]))</code></pre>
-
-<p>where the strip function (which gets rid of the white space) is applied to each element in the 11th column. Then each is converted to a float. Looking now at the data2 array:</p>
-<pre><code class="(null)">3592x11 Array{Any,2}:
- &quot;00037&quot;  …   11.283  0.116  29.9676   -92.0982
- &quot;00064&quot;       4.369  0.008  34.1792   -82.3797
- &quot;00091&quot;       2.071  0.005  44.9486   -90.3159
- &quot;00118&quot;       2.864  0.02   33.8247   -88.5546
- &quot;00145&quot;      12.742  0.096  45.4632   -98.471
- &quot;00172&quot;  …   15.443  0.745  46.9764  -123.796
- &quot;00199&quot;     131.131  3.794  39.509    -76.3034
- &quot;00226&quot;       1.178  0.005  33.8305  -101.846
- &quot;00253&quot;       3.387  0.001  38.9211   -97.2208
- &quot;00280&quot;      54.732  0.382  32.4285   -99.7472</code></pre>
-
-<p>shows a bit of it.</p>
+<p>then the GEOID is now a String. Check it. </p>
 
 <h3 id="sortinganarray">Sorting an array</h3>
 
