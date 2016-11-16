@@ -2,9 +2,9 @@ module TropicalMath
 
 export ⊕,⊗,trop_pow
 
-function ⊕{T1<:Number,T2<:Number}(x::T1,y::T2)
-    min(x,y) 
-end
+#function ⊕{T1<:Number,T2<:Number}(x::T1,y::T2)
+#    min(x,y) 
+#end
 
 function ⊕{T<:Number}(x::T...)
     minimum(x)
