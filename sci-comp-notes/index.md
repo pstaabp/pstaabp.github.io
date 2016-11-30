@@ -13,10 +13,13 @@
 * [Chapter 10: Random Numbers and Monte Carlo Simulations](ch10.html)
 * [Chapter 11: Creating New Data Types in Julia](ch11.html)
 * [Chapter 12: Creating A Module and Performing Unit Tests](ch12.html)
-* [Chpater 13: Parallel Computing](ch13.html)
+* [Chapter 13: Parallel Computing](ch13.html)
 * [Chapter 14: Shortest Paths through a Graph and the Traveling Salesperson Problem](ch14.html)
 * [Chapter 15: Dictionaries and JSON Files](ch15.html)
 * [Chapter 16: Data, Data everywhere](ch16.html)
+* [Chapter 17: Rational and Complex Numbers](ch17.html)
+* [Chapter 18: Images](ch18.html)
+* [Chapter 19: Newton's Method in the Complex Plane](ch19.html)
 
 
 ### Appendices

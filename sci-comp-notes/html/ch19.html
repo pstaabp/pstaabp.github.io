@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>index</title>
+  <title>ch19</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style id="mkstylesheet">
 body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;margin:30px 0 0;padding:0;background:#fff}#wrapper{padding:20px}li{font-size:110%}li li{font-size:100%}li p{font-size:100%;margin:.5em 0}h1{color:#000}h2{color:#111}h3{color:#111;margin:0}h4{color:#111}h5{color:#111}h6{font-size:1em;line-height:1.5em;margin:1.5em 0}body,p,td,div{color:#111;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;word-wrap:break-word}a{color:#0d6ea1;text-decoration:none;-webkit-transition:color .2s ease-in-out;-moz-transition:color .2s ease-in-out;-o-transition:color .2s ease-in-out;-ms-transition:color .2s ease-in-out;transition:color .2s ease-in-out}a:hover{color:#3593d9}body{font-size:15px;line-height:21px;margin:0 auto}h1{font-size:37px;line-height:42px;margin-top:42px;margin-bottom:21px}h2{font-size:27px;line-height:42px;margin-top:42px;margin-bottom:21px}h3{font-size:20px;line-height:21px;margin-top:21px;margin-bottom:21px}h4{font-size:20px;line-height:21px;margin-top:21px;margin-bottom:21px}p,ul,ol,pre,table,blockquote{margin-top:21px;margin-bottom:21px}hr{border:1px solid;margin:-1px 0}ul ul,ol ol,ul ol,ol ul{margin-top:0;margin-bottom:0}b,strong,em,small,code{line-height:1}.footnote{color:#0d6ea1;font-size:.8em;vertical-align:super}abbr,acronym{border-bottom:1px dotted #aaa}#wrapper img{max-width:100%;height:auto}dd{font-size:1em;margin-bottom:1em}li>p:first-child{margin:0}ul,ol{padding-left:1.5em}#wrapper ol{list-style-position:inside}ul ul,ul ol{margin-bottom:.4em}caption,col,colgroup,table,tbody,td,tfoot,th,thead,tr{border-spacing:0}table{border:1px solid rgba(0,0,0,0.25);border-collapse:collapse;display:table;empty-cells:hide;margin:-1px 0 1.3125em;padding:0;table-layout:fixed}caption{display:table-caption;font-weight:700}col{display:table-column}colgroup{display:table-column-group}tbody{display:table-row-group}tfoot{display:table-footer-group}thead{display:table-header-group}td,th{display:table-cell}tr{display:table-row}table th,table td{font-size:1.1em;line-height:1.3;padding:.5em 1em 0}table thead{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-bottom:1px solid rgba(0,0,0,0.2)}table tbody{background:rgba(0,0,0,0.05)}table tfoot{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-top:1px solid rgba(0,0,0,0.2)}figure{display:inline-block;overflow:hidden;position:relative;margin:1em 0 2em}figcaption{font-style:italic;text-align:center;background:white;color:#666}.poetry pre{display:block;font-family:Georgia,Garamond,serif !important;font-size:110% !important;font-style:italic;line-height:1.6em;margin-left:1em}.poetry pre code{font-family:Georgia,Garamond,serif !important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}blockquote p{font-size:110%;font-style:italic;line-height:1.6em}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;position:relative;vertical-align:super}sub{vertical-align:sub;top:-1px}p,h5{font-size:1.1429em;line-height:1.3125em;margin:1.3125em 0}dt,th{font-weight:700}table tr:nth-child(odd),table th:nth-child(odd),table td:nth-child(odd){background:rgba(255,255,255,0.06)}table tr:nth-child(even),table td:nth-child(even){background:rgba(200,200,200,0.25)}@media print{img,table,figure{page-break-inside:avoid}#wrapper{background:#fff;color:#303030;padding:10px;position:relative;text-indent:0}}@media screen{.inverted{background:#252a2a}.inverted #wrapper{background:#252a2a;color:#eee}.inverted hr{border-color:#333f40 !important}.inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dt,.inverted dd{color:#eee}.inverted pre{background:#ccc;color:#111}.inverted table{background:none}.inverted table tr:nth-child(odd),.inverted table td:nth-child(odd){background:none}.inverted a{color:#acd1d5}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eee}code span::selection{background-color:rgba(0,0,0,0.7) !important;color:#eee !important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}}
@@ -167,38 +167,124 @@ html,body,#wrapper{font-size:10pt!important;}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
-      <h2 id="listofnotesforscientificcomputingfsufall2016">List of notes for Scientific Computing (FSU, Fall 2016)</h2>
+      <h1 id="chapter19:newtonsmethodinthecomplexplane">Chapter 19: Newton&#8217;s Method in the Complex Plane</h1>
 
-<ul>
-<li><a href="julia.html">Getting Started in Julia</a></li>
-<li><a href="ch01.html">Chapter 1: Introduction to Scientific Computing</a></li>
-<li><a href="ch02.html">Chapter 2: Functions</a></li>
-<li><a href="ch03.html">Chapter 3: Data Types</a></li>
-<li><a href="ch04.html">Chapter 4: Number theory</a></li>
-<li><a href="ch05.html">Chapter 5: Solving Quadratics and Rootfinding in General</a></li>
-<li><a href="ch06.html">Chapter 6: Loading Packages</a></li>
-<li><a href="ch07.html">Chapter 7: Arrays</a></li>
-<li><a href="ch08.html">Chapter 8: More on Functions</a></li>
-<li><a href="ch09.html">Chapter 9: Plotting Data and Functions</a></li>
-<li><a href="ch10.html">Chapter 10: Random Numbers and Monte Carlo Simulations</a></li>
-<li><a href="ch11.html">Chapter 11: Creating New Data Types in Julia</a></li>
-<li><a href="ch12.html">Chapter 12: Creating A Module and Performing Unit Tests</a></li>
-<li><a href="ch13.html">Chapter 13: Parallel Computing</a></li>
-<li><a href="ch14.html">Chapter 14: Shortest Paths through a Graph and the Traveling Salesperson Problem</a></li>
-<li><a href="ch15.html">Chapter 15: Dictionaries and JSON Files</a></li>
-<li><a href="ch16.html">Chapter 16: Data, Data everywhere</a></li>
-<li><a href="ch17.html">Chapter 17: Rational and Complex Numbers</a></li>
-<li><a href="ch18.html">Chapter 18: Images</a></li>
-<li><a href="ch19.html">Chapter 19: Newton&#8217;s Method in the Complex Plane</a></li>
-</ul>
+<p>Newton&#8217;s method works great with complex numbers as well. In short, we just need to start it with a complex number and it will iterate the same way. </p>
 
-<h3 id="appendices">Appendices</h3>
+<p>(Note: the interpretation of using the tangent line to estimate the root isn&#8217;t quite the same as with real numbers, but it still converges to a root.)</p>
 
-<ul>
-<li><a href="append01.html">Appendix 1:: The Google Maps Distance Matrix API</a></li>
-</ul>
+<p>Let&#8217;s use this to solve <span class="math">\(x^{2}+5=0\)</span>, which should have the solution <span class="math">\(x=\pm i\sqrt{5}\)</span>. First, define </p>
+<pre><code class="(null)">f(x)=x<sup>2+5</sup></code></pre>
+
+<p>and </p>
+<pre><code class="(null)">df(x)=2x</code></pre>
+
+<p>and if we do <code>newton(f,df,1.0)</code> then the result stays in the real number and we get <code>-11.659358758975838</code> but this isn&#8217;t the solution.</p>
+
+<p>However, if we type <code>newton(f,df,1im)</code>, the the solution 0.0 + 2.236067977499978im. </p>
+
+<h3 id="exercise">Exercise</h3>
+
+<p>The equation <span class="math">\(x^{3}-1=0\)</span> has one real root and two complex ones. Use newton&#8217;s method to find all of them. </p>
+
+<h1 id="findingcomplexroots">Finding Complex roots</h1>
+
+<p>It is quite interesting to solve <span class="math">\( z^n=1 \)</span> for <span class="math">\(n=3,4,…\)</span> using Newton&#8217;s method and we will spend the rest of this chapter doing so. Mainly we will be examining the case where <span class="math">\(n=3\)</span> or finding roots of <span class="math">\(f(z) = z^3-1\)</span>. </p>
+
+<h2 id="creatinganpictureofnewtonsmethod">Creating an picture of newton&#8217;s method</h2>
+
+<p>The following is quite interesting. Consider the map <span class="math">\(f(z)=z^3-1\)</span> and some initial condition, iterate Newton&#8217;s method until it converges. Except <span class="math">\(z_0=0+0i\)</span>, it will converge to one of three roots. Label the initial point A, B or C for the roots (or more visually interesting, give the initial point a color). Do this for a number of initial points and see what it looks like. </p>
+
+<ol>
+<li>Start with an array of initial points:</li>
+</ol>
+<pre><code class="(null)">Z=[x+im*y for y=1:&#8211;0.1:&#8211;1, x=&#8211;1:0.1:1]</code></pre>
+
+<pre><code>This will make a 21 by 21 array of complex numbers.  Notice that we did `x-im*y` to get the numbers to align with the way that we typically think of numbers in the complex plane.  
+</code></pre>
+
+<ol>
+<li>Run Newton&#8217;s method with the function <span class="math">\(f(z)\)</span> as above on every initial point:</li>
+</ol>
+<pre><code class="(null)">roots=map(a-&gt;newton(x-&gt;x<sup>3-1,x-&gt;3x</sup>2,a),Z)</code></pre>
+
+<pre><code>and this returns the root that each initial condition goes to.  
+</code></pre>
+
+<ol>
+<li>Label each root a number. We can do this with the angle command. For example:</li>
+</ol>
+<pre><code class="(null)">angles = map(angle,roots)</code></pre>
+
+<pre><code>this will return all of the roots in radians, and the following will switch to degrees and round to the nearest integer:  
+</code></pre>
+<pre><code class="(null)">angles = round(map(angle,roots)*180/pi)</code></pre>
+
+<ol>
+<li>There will be a problem with the center point in this array. If we look at:</li>
+</ol>
+<pre><code class="(null)">data[9:15,8:13]</code></pre>
+
+<pre><code>note that the center (at row 11, column 11) is `NaN`.  This is because we divided by 0 in Newton's method.
+</code></pre>
+
+<ol>
+<li>Let&#8217;s change the angles to 1, 2 or 3. We will convert the data to an integer array and then do some integer division:</li>
+</ol>
+<pre><code class="(null)">data2=div(convert(Array{Int,2},data)+240,120)</code></pre>
+
+<pre><code>returns a nice 21 by 21 matrix such that it explains which roots Newton's method goes to. It is:  
+</code></pre>
+<pre><code class="(null)">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 1 1 2 2
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 1 2 2 2
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 2 2 2 2
+1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 2 2 2 2 2 2
+1 1 1 1 1 1 1 1 1 1 1 3 2 3 1 3 2 2 2 2 2
+1 1 1 1 1 1 1 1 1 1 1 1 3 3 1 1 2 2 2 2 2
+1 1 1 1 1 1 1 1 1 1 3 3 3 3 3 3 2 2 2 2 2
+1 1 1 1 1 1 1 1 1 1 1 3 3 3 1 2 2 2 2 2 2
+1 1 1 1 2 3 3 1 1 1 2 3 3 1 2 2 2 2 2 2 2
+2 1 1 3 2 2 2 2 2 1 2 3 3 2 2 2 2 2 2 2 2
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+2 3 3 1 2 2 2 2 2 3 2 1 1 2 2 2 2 2 2 2 2
+3 3 3 3 2 1 1 3 3 3 2 1 1 3 2 2 2 2 2 2 2
+3 3 3 3 3 3 3 3 3 3 3 1 1 1 3 2 2 2 2 2 2
+3 3 3 3 3 3 3 3 3 3 1 1 1 1 1 1 2 2 2 2 2
+3 3 3 3 3 3 3 3 3 3 3 3 1 1 3 3 2 2 2 2 2
+3 3 3 3 3 3 3 3 3 3 3 1 2 1 3 1 2 2 2 2 2
+3 3 3 3 3 3 3 3 3 3 3 3 2 2 1 2 2 2 2 2 2
+3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 1 2 2 2 2
+3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 3 2 2 2
+3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 3 3 2 2</code></pre>
+
+<ol>
+<li>Using a colormap to create a image. First, if you haven&#8217;t loaded these:</li>
+</ol>
+<pre><code class="(null)">using Images, Colors</code></pre>
+
+<pre><code>then let's make a color map:  
+</code></pre>
+<pre><code class="(null)">cmap = colormap(&quot;reds&quot;,3)</code></pre>
+
+<pre><code>and then  
+</code></pre>
+<pre><code class="(null)">ImageCmap(data2,cmap)</code></pre>
+
+<pre><code>produces the following:  
+![plot of Newton's method in the Complex Plane](../images/ch19/plot1.png)
+</code></pre>
+
+<ol>
+<li>There&#8217;s actually a problem with this because the way an image treats the underlying data is different that the mathematical way of understanding arrays. (Look at the documentation on the <code>Images</code> package for more info). To fix the picture, if we</li>
+</ol>
+<pre><code class="(null)">image=ImageCmap(transpose(data2),cmap)</code></pre>
+
+<pre><code>  then the result is correct.  
+</code></pre>
+
+<h1 id="puttingthisalltogether">Putting this all together</h1>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
