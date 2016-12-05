@@ -167,7 +167,7 @@ html,body,#wrapper{font-size:10pt!important;}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="chapter19:newtonsmethodinthecomplexplane">Chapter 19: Newton&#8217;s Method in the Complex Plane</h1>
 
@@ -175,10 +175,10 @@ html,body,#wrapper{font-size:10pt!important;}
 
 <p>(Note: the interpretation of using the tangent line to estimate the root isn&#8217;t quite the same as with real numbers, but it still converges to a root.)</p>
 
-<p>Let&#8217;s use this to solve <span class="math">\(x^{2}+5=0\)</span>, which should have the solution <span class="math">\(x=\pm i\sqrt{5}\)</span>. First, define </p>
-<pre><code class="(null)">f(x)=x<sup>2+5</sup></code></pre>
+<p>Let&#8217;s use this to solve <span class="math">\(x^{2}+5=0\)</span>, which should have the solution <span class="math">\(x=\pm i\sqrt{5}\)</span>. First, define</p>
+<pre><code class="(null)">f(x)=x^2+5</code></pre>
 
-<p>and </p>
+<p>and</p>
 <pre><code class="(null)">df(x)=2x</code></pre>
 
 <p>and if we do <code>newton(f,df,1.0)</code> then the result stays in the real number and we get <code>-11.659358758975838</code> but this isn&#8217;t the solution.</p>
@@ -198,91 +198,65 @@ html,body,#wrapper{font-size:10pt!important;}
 <p>The following is quite interesting. Consider the map <span class="math">\(f(z)=z^3-1\)</span> and some initial condition, iterate Newton&#8217;s method until it converges. Except <span class="math">\(z_0=0+0i\)</span>, it will converge to one of three roots. Label the initial point A, B or C for the roots (or more visually interesting, give the initial point a color). Do this for a number of initial points and see what it looks like. </p>
 
 <ol>
-<li>Start with an array of initial points:</li>
-</ol>
-<pre><code class="(null)">Z=[x+im*y for y=1:&#8211;0.1:&#8211;1, x=&#8211;1:0.1:1]</code></pre>
+<li><p>Start with an array of initial points:</p>
+<pre><code class="(null)">Z=[x+im*y for y=1:-0.1:-1, x=-1:0.1:1]</code></pre>
 
-<pre><code>This will make a 21 by 21 array of complex numbers.  Notice that we did `x-im*y` to get the numbers to align with the way that we typically think of numbers in the complex plane.  
-</code></pre>
+<p>This will make a 21 by 21 array of complex numbers. Notice that we did <code>x-im*y</code> to get the numbers to align with the way that we typically think of numbers in the complex plane. </p></li>
+<li><p>Run Newton&#8217;s method with the function <span class="math">\(f(z)\)</span> as above on every initial point:</p>
+<pre><code class="(null)">roots=map(a-&gt;newton(x-&gt;x^3-1,x-&gt;3x^2,a),Z)</code></pre>
 
-<ol>
-<li>Run Newton&#8217;s method with the function <span class="math">\(f(z)\)</span> as above on every initial point:</li>
-</ol>
-<pre><code class="(null)">roots=map(a-&gt;newton(x-&gt;x<sup>3-1,x-&gt;3x</sup>2,a),Z)</code></pre>
-
-<pre><code>and this returns the root that each initial condition goes to.  
-</code></pre>
-
-<ol>
-<li>Label each root a number. We can do this with the angle command. For example:</li>
-</ol>
+<p>and this returns the root that each initial condition goes to. </p></li>
+<li><p>Label each root a number. We can do this with the angle command. For example:</p>
 <pre><code class="(null)">angles = map(angle,roots)</code></pre>
 
-<pre><code>this will return all of the roots in radians, and the following will switch to degrees and round to the nearest integer:  
-</code></pre>
-<pre><code class="(null)">angles = round(map(angle,roots)*180/pi)</code></pre>
-
-<ol>
-<li>There will be a problem with the center point in this array. If we look at:</li>
-</ol>
+<p>this will return all of the roots in radians, and the following will switch to degrees and round to the nearest integer:</p>
+<pre><code class="(null)">angles = round(map(angle,roots)*180/pi)</code></pre></li>
+<li><p>There will be a problem with the center point in this array. If we look at:</p>
 <pre><code class="(null)">data[9:15,8:13]</code></pre>
 
-<pre><code>note that the center (at row 11, column 11) is `NaN`.  This is because we divided by 0 in Newton's method.
-</code></pre>
-
-<ol>
-<li>Let&#8217;s change the angles to 1, 2 or 3. We will convert the data to an integer array and then do some integer division:</li>
-</ol>
+<p>note that the center (at row 11, column 11) is <code>NaN</code>. This is because we divided by 0 in Newton&#8217;s method.</p></li>
+<li><p>Let&#8217;s change the angles to 1, 2 or 3. We will convert the data to an integer array and then do some integer division:</p>
 <pre><code class="(null)">data2=div(convert(Array{Int,2},data)+240,120)</code></pre>
 
-<pre><code>returns a nice 21 by 21 matrix such that it explains which roots Newton's method goes to. It is:  
-</code></pre>
-<pre><code class="(null)">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 1 1 2 2
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 1 2 2 2
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 2 2 2 2
-1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 2 2 2 2 2 2
-1 1 1 1 1 1 1 1 1 1 1 3 2 3 1 3 2 2 2 2 2
-1 1 1 1 1 1 1 1 1 1 1 1 3 3 1 1 2 2 2 2 2
-1 1 1 1 1 1 1 1 1 1 3 3 3 3 3 3 2 2 2 2 2
-1 1 1 1 1 1 1 1 1 1 1 3 3 3 1 2 2 2 2 2 2
-1 1 1 1 2 3 3 1 1 1 2 3 3 1 2 2 2 2 2 2 2
-2 1 1 3 2 2 2 2 2 1 2 3 3 2 2 2 2 2 2 2 2
-2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-2 3 3 1 2 2 2 2 2 3 2 1 1 2 2 2 2 2 2 2 2
-3 3 3 3 2 1 1 3 3 3 2 1 1 3 2 2 2 2 2 2 2
-3 3 3 3 3 3 3 3 3 3 3 1 1 1 3 2 2 2 2 2 2
-3 3 3 3 3 3 3 3 3 3 1 1 1 1 1 1 2 2 2 2 2
-3 3 3 3 3 3 3 3 3 3 3 3 1 1 3 3 2 2 2 2 2
-3 3 3 3 3 3 3 3 3 3 3 1 2 1 3 1 2 2 2 2 2
-3 3 3 3 3 3 3 3 3 3 3 3 2 2 1 2 2 2 2 2 2
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 1 2 2 2 2
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 3 2 2 2
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 3 3 2 2</code></pre>
-
-<ol>
-<li>Using a colormap to create a image. First, if you haven&#8217;t loaded these:</li>
-</ol>
+<p>returns a nice 21 by 21 matrix such that it explains which roots Newton&#8217;s method goes to. It is:</p>
+<pre><code class="(null)">1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  3  3  1  1  2  2
+1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  3  3  1  2  2  2
+1  1  1  1  1  1  1  1  1  1  1  1  1  1  3  3  3  2  2  2  2
+1  1  1  1  1  1  1  1  1  1  1  1  2  2  3  2  2  2  2  2  2
+1  1  1  1  1  1  1  1  1  1  1  3  2  3  1  3  2  2  2  2  2
+1  1  1  1  1  1  1  1  1  1  1  1  3  3  1  1  2  2  2  2  2
+1  1  1  1  1  1  1  1  1  1  3  3  3  3  3  3  2  2  2  2  2
+1  1  1  1  1  1  1  1  1  1  1  3  3  3  1  2  2  2  2  2  2
+1  1  1  1  2  3  3  1  1  1  2  3  3  1  2  2  2  2  2  2  2
+2  1  1  3  2  2  2  2  2  1  2  3  3  2  2  2  2  2  2  2  2
+2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2
+2  3  3  1  2  2  2  2  2  3  2  1  1  2  2  2  2  2  2  2  2
+3  3  3  3  2  1  1  3  3  3  2  1  1  3  2  2  2  2  2  2  2
+3  3  3  3  3  3  3  3  3  3  3  1  1  1  3  2  2  2  2  2  2
+3  3  3  3  3  3  3  3  3  3  1  1  1  1  1  1  2  2  2  2  2
+3  3  3  3  3  3  3  3  3  3  3  3  1  1  3  3  2  2  2  2  2
+3  3  3  3  3  3  3  3  3  3  3  1  2  1  3  1  2  2  2  2  2
+3  3  3  3  3  3  3  3  3  3  3  3  2  2  1  2  2  2  2  2  2
+3  3  3  3  3  3  3  3  3  3  3  3  3  3  1  1  1  2  2  2  2
+3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  1  1  3  2  2  2
+3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  1  1  3  3  2  2</code></pre></li>
+<li><p>Using a colormap to create a image. First, if you haven&#8217;t loaded these:</p>
 <pre><code class="(null)">using Images, Colors</code></pre>
 
-<pre><code>then let's make a color map:  
-</code></pre>
+<p>then let&#8217;s make a color map:</p>
 <pre><code class="(null)">cmap = colormap(&quot;reds&quot;,3)</code></pre>
 
-<pre><code>and then  
-</code></pre>
+<p>and then</p>
 <pre><code class="(null)">ImageCmap(data2,cmap)</code></pre>
 
-<pre><code>produces the following:  
-![plot of Newton's method in the Complex Plane](../images/ch19/plot1.png)
-</code></pre>
+<p>produces the following:<br/>
+<img src="../images/ch19/plot1.png" alt="plot of Newtons method in the Complex Plane" /></p></li>
+<li><p>There&#8217;s actually a problem with this because the way an image treats the underlying data is different that the mathematical way of understanding arrays. (Look at the documentation on the <code>Images</code> package for more info). To fix the picture, if we</p>
 
-<ol>
-<li>There&#8217;s actually a problem with this because the way an image treats the underlying data is different that the mathematical way of understanding arrays. (Look at the documentation on the <code>Images</code> package for more info). To fix the picture, if we</li>
+<p><pre><code class="(null)">image=ImageCmap(transpose(data2),cmap)</code></pre></p>
+
+<p>then the result is correct. </p></li>
 </ol>
-<pre><code class="(null)">image=ImageCmap(transpose(data2),cmap)</code></pre>
-
-<pre><code>  then the result is correct.  
-</code></pre>
 
 <h1 id="puttingthisalltogether">Putting this all together</h1>
 <!-- ##END MARKED WRAPPER## -->
@@ -762,6 +736,15 @@ NUM_SUFFIX}],relevance:0},{className:'function',beginKeywords:'fn',end:'(\\(|<)'
 BUILTIN_MODULES};var DOUBLE_QUOTE_TEXT={className:'string',begin:'"',end:'"',illegal:'\\n'};var SINGLE_QUOTE_TEXT={className:'string',begin:'\'',end:'\'',illegal:'\\n'};var LONG_TEXT={className:'string',begin:'<<',end:'>>'};var BASED_NUMBER={className:'number',begin:'[0-9]+#[0-9A-Z_]+(\\.[0-9-A-Z_]+)?#?([Ee][+-]?[0-9]+)?'};var IMPORT={beginKeywords:'import',end:'$',keywords:XL_KEYWORDS,contains:[DOUBLE_QUOTE_TEXT]};var FUNCTION_DEFINITION={className:'function',begin:/[a-z][^\n]*->/,returnBegin:true,end:/->/,contains:[hljs.inherit(hljs.TITLE_MODE,{starts:{endsWithParent:true,keywords:XL_KEYWORDS}})]};return{aliases:['tao'],lexemes:/[a-zA-Z][a-zA-Z0-9_?]*/,keywords:XL_KEYWORDS,contains:[hljs.C_LINE_COMMENT_MODE,hljs.C_BLOCK_COMMENT_MODE,DOUBLE_QUOTE_TEXT,SINGLE_QUOTE_TEXT,LONG_TEXT,FUNCTION_DEFINITION,IMPORT,BASED_NUMBER,hljs.NUMBER_MODE]};});hljs.registerLanguage('xquery',function(hljs){var KEYWORDS='for let if while then else return where group by xquery encoding version'+'module namespace boundary-space preserve strip default collation base-uri ordering'+'copy-namespaces order declare import schema namespace function option in allowing empty'+'at tumbling window sliding window start when only end when previous next stable ascending'+'descending empty greatest least some every satisfies switch case typeswitch try catch and'+'or to union intersect instance of treat as castable cast map array delete insert into'+'replace value rename copy modify update';var LITERAL='false true xs:string xs:integer element item xs:date xs:datetime xs:float xs:double xs:decimal QName xs:anyURI xs:long xs:int xs:short xs:byte attribute';var VAR={begin:/\$[a-zA-Z0-9\-]+/};var NUMBER={className:'number',begin:'(\\b0[0-7_]+)|(\\b0x[0-9a-fA-F_]+)|(\\b[1-9][0-9_]*(\\.[0-9_]+)?)|[0_]\\b',relevance:0};var STRING={className:'string',variants:[{begin:/"/,end:/"/,contains:[{begin:/""/,relevance:0}]},{begin:/'/,end:/'/,contains:[{begin:/''/,relevance:0}]}]};var ANNOTATION={className:'meta',begin:'%\\w+'};var COMMENT={className:'comment',begin:'\\(:',end:':\\)',relevance:10,contains:[{className:'doctag',begin:'@\\w+'}]};var METHOD={begin:'{',end:'}'};var CONTAINS=[VAR,STRING,NUMBER,COMMENT,ANNOTATION,METHOD];METHOD.contains=CONTAINS;return{aliases:['xpath','xq'],case_insensitive:false,lexemes:/[a-zA-Z\$][a-zA-Z0-9_:\-]*/,illegal:/(proc)|(abstract)|(extends)|(until)|(#)/,keywords:{keyword:KEYWORDS,literal:LITERAL},contains:CONTAINS};});hljs.registerLanguage('zephir',function(hljs){var STRING={className:'string',contains:[hljs.BACKSLASH_ESCAPE],variants:[{begin:'b"',end:'"'},{begin:'b\'',end:'\''},hljs.inherit(hljs.APOS_STRING_MODE,{illegal:null}),hljs.inherit(hljs.QUOTE_STRING_MODE,{illegal:null})]};var NUMBER={variants:[hljs.BINARY_NUMBER_MODE,hljs.C_NUMBER_MODE]};return{aliases:['zep'],case_insensitive:true,keywords:'and include_once list abstract global private echo interface as static endswitch '+'array null if endwhile or const for endforeach self var let while isset public '+'protected exit foreach throw elseif include __FILE__ empty require_once do xor '+'return parent clone use __CLASS__ __LINE__ else break print eval new '+'catch __METHOD__ case exception default die require __FUNCTION__ '+'enddeclare final try switch continue endfor endif declare unset true false '+'trait goto instanceof insteadof __DIR__ __NAMESPACE__ '+'yield finally int uint long ulong char uchar double float bool boolean string'+'likely unlikely',contains:[hljs.C_LINE_COMMENT_MODE,hljs.HASH_COMMENT_MODE,hljs.COMMENT('/\\*','\\*/',{contains:[{className:'doctag',begin:'@[A-Za-z]+'}]}),hljs.COMMENT('__halt_compiler.+?;',false,{endsWithParent:true,keywords:'__halt_compiler',lexemes:hljs.UNDERSCORE_IDENT_RE}),{className:'string',begin:'<<<[\'"]?\\w+[\'"]?$',end:'^\\w+;',contains:[hljs.BACKSLASH_ESCAPE]},{begin:/(::|->)+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/},{className:'function',beginKeywords:'function',end:/[;{]/,excludeEnd:true,illegal:'\\$|\\[|%',contains:[hljs.UNDERSCORE_TITLE_MODE,{className:'params',begin:'\\(',end:'\\)',contains:['self',hljs.C_BLOCK_COMMENT_MODE,STRING,NUMBER]}]},{className:'class',beginKeywords:'class interface',end:'{',excludeEnd:true,illegal:/[:\(\$"]/,contains:[{beginKeywords:'extends implements'},hljs.UNDERSCORE_TITLE_MODE]},{beginKeywords:'namespace',end:';',illegal:/[\.']/,contains:[hljs.UNDERSCORE_TITLE_MODE]},{beginKeywords:'use',end:';',contains:[hljs.UNDERSCORE_TITLE_MODE]},{begin:'=>'},STRING,NUMBER]};});return hljs;}));
 </script>
 <script>hljs.initHighlightingOnLoad();</script>
+</div>
+
+
+<div style="display:none" markdown="0">
+<!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config();
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </div>
 
 
