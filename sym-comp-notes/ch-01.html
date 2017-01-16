@@ -46,6 +46,8 @@ html,body,#wrapper{font-size:10pt!important;}
   <div id="wrapper">
       <h1 id="chapter-1:--introduction-to-symbolic-computing-and-computer-algebra-systems--">Chapter 1:  Introduction to Symbolic Computing and Computer Algebra Systems  </h1>
 
+<p><a href="index.html">Return to all notes</a></p>
+
 <p>This chapter explains what symbolic computing and computer algebra systems (CAS) are.  It&rsquo;s easier to understand these terms in context.  If we consider a basic calculator, typically numbers are put in and you get numbers out.  The numbers are what are called floating point numbers, but they look like decimals.  For example if you enter 2, then the square root button, you will see</p>
 
 <pre><code class="(null)">1.414213562</code></pre>
@@ -58,8 +60,7 @@ The difference is that the decimal number above truncates to 10 or 12 decimal pl
 <pre><code class="(null)">1.9999999989</code></pre>
 
 
-<p>
-is close to 2, but not exactly, whereas in the CAS, the answer will be 2.</p>
+<p>which is close to 2, but not exactly, whereas in the CAS, the answer will be 2.</p>
 
 <p>Additionally, a CAS allows one to enter in mathematical expressions and manipulate them.  For example if you enter<br/>
 $$(x+2)^{2}$$</p>
@@ -141,16 +142,24 @@ $$100!=9332621544394415268169923885626670049071596826438162146859296389521759999
 <h1 id="examples--">Examples  </h1>
 
 <ul>
-<li><p>The following expands the expression $(x+1)(x+2)$:</p>
-
-<p><pre><code class="(null)">expand((x+1)·(x+2))</code></pre><br/>
-will be $x^{2}+3x+2$.  The return type is also an expression.</p></li>
-<li><p>The following simplifies the expression $\dfrac{1}{2} + \dfrac{x}{x+1} + \dfrac{3}{x+1}$</p>
-
-<p><pre><code class="(null)">simplify(1/2 + x/(x+1) + 3/(x+1))</code></pre><br/>
-results in  $\dfrac{2x+4}{x+1}$. And again, the return type is also an expression.</p></li>
+<li>The following expands the expression $(x+1)(x+2)$:</li>
 </ul>
 
+
+<pre><code class="(null)">expand((x+1)·(x+2))</code></pre>
+
+
+<p>  which will be $x^{2}+3x+2$.  The return type is also an expression.</p>
+
+<ul>
+<li>The following simplifies the expression $\dfrac{1}{2} + \dfrac{x}{x+1} + \dfrac{3}{x+1}$</li>
+</ul>
+
+
+<pre><code class="(null)">simplify(1/2 + x/(x+1) + 3/(x+1))</code></pre>
+
+
+<p>  which results in  $\dfrac{2x+4}{x+1}$. And again, the return type is also an expression.</p>
 
 <h1 id="input-modes-in-maple--">Input modes in Maple  </h1>
 
