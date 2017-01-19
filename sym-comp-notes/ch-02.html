@@ -46,6 +46,8 @@ html,body,#wrapper{font-size:10pt!important;}
   <div id="wrapper">
       <h1 id="chapter-2:-precalculus-topics--">Chapter 2: Precalculus Topics  </h1>
 
+<p><a href="index.html">Return to all notes</a></p>
+
 <h2 id="solving-equations--">Solving Equations  </h2>
 
 <p>You probably recall from throughout your mathematical career that solving an equation can be difficult.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>  Maple can often solve equations effortlessly. For example if we type</p>
@@ -53,8 +55,7 @@ html,body,#wrapper{font-size:10pt!important;}
 <pre><code class="(null)">solve(x^2-3x-4=0)</code></pre>
 
 
-<p>
-returns <code>4,-1</code>, meaning that both 4 and -1 are solutions to the equation.</p>
+<p>Maple returns <code>4,-1</code>, meaning that both 4 and -1 are solutions to the equation.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -90,8 +91,7 @@ which is indeed a solution to the equation.  However, it isn&rsquo;t the only so
 <pre><code class="(null)">Student[Calculus1][Roots](sin(3x)=1/2,x=0..2pi)</code></pre>
 
 
-<p>
-you will see 6 roots.</p>
+<p>and you will see 6 roots.</p>
 
 <p>Now you might (and probably should) be thinking, that&rsquo;s a crazy command to get the solutions.  What&rsquo;s with the brackets?  We will explain this in the next chapter.  In short, it is a way to call a command that is in a library that is not built-in to Maple by default.  We will see a shortcut to call this later.</p>
 
@@ -104,8 +104,7 @@ you will see 6 roots.</p>
 <pre><code class="(null)">solve(sin(x)=0,x,allsolutions = true)</code></pre>
 
 
-<p>
-get $\pi\_ Z1$~  (or another number after the Z).  This is a bit strange, but this is Maple&rsquo;s way of saying any integer multiple of $\pi$.</p>
+<p>We get $\pi\_ Z1$~  (or another number after the Z).  This is a bit strange, but this is Maple&rsquo;s way of saying any integer multiple of $\pi$.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -136,8 +135,7 @@ and you will see a mess (no really, try it).</p>
 <pre><code class="(null)">fsolve(x^3+3x^2-11x-10=0)</code></pre>
 
 
-<p>
-you should see 3 roots:</p>
+<p>and you should see 3 roots:</p>
 
 <pre><code class="(null)">-4.844519677, -.7850044458, 2.629524123</code></pre>
 
@@ -149,8 +147,7 @@ you should see 3 roots:</p>
 <pre><code class="(null)">solve(4x+3&gt;5x-7,x)</code></pre>
 
 
-<p>
-return <em>RealRange(-$\infty$,Open(10))</em>.  This is Maple&rsquo;s notation for $(-\infty,10)$.  Try changing the greater than sign in the inequality to a greater than or equal to, which you type in <code>&gt;=</code> and Maple will change it automatically to a $\geq$.</p>
+<p>will return <em>RealRange(-$\infty$,Open(10))</em>.  This is Maple&rsquo;s notation for $(-\infty,10)$.  Try changing the greater than sign in the inequality to a greater than or equal to, which you type in <code>&gt;=</code> and Maple will change it automatically to a $\geq$.</p>
 
 <p>Maple will solve many types of inequalities.  Another example is <code>solve(x^2-9&gt;=0,x)</code> which returns <em>RealRange(-$\infty$,-3),RealRange(3,$\infty$)</em>.  In standard interval notation, this is $(-\infty,-3] \bigcup [3,\infty)$.</p>
 
@@ -183,8 +180,7 @@ return <em>RealRange(-$\infty$,Open(10))</em>.  This is Maple&rsquo;s notation f
 <pre><code class="(null)">plot(x^2,x=-2..2,title=typeset(&quot;A plot of &quot;, x^2))</code></pre>
 
 
-<p>
-have called a command called <code>typeset</code> that will help Maple understand how to print out what you want. If you search plot in the <strong>Help Browser</strong>, then scroll down to <code>plot,typesetting</code>, you will find more information and examples to typeset.</p>
+<p>You have called a command called <code>typeset</code> that will help Maple understand how to print out what you want. If you search plot in the <strong>Help Browser</strong>, then scroll down to <code>plot,typesetting</code>, you will find more information and examples to typeset.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -194,7 +190,7 @@ have called a command called <code>typeset</code> that will help Maple understan
 
 <p>Another way to change the plotting window of a plot is to use the <code>view</code> option.  If I just want to see the plot of $x^{2}$ in the first quadrant, you can type</p>
 
-<pre><code class="(null)">plot(x^2, x = -2 .. 2, view = [0 .. 4, 0 .. 4], title = typeset(&quot;Plot of %1 in the first quadrant&quot;, x^2))</code></pre>
+<pre><code class="(null)">plot(x^2, x=-2..2, view=[0..4,0..4], title=typeset(&quot;Plot of %1 in the first quadrant&quot;, x^2))</code></pre>
 
 
 <p>to get:</p>
@@ -213,13 +209,12 @@ have called a command called <code>typeset</code> that will help Maple understan
 
 <h3 id="adding-a-legend">Adding a Legend</h3>
 
-<p>A legend is important for any plot containing more than one function. This allows you to distinguish between the curves. There is a legend option to the plot function. For example, to add a legend and a title to the plot of $x<sup>2</sup>$ and $x<sup>3</sup>$ type:</p>
+<p>A legend is important for any plot containing more than one function. This allows you to distinguish between the curves. There is a legend option to the plot function. For example, to add a legend and a title to the plot of $x^{2}$ and $x^{3}$ type:</p>
 
 <pre><code class="(null)">plot([x^2, x^3], x = -2..2,legend = [x^2, x^3], title = typeset(&quot;A plot of %1 and %2.&quot;, x^2, x^3))</code></pre>
 
 
-<p>
-you will see:<br/>
+<p>and you will see:<br/>
 <img src="images/ch02/plot17.png" alt="A plot of two functions with a legend" /></p>
 
 <h3 id="alternative-way-to-add-a-legend">Alternative Way to Add a Legend</h3>
@@ -236,7 +231,7 @@ you will see:<br/>
 
 <h2 id="changing-the-aspect-ratio-of-a-plot--">Changing the Aspect Ratio of a Plot  </h2>
 
-<p>Often it is important to have an aspect ratio of 1:1 for a plot.  For example, consider a plot of $\sqrt{4-x<sup>2</sup>}$, which is the top half of a circle.  If it is plotted on $-3 \leq x \leq 3$, then the curve looks like an ellipse, not a circle.</p>
+<p>Often it is important to have an aspect ratio of 1:1 for a plot.  For example, consider a plot of $\sqrt{4-x^{2}}$, which is the top half of a circle.  If it is plotted on $-3 \leq x \leq 3$, then the curve looks like an ellipse, not a circle.</p>
 
 <p>If you click on the plot, the toolbar changes to the following:</p>
 
@@ -248,7 +243,9 @@ you will see:<br/>
 
 <p>Plot the functions $f(x)=2x+3$ and $g(x)=-\frac{1}{2}x+1$ and make the plot ratio 1:1. The two lines should be perpendicular.  (Why?)</p>
 
-<h2 id="plotting-a-function-with-a-parameter--">Plotting a function with a parameter  </h2>
+<!--Plotting a function with a parameter  
+--------  -->
+
 
 <h2 id="piecewise-functions--">Piecewise Functions  </h2>
 
@@ -260,8 +257,7 @@ $$f(x) = \begin{cases} x &amp; x&lt;0 \newline 3-x^{2} &amp; x \geq 0 \end{cases
 <pre><code class="(null)">f:=piecewise(x&lt;0,x,3-x^2,x&gt;=0)</code></pre>
 
 
-<p>
-the interval comes before the function.  Notice that Maple formats it like we typically write it out mathematically.</p>
+<p>where the interval comes before the function.  Notice that Maple formats it like we typically write it out mathematically.</p>
 
 <p>Then we can plot it like other functions:</p>
 
@@ -283,8 +279,7 @@ the plot will look like:</p>
 <pre><code class="(null)">plot(1/(x-1),x=-3..3,discont=true)</code></pre>
 
 
-<p>
-plot will look like:</p>
+<p>the plot will look like:</p>
 
 <p><img src="images/ch02/plot9.png" alt="plot of 1/(x-1)" /></p>
 
@@ -336,8 +331,7 @@ plot([x^3, sin(x), dots],x=-3..3,y=-3..3)</code></pre>
 <pre><code class="(null)">plot([x^3, sin(x), dots],x=-3..3,y=-3..3,style=[line,line,point])</code></pre>
 
 
-<p>
-the first two are line plots (the default) and the last is a point plot.  The resulting plot is</p>
+<p>where the first two are line plots (the default) and the last is a point plot.  The resulting plot is</p>
 
 <p><img src="images/ch02/plot16.png" alt="Better plot with functions and dots" /></p>
 
@@ -411,8 +405,7 @@ $$ x \rightarrow x^{2} $$</p>
 <pre><code class="(null)">solve(x^2-5x+4&gt;=0)</code></pre>
 
 
-<p>
-get (in interval notation), $(-\infty,1]\bigcup[4,\infty)$, so this is the domain of $\sqrt{x<sup>2</sup>-5x+4}$.</p>
+<p>to get (in interval notation), $(-\infty,1]\bigcup[4,\infty)$, so this is the domain of $\sqrt{x<sup>2</sup>-5x+4}$.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -466,22 +459,19 @@ then</p>
 <pre><code class="(null)">solve(denom(g(x)))</code></pre>
 
 
-<p>
-in $-3$, and $3$.  Therefore, the domain is $(-\infty,-3)\bigcup(-3,3)\bigcup(3,\infty)$.</p>
+<p>resultng in $-3$, and $3$.  Therefore, the domain is $(-\infty,-3)\bigcup(-3,3)\bigcup(3,\infty)$.</p>
 
 <p>For the answer to 2, we need to find the zeros (roots) of the top and</p>
 
 <pre><code class="(null)">solve(numer(g(x)))</code></pre>
 
 
-<p>
-return 0,-2,2.  And the answer to the 3, is the zeros of the denominator or</p>
+<p>will return 0,-2,2.  And the answer to the 3, is the zeros of the denominator or</p>
 
 <pre><code class="(null)">solve(denom(g(x))</code></pre>
 
 
-<p>
-returns -3,3.  Recall that this means the asymptotes, which are lines, are $x=3$ and $x=-3$.</p>
+<p>which returns -3,3.  Recall that this means the asymptotes, which are lines, are $x=3$ and $x=-3$.</p>
 
 <h2 id="partial-fractions--">Partial Fractions  </h2>
 
@@ -570,7 +560,7 @@ using the steps above. Check your answer by reversing the partial fraction form.
 
 <ol>
 <li>Use <code>convert</code> to check your result above.</li>
-<li>Find the partial fraction form of $${\frac {4\,{x}^{6}+15\,{x}^{5}+34\,{x}^{4}+66\,{x}^{3}+94\,{x}^{2}+56\,x+40}{{x}^{4}+2\,{x}^{3}+5\,{x}^{2}+8\,x+4}}$$</li>
+<li>Find the partial fraction form of $${\frac {4\,x^{6}+15\,x^{5}+34\,x^{4}+66\,x^{3}+94\,x^{2}+56\,x+40}{x^{4}+2\,x^{3}+5\,x^{2}+8\,x+4}}$$</li>
 </ol>
 
 
@@ -623,6 +613,32 @@ $$Q=\frac{3x^{3}-5x^{2}+10x-3}{3x+1}= x^{2}-2x+4+ \frac{-7}{3x+1}$$</p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
+
+
+<div style="display:none" markdown="0">
+<!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        messageStyle: "normal",
+        linebreaks: {
+            automatic: false
+        }
+    },
+    tex2jax: { 
+        inlineMath: [["$","$"],["\\(","\\)"]], 
+        displayMath: [["$$","$$"],["\\[","\\]"]], 
+        processEscapes: true
+    },
+    TeX: {
+        Macros: {
+            tr: "{\\scriptscriptstyle\\mathrm{T}}",
+        }
+    }
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</div>
 
 
 <script>(function(factory){if(typeof define==="function"&&define.amd){define("bidi_helpers",[],factory)}else{window.bidi_helpers=factory()}})(function(){var module={};module.Dir={RTL:-1,UNKNOWN:0,LTR:1};module.Format={LRE:"\u202A",RLE:"\u202B",PDF:"\u202C",LRM:"\u200E",RLM:"\u200F"};module.ltrChars_="A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF\u2C00-\uFB1C\uFE00-\uFE6F\uFEFD-\uFFFF";module.rtlChars_="\u0591-\u07FF\uFB1D-\uFDFF\uFE70-\uFEFC";module.ltrDirCheckRe_=new RegExp("^[^"+module.rtlChars_+"]*["+module.ltrChars_+"]");module.ltrCharReg_=new RegExp("["+module.ltrChars_+"]");module.hasAnyLtr=function(text){return module.ltrCharReg_.test(text)};module.rtlDirCheckRe_=new RegExp("^[^"+module.ltrChars_+"]*["+module.rtlChars_+"]");module.rtlRe=module.rtlDirCheckRe_;module.isRtlText=function(text){return module.rtlDirCheckRe_.test(text)};module.isLtrText=function(text){return module.ltrDirCheckRe_.test(text)};module.isRequiredLtrRe_=/^http:\/\/.*/;module.hasNumeralsRe_=/\d/;module.estimateDirection=function(text,detectionThreshold){var rtlCount=0;var totalCount=0;var hasWeaklyLtr=false;var tokens=text.split(/\s+/);for(var i=0;i<tokens.length;i++){var token=tokens[i];if(module.isRtlText(token)){rtlCount++;totalCount++}else{if(module.isRequiredLtrRe_.test(token)){hasWeaklyLtr=true}else{if(module.hasAnyLtr(token)){totalCount++}else{if(module.hasNumeralsRe_.test(token)){hasWeaklyLtr=true}}}}}return totalCount==0?(hasWeaklyLtr?module.Dir.LTR:module.Dir.UNKNOWN):(rtlCount/totalCount>detectionThreshold?module.Dir.RTL:module.Dir.LTR)};return module});(function(factory){if(typeof define==="function"&&define.amd){define("bidiweb",["bidi_helpers"],factory)}else{window.bidiweb=factory(bidi_helpers)}})(function(bidi_helpers){var module={};var IProcessor={makeRtl:function(element){},makeLtr:function(element){}};var css_processor=function(classes){return{makeRtl:function(element){element.classList.add(classes.rtl)},makeLtr:function(element){element.classList.add(classes.ltr)}}};var style_processor=function(falign){return{makeRtl:function(element){element.style.direction="rtl";if(falign){element.style.textAlign="right"}},makeLtr:function(element){element.style.direction="ltr";if(falign){element.style.textAlign="left"}}}};module.processors={css:css_processor,style:style_processor};var nodeListMock=function(node){var list=[node];list.item=function(i){return list[i]};return list};module.process=function(query,processor){var elements;if(query instanceof NodeList){elements=query}else{if(query instanceof Node){elements=nodeListMock(query)}else{elements=document.querySelectorAll(query)}}module.process_elements(elements,processor);return elements};module.process_elements=function(elements,processor){for(var index=0;index<elements.length;index++){var element=elements.item(index);var text=element.textContent||element.value||element.placeholder||"";var dir=bidi_helpers.estimateDirection(text,0.4);if(dir==bidi_helpers.Dir.RTL){processor.makeRtl(element)}else{if(dir==bidi_helpers.Dir.LTR){processor.makeLtr(element)}}}};module.process_css=function(query,classes){var proc=module.processors.css(classes);return module.process(query,proc)};module.process_style=function(query,falign){var proc=module.processors.style(falign);return module.process(query,proc)};module.style=function(query){return module.process_style(query,true)};module.css=function(query){return module.process_css(query,{rtl:"rtl",ltr:"ltr"})};module.htmlToElement=function(html){var container=document.createElement("div");container.innerHTML=html;return container};module.html_css=function(html){var container=module.htmlToElement(html);var nodes=container.querySelectorAll("*");module.css(nodes);return container.innerHTML};module.html_style=function(html){var container=module.htmlToElement(html);var nodes=container.querySelectorAll("*");module.style(nodes);return container.innerHTML};return module});</script>

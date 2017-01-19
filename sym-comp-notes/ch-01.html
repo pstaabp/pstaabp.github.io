@@ -60,7 +60,8 @@ The difference is that the decimal number above truncates to 10 or 12 decimal pl
 <pre><code class="(null)">1.9999999989</code></pre>
 
 
-<p>which is close to 2, but not exactly, whereas in the CAS, the answer will be 2.</p>
+<p>
+is close to 2, but not exactly, whereas in the CAS, the answer will be 2.</p>
 
 <p>Additionally, a CAS allows one to enter in mathematical expressions and manipulate them.  For example if you enter<br/>
 $$(x+2)^{2}$$</p>
@@ -142,24 +143,16 @@ $$100!=9332621544394415268169923885626670049071596826438162146859296389521759999
 <h1 id="examples--">Examples  </h1>
 
 <ul>
-<li>The following expands the expression $(x+1)(x+2)$:</li>
+<li><p>The following expands the expression $(x+1)(x+2)$:</p>
+
+<p><pre><code class="(null)">expand((x+1)·(x+2))</code></pre><br/>
+will be $x^{2}+3x+2$.  The return type is also an expression.</p></li>
+<li><p>The following simplifies the expression $\dfrac{1}{2} + \dfrac{x}{x+1} + \dfrac{3}{x+1}$</p>
+
+<p><pre><code class="(null)">simplify(1/2 + x/(x+1) + 3/(x+1))</code></pre><br/>
+results in  $\dfrac{2x+4}{x+1}$. And again, the return type is also an expression.</p></li>
 </ul>
 
-
-<pre><code class="(null)">expand((x+1)·(x+2))</code></pre>
-
-
-<p>  which will be $x^{2}+3x+2$.  The return type is also an expression.</p>
-
-<ul>
-<li>The following simplifies the expression $\dfrac{1}{2} + \dfrac{x}{x+1} + \dfrac{3}{x+1}$</li>
-</ul>
-
-
-<pre><code class="(null)">simplify(1/2 + x/(x+1) + 3/(x+1))</code></pre>
-
-
-<p>  which results in  $\dfrac{2x+4}{x+1}$. And again, the return type is also an expression.</p>
 
 <h1 id="input-modes-in-maple--">Input modes in Maple  </h1>
 
@@ -192,6 +185,20 @@ and let&rsquo;s say it is line 8.  If we want to use this expression and say <co
 <p>where the <code>(8)</code> above needs to be entered as <em>Insert->Label&hellip;</em> and then type in 8. (If you expression is on a different line number, type that one.) You should get in the habit of using a keyboard shortcut and type CTRL-L  (or CMD-L on the Mac) to get the dialog instead.  Keyboard shortcuts are always faster.   The result above should be<br/>
 $$7x^{2}-4x$$<br/>
 and if you get the number 8 as an answer then you just typed 8 and not the insert label.</p>
+
+<h2 id="help-pages-in-maple--">Help Pages in Maple  </h2>
+
+<p>Maple has a good set of help pages built-in.  It is highly recommended that you use it often.  There are two standard ways to ask for help.</p>
+
+<ol>
+<li><p>If you know the name of the command, but don&rsquo;t remember the details, you can type a ? then the name of the command.  For example,</p>
+
+<p> <pre><code class="(null)">?expand</code></pre></p>
+
+<p> will open the Help Browser and open the <code>expand</code> command.</p></li>
+<li><p>In the toolbar, there is a search box on the right side. Type in the name of the command and you will get a list of possible topics.  Select the topic and the page will open in the Help Browser.</p></li>
+</ol>
+
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
