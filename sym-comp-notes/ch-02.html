@@ -55,7 +55,8 @@ html,body,#wrapper{font-size:10pt!important;}
 <pre><code class="(null)">solve(x^2-3x-4=0)</code></pre>
 
 
-<p>Maple returns <code>4,-1</code>, meaning that both 4 and -1 are solutions to the equation.</p>
+<p>
+returns <code>4,-1</code>, meaning that both 4 and -1 are solutions to the equation.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -91,7 +92,8 @@ which is indeed a solution to the equation.  However, it isn&rsquo;t the only so
 <pre><code class="(null)">Student[Calculus1][Roots](sin(3x)=1/2,x=0..2pi)</code></pre>
 
 
-<p>and you will see 6 roots.</p>
+<p>
+you will see 6 roots.</p>
 
 <p>Now you might (and probably should) be thinking, that&rsquo;s a crazy command to get the solutions.  What&rsquo;s with the brackets?  We will explain this in the next chapter.  In short, it is a way to call a command that is in a library that is not built-in to Maple by default.  We will see a shortcut to call this later.</p>
 
@@ -104,7 +106,8 @@ which is indeed a solution to the equation.  However, it isn&rsquo;t the only so
 <pre><code class="(null)">solve(sin(x)=0,x,allsolutions = true)</code></pre>
 
 
-<p>We get $\pi\_ Z1$~  (or another number after the Z).  This is a bit strange, but this is Maple&rsquo;s way of saying any integer multiple of $\pi$.</p>
+<p>
+get $\pi\_ Z1$~  (or another number after the Z).  This is a bit strange, but this is Maple&rsquo;s way of saying any integer multiple of $\pi$.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -135,7 +138,8 @@ and you will see a mess (no really, try it).</p>
 <pre><code class="(null)">fsolve(x^3+3x^2-11x-10=0)</code></pre>
 
 
-<p>and you should see 3 roots:</p>
+<p>
+you should see 3 roots:</p>
 
 <pre><code class="(null)">-4.844519677, -.7850044458, 2.629524123</code></pre>
 
@@ -147,7 +151,8 @@ and you will see a mess (no really, try it).</p>
 <pre><code class="(null)">solve(4x+3&gt;5x-7,x)</code></pre>
 
 
-<p>will return <em>RealRange(-$\infty$,Open(10))</em>.  This is Maple&rsquo;s notation for $(-\infty,10)$.  Try changing the greater than sign in the inequality to a greater than or equal to, which you type in <code>&gt;=</code> and Maple will change it automatically to a $\geq$.</p>
+<p>
+return <em>RealRange(-$\infty$,Open(10))</em>.  This is Maple&rsquo;s notation for $(-\infty,10)$.  Try changing the greater than sign in the inequality to a greater than or equal to, which you type in <code>&gt;=</code> and Maple will change it automatically to a $\geq$.</p>
 
 <p>Maple will solve many types of inequalities.  Another example is <code>solve(x^2-9&gt;=0,x)</code> which returns <em>RealRange(-$\infty$,-3),RealRange(3,$\infty$)</em>.  In standard interval notation, this is $(-\infty,-3] \bigcup [3,\infty)$.</p>
 
@@ -175,16 +180,17 @@ and you will see a mess (no really, try it).</p>
 
 <p><img src="images/ch02/plot4.png" alt="Plot of $x^{2}$ with a title " /></p>
 
-<p>If you try to put the $x^{2}$ function in the title, you will run into problems. This is due to a typesetting issue. You can add the $x<sup>2</sup>$ function by typing</p>
+<p>If you try to put the $x^{2}$ function in the title, you will run into problems. This is due to a typesetting issue. You can add the $x^{2}$ function by typing</p>
 
-<pre><code class="(null)">plot(x^2,x=-2..2,title=typeset(&quot;A plot of &quot;, x^2))</code></pre>
+<pre><code class="(null)">plot(x^2,x=-2..2,title=typeset(&quot;A plot of %1&quot;, x^2))</code></pre>
 
 
-<p>You have called a command called <code>typeset</code> that will help Maple understand how to print out what you want. If you search plot in the <strong>Help Browser</strong>, then scroll down to <code>plot,typesetting</code>, you will find more information and examples to typeset.</p>
+<p>
+have called a command called <code>typeset</code> that will help Maple understand how to print out what you want. If you search plot in the <strong>Help Browser</strong>, then scroll down to <code>plot,typesetting</code>, you will find more information and examples to typeset.</p>
 
 <h3 id="exercise">Exercise</h3>
 
-<p>Plot $f(x) = \sin x$ on the range $[−6.25, 6.25]$. Give the plot a title that includes the function.</p>
+<p>Plot $f(x) = \sin x$ on the domain $[−6.25, 6.25]$. Give the plot a title that includes the function.  Try changing the plotting domain to $[-2\pi,2\pi]$  What&rsquo;s the difference?</p>
 
 <h3 id="alternative-way-to-change-the-plotting-window-of-a-plot">Alternative Way to Change the plotting window of a plot</h3>
 
@@ -214,7 +220,8 @@ and you will see a mess (no really, try it).</p>
 <pre><code class="(null)">plot([x^2, x^3], x = -2..2,legend = [x^2, x^3], title = typeset(&quot;A plot of %1 and %2.&quot;, x^2, x^3))</code></pre>
 
 
-<p>and you will see:<br/>
+<p>
+you will see:<br/>
 <img src="images/ch02/plot17.png" alt="A plot of two functions with a legend" /></p>
 
 <h3 id="alternative-way-to-add-a-legend">Alternative Way to Add a Legend</h3>
@@ -243,9 +250,25 @@ and you will see a mess (no really, try it).</p>
 
 <p>Plot the functions $f(x)=2x+3$ and $g(x)=-\frac{1}{2}x+1$ and make the plot ratio 1:1. The two lines should be perpendicular.  (Why?)</p>
 
-<!--Plotting a function with a parameter  
---------  -->
+<h2 id="plotting-a-function-with-a-parameter--">Plotting a function with a parameter  </h2>
 
+<p>Maple is also helpful in understanding how a parameter (a variable that just takes on certain values) affects a plot.  For example, if we plot $y=x+C$ for $C=-2,-1,0,1,2$ and we want to see what happens to the plot.</p>
+
+<p>To make this easier, we first define the functions:</p>
+
+<pre><code class="(null)">lines:=[x-2,x-1,x,x+1,x+2]</code></pre>
+
+
+<p>then plot the results and add a legend:</p>
+
+<pre><code class="(null)">plot(lines, x = -3 .. 3, legend = lines, title = &quot;plot of a family of lines&quot;)</code></pre>
+
+
+<p>the result will be:</p>
+
+<p><img src="images/ch02/plot18.png" alt="Plot of a family of lines" /></p>
+
+<p>And from this you can see that the parameter C shifts the lines vertically.</p>
 
 <h2 id="piecewise-functions--">Piecewise Functions  </h2>
 
@@ -257,7 +280,8 @@ $$f(x) = \begin{cases} x &amp; x&lt;0 \newline 3-x^{2} &amp; x \geq 0 \end{cases
 <pre><code class="(null)">f:=piecewise(x&lt;0,x,3-x^2,x&gt;=0)</code></pre>
 
 
-<p>where the interval comes before the function.  Notice that Maple formats it like we typically write it out mathematically.</p>
+<p>
+the interval comes before the function.  Notice that Maple formats it like we typically write it out mathematically.</p>
 
 <p>Then we can plot it like other functions:</p>
 
@@ -279,7 +303,8 @@ the plot will look like:</p>
 <pre><code class="(null)">plot(1/(x-1),x=-3..3,discont=true)</code></pre>
 
 
-<p>the plot will look like:</p>
+<p>
+plot will look like:</p>
 
 <p><img src="images/ch02/plot9.png" alt="plot of 1/(x-1)" /></p>
 
@@ -331,7 +356,8 @@ plot([x^3, sin(x), dots],x=-3..3,y=-3..3)</code></pre>
 <pre><code class="(null)">plot([x^3, sin(x), dots],x=-3..3,y=-3..3,style=[line,line,point])</code></pre>
 
 
-<p>where the first two are line plots (the default) and the last is a point plot.  The resulting plot is</p>
+<p>
+the first two are line plots (the default) and the last is a point plot.  The resulting plot is</p>
 
 <p><img src="images/ch02/plot16.png" alt="Better plot with functions and dots" /></p>
 
@@ -405,7 +431,8 @@ $$ x \rightarrow x^{2} $$</p>
 <pre><code class="(null)">solve(x^2-5x+4&gt;=0)</code></pre>
 
 
-<p>to get (in interval notation), $(-\infty,1]\bigcup[4,\infty)$, so this is the domain of $\sqrt{x<sup>2</sup>-5x+4}$.</p>
+<p>
+get (in interval notation), $(-\infty,1]\bigcup[4,\infty)$, so this is the domain of $\sqrt{x<sup>2</sup>-5x+4}$.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -459,19 +486,22 @@ then</p>
 <pre><code class="(null)">solve(denom(g(x)))</code></pre>
 
 
-<p>resultng in $-3$, and $3$.  Therefore, the domain is $(-\infty,-3)\bigcup(-3,3)\bigcup(3,\infty)$.</p>
+<p>
+in $-3$, and $3$.  Therefore, the domain is $(-\infty,-3)\bigcup(-3,3)\bigcup(3,\infty)$.</p>
 
 <p>For the answer to 2, we need to find the zeros (roots) of the top and</p>
 
 <pre><code class="(null)">solve(numer(g(x)))</code></pre>
 
 
-<p>will return 0,-2,2.  And the answer to the 3, is the zeros of the denominator or</p>
+<p>
+return 0,-2,2.  And the answer to the 3, is the zeros of the denominator or</p>
 
 <pre><code class="(null)">solve(denom(g(x))</code></pre>
 
 
-<p>which returns -3,3.  Recall that this means the asymptotes, which are lines, are $x=3$ and $x=-3$.</p>
+<p>
+returns -3,3.  Recall that this means the asymptotes, which are lines, are $x=3$ and $x=-3$.</p>
 
 <h2 id="partial-fractions--">Partial Fractions  </h2>
 
