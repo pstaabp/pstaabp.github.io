@@ -18,7 +18,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="differential-calculus-problems-in-maple--">Differential Calculus Problems in Maple  </h1>
 
@@ -251,14 +251,20 @@ $$</p>
 
 <p>The definition of a vertical asymptote is a bit more complicated.  The line $x=a$ is a vertical asymptote of the function $f(x)$ if at least one of the following is true</p>
 
-<p>$\lim<em>{x \rightarrow a} f(x)=\infty$ or $\lim</em>{x \rightarrow a^+} f(x)=\infty$ or $\lim_{x \rightarrow a^-} f(x)=\infty$ or</p>
+<ul>
+<li>$\lim_{x \rightarrow a} f(x)=\infty$</li>
+<li>$\lim_{x \rightarrow a^{+}} f(x) = \infty $</li>
+<li>$\lim_{x \rightarrow a^{-}} f(x) = \infty $</li>
+<li>$\lim_{x \rightarrow a} f(x)=-\infty$</li>
+<li>$\lim_{x \rightarrow a^{+}} f(x) = -\infty $</li>
+<li>$\lim_{x \rightarrow a^{-}} f(x) = -\infty $</li>
+</ul>
 
-<p>$\lim<em>{x \rightarrow a} f(x)=-\infty$ or $\lim</em>{x \rightarrow a^+} f(x)=-\infty$ or $\lim_{x \rightarrow a^-} f(x)=-\infty$</p>
 
 <p>In other words, the limit (one-sided or both-sided) is infinite.</p>
 
 <p>For the function seen above, the line $x=3$ is a vertical asympote because<br/>
-$$\lim_{x \rightarrow 3^+} \frac{2x-1}{x-3}=\infty$$</p>
+$$\lim_{x \rightarrow 3^{+}} \frac{2x-1}{x-3}=\infty$$</p>
 
 <p>Now this provides a way to prove that a vertical line is a vertical asymptote, but not how to find them.  If you have a rational function (polynomial over a polynomial), then possible vertical asympotes are where the denominator is 0.    For example, let&rsquo;s look at the function<br/>
 $$R(x)=\frac{x^{2}-1}{x^{3}-13x+12}$$</p>
