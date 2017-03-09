@@ -379,7 +379,7 @@ y:=t-&gt;5*sin(t)</code></pre>
 
 <p>We can also find the tangent line to a parametric curve in the following way.  The derivative $\frac{dy}{dx}$ to a curve can be written:<br/>
 $$<br/>
-\frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dy}}<br/>
+\frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}}<br/>
 $$</p>
 
 <p>To find the deriavative to the circle above at the point $(3,4)$, we need to find the $t$ value at the point.  We can do this by solving for $t$ by setting $x=3$ and $t=4$.  (It&rsquo;s recommended to use the <code>Roots</code> command on the interval <code>0..</code>$\pi/2$ because the point is in the first quadrant.)</p>
@@ -445,7 +445,7 @@ and we can plot it using the <code>polarplot</code> command</p>
 
 <p>And altenatively, if you don&rsquo;t want the polar axes shown, you can use the regular plot command with the <code>coord=polar</code> option:</p>
 
-<pre><code class="(null)">plot(1+cos(theta),theta=0..2*Pi,coord=polar)</code></pre>
+<pre><code class="(null)">plot(1+cos(theta),theta=0..2*Pi,coords=polar)</code></pre>
 
 
 <p>
@@ -678,7 +678,7 @@ the 2nd parameter needs to be in 2 sets of square brackets because for a paramet
 
 <p>The set of points defined by<br/>
 $$y^{2} (y^{2}-a^{2})=x^{2}(x^{2}-b^{2})$$<br/>
-are called the Devil&rsquo;s curve.  Let $b=1$, and let $a$ range from 0.1 to 2.1$ in an animated plot.</p>
+are called the Devil&rsquo;s curve.  Let $b=1$, and let $a$ range from 0.1 to 2.1 in an animated plot.</p>
 
 <h2 id="three-dimensional-plots--">Three Dimensional Plots  </h2>
 
