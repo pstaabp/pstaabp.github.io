@@ -33,14 +33,12 @@ html,body,#wrapper{font-size:10pt!important}
 <pre><code class="(null)">f:=x-&gt;x^3-15x^2+27x-4</code></pre>
 
 
-<p>
-then we can find where the function is increasing</p>
+<p>and then we can find where the function is increasing</p>
 
 <pre><code class="(null)">solve(f&apos;(x)&gt;0,x)</code></pre>
 
 
-<p>
-the result is shown as <code>RealRange(-</code>$\infty$<code>, Open(1)), RealRange(Open(9),</code>$\infty$<code>)</code>, which can be written in the standard way as $(-\infty,1)\cup(9,\infty)$.</p>
+<p>and the result is shown as <code>RealRange(-</code>$\infty$<code>, Open(1)), RealRange(Open(9),</code>$\infty$<code>)</code>, which can be written in the standard way as $(-\infty,1)\cup(9,\infty)$.</p>
 
 <p>The inteval of decrease is found with <code>solve(f'(x)&lt;0)</code> resulting in <code>(Open(1),Open(9))</code> which is the standard interval $(1,9)$.</p>
 
@@ -77,8 +75,7 @@ and then we can find the $c$ by solving $f'( c )=2c+1=3$ or $c=1$.  Next, we plo
 <pre><code class="(null)">solve(f&apos;(x)=0,x)</code></pre>
 
 
-<p>
-maple returns $1,9$.  Both of the these points are critical points.  Since this is a polynomial, the derivative is defined everywhere so there are no places where the derivative is undefined.  So the only cricial points are at $1$ and $9$.</p>
+<p>and maple returns $1,9$.  Both of the these points are critical points.  Since this is a polynomial, the derivative is defined everywhere so there are no places where the derivative is undefined.  So the only cricial points are at $1$ and $9$.</p>
 
 <h3 id="example">Example</h3>
 
@@ -153,8 +150,7 @@ x&amp;f'(x)\newline<br/>
 <pre><code class="(null)">Matrix(map(a-&gt;[a,g&apos;(a)],xValues))</code></pre>
 
 
-<p>
-an error:  <em>Error, (in simpl/abs) abs is not differentiable at 0</em> because at $-2$ and $2$, the derivative is not defined.  Let&rsquo;s throw those points out:</p>
+<p>returns an error:  <em>Error, (in simpl/abs) abs is not differentiable at 0</em> because at $-2$ and $2$, the derivative is not defined.  Let&rsquo;s throw those points out:</p>
 
 <pre><code class="(null)">xValues:=[-3,-1,0,1,3]</code></pre>
 
@@ -164,8 +160,7 @@ an error:  <em>Error, (in simpl/abs) abs is not differentiable at 0</em> because
 <pre><code class="(null)">Matrix(map(a-&gt;[a,g&apos;(a)],xValues))</code></pre>
 
 
-<p>
-$$\begin{array}{cc}<br/>
+<p>$$\begin{array}{cc}<br/>
 x&amp;g'(x)\newline<br/>
 -3 &amp; -6 \newline<br/>
 -1 &amp; 2 \newline<br/>
@@ -181,11 +176,11 @@ and remembering that the function is undefined at $x=-2$ and $x=2$, then the der
 
 <h2 id="concavity-of-a-graph-and-inflection-points.--">Concavity of a Graph and Inflection points.  </h2>
 
-<p>A graph of a function $f$ is <em>concave up</em> at the point $x$ if it&rsquo;s derivative is increasing or $f'&lsquo;(x)>0$.  A graph of a function $f$ is <em>concave down</em> at the point $x$ if it&rsquo;s derivative is decreasing or $f&rsquo;&lsquo;(x)\lt 0$.</p>
+<p>A graph of a function $f$ is <em>concave up</em> at the point $x$ if it&rsquo;s derivative is increasing or $f^{\prime\prime}(x)>0$.  A graph of a function $f$ is <em>concave down</em> at the point $x$ if it&rsquo;s derivative is decreasing or $f^{\prime\prime}(x)\lt 0$.</p>
 
 <h3 id="example">Example</h3>
 
-<p>Find the intervals on which the function $f(x)=x<sup>4</sup>-3x^{2}-1$ is concave up and concave down.</p>
+<p>Find the intervals on which the function $f(x)=x^{4}-3x^{2}-1$ is concave up and concave down.</p>
 
 <p>If we solve</p>
 
@@ -205,7 +200,7 @@ and remembering that the function is undefined at $x=-2$ and $x=2$, then the der
 
 <p>There is an alternative way to test for relative extrema by using the second derviative.  Generally, it&rsquo;s often easier to use if the second derivative exists.</p>
 
-<p><strong>Theorem</strong>  If $f'( c )=0$ and $f'&lsquo;(c )>0$, then $f( c )$ is a relative minimum.  If $f&rsquo;( c )=0$ and $f'&lsquo;( c )&lt; 0$, then $f( c )$ is a relative maximum.</p>
+<p><strong>Theorem</strong>  If $f'( c )=0$ and $f^{\prime\prime}(c )>0$, then $f( c )$ is a relative minimum.  If $f'( c )=0$ and $f^{\prime\prime}( c )&lt; 0$, then $f( c )$ is a relative maximum.</p>
 
 <h3 id="example">Example</h3>
 
@@ -216,14 +211,13 @@ and remembering that the function is undefined at $x=-2$ and $x=2$, then the der
 <pre><code class="(null)">solve(f&apos;(x)=0,x)</code></pre>
 
 
-<p>
-get $1,9$ again.  And since $f'&lsquo;(1)= -24$, $f(1)$ is a relative maximum and since $f&rsquo;&lsquo;(9)=24$, then $f(9)$ is a relative minimum.</p>
+<p>we get $1,9$ again.  And since $f^{\prime\prime}(1)= -24$, $f(1)$ is a relative maximum and since $f^{\prime\prime}(9)=24$, then $f(9)$ is a relative minimum.</p>
 
 <h3 id="example">Example</h3>
 
 <p>Can we use the above theorem to find the relative extrema of $g(x)=|x^{2}-4|$?</p>
 
-<p>We can for the critical value of $x=0$ and since $g'&lsquo;(0)=-2$, then $g(0)$ is a relative maxmium.  However, since the derivative (and therefore second derviative) is not defined at $x=-2$ and $x=2$, then we can&rsquo;t use this theorem for these critical points.  The theorem above about the swtiching signs of the derivative still holds.</p>
+<p>We can for the critical value of $x=0$ and since $g^{\prime\prime}(0)=-2$, then $g(0)$ is a relative maxmium.  However, since the derivative (and therefore second derviative) is not defined at $x=-2$ and $x=2$, then we can&rsquo;t use this theorem for these critical points.  The theorem above about the swtiching signs of the derivative still holds.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -254,18 +248,24 @@ get $1,9$ again.  And since $f'&lsquo;(1)= -24$, $f(1)$ is a relative maximum an
 <li><p>The critical values of $g$ are $-2,0$ and $2$  (see above)</p></li>
 <li><p>We evaluate $g$ at only the values $0$ and $2$ from 1) because $-2$ is not in the interval $[-1,4]$ and the values $-1$ and $4$.</p>
 
-<p> To do this in Maple</p>
+<p> To do this in Maple</p></li>
+</ol>
 
-<p> <pre><code class="(null)">xValues:=[0,2,-1,4]
-Matrix(map(a-&gt;[a,g(a)],xValues))</code></pre></p>
 
-<p> returns<br/>
- $$\left[\begin{array}{cc}<br/>
- 0 &amp; 4 \newline<br/>
- 2 &amp; 0 \newline<br/>
- -1 &amp; 3 \newline<br/>
- 4 &amp; 12 \end{array}\right]$$</p></li>
-<li><p>The smallest function value is 0, so this is the absolute minimumum and the largest function value is 12, so this is the aboslute maximum.  The absolute minimum occurs at $x=2$ and the absolute maximum occurs at $x=4$.</p></li>
+<pre><code class="(null)">xValues:=[0,2,-1,4]
+Matrix(map(a-&gt;[a,g(a)],xValues))</code></pre>
+
+
+<pre><code>returns  
+$$\left[\begin{array}{cc}  
+0 &amp; 4 \newline  
+2 &amp; 0 \newline  
+-1 &amp; 3 \newline  
+4 &amp; 12 \end{array}\right]$$
+</code></pre>
+
+<ol>
+<li>The smallest function value is 0, so this is the absolute minimumum and the largest function value is 12, so this is the aboslute maximum.  The absolute minimum occurs at $x=2$ and the absolute maximum occurs at $x=4$.</li>
 </ol>
 
 
@@ -420,8 +420,7 @@ where the last two are imaginary.</p>
 <pre><code class="(null)">plot(h(x),x=-0.011..0.011)</code></pre>
 
 
-<p>
-get:</p>
+<p>we get:</p>
 
 <p><img src="images/ch07/plot10.png" alt="Another plot of $h$" /><br/>
 which doesn&rsquo;t look any better than the above plot.</p>
