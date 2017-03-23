@@ -33,12 +33,14 @@ html,body,#wrapper{font-size:10pt!important}
 <pre><code class="(null)">f:=x-&gt;x^3-15x^2+27x-4</code></pre>
 
 
-<p>and then we can find where the function is increasing</p>
+<p>
+then we can find where the function is increasing</p>
 
 <pre><code class="(null)">solve(f&apos;(x)&gt;0,x)</code></pre>
 
 
-<p>and the result is shown as <code>RealRange(-</code>$\infty$<code>, Open(1)), RealRange(Open(9),</code>$\infty$<code>)</code>, which can be written in the standard way as $(-\infty,1)\cup(9,\infty)$.</p>
+<p>
+the result is shown as <code>RealRange(-</code>$\infty$<code>, Open(1)), RealRange(Open(9),</code>$\infty$<code>)</code>, which can be written in the standard way as $(-\infty,1)\cup(9,\infty)$.</p>
 
 <p>The inteval of decrease is found with <code>solve(f'(x)&lt;0)</code> resulting in <code>(Open(1),Open(9))</code> which is the standard interval $(1,9)$.</p>
 
@@ -75,7 +77,8 @@ and then we can find the $c$ by solving $f'( c )=2c+1=3$ or $c=1$.  Next, we plo
 <pre><code class="(null)">solve(f&apos;(x)=0,x)</code></pre>
 
 
-<p>and maple returns $1,9$.  Both of the these points are critical points.  Since this is a polynomial, the derivative is defined everywhere so there are no places where the derivative is undefined.  So the only cricial points are at $1$ and $9$.</p>
+<p>
+maple returns $1,9$.  Both of the these points are critical points.  Since this is a polynomial, the derivative is defined everywhere so there are no places where the derivative is undefined.  So the only cricial points are at $1$ and $9$.</p>
 
 <h3 id="example">Example</h3>
 
@@ -150,7 +153,8 @@ x&amp;f'(x)\newline<br/>
 <pre><code class="(null)">Matrix(map(a-&gt;[a,g&apos;(a)],xValues))</code></pre>
 
 
-<p>returns an error:  <em>Error, (in simpl/abs) abs is not differentiable at 0</em> because at $-2$ and $2$, the derivative is not defined.  Let&rsquo;s throw those points out:</p>
+<p>
+an error:  <em>Error, (in simpl/abs) abs is not differentiable at 0</em> because at $-2$ and $2$, the derivative is not defined.  Let&rsquo;s throw those points out:</p>
 
 <pre><code class="(null)">xValues:=[-3,-1,0,1,3]</code></pre>
 
@@ -160,7 +164,8 @@ x&amp;f'(x)\newline<br/>
 <pre><code class="(null)">Matrix(map(a-&gt;[a,g&apos;(a)],xValues))</code></pre>
 
 
-<p>$$\begin{array}{cc}<br/>
+<p>
+$$\begin{array}{cc}<br/>
 x&amp;g'(x)\newline<br/>
 -3 &amp; -6 \newline<br/>
 -1 &amp; 2 \newline<br/>
@@ -211,7 +216,8 @@ and remembering that the function is undefined at $x=-2$ and $x=2$, then the der
 <pre><code class="(null)">solve(f&apos;(x)=0,x)</code></pre>
 
 
-<p>we get $1,9$ again.  And since $f^{\prime\prime}(1)= -24$, $f(1)$ is a relative maximum and since $f^{\prime\prime}(9)=24$, then $f(9)$ is a relative minimum.</p>
+<p>
+get $1,9$ again.  And since $f^{\prime\prime}(1)= -24$, $f(1)$ is a relative maximum and since $f^{\prime\prime}(9)=24$, then $f(9)$ is a relative minimum.</p>
 
 <h3 id="example">Example</h3>
 
@@ -248,24 +254,18 @@ and remembering that the function is undefined at $x=-2$ and $x=2$, then the der
 <li><p>The critical values of $g$ are $-2,0$ and $2$  (see above)</p></li>
 <li><p>We evaluate $g$ at only the values $0$ and $2$ from 1) because $-2$ is not in the interval $[-1,4]$ and the values $-1$ and $4$.</p>
 
-<p> To do this in Maple</p></li>
-</ol>
+<p> To do this in Maple</p>
 
+<p> <pre><code class="(null)">xValues:=[0,2,-1,4]
+Matrix(map(a-&gt;[a,g(a)],xValues))</code></pre></p>
 
-<pre><code class="(null)">xValues:=[0,2,-1,4]
-Matrix(map(a-&gt;[a,g(a)],xValues))</code></pre>
-
-
-<pre><code>returns  
-$$\left[\begin{array}{cc}  
-0 &amp; 4 \newline  
-2 &amp; 0 \newline  
--1 &amp; 3 \newline  
-4 &amp; 12 \end{array}\right]$$
-</code></pre>
-
-<ol>
-<li>The smallest function value is 0, so this is the absolute minimumum and the largest function value is 12, so this is the aboslute maximum.  The absolute minimum occurs at $x=2$ and the absolute maximum occurs at $x=4$.</li>
+<p> returns<br/>
+ $$\left[\begin{array}{cc}<br/>
+ 0 &amp; 4 \newline<br/>
+ 2 &amp; 0 \newline<br/>
+ -1 &amp; 3 \newline<br/>
+ 4 &amp; 12 \end{array}\right]$$</p></li>
+<li><p>The smallest function value is 0, so this is the absolute minimumum and the largest function value is 12, so this is the aboslute maximum.  The absolute minimum occurs at $x=2$ and the absolute maximum occurs at $x=4$.</p></li>
 </ol>
 
 
@@ -332,6 +332,48 @@ $$\left[\begin{array}{cc}<br/>
 <h3 id="exercise">Exercise</h3>
 
 <p>A can is in the shape of a  right circular cylinder.  What are the dimensions (radius and height) of the can that holds 1000 $\text{cm}^{3}$ of liquid and uses the smallest amount of material.  Note: in this case, you don&rsquo;t need a closed interval, but you should show that the amount of material (or the surface area) is a minimum by using the second derivative test.</p>
+
+<h2 id="using-the-built-in-maximum-and-minimum-function--">Using the built-in maximum and minimum function  </h2>
+
+<p>Maple also has a maximum and minimum function for a given interval.  For example to repeat finding the absolute minimum and maximum values of $g(x)=|x^{2}-4|$ on the interval $[-1,4]$, we can type</p>
+
+<pre><code class="(null)">maximize(g(x), x = -1 .. 4)</code></pre>
+
+
+<p>which returns 12 and</p>
+
+<pre><code class="(null)">minimize(g(x), x = -1 .. 4)</code></pre>
+
+
+<p>which returns 0.</p>
+
+<p>If we want to also find the location of the maximum and minimum, we use the <code>location</code> option.</p>
+
+<pre><code class="(null)">minimize(g(x),x=-1..4,location)</code></pre>
+
+
+<p>which returns <code>0, {[{x = 2}, 0]}</code> which is a fairly complicated way to say that the minimum is 0 and is located at $x=2$.</p>
+
+<p>Again, like above, if we are asked for the dimensions of the rectangle, we need to recall that the width is $2x$ and the height is $\sqrt{4-x<sup>2</sup>}$, so</p>
+
+<pre><code class="(null)">subs(x=sqrt(2),2x)</code></pre>
+
+
+<p>and</p>
+
+<pre><code class="(null)">subs(x=sqrt(2),sqrt(4-x^2))</code></pre>
+
+
+<p>returns $2\sqrt{2}$ and $\sqrt{2}$ as the dimensions.</p>
+
+<h3 id="example">Example</h3>
+
+<p>Use Maple&rsquo;s built-in functions to find the maximum area from the example above.</p>
+
+<pre><code class="(null)">maximize(2x*sqrt(4-x^2),x=-2..2,location)</code></pre>
+
+
+<p>returns <code>4, {[{x = sqrt(2)}, 4]}</code> which means that the function reaches a maximum of 4 when $x=\sqrt{2}$.</p>
 
 <h2 id="using-calculus-to-find-accurate-plots--">Using Calculus to find accurate plots  </h2>
 
@@ -420,7 +462,8 @@ where the last two are imaginary.</p>
 <pre><code class="(null)">plot(h(x),x=-0.011..0.011)</code></pre>
 
 
-<p>we get:</p>
+<p>
+get:</p>
 
 <p><img src="images/ch07/plot10.png" alt="Another plot of $h$" /><br/>
 which doesn&rsquo;t look any better than the above plot.</p>
