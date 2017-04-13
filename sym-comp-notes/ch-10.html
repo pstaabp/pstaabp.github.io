@@ -18,15 +18,17 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
-      <h1 id="sequences-and-series--">Sequences and Series  </h1>
+      <h1 id="chapter-10:-sequences-and-series--">Chapter 10: Sequences and Series  </h1>
+
+<p><a href="index.html">Return to all notes</a></p>
 
 <p>Maple and other CAS programs are powerful and helpful tools when performing mathematics involving sequences and series.</p>
 
 <h2 id="sequences--">Sequences  </h2>
 
-<p>Recall that a sequence is a function that is defined on the nonnegative inetgers.  For example if<br/>
+<p>Recall that a sequence is a function that is defined on the nonnegative integers.  For example if<br/>
 $$a_n = \frac{(-1)^{n}}{n}$$</p>
 
 <p>Then one can generate the first few terms of the sequence.  Doing this in Maple involves the <code>seq</code> command:</p>
@@ -115,10 +117,10 @@ $$S=\frac{a}{1-r}= \frac{1}{1-\frac{1}{2}} =2$$</p>
 <p>Try evaluating the following series:</p>
 
 <ol>
-<li>$\sum_{n=1}^{\infty} \frac{1}{n}$</li>
-<li>$\sum_{n=1}^{\infty} \frac{1}{n^{2}}$</li>
-<li>$\sum_{n=1}^{\infty} \frac{1}{n^{3/2}}$</li>
-<li>$\sum_{n=0}^{\infty} \frac{1}{n!}$</li>
+<li>$\displaystyle \sum_{n=1}^{\infty} \frac{1}{n}$</li>
+<li>$\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^{2}}$</li>
+<li>$\displaystyle \sum_{n=1}^{\infty} \frac{1}{n^{3/2}}$</li>
+<li>$\displaystyle \sum_{n=0}^{\infty} \frac{1}{n!}$</li>
 </ol>
 
 
@@ -204,15 +206,15 @@ The series $\sum_{n=1}^{\infty} a_n$ converges if $L\lt1$, it diverges if $L>1$ 
 <h3 id="exercise">Exercise</h3>
 
 <p>Use RATFACE to determine if<br/>
-$$\sum_{n=0}^{\infty} \frac{(-1)^{n}}{n+3^{n}}$$</p>
+$$\sum_{n=0}^{\infty} \frac{(-1)^{n}}{(n+3)^{n}}$$</p>
 
 <p>converges or diverges.  Does Maple find a value for this?</p>
 
 <h2 id="power-and-taylor-series--">Power and Taylor Series  </h2>
 
 <p>A power series is a series of the form:<br/>
-$$\sum_{n=0}^{\infty} c_n x^{n}$$<br/>
-for known values $c_n$.  For example,<br/>
+$$\sum_{n=0}^{\infty} c_n (x-a)^{n}$$<br/>
+for known values $c_n$ and the number $a$ is called the <em>center</em>.  For example,<br/>
 $$\sum_{n=0}^{\infty} \frac{(-1)^{n}}{n!}x^{n}$$<br/>
 The first few terms of this power series:<br/>
 $$1-x+\frac{x^{2}}{2!}-\frac{x^{3}}{3!}+\frac{x^{4}}{4!}-\frac{x^{5}}{5!}+\cdots$$<br/>
@@ -263,7 +265,7 @@ $$\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}$$</p>
 $$-\frac{1}{2}\frac{n(x-3)}{n+1}$$<br/>
 The rule for RATFACE is that if<br/>
 $$L=\lim_{n \rightarrow \infty} \left|\frac{c_{n+1}}{c_n}\right|$$<br/>
-is less than 1, then the series converges absolution.  Therefore taking the limit of the absolute value of the above expression yields<br/>
+is less than 1, then the series converges absolutely.  Therefore taking the limit of the absolute value of the above expression yields<br/>
 $$\frac{1}{2}|x-3|$$</p>
 
 <p>To check if the endpoints are in the interval as well, we need to check the endpoints or where $x=1$ and $x=5$.  First, the left one. Substitute $x=1$ into $c_n$ or</p>
@@ -271,7 +273,7 @@ $$\frac{1}{2}|x-3|$$</p>
 <pre><code class="(null)">simplify(subs(x=1,c(n)))</code></pre>
 
 
-<p>returns $\frac{(-1)^{2n}}{n}$ or $\frac{1}{n}$.  Recall that this means that when $x=1$, we have the series:<br/>
+<p>returns $\dfrac{(-1)^{2n}}{n}$ or $\dfrac{1}{n}$.  Recall that this means that when $x=1$, we have the series:<br/>
 $$\sum_{n=1}^{\infty} \frac{1}{n}$$<br/>
 which diverges (it is the harmonic series).</p>
 
@@ -280,7 +282,7 @@ which diverges (it is the harmonic series).</p>
 <pre><code class="(null)">simplify(subs(x = 5, c(n)))</code></pre>
 
 
-<p>return $\frac{(-1)^{n}}{n}$ so this means when $x=5$, we have the series<br/>
+<p>return $\dfrac{(-1)^{n}}{n}$ so this means when $x=5$, we have the series<br/>
 $$\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n}$$<br/>
 and this series converges by the alternating series remainder theorem.  So the series<br/>
 $$\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}$$<br/>
@@ -332,7 +334,7 @@ $$\frac{1}{2}+\frac{x}{2}-\frac{1}{8}\, \left( x-1 \right) ^{2}+\frac{1}{16}\, \
 \frac {5\, \left( x-1 \right) ^{4}}{128}} + O((x-1)^{5})<br/>
 $$</p>
 
-<p>which is nearly identical to that above, except the final term, which means that the next smallest power has the form $(x-1)^{5}$.</p>
+<p>which is nearly identical to that above, except the final term, which means that the next larger power has the form $(x-1)^{5}$.</p>
 
 <h3 id="plotting-a-taylor-series">Plotting a Taylor Series</h3>
 
