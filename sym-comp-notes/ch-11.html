@@ -18,7 +18,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="chapter-11:-linear-algebra--">Chapter 11: Linear Algebra  </h1>
 
@@ -41,7 +41,7 @@ html,body,#wrapper{font-size:10pt!important}
 <h2 id="vectors--">Vectors  </h2>
 
 <p>There are two standard types of Vectors, column vectors and row vectors and Maple has both.  If you want to enter the vector<br/>
-$$\left[\begin{array}{c} 4 \ -2 \ 3 \end{array} \right]$$</p>
+$$\left[\begin{array}{c} 4 \newline -2 \newline 3 \end{array} \right]$$</p>
 
 <p>you can type:</p>
 
@@ -77,12 +77,12 @@ you can enter this as</p>
 
 
 <p>which returns the vector<br/>
-$$\left[\begin{array}{c} -6 \ -6 \ 4 \end{array}\right]$$</p>
+$$\left[\begin{array}{c} -6 \newline -6 \newline 4 \end{array}\right]$$</p>
 
 <h2 id="matrices--">Matrices  </h2>
 
 <p>To enter a matrix in Maple, it is entered row by row. Consider the matrix:<br/>
-$$A=\left[\begin{array}{cccc} 1 &amp; 2 &amp; 3 &amp; 4 \ 5 &amp; 6 &amp; 7 &amp; 8 \ 9 &amp; 10 &amp; 11 &amp; 12 \end{array} \right]$$<br/>
+$$A=\left[\begin{array}{cccc} 1 &amp; 2 &amp; 3 &amp; 4 \newline 5 &amp; 6 &amp; 7 &amp; 8 \newline 9 &amp; 10 &amp; 11 &amp; 12 \end{array} \right]$$<br/>
 you can enter this as</p>
 
 <pre><code class="(null)">A:=Matrix([[1,2,3,4],[5,6,7,8],[9,10,11,12]])</code></pre>
@@ -96,7 +96,7 @@ you can enter this as</p>
 
 
 <p>and this will look like:<br/>
-$$\left[\begin{array}{cccc} 1 &amp; 1 &amp; 1 &amp; 1 \ 1 &amp; 1 &amp; 1 &amp; 1 \ 1 &amp; 1 &amp; 1 &amp; 1 \end{array} \right]$$</p>
+$$\left[\begin{array}{cccc} 1 &amp; 1 &amp; 1 &amp; 1 \newline 1 &amp; 1 &amp; 1 &amp; 1 \newline 1 &amp; 1 &amp; 1 &amp; 1 \end{array} \right]$$</p>
 
 <p>And a 3 by 3 matrix with the numbers 2, $-1$ and 4 on the diagonal,</p>
 
@@ -104,7 +104,7 @@ $$\left[\begin{array}{cccc} 1 &amp; 1 &amp; 1 &amp; 1 \ 1 &amp; 1 &amp; 1 &amp; 
 
 
 <p>and this will look like<br/>
-$$\left[\begin{array}{cccc} 2 &amp; 0 &amp; 0  \ 0 &amp; -1 &amp; 0 \ 0 &amp; 0 &amp; 4 \end{array} \right]$$</p>
+$$\left[\begin{array}{cccc} 2 &amp; 0 &amp; 0  \newline 0 &amp; -1 &amp; 0 \newline 0 &amp; 0 &amp; 4 \end{array} \right]$$</p>
 
 <h3 id="adding-and-subtracting-matrices">Adding and Subtracting Matrices</h3>
 
@@ -114,7 +114,7 @@ $$\left[\begin{array}{cccc} 2 &amp; 0 &amp; 0  \ 0 &amp; -1 &amp; 0 \ 0 &amp; 0 
 
 
 <p>which will return:<br/>
-$$\left[\begin{array}{cccc}  2 &amp; 3 &amp; 4 &amp; 5 \  6 &amp; 7 &amp; 8 &amp; 9 \ 10 &amp; 11 &amp; 12 &amp; 13 \end{array} \right]$$</p>
+$$\left[\begin{array}{cccc}  2 &amp; 3 &amp; 4 &amp; 5 \newline  6 &amp; 7 &amp; 8 &amp; 9 \newline 10 &amp; 11 &amp; 12 &amp; 13 \end{array} \right]$$</p>
 
 <p>and if we subtract</p>
 
@@ -122,7 +122,7 @@ $$\left[\begin{array}{cccc}  2 &amp; 3 &amp; 4 &amp; 5 \  6 &amp; 7 &amp; 8 &amp
 
 
 <p>Maple returns<br/>
-$$\left[\begin{array}{cccc} 0 &amp; 1 &amp; 2 &amp; 3 \ 4 &amp; 5 &amp; 6 &amp; 7 \ 8 &amp; 9 &amp; 10 &amp; 11  \end{array} \right]$$</p>
+$$\left[\begin{array}{cccc} 0 &amp; 1 &amp; 2 &amp; 3 \newline 4 &amp; 5 &amp; 6 &amp; 7 \newline 8 &amp; 9 &amp; 10 &amp; 11  \end{array} \right]$$</p>
 
 <p>If we try to add $A$ and $C$, we get the error:</p>
 
@@ -134,11 +134,11 @@ $$\left[\begin{array}{cccc} 0 &amp; 1 &amp; 2 &amp; 3 \ 4 &amp; 5 &amp; 6 &amp; 
 <h3 id="scalar-multiplication">Scalar multiplication</h3>
 
 <p>Recall that Scalar multiplication of either a vector or a matrix results in a vector a matrix that is the product of the scalar and each element of the vector or matrix.  For example, $3v$ for the vector $v$ above is<br/>
-$$\left[\begin{array}{c} 12 \ -6 \ 9\end{array}\right]$$<br/>
+$$\left[\begin{array}{c} 12 \newline -6 \newline 9\end{array}\right]$$<br/>
 and $-2A$ is</p>
 
-<p>$$\left[ \begin {array}{cccc} -2&amp;-4&amp;-6&amp;-8\ -10&amp;-12&amp;-<br/>
-14&amp;-16\-18&amp;-20&amp;-22&amp;-24\end {array} \right]$$</p>
+<p>$$\left[ \begin {array}{cccc} -2&amp;-4&amp;-6&amp;-8\newline -10&amp;-12&amp;-<br/>
+14&amp;-16\newline-18&amp;-20&amp;-22&amp;-24\end {array} \right]$$</p>
 
 <h3 id="multiplying-matrices">Multiplying Matrices</h3>
 
@@ -149,12 +149,12 @@ and $-2A$ is</p>
 
 <p>If we multiply $P$ and $A$, we use Maple&rsquo;s dot notation or $P.A$ to get</p>
 
-<p>$$\left[ \begin {array}{cccc} 13&amp;18&amp;23&amp;28\ 27&amp;30&amp;33&amp;<br/>
-36\ 55&amp;62&amp;69&amp;76\end {array} \right]$$</p>
+<p>$$\left[ \begin {array}{cccc} 13&amp;18&amp;23&amp;28\newline 27&amp;30&amp;33&amp;<br/>
+36\newline 55&amp;62&amp;69&amp;76\end {array} \right]$$</p>
 
 <p>We can also use the dot notation to multiply matrices and vectors.  For example, $P.v$ is</p>
 
-<p>$$\left[\begin{array}{c} 8\20\11\end{array}\right]$$</p>
+<p>$$\left[\begin{array}{c} 8\newline20\newline11\end{array}\right]$$</p>
 
 <p>If we don&rsquo;t have compatibly-sized matrices, for example, $A$ and $B$, and try $A.B$, we get:</p>
 
@@ -165,11 +165,11 @@ and $-2A$ is</p>
 
 <p>Let</p>
 
-<p>$$A=\left[\begin{array}{cc} 1 &amp; 3 \ -2 &amp; 4 \ 5 &amp; 0\end{array}\right]$$<br/>
-$$B=\left[\begin{array}{ccc} 3 &amp; 2 &amp; 3 \ 0 &amp; 2 &amp; 0 \ -1 &amp;4 &amp; -1 \end{array}\right]$$<br/>
-$$C=\left[\begin{array}{cc} 0 &amp;4 \ -2 &amp; 1 \end{array}\right]$$<br/>
-$$\vec{v} = \left[\begin{array}{c} 4 \ 2 \end{array}\right]$$<br/>
-$$\vec{u} = \left[\begin{array}{c} 0 \ 5 \ -2 \end{array}\right]$$</p>
+<p>$$A=\left[\begin{array}{cc} 1 &amp; 3 \newline -2 &amp; 4 \newline 5 &amp; 0\end{array}\right]$$<br/>
+$$B=\left[\begin{array}{ccc} 3 &amp; 2 &amp; 3 \newline 0 &amp; 2 &amp; 0 \newline -1 &amp;4 &amp; -1 \end{array}\right]$$<br/>
+$$C=\left[\begin{array}{cc} 0 &amp;4 \newline -2 &amp; 1 \end{array}\right]$$<br/>
+$$\vec{v} = \left[\begin{array}{c} 4 \newline 2 \end{array}\right]$$<br/>
+$$\vec{u} = \left[\begin{array}{c} 0 \newline 5 \newline -2 \end{array}\right]$$</p>
 
 <p>Find the following or state the operation is not compatible.</p>
 
@@ -177,7 +177,7 @@ $$\vec{u} = \left[\begin{array}{c} 0 \ 5 \ -2 \end{array}\right]$$</p>
 <li>$AB$</li>
 <li>$AC$</li>
 <li>$BC$</li>
-<li>$A<sup>TB</sup>$</li>
+<li>$A^{T}B$</li>
 <li>$A\vec{v}$</li>
 <li>$A\vec{u}$</li>
 <li>$B\vec{u}$.</li>
@@ -189,8 +189,8 @@ $$\vec{u} = \left[\begin{array}{c} 0 \ 5 \ -2 \end{array}\right]$$</p>
 <p>A square matrix with all zeros except 1&rsquo;s on the diagonal, is called an <em>identity matrix</em>.  The identity matrices of size 2 by 2, 3 by 3 and 4 by 4 are</p>
 
 <p>$$\begin{array}{ccc}<br/>
-\left[\begin{array}{cc}1&amp;0\0&amp;1\end{array}\right]&amp;\left[\begin{array}{ccc}1&amp;0&amp;0\0&amp;1&amp;0\0&amp;0&amp;1\end{array}\right]&amp;<br/>
-\left[\begin{array}{cccc}1&amp;0&amp;0&amp;0\0&amp;1&amp;0&amp;0\0&amp;0&amp;1&amp;0\0&amp;0&amp;0&amp;1\end{array}\right]\end{array}$$</p>
+\left[\begin{array}{cc}1&amp;0\newline0&amp;1\end{array}\right]&amp;\left[\begin{array}{ccc}1&amp;0&amp;0\newline0&amp;1&amp;0\newline0&amp;0&amp;1\end{array}\right]&amp;<br/>
+\left[\begin{array}{cccc}1&amp;0&amp;0&amp;0\newline0&amp;1&amp;0&amp;0\newline0&amp;0&amp;1&amp;0\newline0&amp;0&amp;0&amp;1\end{array}\right]\end{array}$$</p>
 
 <p>An identity matrix has the property that if you mulitply a matrix or a vector by the identity matrix, the matrix or vector is returned.  More particularly,<br/>
 $$\begin{array}{cccc}IA=A &amp; AI=A &amp; I\vec{v}=\vec{v} &amp; \vec{v}I=\vec{v}\end{array}$$</p>
@@ -220,7 +220,7 @@ $$\begin{array}{cccc}IA=A &amp; AI=A &amp; I\vec{v}=\vec{v} &amp; \vec{v}I=\vec{
 
 <p>Recall that the transpose of a matrix is a new matrix where the rows of the tranpose are the columns of the original matrix.  For example,</p>
 
-<p>$$A^{T} = \left[\begin{array}{ccc} 1 &amp; 5 &amp; 9 \ 2 &amp; 6 &amp; 10 \ 3 &amp; 7 &amp; 11 \ 4 &amp; 8 &amp; 12 \end{array}\right]$$</p>
+<p>$$A^{T} = \left[\begin{array}{ccc} 1 &amp; 5 &amp; 9 \newline 2 &amp; 6 &amp; 10 \newline 3 &amp; 7 &amp; 11 \newline 4 &amp; 8 &amp; 12 \end{array}\right]$$</p>
 
 <p>This can be done in Maple using the <code>Tranpose</code> command:</p>
 
@@ -232,7 +232,7 @@ $$\begin{array}{cccc}IA=A &amp; AI=A &amp; I\vec{v}=\vec{v} &amp; \vec{v}I=\vec{
 <h2 id="gaussian-elimination--">Gaussian Elimination  </h2>
 
 <p>One of the first concepts in linear algebra is how to solve linear systems.  For example,<br/>
-$$\begin{array}{rl} 3x- 2y &amp; = 4 \<br/>
+$$\begin{array}{rl} 3x- 2y &amp; = 4 \newline<br/>
 x + 5y &amp; = 7 \end{array}$$</p>
 
 <p>Maple can solve this by using the <code>solve</code> command such as</p>
@@ -241,7 +241,7 @@ x + 5y &amp; = 7 \end{array}$$</p>
 
 
 <p>which returns ${x=2,y=1}$.  In linear algebra, we find the augmented coefficient matrix as<br/>
-$$\left[\begin{array}{ccc} 3 &amp; -2 &amp; 4 \ 1 &amp; 5 &amp; 7 \end{array}\right]$$</p>
+$$\left[\begin{array}{ccc} 3 &amp; -2 &amp; 4 \newline 1 &amp; 5 &amp; 7 \end{array}\right]$$</p>
 
 <p>One method is to use row operations on the matix to reduce the matrix to a more useful form.  One of these is called <em>Gaussian Elimination</em>.  If we define the matrix above by $A$, then in Maple,</p>
 
@@ -258,8 +258,8 @@ $$\frac{17}{3} y = \frac{17}{3}$$<br/>
 or $y=1$.  Then writting the first equation:<br/>
 $$3x-2y=4$$<br/>
 or substituting in $y=1$<br/>
-$$\begin{array}{rl}3x-2(1)&amp; =4\<br/>
-3x&amp; = 6 \<br/>
+$$\begin{array}{rl}3x-2(1)&amp; =4\newline<br/>
+3x&amp; = 6 \newline<br/>
 x &amp; = 2\end{array}$$</p>
 
 <h2 id="reduced-row-echelon-form--">Reduced Row Echelon Form  </h2>
@@ -270,18 +270,18 @@ x &amp; = 2\end{array}$$</p>
 
 
 <p>This returns:<br/>
-$$\left[\begin{array}{ccc}1 &amp; 0 &amp; 2\0 &amp;1 &amp;1\end{array}\right]$$<br/>
+$$\left[\begin{array}{ccc}1 &amp; 0 &amp; 2\newline0 &amp;1 &amp;1\end{array}\right]$$<br/>
 and this can be written as the two equations $x=2$, $y=1$, same as above.</p>
 
 <h3 id="exercise">Exercise</h3>
 
 <p>The linear system<br/>
-$$\begin{array}{rl}-3x+4y-5z &amp; = 8\<br/>
--4x-2y-z &amp; = 0 \<br/>
+$$\begin{array}{rl}-3x+4y-5z &amp; = 8\newline<br/>
+-4x-2y-z &amp; = 0 \newline<br/>
 5x-4y+3z &amp; = -16\end{array}$$<br/>
 can be written as an Augmented Coefficient Matrix:<br/>
-$$\left[\begin{array}{cccc}-3 &amp; 4 &amp; -5 &amp; 8\<br/>
--4&amp;-2&amp;-1&amp;0\5&amp;-4&amp;3&amp;-16\end{array}\right]$$</p>
+$$\left[\begin{array}{cccc}-3 &amp; 4 &amp; -5 &amp; 8\newline<br/>
+-4&amp;-2&amp;-1&amp;0\newline5&amp;-4&amp;3&amp;-16\end{array}\right]$$</p>
 
 <p>Use <code>ReducedRowEchelonForm</code> to reduce the matrix and then write the solution.</p>
 
@@ -290,13 +290,13 @@ $$\left[\begin{array}{cccc}-3 &amp; 4 &amp; -5 &amp; 8\<br/>
 <p>The <a href="http://www.mathsisfun.com/algebra/matrix-determinant.html">determinant of a matrix</a> is helpful in many different matrix applications including determining if the matrix is singular and it can be used in solving linear systems using <a href="https://en.wikipedia.org/wiki/Cramer%27s_rule">Cramer&rsquo;s Rule</a>.</p>
 
 <p>The determinant is applied only to square matrices and is denoted ${\rm det}(A)$ or $|A|$.  If the matrix is a 2 by 2, then<br/>
-$$\left|\begin{array}{cc} a &amp; b \ c &amp; d \end{array} \right|=ad-bc$$</p>
+$$\left|\begin{array}{cc} a &amp; b \newline c &amp; d \end{array} \right|=ad-bc$$</p>
 
 <p>When finding a determinant, often Laplace&rsquo;s Expansion method or row operations are used to find the value.  For example</p>
 
-<p>$$\left|\begin {array}{ccc} 2&amp;-3&amp;1\ 3&amp;3&amp;0\2&amp;3&amp;-3\end {array} \right|=2\left|\begin{array}{cc}3&amp;0\3&amp;-3\end{array}\right|-(-3)\left|\begin{array}{cc}3&amp;0\2&amp;-3\end{array}\right|+1\left|\begin{array}{cc}3&amp;3\2&amp;3\end{array}\right|$$</p>
+<p>$$\left|\begin {array}{ccc} 2&amp;-3&amp;1\newline 3&amp;3&amp;0\newline2&amp;3&amp;-3\end {array} \right|=2\left|\begin{array}{cc}3&amp;0\newline3&amp;-3\end{array}\right|-(-3)\left|\begin{array}{cc}3&amp;0\newline2&amp;-3\end{array}\right|+1\left|\begin{array}{cc}3&amp;3\newline2&amp;3\end{array}\right|$$</p>
 
-<p>$$\begin{array}{rl}&amp;=2\left((3)(-3)-(3)(0)\right)+3\left((3)(-3)-2(0)\right)+\left((3)(3)-2(3)\right)\<br/>
+<p>$$\begin{array}{rl}&amp;=2\left((3)(-3)-(3)(0)\right)+3\left((3)(-3)-2(0)\right)+\left((3)(3)-2(3)\right)\newline<br/>
 &amp;=2(-9)+3(-9)+(9-6)=-42\end{array}$$</p>
 
 <p>And using Maple on the 3 by 3 matrix $A$ above  (again this in the <code>LinearAlgebra</code> library)</p>
@@ -314,13 +314,13 @@ $$\left|\begin{array}{cc} a &amp; b \ c &amp; d \end{array} \right|=ad-bc$$</p>
 
 <p>For example, consider the matrix</p>
 
-<p>$$A=\left[\begin{array}{ccc}-3&amp;4&amp;-5\-4&amp;-2&amp;-1\5&amp;-4&amp;3\end{array}\right]$$<br/>
+<p>$$A=\left[\begin{array}{ccc}-3&amp;4&amp;-5\newline-4&amp;-2&amp;-1\newline5&amp;-4&amp;3\end{array}\right]$$<br/>
 then we write the augmented matrix where the 3 by 3 identity matrix is append on the right side.  We can to this using the command:</p>
 
 <pre><code class="(null)">Aug:=Matrix([A,IdentityMatrix(3)])</code></pre>
 
 
-<p>which returns $$\left[\begin{array}{ccc}-3&amp;4&amp;-5&amp;1&amp;0&amp;0\-4&amp;-2&amp;-1&amp;0&amp;1&amp;0\5&amp;-4&amp;3&amp;0&amp;0&amp;1\end{array}\right]$$</p>
+<p>which returns $$\left[\begin{array}{ccc}-3&amp;4&amp;-5&amp;1&amp;0&amp;0\newline-4&amp;-2&amp;-1&amp;0&amp;1&amp;0\newline5&amp;-4&amp;3&amp;0&amp;0&amp;1\end{array}\right]$$</p>
 
 <p>and using the <code>ReducedRowEchelonForm</code> command, we get:</p>
 
@@ -346,10 +346,10 @@ $$A^{-1}=\left[ \begin {array}{ccc} {\frac {5}{36}}&amp;-\frac{1}{9}&amp;{\frac 
 
 <ol>
 <li>Find the inverse of<br/>
- $$C=\left[ \begin {array}{ccc} -1&amp;-3&amp;0\-3&amp;2&amp;-1\1&amp;-3&amp;0\end {array} \right]$$<br/>
+ $$C=\left[ \begin {array}{ccc} -1&amp;-3&amp;0\newline-3&amp;2&amp;-1\newline1&amp;-3&amp;0\end {array} \right]$$<br/>
  using the augmented matrix with the identity matrix.</li>
 <li>Find the inverse of $C$ using the command <code>MatrixInverse</code></li>
-<li>What happens when you try to find the inverse of $$\left[ \begin {array}{ccc} -1&amp;-3&amp;0\-3&amp;2&amp;-1\2&amp;-5&amp;1\end{array}\right]?$$</li>
+<li>What happens when you try to find the inverse of $$\left[ \begin {array}{ccc} -1&amp;-3&amp;0\newline-3&amp;2&amp;-1\newline2&amp;-5&amp;1\end{array}\right]?$$</li>
 </ol>
 
 
@@ -358,22 +358,22 @@ $$A^{-1}=\left[ \begin {array}{ccc} {\frac {5}{36}}&amp;-\frac{1}{9}&amp;{\frac 
 <p>Above we saw the linear system:</p>
 
 <p>The linear system<br/>
-$$\begin{array}{rl}-3x+4y-5z &amp; = 8\<br/>
--4x-2y-z &amp; = 0 \<br/>
+$$\begin{array}{rl}-3x+4y-5z &amp; = 8\newline<br/>
+-4x-2y-z &amp; = 0 \newline<br/>
 5x-4y+3z &amp; = -16\end{array}$$</p>
 
 <p>and used the Augumented Matrix to find the solution.  Instead, we can write:<br/>
-$$\begin{array}{rl}A=\left[ \begin {array}{ccc} -3&amp;4&amp;-5\-4&amp;-2&amp;-1<br/>
-\5&amp;-4&amp;3\end {array} \right]&amp;\vec{b}=\left[\begin{array}{c}8\0\-16\end{array}\right]\end{array}$$</p>
+$$\begin{array}{rl}A=\left[ \begin {array}{ccc} -3&amp;4&amp;-5\newline-4&amp;-2&amp;-1<br/>
+\newline5&amp;-4&amp;3\end {array} \right]&amp;\vec{b}=\left[\begin{array}{c}8\newline0\newline-16\end{array}\right]\end{array}$$</p>
 
 <p>and then if we write the vector<br/>
-$$\vec{x}=\left[\begin{array}{c}x\y\z\end{array}\right]$$, then the linear system can be written as $A\vec{x}=\vec{b}$. We can solve this in the following way.<br/>
+$$\vec{x}=\left[\begin{array}{c}x\newline y\newline z\end{array}\right]$$, then the linear system can be written as $A\vec{x}=\vec{b}$. We can solve this in the following way.<br/>
 $$A\vec{x}=\vec{b}$$<br/>
 Multiply the equation by $A^{-1}$<br/>
-$$\begin{array}{rl}A^{-1}A\vec{x}&amp;=A^{-1}\vec{b}\<br/>
-\text{since $A^{-1}A=I\qquad\qquad$}&amp;\<br/>
-I\vec{x}&amp;=A^{-1}\vec{b}\<br/>
-\text{since $I\vec{x}=\vec{x}\qquad\qquad$}&amp;\<br/>
+$$\begin{array}{rl}A^{-1}A\vec{x}&amp;=A^{-1}\vec{b}\newline<br/>
+\text{since $A^{-1}A=I\qquad\qquad$}&amp;\newline<br/>
+I\vec{x}&amp;=A^{-1}\vec{b}\newline<br/>
+\text{since $I\vec{x}=\vec{x}\qquad\qquad$}&amp;\newline<br/>
 \vec{x}&amp;=A^{-1}\vec{b}\end{array}$$</p>
 
 <p>Use this to solve the linear system above.</p>
@@ -396,7 +396,7 @@ as we saw above.</p>
 
 
 <p>to get:<br/>
-$$\left[\begin{array}{c}-2\3\2\end{array}\right]$$</p>
+$$\left[\begin{array}{c}-2\newline3\newline2\end{array}\right]$$</p>
 
 <p>so the result is $x=-2,y=3,z=2$, the same as we found above.</p>
 
@@ -417,7 +417,7 @@ Finding $\lambda$ and $\vec{v}$ that satisfy this require two steps:</p>
 <h3 id="example">Example</h3>
 
 <p>Find the eigenvalues and eigenvectors of the matrix<br/>
-$$A=\left[\begin{array}{cc}4&amp;-1\-2&amp;3\end{array}\right]$$</p>
+$$A=\left[\begin{array}{cc}4&amp;-1\newline-2&amp;3\end{array}\right]$$</p>
 
 <p>Step 1:  Solve $|A-\lambda I|=0$</p>
 
@@ -436,58 +436,57 @@ $$A=\left[\begin{array}{cc}4&amp;-1\-2&amp;3\end{array}\right]$$</p>
 <pre><code class="(null)">A-5*IdentityMatrix(2)</code></pre>
 
 
-<p>return the matrix: $$\left[\begin{array}{cc}-1&amp;-1\-2&amp;-2\end{array}\right]$$.<br/>
+<p>return the matrix: $$\left[\begin{array}{cc}-1&amp;-1\newline-2&amp;-2\end{array}\right]$$.<br/>
 To solve this we will append the zero vector on the right or</p>
 
 <pre><code class="(null)">Aug:=Matrix([A-5*IdentityMatrix(2),Vector([0,0])])</code></pre>
 
 
-<p>
-returns $$\left[\begin{array}{ccc}-1&amp;-1&amp;0\-2&amp;-2&amp;0\end{array}\right]$$<br/>
+<p>which returns $$\left[\begin{array}{ccc}-1&amp;-1&amp;0\newline-2&amp;-2&amp;0\end{array}\right]$$<br/>
 and then</p>
 
 <pre><code class="(null)">ReducedRowEchelonForm(Aug)</code></pre>
 
 
-<p>which returns $$\left[\begin{array}{ccc}1&amp;1&amp;0\0&amp;0&amp;0\end{array}\right]$$</p>
+<p>which returns $$\left[\begin{array}{ccc}1&amp;1&amp;0\newline0&amp;0&amp;0\end{array}\right]$$</p>
 
 <p>The first row of the equation, means that $x+y=0$.  We seek any nonzero solution to this, if $y=-1$ and $x=1$, then the vector is<br/>
-$$\vec{v}_1=\left[\begin{array}{c}1\-1\end{array}\right]$$.</p>
+$$\vec{v}_1=\left[\begin{array}{c}1\newline-1\end{array}\right]$$.</p>
 
 <p>Next, find the eigenvector with eigenvalue $\lambda=2$.</p>
 
 <pre><code class="(null)">Aug:=Matrix([A-2*IdentityMatrix(2),Vector([0,0])])</code></pre>
 
 
-<p>returns $$\left[\begin{array}{ccc} 2&amp;-1&amp;0\ -2&amp;1&amp;0\end{array} \right]$$</p>
+<p>returns $$\left[\begin{array}{ccc} 2&amp;-1&amp;0\newline -2&amp;1&amp;0\end{array} \right]$$</p>
 
 <p>and putting in reduced row echelon form:<br/>
-$$\left[\begin{array}{ccc} 2&amp;-1&amp;0\ 0&amp;0&amp;0\end{array} \right]$$</p>
+$$\left[\begin{array}{ccc} 2&amp;-1&amp;0\newline 0&amp;0&amp;0\end{array} \right]$$</p>
 
 <p>Lastly, we find the eigenvector associated with this.  The first row is $2x-y=0$ and we seek a nonzero solution to this.  Let $x=1$, then $y=2$ and the vector will be<br/>
-$$\vec{v}_2=\left[\begin{array}{c}1\2\end{array}\right]$$</p>
+$$\vec{v}_2=\left[\begin{array}{c}1\newline2\end{array}\right]$$</p>
 
 <p>In summary for the matrix<br/>
-$$A=\left[\begin{array}{cc}4&amp;-1\-2&amp;3\end{array}\right]$$</p>
+$$A=\left[\begin{array}{cc}4&amp;-1\newline-2&amp;3\end{array}\right]$$</p>
 
 <p>The eigenvalues are 5 and 2 and the associated eigenvectors are<br/>
-$$\begin{array}{rl}\vec{v}<em>1=\left[\begin{array}{c}1\-1\end{array}\right]&amp; \vec{v}</em>2=\left[\begin{array}{c}1\2\end{array}\right]\end{array}$$</p>
+$$\begin{array}{rl}\vec{v}_1=\left[\begin{array}{c}1\newline-1\end{array}\right]&amp; \vec{v}_2=\left[\begin{array}{c}1\newline2\end{array}\right]\end{array}$$</p>
 
 <h3 id="exercise">Exercise</h3>
 
 <p>Use the steps above to find the eigenvalues and eigenvectors of<br/>
-$$A=\left[\begin{array}{cc}6&amp;2\4&amp;4\end{array}\right]$$</p>
+$$A=\left[\begin{array}{cc}6&amp;2\newline4&amp;4\end{array}\right]$$</p>
 
 <h3 id="more-built-in-commands-for-maple">More Built-in commands for Maple</h3>
 
 <p>Recall that above, the first step in finding the eigenvalues of the matrix is to write down the characteristic equation of the matrix or $|A-\lambda I|=0$.  If we return to the matrix above,<br/>
-$$A=\left[\begin{array}{cc}4&amp;-1\-2&amp;3\end{array}\right]$$<br/>
+$$A=\left[\begin{array}{cc}4&amp;-1\newline-2&amp;3\end{array}\right]$$<br/>
 we can use Maple to find the characteristic equation by</p>
 
 <pre><code class="(null)">CharacteristicPolynomial(A,lambda)=0</code></pre>
 
 
-<p>which returns as above, $\lambda<sup>2</sup>-7\lambda+10=0$, which we can solve with the <code>solve</code> command to get $5,2$.</p>
+<p>which returns as above, $\lambda^{2}-7\lambda+10=0$, which we can solve with the <code>solve</code> command to get $5,2$.</p>
 
 <p>Then the next step was to solve $(A-\lambda I)\vec{v}$ for the given values of $\lambda$.  Another name for this is the null space of the matrix.  If we enter</p>
 
@@ -495,7 +494,7 @@ we can use Maple to find the characteristic equation by</p>
 
 
 <p>Maple returns<br/>
-$$\left{\left[\begin{array}{c}-1\1\end{array}\right]\right}$$</p>
+$$\left\{ \left[\begin{array}{c}-1\newline 1\end{array}\right] \right\}$$</p>
 
 <p>so the only vector in the null space is the one above.  This is just $-1$ times the eigenvector that we found above.  (Note: there is a theorem that says that any nonzero scalar times an eigenvector is also an eigenvector.  In other words, eigenvectors are not unique.)</p>
 
@@ -505,14 +504,14 @@ $$\left{\left[\begin{array}{c}-1\1\end{array}\right]\right}$$</p>
 
 
 <p>Maple returns<br/>
-$$\left{\left[\begin{array}{c}1/2\1\end{array}\right]\right}$$</p>
+$$\left\{\left[\begin{array}{c}1/2\newline1\end{array}\right]\right\}$$</p>
 
 <p>which is $1/2$ times the eigenvector that we found.</p>
 
 <h3 id="exercise">Exercise</h3>
 
 <p>Use the CharacteristicPolynomial and NullSpace commands to find the eigenvalues and eigenvectors of<br/>
-$$A=\left[\begin{array}{cc}6&amp;2\4&amp;4\end{array}\right]$$</p>
+$$A=\left[\begin{array}{cc}6&amp;2\newline4&amp;4\end{array}\right]$$</p>
 
 <p>that found above.</p>
 
@@ -527,7 +526,7 @@ type</p>
 
 
 <p>and one gets:<br/>
-$$\left[\begin{array}{c}5\2\end{array}\right]$$</p>
+$$\left[\begin{array}{c}5\newline2\end{array}\right]$$</p>
 
 <p>Note:  this is not a vector, but the two eigenvectors are just 5 and 2 as we saw above.</p>
 
@@ -537,7 +536,7 @@ $$\left[\begin{array}{c}5\2\end{array}\right]$$</p>
 
 
 <p>and you get:<br/>
-$$\left[\begin{array}{c}5\2\end{array}\right],\left[\begin{array}{cc}\frac{1}{2} &amp; -1\1&amp;1\end{array}\right]$$</p>
+$$\left[\begin{array}{c}5\newline2\end{array}\right],\left[\begin{array}{cc}\frac{1}{2} &amp; -1\newline1&amp;1\end{array}\right]$$</p>
 
 <p>The first vector is the eigenvalues again and the matrix contain the eigenvectors as column vectors.  Note: these are the same eigenvectors that we found using the <code>NullSpace</code> command.</p>
 <!-- ##END MARKED WRAPPER## -->
