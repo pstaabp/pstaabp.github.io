@@ -11,5 +11,5 @@ Symbolic Computation Notes (FSU, Spring 2017)
 * [Chapter 9: Applications of Definite Integrals](ch-09.html)
 * [Chapter 10: Sequences and Series](ch-10.html)
 * [Chapter 11: Linear Algebra](ch-11.html)
-<!--* [Chapter 12: Recursive Iterations and Newton's Method](ch-12.html)
-* [Chapter 13: Complex Numbers](ch-13.html)  -->
+* [Chapter 12: Recursive Iterations and Newton's Method](ch-12.html)
+<!--* [Chapter 13: Complex Numbers](ch-13.html)  -->
