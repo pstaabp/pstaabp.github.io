@@ -18,9 +18,11 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="ch-5:-introduction-to-programming--">Ch 5: Introduction to Programming  </h1>
+
+<p><a href="index.html">Return to all notes</a></p>
 
 <p>The following are number of advanced techniques in Maple.  Again, these are general ideas that appear in any CAS, but the format will be specific to Maple.  These allow a user of Maple to create more complicated series of mathematical steps in a nice way. The following techniques are described here:</p>
 
@@ -374,7 +376,7 @@ return sum:</code></pre></p></li>
 
 <h3 id="exercise">Exercise</h3>
 
-<p>A fibonacci number is defined as $F(1)=1, F(2)=1$, then $F(n)=F(n-1)+F(n-2)$ for $n \geq 3$.  This is naturally a recursive function.  Write a procedure $F$ that take a positive integer $n$ and returns the $n$th Fibonacci number using recursion.  Find the first 20 Fibonacci number (hint: use the <code>map</code> command)</p>
+<p>A fibonacci number is defined as $F(1)=1, F(2)=1$, then $F(n)=F(n-1)+F(n-2)$ for $n \geq 3$.  This is naturally a recursive function.  Write a procedure $F$ that take a positive integer $n$ and returns the $n$th Fibonacci number using recursion.  Find the first 20 Fibonacci number (hint: use the <code>seq</code> command)</p>
 
 <h2 id="rootfinding-techniques--">Rootfinding techniques  </h2>
 
@@ -454,7 +456,12 @@ you should get the answer 1.0.</p></li>
       inter := mid .. rhs(inter)
    end if:
    return inter:
-end proc:</code></pre></p></li>
+end proc:</code></pre><br/>
+we test this with <code>bisect(x-&gt;x^2-2,0..2)</code> we get</p>
+
+<p>  <pre><code class="(null)">1.0 .. 2</code></pre></p>
+
+<p>  which means that the root is in the interval [1.0,2.0].</p></li>
 <li><p>Put in a loop to run a few times.</p>
 
 <p> Next, we will run this a few times using a <code>for</code> loop to test the procedure.</p>
@@ -476,7 +483,15 @@ end proc:</code></pre></p></li>
   return mid
 end proc:</code></pre></p>
 
-<p> This will print out the interval to make sure it is working.  YOu should see the interval printed 4 times and then the midpoint returned (and then printed).</p></li>
+<p> This will print out the interval to make sure it is working.  You should see the interval printed 4 times and then the midpoint returned (and then printed):</p>
+
+<p> <pre><code class="(null)">1.0 .. 2
+1.0 .. 1.50
+1.250 .. 1.50
+1.3750 .. 1.50
+1.43750</code></pre></p>
+
+<p> so this appears that the root is 1.43750 and is guaranteed to be in the interval [1.375,1.5]</p></li>
 <li><p>Replace the for loop with a while loop</p>
 
 <p> We don&rsquo;t want to run this a fixed number of times, but instead, run this until the halting condition.</p>
@@ -571,6 +586,8 @@ bisect( f::procedure, interval::range,
 </ol>
 
 
+<p>We will use this procedure in a homework problem.</p>
+
 <!-- Creating a Package or Module-->
 
 
@@ -628,7 +645,7 @@ end module:
     }
 });
 </script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </div>
 
 

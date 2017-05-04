@@ -18,9 +18,11 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal">
+<body class="normal firstload">
   <div id="wrapper">
       <h1 id="differential-calculus-problems-in-maple--">Differential Calculus Problems in Maple  </h1>
+
+<p><a href="index.html">Return to all notes</a></p>
 
 <p>This chapter covers how to perform many mathematics that arises from Calculus using a CAS like Maple.  As we will see, a CAS will often do limits and derivatives quite easily, allowing us to investigate the geometry of the derivative using a plot or a table of values, which are often helpful for gaining intuition about limits and derivatives.</p>
 
@@ -433,6 +435,17 @@ $$-\frac{x}{y(x)}$$</p>
 
 <p>Let&rsquo;s say we want to find the tangent line to the curve at the point $(3,4)$.  If we plug the point into the derivative we will get $m=-3/4$ so the line will be $y=-\frac{3}{4} (x-3)+4$.</p>
 
+<h3 id="finding-second-derivatives-implicitly.">Finding second derivatives implicitly.</h3>
+
+<p>We can also find second and higher derivatives implicitly using <code>implicitdiff</code>.  For example, if we have the curve $x^{2}+y^{2}=25$, then the second derivative can be found by</p>
+
+<pre><code class="(null)">implicitdiff(x^2+y^2=25,y,x,x)</code></pre>
+
+
+<p>
+the result is:<br/>
+\[-\frac{x^{2}+y^{2}}{y^{3}}\]</p>
+
 <h2 id="implicit-plots--">Implicit Plots  </h2>
 
 <p>Maple can plot curves based on equations in an implicit manner.  The command <code>implicitplot</code> is a command in the <code>plots</code> package.</p>
@@ -486,7 +499,7 @@ give the following result.</p>
     }
 });
 </script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </div>
 
 
