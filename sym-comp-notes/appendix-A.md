@@ -8,8 +8,7 @@ Appendix A: LaTeX, a typesetting System
 * Inserting a plot
 * Sections/subsections
 * Mathematics
-* Integral
-* Derivatives
+  * Integrals, derivatives and sums
 * Aligned equations
 * Matrices
 * Bold and italics
@@ -20,5 +19,3 @@ Appendix A: LaTeX, a typesetting System
   * amsfonts
   * geometry
   * graphicx
-
-  
