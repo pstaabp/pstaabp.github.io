@@ -213,7 +213,8 @@ which does not have a root in the reals.  If we use</p>
 
 <p> in Maple with this function, we get: <code>1.683061201</code> which is clearly not right. If instead we plot it:</p>
 
-<p> <pre><code class="(null)">NewtonsMethod(x^2+4, x = 1,output=plot)</code></pre></p>
+<pre><code class="(null)">NewtonsMethod(x^2+4, x = 1,output=plot)</code></pre>
+
 
 <p> we get the plot:<br/>
  <img src="images/ch15/plot02.png" alt="Plot of Newton's method on $f(x)=x^{2}+4$" /></p>
@@ -291,8 +292,7 @@ end proc:</code></pre>
 <pre><code class="(null)">newton(x-&gt;x^2+4, 1.0*I)</code></pre>
 
 
-<p>
-get <code>2.0000I</code>.</p>
+<p>and get <code>2.0000I</code>.</p>
 
 <h3 id="roots-of-unity">Roots of Unity</h3>
 
@@ -364,8 +364,7 @@ $$z_3= e^{4 \pi i/3}$$.</p>
 <pre><code class="(null)">Z[5,5]:=0.0001+0.0001I</code></pre>
 
 
-<p>
-is close to 0, but not exactly.  Then</p>
+<p>which is close to 0, but not exactly.  Then</p>
 
 <pre><code class="(null)">roots:=map(a-&gt;newton(z-&gt;z^3-1, a), Z)</code></pre>
 
@@ -451,14 +450,13 @@ and then the terms get further from the the origin.</p>
 
 <p>It&rsquo;s helpful to have a procedure that determines the number of steps such that $|z_n|>2$.</p>
 
-<pre><code class="(null)">mandelSteps := proc (C::complex,{maxsteps::posint:=50})::posint;
-  local z:=0.0+0.0*I, i:=0;
-  while |z| &lt; 2 do
-    i := i+1;
-    z := z^2+C;
-    if 25 &lt; i then break end if
+<pre><code class="(null)">mandelSteps := proc (c::complex, { maxsteps::posint := 50 })::posint;
+  local i,z := 0.+0.*I;
+  for i to maxsteps do
+    z := z^2+c;
+    if 2 &lt; abs(z) then break end if
   end do;
-  return i
+  return i;
 end proc:</code></pre>
 
 
@@ -467,13 +465,12 @@ end proc:</code></pre>
 <pre><code class="(null)">mandelSteps(0+0*I)</code></pre>
 
 
-<p>return 26, which basically means the origin is in the mandelbrot set, however,</p>
+<p>return 51, which basically means the origin is in the mandelbrot set, however,</p>
 
 <pre><code class="(null)">mandelSetps(1+I)</code></pre>
 
 
-<p>
-3, which means it took 3 steps to leave $|z|>2$.</p>
+<p>returns 3, which means it took 3 steps to leave $|z|>2$ and it is not in the Mandelbrot set.</p>
 
 <h2 id="visualizing-the-mandelbrot-set--">Visualizing the Mandelbrot Set  </h2>
 
