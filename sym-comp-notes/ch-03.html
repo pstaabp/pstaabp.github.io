@@ -103,13 +103,17 @@ html,body,#wrapper{font-size:10pt!important}
 
 <p>If instead, you want to run the entire document, click the !!! button.  In either case, the top-most command is run first, then sequential from top to bottom.</p>
 
-<h3 id="sections-in-maple-documents">Sections in Maple Documents</h3>
+<h2 id="sections-in-maple-documents">Sections in Maple Documents</h2>
 
 <p>Another way to organize your Maple document is to use sections and subsection.  To create a section, go to <em>Insert->Section</em> and you can give the section a name.  If this is named &ldquo;Section One&rdquo;, it will look like the following:</p>
 
 <p><img src="images/ch03/section-one.png" alt="Part of a Maple document with a section" /></p>
 
 <p>You can collapse and open sections by clicking on the section name.</p>
+
+<h3 id="subsections">Subsections</h3>
+
+<p>You can also make subsections that lie inside of sections (or other subsections) by going to <em>Insert->Subsection</em>.</p>
 
 <h2 id="what-is-a-command---">What is a command?  </h2>
 
@@ -322,7 +326,7 @@ you will get 20 digits of the fraction $\frac{4}{7}$.</p>
 
 <p>Remember that if you use a variable that Maple doesn&rsquo;t know, it assumes nothing about it.  We can tell Maple additional information about it however.  Here&rsquo;s a few examples.</p>
 
-<p>If we just type $\sin(n\pi)$, then Maple will return it because it doesn&rsquo;t know anything about $n$.  What if we say $n$ is an integer, by typing <code>assume(n,integer)</code>, then evaluating $\sin(n\pi)$, we get 0.</p>
+<p>If we just type $\sin(n\cdot\pi)$, then Maple will return it because it doesn&rsquo;t know anything about $n$.  What if we say $n$ is an integer, by typing <code>assume(n,integer)</code>, then evaluating $\sin(n\cdot\pi)$, we get 0.</p>
 
 <p>Often, you simplify $\sqrt{a^{2}}$ to be $a$.  This is actually only true when $a>0$ and Maple knows this.  If you type</p>
 

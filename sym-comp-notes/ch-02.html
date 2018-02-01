@@ -85,8 +85,7 @@ html,body,#wrapper{font-size:10pt!important}
 <pre><code class="(null)">plot(x^2,x=-2..2,title=typeset(&quot;A plot of %1&quot;, x^2))</code></pre>
 
 
-<p>
-have called a command called <code>typeset</code> that will help Maple understand how to print out what you want. If you search plot in the <strong>Help Browser</strong>, then scroll down to <code>plot,typesetting</code>, you will find more information and examples to typeset.</p>
+<p>You have called a command called <code>typeset</code> that will help Maple understand how to print out what you want. If you search plot in the <strong>Help Browser</strong>, then scroll down to <code>plot,typesetting</code>, you will find more information and examples to typeset.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -120,8 +119,7 @@ have called a command called <code>typeset</code> that will help Maple understan
 <pre><code class="(null)">plot([x^2, x^3], x = -2..2,legend = [x^2, x^3], title = typeset(&quot;A plot of %1 and %2.&quot;, x^2, x^3))</code></pre>
 
 
-<p>
-you will see:<br/>
+<p>and you will see:<br/>
 <img src="images/ch02/plot17.png" alt="A plot of two functions with a legend" /></p>
 
 <h3 id="alternative-way-to-add-a-legend">Alternative Way to Add a Legend</h3>
@@ -177,11 +175,10 @@ $$f(x) = \begin{cases} x &amp; x&lt;0 \newline 3-x^{2} &amp; x \geq 0 \end{cases
 
 <p>The way to enter this in is the following:</p>
 
-<pre><code class="(null)">f:=piecewise(x&lt;0,x,3-x^2,x&gt;=0)</code></pre>
+<pre><code class="(null)">f:=piecewise(x&lt;0,x,x&gt;=0,3-x^2)</code></pre>
 
 
-<p>
-the interval comes before the function.  Notice that Maple formats it like we typically write it out mathematically.</p>
+<p>where the interval comes before the function.  Notice that Maple formats it like we typically write it out mathematically.</p>
 
 <p>Then we can plot it like other functions:</p>
 
@@ -203,8 +200,7 @@ the plot will look like:</p>
 <pre><code class="(null)">plot(1/(x-1),x=-3..3,discont=true)</code></pre>
 
 
-<p>
-plot will look like:</p>
+<p>the plot will look like:</p>
 
 <p><img src="images/ch02/plot9.png" alt="plot of 1/(x-1)" /></p>
 
@@ -215,13 +211,19 @@ plot will look like:</p>
 <p>Plot a set of discrete points as follows:</p>
 
 <ol>
-<li><p>Enter<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>:</p>
-
-<p> <pre><code class="(null)">dots:=[[0,1],[1,0],[2,1],[3,0]]</code></pre></p></li>
-<li><p>Enter:</p>
-
-<p> <pre><code class="(null)">plot(dots,style=point)</code></pre></p></li>
+<li>Enter<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>:</li>
 </ol>
+
+
+<pre><code class="(null)">dots:=[[0,1],[1,0],[2,1],[3,0]]</code></pre>
+
+
+<ol>
+<li>Enter:</li>
+</ol>
+
+
+<pre><code class="(null)">plot(dots,style=point)</code></pre>
 
 
 <p>and you should see the following plot:</p>
@@ -260,8 +262,7 @@ plot([x^3, sin(x), dots],x=-3..3,y=-3..3)</code></pre>
 <pre><code class="(null)">plot([x^3, sin(x), dots],x=-3..3,y=-3..3,style=[line,line,point])</code></pre>
 
 
-<p>
-the first two are line plots (the default) and the last is a point plot.  The resulting plot is</p>
+<p>where the first two are line plots (the default) and the last is a point plot.  The resulting plot is</p>
 
 <p><img src="images/ch02/plot16.png" alt="Better plot with functions and dots" /></p>
 
@@ -274,8 +275,7 @@ the first two are line plots (the default) and the last is a point plot.  The re
 <pre><code class="(null)">solve(x^2-3x-4=0)</code></pre>
 
 
-<p>
-returns <code>4,-1</code>, meaning that both 4 and -1 are solutions to the equation.</p>
+<p>Maple returns <code>4,-1</code>, meaning that both 4 and -1 are solutions to the equation.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -311,8 +311,7 @@ which is indeed a solution to the equation.  However, it isn&rsquo;t the only so
 <pre><code class="(null)">Student[Calculus1][Roots](sin(3x)=1/2,x=0..2pi)</code></pre>
 
 
-<p>
-you will see 6 roots.</p>
+<p>and you will see 6 roots.</p>
 
 <p>Now you might (and probably should) be thinking, that&rsquo;s a crazy command to get the solutions.  What&rsquo;s with the brackets?  We will explain this in the next chapter.  In short, it is a way to call a command that is in a library that is not built-in to Maple by default.  We will see a shortcut to call this later.</p>
 
@@ -325,8 +324,7 @@ you will see 6 roots.</p>
 <pre><code class="(null)">solve(sin(x)=0,x,allsolutions = true)</code></pre>
 
 
-<p>
-get $\pi\_ Z1$~  (or another number after the Z).  This is a bit strange, but this is Maple&rsquo;s way of saying any integer multiple of $\pi$.</p>
+<p>We get $\pi\_ Z1$~  (or another number after the Z).  This is a bit strange, but this is Maple&rsquo;s way of saying any integer multiple of $\pi$.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -357,8 +355,7 @@ and you will see a mess (no really, try it).</p>
 <pre><code class="(null)">fsolve(x^3+3x^2-11x-10=0)</code></pre>
 
 
-<p>
-you should see 3 roots:</p>
+<p>and you should see 3 roots:</p>
 
 <pre><code class="(null)">-4.844519677, -.7850044458, 2.629524123</code></pre>
 
@@ -370,10 +367,11 @@ you should see 3 roots:</p>
 <pre><code class="(null)">solve(4x+3&gt;5x-7,x)</code></pre>
 
 
-<p>
-return <em>RealRange(-$\infty$,Open(10))</em>.  This is Maple&rsquo;s notation for $(-\infty,10)$.  Try changing the greater than sign in the inequality to a greater than or equal to, which you type in <code>&gt;=</code> and Maple will change it automatically to a $\geq$.</p>
+<p>will return $[-\infty,10)$.  Note: versions before Maple 2017 will return <code>RealRange(-∞,Open(10))</code>.  Also, Maple uses a very strange notation of a square bracket with $\infty$, generally which is not done.</p>
 
-<p>Maple will solve many types of inequalities.  Another example is <code>solve(x^2-9&gt;=0,x)</code> which returns <em>RealRange(-$\infty$,-3),RealRange(3,$\infty$)</em>.  In standard interval notation, this is $(-\infty,-3] \bigcup [3,\infty)$.</p>
+<p>Try changing the greater than sign in the inequality to a greater than or equal to, which you type in <code>&gt;=</code> and Maple will change it automatically to a $\geq$.</p>
+
+<p>Maple will solve many types of inequalities.  Another example is <code>solve(x^2-9&gt;=0,x)</code> which returns $[-\infty,-3] \bigcup [3,\infty]$.</p>
 
 <h2 id="substituting-values-into-expressions--">Substituting values into expressions  </h2>
 
@@ -476,55 +474,81 @@ then using Maple</p>
 <ol>
 <li><p>Find it&apos;s domain</p>
 
-<p> We find the domain by solving the inside greater than zero:</p>
+<p> We find the domain by solving the inside greater than zero:</p></li>
+</ol>
 
-<p> <pre><code class="(null)">solve(3x^3+x^2+3x+1&gt;0)</code></pre><br/>
-this results in the interval $(-1/3,\infty)$.</p></li>
+
+<pre><code class="(null)">solve(3x^3+x^2+3x+1&gt;0)</code></pre>
+
+
+<pre><code>and this results in the interval $(-1/3,\infty)$.  
+</code></pre>
+
+<ol>
 <li><p>Find it&apos;s inverse function</p>
 
-<p> We find the inverse of it by <code>solve(f(y)=x,y)</code>.  The result is a mess (try it).  There are 3 solutions because there is a cubic being solved.  Looking carefully at the results, the 2nd two solutions are complex because of the presence of I, which maple uses for $\sqrt{-1}$.  The only interesting part of this for us is the first one, so let&rsquo;s enter:</p>
+<p> We find the inverse of it by <code>solve(f(y)=x,y)</code>.  The result is a mess (try it).  There are 3 solutions because there is a cubic being solved.  Looking carefully at the results, the 2nd two solutions are complex because of the presence of I, which maple uses for $\sqrt{-1}$.  The only interesting part of this for us is the first one, so let&rsquo;s enter:</p></li>
+</ol>
 
-<p> <pre><code class="(null)">g(x):=(#)[1]</code></pre></p>
 
-<p> where (#) is the line number of the result.  The [1] says take only the first solution.  (Note: we will explain this in the next chapter)</p></li>
+<pre><code class="(null)">g(x):=(#)[1]</code></pre>
+
+
+<pre><code>where (#) is the line number of the result.  The [1] says take only the first solution.  (Note: we will explain this in the next chapter)
+</code></pre>
+
+<ol>
 <li><p>Graph the function and its inverse.  What relationship do you notice.</p>
 
-<p> If we graph the two, for example</p>
+<p> If we graph the two, for example</p></li>
+</ol>
 
-<p> <pre><code class="(null)">plot([f(x),g(x)],x=-1..10,y=-1..10)</code></pre></p>
 
-<p> then you get:</p>
+<pre><code class="(null)">plot([f(x),g(x)],x=-1..10,y=-1..10)</code></pre>
 
-<p> <img src="images/ch02/plot19.png" alt="Plot of a function and its inverse" /></p>
 
-<p> and you should note that they look like inverses because they are symmetric across the line $y=x$.</p></li>
+<pre><code>then you get:
+
+![Plot of a function and its inverse](images/ch02/plot19.png)
+
+and you should note that they look like inverses because they are symmetric across the line $y=x$.  
+</code></pre>
+
+<ol>
 <li><p>Find the range of $f$ knowing the domain of $f^{-1}(x)$.</p>
 
-<p>We look for the domain of $g(x)$.  First, note that if we</p>
+<p>We look for the domain of $g(x)$.  First, note that if we</p></li>
+</ol>
 
-<p><pre><code class="(null)">simplify(g(x))</code></pre></p>
 
-<p>we get:<br/>
-\[-1/9\,{\frac {-1/2\, \left( -656+972\,{ {\rm e}^{x}}+36\,\sqrt {1200-<br/>
+<pre><code class="(null)">simplify(g(x))</code></pre>
+
+
+<p>   we get:<br/>
+   \[-1/9\,{\frac {-1/2\, \left( -656+972\,{ {\rm e}^{x}}+36\,\sqrt {1200-<br/>
 984\,{ {\rm e}^{x}}+729\,{ {\rm e}^{2\,x} } } \right) ^{2/3}+\sqrt [3]{-<br/>
 656+972\,{ {\rm e}^{x}}+36\,\sqrt {1200-984\,{ {\rm e}^{x}}+729\,{<br/>
 {\rm e}^{2\,x} } } }+52}{\sqrt [3]{-656+972\,{ {\rm e}^{x}}+36\,\sqrt {<br/>
 1200-984\,{ {\rm e}^{x} }+729\,{ {\rm e}^{2\,x} } } } } }\]</p>
 
-<p>  and there are two important things.  We need to check where the denominator is equal to zero and typing:</p>
+<pre><code>and there are two important things.  We need to check where the denominator is equal to zero and typing:  
+</code></pre>
 
-<p>  <pre><code class="(null)">solve(denom(g(x))=0)</code></pre></p>
+<pre><code class="(null)">solve(denom(g(x))=0)</code></pre>
 
-<p>  Maple doesn&rsquo;t return anything.  This means that there is no solution to this, so the denominator is never 0.</p>
 
-<p>  Also, we need to solve for where $\sqrt {1200-<br/>
-984\,{ {\rm e}^{x}}+729\,{ {\rm e}^{2\,x} } }$ is defined, so solve:</p>
+<pre><code>Maple doesn't return anything.  This means that there is no solution to this, so the denominator is never 0.
 
-<p>   <pre><code class="(null)">solve(1200-984\,{ {\rm e}^{x} }+729\,{ {\rm e}^{2\,x} } \geq 0)</code></pre></p>
+Also, we need to solve for where $\sqrt {1200-  
+</code></pre>
 
-<p>   And Maple returns $x$, which is a confusing way to say all real numbers.</p></li>
-</ol>
+<p> 984\,{ {\rm e}^{x}}+729\,{ {\rm e}^{2\,x} } }$ is defined, so solve:</p>
 
+<pre><code class="(null)">solve(1200-984\,{ {\rm e}^{x} }+729\,{ {\rm e}^{2\,x} } \geq 0)</code></pre>
+
+
+<pre><code>And Maple returns $x$, which is a confusing way to say all real numbers.  
+</code></pre>
 
 <h2 id="expressions-versus-functions--">Expressions versus Functions  </h2>
 
@@ -539,8 +563,7 @@ this results in the interval $(-1/3,\infty)$.</p></li>
 <pre><code class="(null)">solve(x^2-5x+4&gt;=0)</code></pre>
 
 
-<p>
-get (in interval notation), $(-\infty,1]\bigcup[4,\infty)$, so this is the domain of $\sqrt{x^{2}-5x+4}$.</p>
+<p>to get (in interval notation), $(-\infty,1]\bigcup[4,\infty)$, so this is the domain of $\sqrt{x^{2}-5x+4}$.</p>
 
 <h3 id="exercise">Exercise</h3>
 
@@ -594,22 +617,19 @@ then</p>
 <pre><code class="(null)">solve(denom(g(x)))</code></pre>
 
 
-<p>
-in $-3$, and $3$.  Therefore, the domain is $(-\infty,-3)\bigcup(-3,3)\bigcup(3,\infty)$.</p>
+<p>resultng in $-3$, and $3$.  Therefore, the domain is $(-\infty,-3)\bigcup(-3,3)\bigcup(3,\infty)$.</p>
 
 <p>For the answer to 2, we need to find the zeros (roots) of the top and</p>
 
 <pre><code class="(null)">solve(numer(g(x)))</code></pre>
 
 
-<p>
-return 0,-2,2.  And the answer to the 3, is the zeros of the denominator or</p>
+<p>will return 0,-2,2.  And the answer to the 3, is the zeros of the denominator or</p>
 
 <pre><code class="(null)">solve(denom(g(x))</code></pre>
 
 
-<p>
-returns -3,3.  Recall that this means the asymptotes, which are lines, are $x=3$ and $x=-3$.</p>
+<p>which returns -3,3.  Recall that this means the asymptotes, which are lines, are $x=3$ and $x=-3$.</p>
 
 <h2 id="partial-fractions--">Partial Fractions  </h2>
 
