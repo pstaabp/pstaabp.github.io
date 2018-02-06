@@ -15,3 +15,10 @@ Symbolic Computation Notes (FSU, Spring 2017)
 * [Chapter 13: Curvature of Plane Curves](ch-13.html)  
 * [Chapter 14: Data Analysis in Maple](ch-14.html)
 * [Chapter 15: Complex Numbers, Newton's Method and the Mandelbrot Set](ch-15.html)
+
+
+Appendices
+-----
+
+* [Appendix A: Getting Started with LaTeX](appendix-A.html)
+* [Appendix B: Floating Point Numbers](appendix-B.html)
