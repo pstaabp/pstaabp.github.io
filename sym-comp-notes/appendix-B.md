@@ -1,4 +1,4 @@
-Numbers on a Digital Computer
+Appendix B: Numbers on a Digital Computer
 ======
 
 Scientific Notation

@@ -18,13 +18,132 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="appendix-a:-latex--a-typesetting-system--">Appendix A: LaTeX, a typesetting System  </h1>
 
+<p>LaTeX is a typesetting system or software to create high-quality printed documents.  It dates to the 1970s and predates many word-processing programs like Microsoft Word.  LaTeX is also the goto software for people in STEM fields to produce mathematics and high-quality graphs.</p>
+
+<p>The system is more like a programming language language in which there is source code which is compiled into a resulting PDF document.</p>
+
+<h2 id="latex-software--">LaTeX Software  </h2>
+
+<p>Once you learn LaTeX, it is a fantastic typesetting system.  Another aspect of it is that it is open-source and free.  There are a bunch of different systems that you can install/use on a given computer</p>
+
+<h3 id="over-the-web">Over the web</h3>
+
 <ul>
-<li>basic template</li>
-<li><p>Simple math formulas</p></li>
+<li><a href="https://www.overleaf.com">Overleaf</a> is a way to do LaTeX without installing anything on your computer.  It is great to start off with, but you are limited to having web access and may not have all capabilities.</li>
+</ul>
+
+
+<h3 id="macos">MacOS</h3>
+
+<ul>
+<li><p>TeXLive for Macs is a place to grab everything you need to run LaTeX on your Mac.  It is a huge download (about 1Gb), so if you decide to do this, get on a good internet connection, get yourself a drink or a meal and sit back and wait.</p>
+
+<p>Note: there is a smaller version of this here.  You&rsquo;ll get a minimal install, but may have to install other packages later.</p></li>
+</ul>
+
+
+<h3 id="windows">Windows</h3>
+
+<ul>
+<li><p>TeXLive for windows is similar to the Mac site and has everything you need to get started and is equally big.</p></li>
+<li><p>MikTeX</p></li>
+</ul>
+
+
+<h2 id="editors--">Editors  </h2>
+
+<p>Since LaTeX is similar to a programming language, the place you write is an editor.  As mentioned above, when you download the software, most bundles come with the editor.  Here is what to look for:</p>
+
+<ul>
+<li><p><em>TeXworks</em>  which comes with TeXLive or you can download separately.</p></li>
+<li><p><em>TeXShop</em> which is a Mac-only editor, but has the look-and-feel of a Mac software.</p></li>
+<li><p><em>Overleaf</em> is just a webpage with a built-in editor.</p></li>
+</ul>
+
+
+<p>For the most part, these all are similar.  There is a place to type in the LaTeX source; a set of buttons, menu items, and keyboard shortcuts to compile the code; and a console area for information about errors.</p>
+
+<h2 id="basic-template--">Basic Template  </h2>
+
+<p>The following is a basic template for LaTeX:</p>
+
+<pre><code class="(null)">\documentclass[11pt]{article}
+
+\begin{document}
+
+This is my first latex document.
+
+\end{document}</code></pre>
+
+
+<p>The important aspects of this are:</p>
+
+<ul>
+<li><p>the <code>\documentclass</code> line tells LaTeX the base font size and the type of document.  The other font sizes are 10pt and 12pt.  Other types of documents are books and letters.</p></li>
+<li><p>a <code>\begin</code> / <code>\end</code> block is an environment.  This is the document where the stuff that you type appears printed out.</p></li>
+<li><p>any commands about the <code>\begin{document}</code> is called the preamble.</p></li>
+<li><p>anything after the <code>\end{document}</code> is just ignored.</p></li>
+</ul>
+
+
+<p>To get the LaTeX into a PDF form:</p>
+
+<ol>
+<li>Take the few lines above, copy them and paste into Overleaf, TeXShop or TeXworks.</li>
+<li>Find the &ldquo;Typeset&rdquo; button (or menu item) and click or select it.</li>
+<li>Your PDF should show up in a separate window or part of the program.</li>
+</ol>
+
+
+<h2 id="simple-math-formulas--">Simple math formulas  </h2>
+
+<p>One main reason for doing LaTeX is the nice mathematical formatting.  There are two modes of mathematics:</p>
+
+<ol>
+<li>inline mode.  Mathematical commands are surrounded by dollar signs \$ &hellip; \$.</li>
+<li>Display mode.  This is on its own line and centered.  Often the size of symbols or layout is different.  We will also learn later how to add line numbers.</li>
+</ol>
+
+
+<p>Here are some basic ideas of mathematical symbols:</p>
+
+<ul>
+<li>standard variables are entered as is. Note that if they are in \$ &hellip; \$ then the font is different.</li>
+<li>greek letters use the standard name preceded with a backslash \.  \$ \alpha, \beta, \gamma, &hellip; \$ will turn into $\alpha, \beta, \gamma \ldots $</li>
+<li>Superscripts and subscripts are with the ^ and _ characters.</li>
+<li>Fractions are with the <code>\frac{top}{bottom}</code> command.  <code>\frac{x^2}{2}</code> becomes $\frac{x^{2}}{2}$</li>
+<li>Derivatives: \$ f'(x) \$ becomes $f'(x)$ and <code>\frac{df}{dx}</code> becomes<br/>
+$$\frac{df}{dx}$$</li>
+<li>Integrals</li>
+<li>Sums</li>
+<li>Other</li>
+</ul>
+
+
+<h2 id="packages--">Packages  </h2>
+
+<p>Like other software, additional functionality is located in packages in LaTeX.  To load in a package, you will use the <code>\usepackage</code> command in the preamble (above the <code>\begin{document}</code> line).</p>
+
+<p>Here are a few common packages</p>
+
+<ul>
+<li>amsmath</li>
+<li>amsfonts</li>
+<li>geometry</li>
+<li>graphicx</li>
+</ul>
+
+
+<h3 id="L-code-amsmath--code--package"><code>amsmath</code> package</h3>
+
+<p>Type <code>\usepackage{amsmath}</code> in the preamble.   This has a lot of helpful mathematical formatting.  The <a href="http://mirrors.concertpass.com/tex-archive/macros/latex/required/amsmath/amsmath.pdf">amsmath documentation</a> has more information that you probably want.  Here&rsquo;s a few ideas:</p>
+
+<ul>
+<li><p><code>align</code> and <code>align*</code> environment.  This creates aligned, centered equations (either numbered or not&mdash;the <code>*</code> is a non-numbered version).</p></li>
 <li><p>Inserting a plot</p></li>
 <li>Sections/subsections</li>
 <li>Mathematics
@@ -36,17 +155,6 @@ html,body,#wrapper{font-size:10pt!important}
 <li>Aligned equations</li>
 <li>Matrices</li>
 <li>Bold and italics</li>
-<li>Classes</li>
-<li>Package</li>
-<li>Standard and common ones
-
-<ul>
-<li>amsmath</li>
-<li>amsfonts</li>
-<li>geometry</li>
-<li>graphicx</li>
-</ul>
-</li>
 </ul>
 
 <!-- ##END MARKED WRAPPER## -->

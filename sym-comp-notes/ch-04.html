@@ -18,7 +18,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="differential-calculus-problems-in-maple--">Differential Calculus Problems in Maple  </h1>
 
@@ -38,7 +38,7 @@ then $L$ is the value of the function $x^{2}$ as $x$ approaches 1 (from either s
 
 <p>Another way to attack this is with a table.  Let&rsquo;s find the value of the function $f(x)=x^{2}$, at the points $x=0.9,0.99,0.999,1.001,1.01,1.1$.  We can do this easily with the <code>map</code> function.  If</p>
 
-<pre><code class="(null)">f:=x-&gt;x^{2}
+<pre><code class="(null)">f:=x-&gt;x^2
 xvals := [.9, .99, .999, 1.001, 1.01, 1.1]
 map(f,xvals)</code></pre>
 
@@ -132,7 +132,7 @@ $$\lim_{x \rightarrow 1}x^{2}$$</p>
 
 <p>and you can see from the plot that indeed the line passes through the given points.  Also, recall to find the slope of the secant line, we&rsquo;ll need to evaluate the function at the $x$ values.</p>
 
-<pre><code class="(null)">f:=x-&gt;x^{2}
+<pre><code class="(null)">f:=x-&gt;x^2
 m:=(f(2)-f(1))/(2-1)</code></pre>
 
 
@@ -149,7 +149,7 @@ is 3 in this case.  We can then use the point-slope form of the line with either
 <p>Now this will allow us to find the slope of the secant line for any point $x$.  We can also build a table like above.</p>
 
 <pre><code class="(null)">xvals := [1.5,1.9, 1.99, 1.999, 2.001, 2.01, 2.1,2.5]
-Matrix(map)</code></pre>
+Matrix(map(x-&gt;[x,m(x)],xvals))</code></pre>
 
 
 <p>And you will see $$\left[ \begin {array}{cc}<br/>
@@ -305,13 +305,13 @@ recall to suppress the output of all of the commands that are imported, put a co
 
 <p>There is one horizontal asymptote of $y=4$ and two vertical asymptotes, $x=-5$ and $x=3$.  And we&rsquo;d like to plot all of those on the same axes.  The line $y=5$ is easy to plot because it is just the function $5$, however the two vertical lines are not since they are not functions.  One way to do this is to find a pair of points on each line and plot the points.</p>
 
-<pre><code class="(null)">va1:=[[-5,-10],[-5,10]]</code></pre>
+<pre><code class="(null)">va1:=[[-5,-50],[-5,50]]</code></pre>
 
 
 <p>
 points on the line $x=-5$ and</p>
 
-<pre><code class="(null)">va2:=[[3,-10],[3,10]]</code></pre>
+<pre><code class="(null)">va2:=[[3,-50],[3,50]]</code></pre>
 
 
 <p>It would appear that if we typed:</p>

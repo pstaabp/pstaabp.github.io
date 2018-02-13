@@ -1,4 +1,4 @@
-Symbolic Computation Notes (FSU, Spring 2017)
+Symbolic Computation Notes (FSU, Spring 2018)
 
 * [Chapter 1: Introduction to Symbolic Computing and Computer Algebra Systems](ch-01.html)
 * [Chapter 2: Precalculus Topics](ch-02.html)

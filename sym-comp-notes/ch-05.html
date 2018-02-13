@@ -18,7 +18,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="ch-5:-introduction-to-programming--">Ch 5: Introduction to Programming  </h1>
 
@@ -112,7 +112,7 @@ end proc:</code></pre>
 
 <p>The modulus of an integer is the remainder in division.  For example, 7 mod 3 is 1.</p>
 
-<p>Write a procedure call <code>isOdd</code> that take a positive integer (type <code>posint</code>) and returns boolean if the number is odd.  Use the modulus with the divisor 2.</p>
+<p>Write a procedure call <code>isOdd</code> that take a positive integer (type <code>posint</code>) and returns <code>true</code> if the number is odd and <code>false</code> if not.  Use the modulus with the divisor 2.</p>
 
 <h2 id="loops--">Loops  </h2>
 
@@ -167,8 +167,7 @@ end proc:</code></pre>
 end proc</code></pre>
 
 
-<p>
-here&#8217;s a couple of examples of this</p>
+<p>And here&#8217;s a couple of examples of this</p>
 
 <ul>
 <li>type <code>allfactors(6)</code> returns <code>[1,2,3,6]</code></li>
@@ -307,7 +306,7 @@ end proc:</code></pre>
 
 <p>To write this in Maple, first, it is helpful to have a procedure that splits any positive integer into its digits.  Here&#1817;s such a procedure:</p>
 
-<pre><code class="(null)">splitDigits := proc (n::posint)::boolean;
+<pre><code class="(null)">splitDigits := proc (n::posint)::list;
    local list := [], k := n;
    while 9 &lt; k do
       list := [k mod 10, op(list)];
@@ -332,12 +331,13 @@ end proc:</code></pre>
 
 <ul>
 <li>note that this is recursive in that it calls itself.</li>
-<li><p>The add command takes the elements in splitDigits, squares them and adds them up.  This could be written in the following lines instead:</p>
-
-<p>  <pre><code class="(null)">local squares = map(k-&gt;k^2,splitDigits(n)):
-local sum = add(squares):
-return sum:</code></pre></p></li>
+<li>The add command takes the elements in splitDigits, squares them and adds them up.  This could be written in the following lines instead:</li>
 </ul>
+
+
+<pre><code class="(null)">local squares = map(k-&gt;k^2,splitDigits(n)):
+local sum = add(squares):
+return sum:</code></pre>
 
 
 <p>Let&rsquo;s now say that we wish to find all numbers less than 100 that are happy.  To run this command on every number between 1 and 100, can be done many ways.  A for loop comes to mind, but using the <code>seq</code> command is better:</p>
@@ -413,8 +413,7 @@ There are three choices for $\tilde{a}$.  Either it is 0, then you have found th
 <pre><code class="(null)">[1.41406250,1.416015625]</code></pre>
 
 
-<p>
-as long as the condition that the funtion values of two endpoints are opposite signs, then there is a guarantee of a root inside this interval.</p>
+<p>and as long as the condition that the funtion values of two endpoints are opposite signs, then there is a guarantee of a root inside this interval.</p>
 
 <p>Again, we can go on forever, but a good place to stop (often called a halting condition) is when the length of the interval shrinks to a particular size.  Let&#8217;s say that we stop when the length is $10^{-4}$ and then we should return our best guess at the root, which may be the midpoint of the final interval.   If we stop when the interval is less than $10^{-4}$ and take this midpoint, the answer will be 1.414215088.</p>
 
@@ -423,31 +422,48 @@ as long as the condition that the funtion values of two endpoints are opposite s
 <p>This section will slowly build up a procedure that does this.  The goal of this section is to learn how to take an algorithm (explained above) and make a procedure that does this.</p>
 
 <ol>
-<li><p>Shell of a procedure.  Let&#8217;s start with the declaration of the procedure.  We want to take a function and an interval in and return an approximate root.</p>
+<li>Shell of a procedure.  Let&#8217;s start with the declaration of the procedure.  We want to take a function and an interval in and return an approximate root.</li>
+</ol>
 
-<p> <pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
 
-end proc:</code></pre></p>
+<pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
 
-<p> This will just do that.  Note that a function type is called a <code>procedure</code> and an interval is called a <code>range</code>.  The return type will be a number, so <code>numeric</code>.  It&#8217;s a good idea to just run this at this point.</p></li>
+end proc:</code></pre>
+
+
+<pre><code>This will just do that.  Note that a function type is called a `procedure` and an interval is called a `range`.  The return type will be a number, so `numeric`.  It&amp;#8217;s a good idea to just run this at this point.  
+</code></pre>
+
+<ol>
 <li><p>Define the midpoint and return it.</p>
 
-<p> Next, let&#8217;s do something super simple and define the midpoint and then return it.  To get the endpoints of an interval or range, use <code>lhs</code> and <code>rhs</code>, which stands for left hand side and right hand side respectively.</p>
+<p> Next, let&#8217;s do something super simple and define the midpoint and then return it.  To get the endpoints of an interval or range, use <code>lhs</code> and <code>rhs</code>, which stands for left hand side and right hand side respectively.</p></li>
+</ol>
 
-<p> <pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
+
+<pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
    local mid:=0.5*(lhs(interval)+rhs(interval)):
     return mid:
-end proc:</code></pre></p>
+end proc:</code></pre>
 
-<p> and then execute this block of code.  Make sure there are no errors.  Then you can test it using the example above by typing</p>
 
-<p> <pre><code class="(null)">bisect(x-&gt;x^2,0..2)</code></pre><br/>
-you should get the answer 1.0.</p></li>
+<pre><code>and then execute this block of code.  Make sure there are no errors.  Then you can test it using the example above by typing  
+</code></pre>
+
+<pre><code class="(null)">bisect(x-&gt;x^2,0..2)</code></pre>
+
+
+<pre><code>and you should get the answer 1.0.
+</code></pre>
+
+<ol>
 <li><p>Create a new interval</p>
 
-<p> Now, let&rsquo;s also create a variable called <code>inter</code> that is the new interval.  Recall that you want to make sure that the endpoints of the new interval are opposite signs.  The easiest way to check this is to determine if the product of the function values is negative.</p>
+<p> Now, let&rsquo;s also create a variable called <code>inter</code> that is the new interval.  Recall that you want to make sure that the endpoints of the new interval are opposite signs.  The easiest way to check this is to determine if the product of the function values is negative.</p></li>
+</ol>
 
-<p> <pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
+
+<pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
    local mid:=0.5*(lhs(interval)+rhs(interval)):
    local inter:=interval:
    if f(lhs(inter))*f(mid) &lt; 0 then
@@ -456,17 +472,26 @@ you should get the answer 1.0.</p></li>
       inter := mid .. rhs(inter)
    end if:
    return inter:
-end proc:</code></pre><br/>
-we test this with <code>bisect(x-&gt;x^2-2,0..2)</code> we get</p>
+end proc:</code></pre>
 
-<p>  <pre><code class="(null)">1.0 .. 2</code></pre></p>
 
-<p>  which means that the root is in the interval [1.0,2.0].</p></li>
+<pre><code>If we test this with `bisect(x-&gt;x^2-2,0..2)` we get  
+</code></pre>
+
+<pre><code class="(null)">1.0 .. 2</code></pre>
+
+
+<pre><code>which means that the root is in the interval [1.0,2.0].
+</code></pre>
+
+<ol>
 <li><p>Put in a loop to run a few times.</p>
 
-<p> Next, we will run this a few times using a <code>for</code> loop to test the procedure.</p>
+<p> Next, we will run this a few times using a <code>for</code> loop to test the procedure.</p></li>
+</ol>
 
-<p> <pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
+
+<pre><code class="(null)">bisect:=proc(f::procedure,interval::range)::numeric;
    local mid:=0.5*(lhs(interval)+rhs(interval)):
    local inter:=interval:
    local i:
@@ -481,24 +506,32 @@ we test this with <code>bisect(x-&gt;x^2-2,0..2)</code> we get</p>
      print(inter):
     end do;
   return mid
-end proc:</code></pre></p>
+end proc:</code></pre>
 
-<p> This will print out the interval to make sure it is working.  You should see the interval printed 4 times and then the midpoint returned (and then printed):</p>
 
-<p> <pre><code class="(null)">1.0 .. 2
+<pre><code>This will print out the interval to make sure it is working.  You should see the interval printed 4 times and then the midpoint returned (and then printed):  
+</code></pre>
+
+<pre><code class="(null)">1.0 .. 2
 1.0 .. 1.50
 1.250 .. 1.50
 1.3750 .. 1.50
-1.43750</code></pre></p>
+1.43750</code></pre>
 
-<p> so this appears that the root is 1.43750 and is guaranteed to be in the interval [1.375,1.5]</p></li>
+
+<pre><code>so this appears that the root is 1.43750 and is guaranteed to be in the interval [1.375,1.5]
+</code></pre>
+
+<ol>
 <li><p>Replace the for loop with a while loop</p>
 
 <p> We don&rsquo;t want to run this a fixed number of times, but instead, run this until the halting condition.</p>
 
-<p> We will execute the loop while the length of the interval is greater than $10^{-4}$.</p>
+<p> We will execute the loop while the length of the interval is greater than $10^{-4}$.</p></li>
+</ol>
 
-<p> <pre><code class="(null)">bisect := proc (f::procedure, interval::range)::numeric;
+
+<pre><code class="(null)">bisect := proc (f::procedure, interval::range)::numeric;
   local mid := .5*(lhs(interval)+rhs(interval));
   local inter := interval;
   while rhs(inter)-lhs(inter) &gt; 10^(-4) do
@@ -511,17 +544,26 @@ end proc:</code></pre></p>
     print(inter):
   end do;
   return mid:
-end proc:</code></pre></p>
+end proc:</code></pre>
 
-<p> If we test the procedure by typing: <code>bisect(x-&gt;x^2-2,0..2)</code>, you will get 1.414215088.  Note that we can determine the number of digits of accuracy for $\sqrt{2}$ by typing</p>
 
-<p> <pre><code class="(null)">evalf(|sqrt(2)-1.414215088|)</code></pre><br/>
-result in 0.000001526 or 5 digits of accuracy.</p></li>
+<pre><code>If we test the procedure by typing: `bisect(x-&gt;x^2-2,0..2)`, you will get 1.414215088.  Note that we can determine the number of digits of accuracy for $\sqrt{2}$ by typing  
+</code></pre>
+
+<pre><code class="(null)">evalf(|sqrt(2)-1.414215088|)</code></pre>
+
+
+<pre><code>will result in 0.000001526 or 5 digits of accuracy.  
+</code></pre>
+
+<ol>
 <li><p>Adding a parameter for the halting condition.</p>
 
-<p> If we want the halting condition to be smaller than $10^{-4}$, we will make it a parameter.  Here&#8217;s how that works.</p>
+<p> If we want the halting condition to be smaller than $10^{-4}$, we will make it a parameter.  Here&#8217;s how that works.</p></li>
+</ol>
 
-<p> <pre><code class="(null)">bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
+
+<pre><code class="(null)">bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
   local mid := .5*(lhs(interval)+rhs(interval));
   local inter := interval;
   while rhs(inter)-lhs(inter) &gt; eps do
@@ -533,22 +575,34 @@ result in 0.000001526 or 5 digits of accuracy.</p></li>
     mid := .5*(lhs(inter)+rhs(inter));
   end do;
   return mid:
-end proc:</code></pre><br/>
-we have removed the print statement because all seems to be working well.  Now if we call this procedure as above,</p>
+end proc:</code></pre>
 
-<p>  <pre><code class="(null)">bisect(x-&gt;x^2-2,0..2)</code></pre><br/>
-we get the same result as above.</p>
 
-<p>  But this allows us to get more precision.  Type</p>
+<pre><code>and we have removed the print statement because all seems to be working well.  Now if we call this procedure as above,  
+</code></pre>
 
-<p>  <pre><code class="(null)">bisect(x-&gt;x^2-2,0..2,eps=10^(-7))</code></pre></p>
+<pre><code class="(null)">bisect(x-&gt;x^2-2,0..2)</code></pre>
 
-<p>  gives this time 8 digits of accuracy.</p></li>
+
+<pre><code>then we get the same result as above.
+
+But this allows us to get more precision.  Type  
+</code></pre>
+
+<pre><code class="(null)">bisect(x-&gt;x^2-2,0..2,eps=10^(-7))</code></pre>
+
+
+<pre><code>gives this time 8 digits of accuracy.  
+</code></pre>
+
+<ol>
 <li><p>Adding some help and error checking to this</p>
 
-<p> It&rsquo;s often helpful to add a description to the function, so here&rsquo;s the final result:</p>
+<p> It&rsquo;s often helpful to add a description to the function, so here&rsquo;s the final result:</p></li>
+</ol>
 
-<p> <pre><code class="(null)">bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
+
+<pre><code class="(null)">bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
   description &quot;This procedure performs the bisection method on the function f with given range.  The parameter eps will determine  the halting condition.&quot;
   local mid := .5*(lhs(interval)+rhs(interval));
   local inter := interval;
@@ -564,27 +618,32 @@ we get the same result as above.</p>
     mid := .5*(lhs(inter)+rhs(inter));
   end do;
   return mid:
-end proc:</code></pre></p>
+end proc:</code></pre>
 
-<p> The description is helpful to remember what the function does.  If you type:</p>
 
-<p> <pre><code class="(null)">Describe(bisect)</code></pre><br/>
-will see</p>
+<pre><code>The description is helpful to remember what the function does.  If you type:  
+</code></pre>
 
-<p>  <pre><code class="(null)"># This procedure performs the bisection method on the function f with given
+<pre><code class="(null)">Describe(bisect)</code></pre>
+
+
+<pre><code>You will see  
+</code></pre>
+
+<pre><code class="(null)"># This procedure performs the bisection method on the function f with given
 # range.
 # The parameter eps will determine the halting condition.
 # The procedure returns the root of the function f within the given interval
 # such that the
 # interval is no wider than eps.
 bisect( f::procedure, interval::range,
-    { eps := .1e-3 } ) :: numeric</code></pre></p>
+    { eps := .1e-3 } ) :: numeric</code></pre>
 
-<p>  and give a brief description of the function.</p>
 
-<p>  Also, we now have error checking built it.</p></li>
-</ol>
+<pre><code>and give a brief description of the function.
 
+Also, we now have error checking built it.  
+</code></pre>
 
 <p>We will use this procedure in a homework problem.</p>
 
