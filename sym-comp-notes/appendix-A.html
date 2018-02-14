@@ -22,6 +22,8 @@ html,body,#wrapper{font-size:10pt!important}
   <div id="wrapper">
       <h1 id="appendix-a:-latex--a-typesetting-system--">Appendix A: LaTeX, a typesetting System  </h1>
 
+<p><a href="index.html">Return to all notes</a></p>
+
 <p>LaTeX is a typesetting system or software to create high-quality printed documents.  It dates to the 1970s and predates many word-processing programs like Microsoft Word.  LaTeX is also the goto software for people in STEM fields to produce mathematics and high-quality graphs.</p>
 
 <p>The system is more like a programming language language in which there is source code which is compiled into a resulting PDF document.</p>
@@ -40,17 +42,17 @@ html,body,#wrapper{font-size:10pt!important}
 <h3 id="macos">MacOS</h3>
 
 <ul>
-<li><p>TeXLive for Macs is a place to grab everything you need to run LaTeX on your Mac.  It is a huge download (about 1Gb), so if you decide to do this, get on a good internet connection, get yourself a drink or a meal and sit back and wait.</p>
+<li><p><a href="https://tug.org/mactex/">TeXLive for Macs</a> is a place to grab everything you need to run LaTeX on your Mac.  It is a huge download (about 1Gb), so if you decide to do this, get on a good internet connection, get yourself a drink or a meal and sit back and wait.</p>
 
-<p>Note: there is a smaller version of this here.  You&rsquo;ll get a minimal install, but may have to install other packages later.</p></li>
+<p>Note: there is a smaller version of this <a href="https://tug.org/mactex/morepackages.html">here</a>.  You&rsquo;ll get a minimal install, but may have to install other packages later.</p></li>
 </ul>
 
 
 <h3 id="windows">Windows</h3>
 
 <ul>
-<li><p>TeXLive for windows is similar to the Mac site and has everything you need to get started and is equally big.</p></li>
-<li><p>MikTeX</p></li>
+<li><p><a href="https://tug.org/texlive/windows.html">TeXLive for Windows</a> is similar to the Mac site and has everything you need to get started and is equally big. A direct link to run a program to download and install it is located <a href="https://www.tug.org/texlive/acquire-netinstall.html">here</a>.</p></li>
+<li><p><a href="https://miktex.org">MikTeX</a> is an alternative LaTeX system with a more user-friendly installer.  Click on the Download button above to get started.  Note: MikTeX does not provide an editor you will need to do that below.</p></li>
 </ul>
 
 
@@ -59,9 +61,9 @@ html,body,#wrapper{font-size:10pt!important}
 <p>Since LaTeX is similar to a programming language, the place you write is an editor.  As mentioned above, when you download the software, most bundles come with the editor.  Here is what to look for:</p>
 
 <ul>
-<li><p><em>TeXworks</em>  which comes with TeXLive or you can download separately.</p></li>
+<li><p><em>TeXworks</em>  which comes with TeXLive or you can <a href="https://www.tug.org/texworks/">download separately</a>.</p></li>
 <li><p><em>TeXShop</em> which is a Mac-only editor, but has the look-and-feel of a Mac software.</p></li>
-<li><p><em>Overleaf</em> is just a webpage with a built-in editor.</p></li>
+<li><p><em>Overleaf</em> is just a webpage with a built-in editor which is located at <a href="https://www.overleaf.com">https://www.overleaf.com</a>.</p></li>
 </ul>
 
 
@@ -94,7 +96,7 @@ This is my first latex document.
 
 <ol>
 <li>Take the few lines above, copy them and paste into Overleaf, TeXShop or TeXworks.</li>
-<li>Find the &ldquo;Typeset&rdquo; button (or menu item) and click or select it.</li>
+<li>Find the &ldquo;Typeset&rdquo; button (or menu item) and click or select it.  Note: Overleaf does not have a typeset button, but automatically will do so.  If there are errors, often a button that says &ldquo;Recompile from scratch&rdquo; is helpful to try.</li>
 <li>Your PDF should show up in a separate window or part of the program.</li>
 </ol>
 
@@ -105,7 +107,7 @@ This is my first latex document.
 
 <ol>
 <li>inline mode.  Mathematical commands are surrounded by dollar signs \$ &hellip; \$.</li>
-<li>Display mode.  This is on its own line and centered.  Often the size of symbols or layout is different.  We will also learn later how to add line numbers.</li>
+<li>Display mode.  This is on its own line and centered.  Often the size of symbols or layout is different.  The basic way to add math in display mode is with <code>\[</code> &hellip; <code>\]</code>. We will also learn later how to add line numbers.</li>
 </ol>
 
 
@@ -114,15 +116,98 @@ This is my first latex document.
 <ul>
 <li>standard variables are entered as is. Note that if they are in \$ &hellip; \$ then the font is different.</li>
 <li>greek letters use the standard name preceded with a backslash \.  \$ \alpha, \beta, \gamma, &hellip; \$ will turn into $\alpha, \beta, \gamma \ldots $</li>
-<li>Superscripts and subscripts are with the ^ and _ characters.</li>
+<li>Superscripts and subscripts are with the ^ and _ characters. If there is a single character, then just type it, like <code>x^2</code> generates $x^{2}$, but for multiple characters, you&rsquo;ll need { }.  For example, <code>x^{10}</code> generates $x^{10}$.</li>
 <li>Fractions are with the <code>\frac{top}{bottom}</code> command.  <code>\frac{x^2}{2}</code> becomes $\frac{x^{2}}{2}$</li>
 <li>Derivatives: \$ f'(x) \$ becomes $f'(x)$ and <code>\frac{df}{dx}</code> becomes<br/>
 $$\frac{df}{dx}$$</li>
-<li>Integrals</li>
-<li>Sums</li>
-<li>Other</li>
+<li>Integrals: <code>\int x^2 dx</code> generates<br/>
+$$\int x^{2} dx $$<br/>
+and for definite integrals, <code>\int_1^2 x^2 dx</code> generates<br/>
+$$\int_{1}^{2} x^{2} dx$$</li>
+<li><p>Sums and products work like integrals.  <code>\sum_{n=1}^{\infty} \frac{1}{n}</code> generates<br/>
+$$\sum_{n=1}^{\infty} \frac{1}{n}$$</p>
+
+<p>and <code>\prod_{i=1}^{10} (x-i)</code> generates<br/>
+$$ \prod_{i=1}^{10} (x-i)$$</p></li>
+<li><p>Other:  There is a lot of mathematics that is skipped here.  Here are some websites with more information:</p>
+
+<ul>
+<li>Some interesting other examples are available <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">here</a>, however note that many of them require other packages.</li>
+<li>A huge list of mathematics symbols are available <a href="https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols">here</a>.</li>
+</ul>
+</li>
 </ul>
 
+
+<h2 id="other-standard-formatting--">Other Standard Formatting  </h2>
+
+<ul>
+<li><p>paragraphs</p>
+
+<p>To get a new paragraph, simply put in a blank line (two returns).  For example</p></li>
+</ul>
+
+
+<pre><code class="(null)">This is the first sentence in a paragraph.  And this is another one to make this paragraph longer.  This is the last sentence of my paragraph.
+
+This is the first sentence of the next paragraph.</code></pre>
+
+
+<p>  Will generate the two paragraphs. Notice that my default paragraphs are not separated by any space and are indented.  This behavior can be changed in the geometry package listed below.<br/>
+* Sections and subsections</p>
+
+<p>  Often for a paper, you will have sections and subsections of a paper.  To generate a new section, type <code>\section{Section Name}</code> and you will see a numbered section with a larger bold font.  To get a subsection, type <code>\subsection{Subsection name}</code>.  If you don&rsquo;t want the sections numbered, use <code>\section*{}</code> or <code>\subsection*{}</code>.  For example</p>
+
+<pre><code class="(null)">\section{Section One}
+\subsection{Subsection name}</code></pre>
+
+
+<ul>
+<li><p>bold, italics</p>
+
+<p>To get bold use <code>\textbf{}</code> and put the bold words in the braces.  For example, <code>\textbf{this is in bold}</code> will show <strong>this is in bold</strong>.  To get italics, use <code>\emph{}</code> short for empahsis.  <code>\emph{this is in italics}</code> wil show <em>this is in italics</em>.</p></li>
+<li><p>bulleted lists</p>
+
+<p>To get a bulleted list use the <code>itemize</code> environment and each bulleted item should start with <code>\item</code>. For example:</p></li>
+</ul>
+
+
+<pre><code class="(null)">\begin{itemize}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{itemze}</code></pre>
+
+
+<p>  will generate</p>
+
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+<li><p>Item 3</p></li>
+<li><p>enumerated lists</p>
+
+<p>To get an enuerated (numbered) list, use the <code>enumerate</code> environment.  For example:</p></li>
+</ul>
+
+
+<pre><code class="(null)">\begin{enumerate}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}</code></pre>
+
+
+<p>  will generate</p>
+
+<ol>
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+</ol>
+
+
+<p>  There are various types of bullets and enumeration types.   <a href="https://en.wikibooks.org/wiki/LaTeX/List_Structures">This</a> page gives some additional ideas on lists.</p>
 
 <h2 id="packages--">Packages  </h2>
 
@@ -138,23 +223,122 @@ $$\frac{df}{dx}$$</li>
 </ul>
 
 
+<h3 id="L-code-geometry--code--package"><code>geometry</code> package</h3>
+
+<p>Type <code>\usepackage{geometry}</code> in the preamble.  This gives a lot of flexibility on the spacing of margins and paragraphs, etc.</p>
+
+<p>Typically, I will use this package with the following (make sure it is after you have loaded the package):</p>
+
+<pre><code class="(null)">\usepackage[letterpaper,total={7in,9.5in}]{geometry}</code></pre>
+
+
+<p>which sets some margins by defining the area to be printed on (the <code>total</code> option above).  The documentation is <a href="http://mirrors.ctan.org/macros/latex/contrib/geometry/geometry.pdf">here</a></p>
+
 <h3 id="L-code-amsmath--code--package"><code>amsmath</code> package</h3>
 
-<p>Type <code>\usepackage{amsmath}</code> in the preamble.   This has a lot of helpful mathematical formatting.  The <a href="http://mirrors.concertpass.com/tex-archive/macros/latex/required/amsmath/amsmath.pdf">amsmath documentation</a> has more information that you probably want.  Here&rsquo;s a few ideas:</p>
+<p>Type <code>\usepackage{amsmath}</code> in the preamble.   This has a lot of helpful mathematical formatting.  The <a href="http://mirrors.ctan.org/macros/latex/required/amsmath/amsmath.pdf">amsmath documentation</a> has more information that you probably want.  Here&rsquo;s a few ideas:</p>
 
 <ul>
-<li><p><code>align</code> and <code>align*</code> environment.  This creates aligned, centered equations (either numbered or not&mdash;the <code>*</code> is a non-numbered version).</p></li>
-<li><p>Inserting a plot</p></li>
-<li>Sections/subsections</li>
-<li>Mathematics
+<li><p><code>align</code> and <code>align*</code> environment.  This creates aligned, centered equations (either numbered or not&mdash;the <code>*</code> is a non-numbered version).</p>
 
-<ul>
-<li>Integrals, derivatives and sums</li>
+<p>The following:</p></li>
 </ul>
-</li>
-<li>Aligned equations</li>
-<li>Matrices</li>
-<li>Bold and italics</li>
+
+
+<pre><code class="(null)">\begin{align*}
+2x_1 + 3x_2 &amp; =  6, \\
+3x_1 + 4x_2 &amp; =  8.
+\end{align*}</code></pre>
+
+
+<p>  will generate<br/>
+  $$<br/>
+  \begin{array}{rl}2x_1 + 3x_2 =&amp; 6, \newline<br/>
+  3x_1+4x_2 = &amp; 8.<br/>
+  \end{array}$$</p>
+
+<p>  where the two lines line up via the ampersands (&amp;)</p>
+
+<ul>
+<li><p><code>bmatrix</code>, <code>vmatrix</code> and <code>pmatrix</code> environments generate matrices with different delimiters. This must be in math mode and typically in display math.  I often put them in an <code>align</code> or <code>align*</code> environment. Each row of a matrix is ended with a <code>\\</code> and each column is separated by an <code>&amp;</code>.</p>
+
+<p>For example,</p></li>
+</ul>
+
+
+<pre><code class="(null)">\begin{align*}
+\begin{bmatrix}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6 \\
+7 &amp; 8 &amp; 9
+\end{bmatrix}
+\end{align*}</code></pre>
+
+
+<p>  will generate</p>
+
+<p>  $$\left[\begin{array}{ccc}<br/>
+  1 &amp; 2 &amp; 3 \newline<br/>
+  4 &amp; 5 &amp; 6 \newline<br/>
+  7 &amp; 8 &amp; 9<br/>
+  \end{array}\right]$$</p>
+
+<pre><code class="(null)">\begin{align*}
+\begin{vmatrix}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6 \\
+7 &amp; 8 &amp; 9
+\end{vmatrix}
+\end{align*}</code></pre>
+
+
+<p>  will generate</p>
+
+<p>  $$\left|\begin{array}{ccc}<br/>
+  1 &amp; 2 &amp; 3 \newline<br/>
+  4 &amp; 5 &amp; 6 \newline<br/>
+  7 &amp; 8 &amp; 9<br/>
+  \end{array}\right|$$</p>
+
+<pre><code class="(null)">\begin{align*}
+\begin{pmatrix}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6 \\
+7 &amp; 8 &amp; 9
+\end{pmatrix}
+\end{align*}</code></pre>
+
+
+<p>  will generate</p>
+
+<p>  $$\left(\begin{array}{ccc}<br/>
+  1 &amp; 2 &amp; 3 \newline<br/>
+  4 &amp; 5 &amp; 6 \newline<br/>
+  7 &amp; 8 &amp; 9<br/>
+  \end{array}\right)$$</p>
+
+<p>  and there are other delimiters available.</p>
+
+<h3 id="L-code-graphicx--code--package"><code>graphicx</code> package</h3>
+
+<p>Type <code>\usepackage{graphicx}</code> in the preamble. This package can load in external graphics (image files and other PDFs).  Additional documentation can be found <a href="https://en.wikibooks.org/wiki/LaTeX/Importing_Graphics">here</a>.</p>
+
+<p>If you have an image that is called <code>my_image.png</code>, then to load it type</p>
+
+<pre><code class="(null)">\includegraphics[width=2in]{my_image.png}</code></pre>
+
+
+<p>and you can change the width to another value or use the <code>height</code> option instead.  Note: make sure that the image is in the same directory that your latex source is.</p>
+
+<h2 id="other-help">Other Help</h2>
+
+<p>There is a huge number of websites available for latex.  Some of the more helpful ones are:</p>
+
+<ul>
+<li><a href="latex/latex_tut.pdf">A short introduction to LaTeX</a></li>
+<li><a href="latex/%20lshort.pdf">A Not-so-short introduction to LaTeX</a></li>
+<li><a href="https://en.wikibooks.org/wiki/LaTeX">Wikibooks site on LaTeX</a></li>
+<li><a href="https://tex.stackexchange.com">A discussion board with helpful Q&amp;A</a> although sometimes you get into way into the LaTeX weeds here.</li>
 </ul>
 
 <!-- ##END MARKED WRAPPER## -->
