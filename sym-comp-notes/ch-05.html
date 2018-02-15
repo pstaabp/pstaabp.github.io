@@ -84,6 +84,12 @@ end proc:</code></pre>
 </ol>
 
 
+<h3 id="semicolons-and-colons">semicolons and colons</h3>
+
+<p>Recall that when we loaded a library, we put a colon (:) at the end of the line.  This was to suppress the output.  That is true about any command in Maple.  It also separately two statements as we will see below.</p>
+
+<p>A semicolon can end a command without suppressing output.  It is often used to separate statements as well.  You will see either colons or semicolons inside of procedures because they are needed.  If you get output when you don&rsquo;t expect it, use a colon.</p>
+
 <h2 id="boolean-values-and--if-statements--">Boolean values and  if statements  </h2>
 
 <p>A boolean value is something that is either <code>true</code> or <code>false</code>.  These are built-in constants in Maple.  Sometimes we will want to know if a statement is true or false, but generally, we will use them in other structures.</p>
@@ -132,18 +138,27 @@ end do:</code></pre>
 <p>And that isn&#8217;t very interesting, but we can reproduce the <code>seq</code> command crudely in the following way.  Let&#8217;s say we want to return a list of numbers from 1 to $n$, where $n$ is a positive integer.</p>
 
 <pre><code class="(null)">intList := proc (n::posint)::list;
-   local list, i;
-   list := [];
-   i := 1;
+   local list, i:
+   list := []:
+   i := 1:
    while i &lt;= n do
-     list := [op(list), i];
+     list := [op(list), i]:
      i := i+1:
    end do:
    return list:
 end proc:</code></pre>
 
 
-<p>Some examples:</p>
+<p>A few things to note about this:</p>
+
+<ul>
+<li>The line that starts <code>local</code> tells Maple the variables <code>list</code> and <code>i</code> are local to the procedure.  That is, don&rsquo;t use the values outside the procedure if they exist.</li>
+<li>The line <code>list:=[op(list), i]</code> simply adds the value of <code>i</code> to the end of the list. Other languages have a <code>push</code> command to do this.</li>
+<li>The <code>op</code> command in the line strips the brackets off of the list, returning a sequence.</li>
+</ul>
+
+
+<p>Let&rsquo;s run some examples:</p>
 
 <ul>
 <li>typing <code>intList(6)</code> returns <code>[1,2,3,4,5,6]</code></li>
@@ -154,16 +169,16 @@ end proc:</code></pre>
 <p>The following is a more interesting example.  If you have a positive integer $n$, the following returns a list of all factors of $n$.  Recall that for a positive integer $n$, the factors of $n$ are all numbers that divide $n$ with 0 remainder.  Both 1 and $n$ are always factors of $n$.</p>
 
 <pre><code class="(null)">allfactors:=proc(num::posint)::posint;
-  local factors, n;
-  factors := [1];
-  n := 2;
+  local factors, n:
+  factors := [1]:
+  n := 2:
   while n &lt;= num do
     if num mod n = 0 then
-      factors := [op(factors), n]
+      factors := [op(factors), n]:
     end if:
     n := n+1:
-  end do;
-  return factors
+  end do:
+  return factors:
 end proc</code></pre>
 
 
@@ -177,7 +192,7 @@ end proc</code></pre>
 
 <p>Another possible procedure that you want is to determine if a number is prime.  Although this is built-in, let&#8217;s find a way to do this using the allfactors command.</p>
 
-<pre><code class="(null)">isPrime := proc (n::posint)::boolean;
+<pre><code class="(null)">isPrime := proc(n::posint)::boolean;
   local factors := allfactors(n);
   return evalb(factors[2] = n)
 end proc:</code></pre>
