@@ -128,7 +128,7 @@ end proc:</code></pre>
 
 <p>Another very common construction for programming is called a while loop.  Basically, we want to run a few statements while some boolean statement is true.  Here&rsquo;s a simple example:</p>
 
-<pre><code class="(null)">n:=1
+<pre><code class="(null)">n:=1:
 while n&lt;10 do
   print(n):
   n:=n+1:
@@ -138,9 +138,8 @@ end do:</code></pre>
 <p>And that isn&#8217;t very interesting, but we can reproduce the <code>seq</code> command crudely in the following way.  Let&#8217;s say we want to return a list of numbers from 1 to $n$, where $n$ is a positive integer.</p>
 
 <pre><code class="(null)">intList := proc (n::posint)::list;
-   local list, i:
-   list := []:
-   i := 1:
+   local list := []:
+   local i := 1:
    while i &lt;= n do
      list := [op(list), i]:
      i := i+1:
@@ -152,7 +151,7 @@ end proc:</code></pre>
 <p>A few things to note about this:</p>
 
 <ul>
-<li>The line that starts <code>local</code> tells Maple the variables <code>list</code> and <code>i</code> are local to the procedure.  That is, don&rsquo;t use the values outside the procedure if they exist.</li>
+<li>Putting <code>local</code> in front of a variable tells Maple the variables are local to the procedure.  That is, don&rsquo;t use the values outside the procedure if they exist.</li>
 <li>The line <code>list:=[op(list), i]</code> simply adds the value of <code>i</code> to the end of the list. Other languages have a <code>push</code> command to do this.</li>
 <li>The <code>op</code> command in the line strips the brackets off of the list, returning a sequence.</li>
 </ul>
@@ -169,9 +168,8 @@ end proc:</code></pre>
 <p>The following is a more interesting example.  If you have a positive integer $n$, the following returns a list of all factors of $n$.  Recall that for a positive integer $n$, the factors of $n$ are all numbers that divide $n$ with 0 remainder.  Both 1 and $n$ are always factors of $n$.</p>
 
 <pre><code class="(null)">allfactors:=proc(num::posint)::posint;
-  local factors, n:
-  factors := [1]:
-  n := 2:
+  local factors := [1]:
+  local n := 2:
   while n &lt;= num do
     if num mod n = 0 then
       factors := [op(factors), n]:
@@ -179,7 +177,7 @@ end proc:</code></pre>
     n := n+1:
   end do:
   return factors:
-end proc</code></pre>
+end proc:</code></pre>
 
 
 <p>And here&#8217;s a couple of examples of this</p>
@@ -198,6 +196,91 @@ end proc</code></pre>
 end proc:</code></pre>
 
 
+<p>Alternatively, prime numbers have only 2 numbers in factor list and so it can be checked if the length (using the <code>nops</code>, for number of operands, command) is 2.</p>
+
+<pre><code class="(null)">isPrime := proc(n::posint)::boolean;
+  return evalb(nops(allfactors(n))=2)
+end proc:</code></pre>
+
+
+<p>where <code>evalb</code> will return true or false instead of (perhaps) the equation.  Note that this nests a number of commands that could be done as steps.</p>
+
+<p>Another nice use of all factors is the use of a theorem that says that the total number of factors is even (factors pair up) unless the number is a perfect square. We will then use this and the <code>isOdd</code> function you wrote above to write an <code>isPerfectSquare</code> procedure.</p>
+
+<pre><code class="(null)">isPerfectSquare := proc(n::nonnegint)::truefalse;
+  if isOdd(nops(allfactors(n))) then
+    return true
+  else
+    return false
+  end if
+end proc:</code></pre>
+
+
+<p>or to even shorten this more, we can write this as:</p>
+
+<pre><code class="(null)">isPerfectSquare := proc(n::nonnegint)::truefalse;
+  return isOdd(nops(allfactors(n)))
+end proc:</code></pre>
+
+
+<h4 id="infinite-loops">Infinite Loops</h4>
+
+<p>It is common in a while loop to keep running it forever.  This occurs if you don&rsquo;t have some code that will stop it.  A couple of things:</p>
+
+<ul>
+<li><p>Make sure something is changing in your loop.  If you intend to stop the loop on an index, make sure the index is updating.</p></li>
+<li><p>Look at your code and see if you have something that you think will stop the loop.  What ever is in the boolean statement needs to eventually switch.</p></li>
+<li><p>Stop the code if you need to.  Maple has a Stop Sign on the toolbar.  This will interrupt the kernel.  Often you will need to do this, but this may not actually give you control back.  You can also restart the kernel using the circle arrow on the toolbar.</p></li>
+<li><p>If you can&rsquo;t figure out why it is in an infinite loop, put print statements inside to print out values of variables.</p></li>
+</ul>
+
+
+<h3 id="compound-booleans-in-an--code-if--code--statement-or--code-while--code--loop">Compound booleans in an <code>if</code> statement or <code>while</code> loop</h3>
+
+<p>Recall that a boolean is something that evaluates to true or false and is needed in an <code>if</code> statement or <code>while</code> loop.  Often more than one boolean is needed.  This is called a compound boolean and is created with either an <code>and</code> or an <code>or</code>.</p>
+
+<ul>
+<li><p>An <code>or</code> compound statement.  If either or both are true, the result is true, otherwise false.</p>
+
+<ul>
+<li>true or true is true</li>
+<li>true or false is true</li>
+<li>false or true is true</li>
+<li>false or false is false</li>
+</ul>
+</li>
+<li><p>An <code>and</code> compound statement.  Both must be true to be true, otherwise false</p>
+
+<ul>
+<li>true and true is true</li>
+<li>true and false is false</li>
+<li>false and true is false</li>
+<li>false and false is false</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Here&rsquo;s an example, where we just print out all odd perfect squares less than 100.  (Note: there is a better way to do this, but the point is to show how to use a compound statement)</p>
+
+<pre><code class="(null)">n:=1:
+while n&lt;=100 do
+  if isOdd(n) and isPerfectSquare(n) then
+    print(n)
+  end if:
+  n:=n+1:
+end do:</code></pre>
+
+
+<p>In addition, the <code>not</code> command switches a true to false and a false to true. A simple version of this would be if we had an <code>isOdd</code> function as written above, then the following would be an <code>isEven</code> function:</p>
+
+<pre><code class="(null)">isEven:=proc(n::nonnegint)::truefalse;
+  return not isOdd(n)
+end proc:</code></pre>
+
+
+<h3 id="more-functions-with-prime-numbers">More functions with prime numbers</h3>
+
 <p>We want to find the smallest prime number bigger than a number n.  We will make a procedure that return the next prime.</p>
 
 <pre><code class="(null)">theNextPrime := proc(n::integer)::integer;
@@ -207,17 +290,6 @@ end proc:</code></pre>
   end do:
   return k:
 end proc:</code></pre>
-
-
-<h4 id="infinite-loops">Infinite Loops</h4>
-
-<p>It is common in a while loop to keep running it forever.  This occurs if you don&rsquo;t have some code that will stop it.  A couple of things:</p>
-
-<ul>
-<li><p>look at your code and see if you have something that you think will stop the loop.  Do you change the variable in the boolean part of the while?</p></li>
-<li><p>Stop the code if you need to.  Maple has a Stop Sign on the toolbar.  This will interrupt the kernel.  Often you will need to do this.</p></li>
-<li><p>If you can&rsquo;t figure out why it is in an infinite loop, put print statements inside to print out values of variables.</p></li>
-</ul>
 
 
 <h3 id="exercise">Exercise</h3>
@@ -241,9 +313,21 @@ end proc:</code></pre>
 end do:</code></pre>
 
 
-<p>This isn&#8217;t a very interesting example, but shows the syntax of a for loop.</p>
+<p>This isn&#8217;t a very interesting example, but shows the syntax of a for loop.  Often a for loop is used in conjunction with a procedure.   Above, we used a <code>while</code> loop to create an integer list.  However, it was a loop with a fixed number of steps in which a <code>for</code> loop is better to use.  Here&rsquo;s a different way to create the integer list:</p>
 
-<p>Often a for loop is used in conjunction with a procedure.  If Maple didn&#8217;t have a factorial builtin, here&#8217;s a way we could handle it.</p>
+<pre><code class="(null)">intList := proc(n::posint)::list;
+   local li := [];
+   local i;
+   for i to n do
+     li := [op(li), i]
+   end do;
+   return li
+end proc</code></pre>
+
+
+<p>Also, there are two variables that live inside the procedure: <code>i</code> and <code>li</code>.  Because they are not needed outside the procedure, we declare them <strong>local</strong>.  If you don&rsquo;t declare them as local, Maple will give a warning.</p>
+
+<p>If Maple didn&#8217;t have a factorial builtin, here&#8217;s a way we could handle it.</p>
 
 <pre><code class="(null)">facty:=proc(n::integer)::integer;
    local i,fact:=1:
@@ -258,17 +342,35 @@ end proc:</code></pre>
 
 <p>Note: if you call this function <code>factorial</code>, you will get a warning from Maple, which is why it is called <code>facty</code>.</p>
 
-<p>Also, there are two variables that live inside the procedure: i and fact.  Because they are not needed outside the procedure, we declare them <strong>local</strong>.</p>
-
-<h3 id="exercise">Exercise</h3>
-
-<p>Rewrite the <code>intList</code> procedure above using a for loop instead of the while loop.</p>
-
 <h2 id="while-loops-versus-for-loops--">While Loops Versus For Loops  </h2>
 
-<p>No this, isn&rsquo;t a smackdown between these two.  A big question often is when should I use a <code>while</code> loop and when should I use a <code>for</code> loop.  The general rule of thumb is:<br/>
-* If you know that you need to run code for a fixed number of times, use a for loop<br/>
-* If you don&rsquo;t use a while loop.  Generally, the <em>doing</em> something in the loop will affect how many times the loop is run.</p>
+<p>No this, isn&rsquo;t a smackdown between these two.  A big question often is when should I use a <code>while</code> loop and when should I use a <code>for</code> loop.  The general rule of thumb is:</p>
+
+<ul>
+<li>If you know that you need to run code for a fixed number of times, use a for loop</li>
+<li>If you don&rsquo;t use a while loop.  Generally, the <em>doing</em> something in the loop will affect how many times the loop is run.</li>
+</ul>
+
+
+<h2 id="types--">Types  </h2>
+
+<p>All of these procedures have the arguments and return typed.  That is, it is important to say what type of Maple object you can pass it.  Here&rsquo;s a list of many common types:</p>
+
+<ul>
+<li><strong>integer</strong>: the standard mathematical integer</li>
+<li><strong>posint</strong>: positive integer.  That is 1,2,3,&hellip;</li>
+<li><strong>negint</strong>: negative integer. That is, -1, -2, -3, &hellip;.</li>
+<li><strong>nonnegint</strong>: non negative integer,  0, 1, 2, 3 &hellip;</li>
+<li><strong>nonposint</strong>: non-positive integer: 0,-1,-2,-3,&hellip;</li>
+<li><strong>rational</strong>: rational (fraction) number.</li>
+<li><strong>realcons</strong>: a real constant</li>
+<li><strong>numeric</strong>: a number (integer, real, rational)</li>
+<li><strong>truefalse</strong>: a boolean (a true or false value)</li>
+<li><strong>list</strong>: a list, like <code>[1,2,3]</code></li>
+<li><strong>procedure</strong>: a mathematical function.</li>
+<li><strong>range</strong>: an interval, like <code>1..2</code> all numbers between 1 and 2.</li>
+</ul>
+
 
 <h2 id="recursion--">Recursion  </h2>
 
@@ -277,7 +379,7 @@ $$ n!=\begin{cases}1&amp;n=0\newline n\cdot(n-1)!&amp;\text{otherwise}\end{cases
 
 <p>The big difference is that inside the function is a call to the function.  This is what is called a recursive function.  Often this is very helpful and the factorial is a great example of this.  We can write the factorial this way in the following:</p>
 
-<pre><code class="(null)">factr := proc (n::integer)::posint;
+<pre><code class="(null)">factr := proc(n::integer)::posint;
    if n = 0 then
       return 1
    else
@@ -321,7 +423,7 @@ end proc:</code></pre>
 
 <p>To write this in Maple, first, it is helpful to have a procedure that splits any positive integer into its digits.  Here&#1817;s such a procedure:</p>
 
-<pre><code class="(null)">splitDigits := proc (n::posint)::list;
+<pre><code class="(null)">splitDigits := proc(n::posint)::list;
    local list := [], k := n;
    while 9 &lt; k do
       list := [k mod 10, op(list)];
@@ -335,10 +437,12 @@ end proc:</code></pre>
 
 <p>Then we can write a <code>isHappy</code> procedure in the following way.</p>
 
-<pre><code class="(null)">isHappy := proc (n::posint)::boolean;
+<pre><code class="(null)">isHappy := proc(n::posint)::truefalse;
   if n = 1 then return true end if;
   if n = 4 then return false end if;
-  return isHappy(add(k^2, k in splitDigits(n)))
+  local squares = map(k-&gt;k^2,splitDigits(n)):
+  local sum = add(squares):
+  return sum:
 end proc:</code></pre>
 
 
@@ -346,13 +450,11 @@ end proc:</code></pre>
 
 <ul>
 <li>note that this is recursive in that it calls itself.</li>
-<li>The add command takes the elements in splitDigits, squares them and adds them up.  This could be written in the following lines instead:</li>
+<li>The last three list can be written compactly as</li>
 </ul>
 
 
-<pre><code class="(null)">local squares = map(k-&gt;k^2,splitDigits(n)):
-local sum = add(squares):
-return sum:</code></pre>
+<pre><code class="(null)">return isHappy(add(k^2, k in splitDigits(n)))</code></pre>
 
 
 <p>Let&rsquo;s now say that we wish to find all numbers less than 100 that are happy.  To run this command on every number between 1 and 100, can be done many ways.  A for loop comes to mind, but using the <code>seq</code> command is better:</p>
