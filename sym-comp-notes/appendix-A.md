@@ -306,4 +306,39 @@ There is a huge number of websites available for latex.  Some of the more helpfu
 * [A short introduction to LaTeX](latex/latex_tut.pdf)
 * [A Not-so-short introduction to LaTeX](latex/ lshort.pdf)
 * [Wikibooks site on LaTeX](https://en.wikibooks.org/wiki/LaTeX)
-* [A discussion board with helpful Q&A](https://tex.stackexchange.com) although sometimes you get into way into the LaTeX weeds here. 
+* [A discussion board with helpful Q&A](https://tex.stackexchange.com) although sometimes you get into way into the LaTeX weeds here.
+
+
+Maple with LaTeX
+-----
+
+Maple can export mathematics in LaTeX form as well using the `latex` command.  For example typing `latex(`$x^{2}$`)` returns
+
+```
+{x}^{2}
+```
+
+which has extra curly braces, but still okay.
+
+However, if you want to latex $\int x^{2} \, dx$, you get
+```
+1/3\,{x}^{3}
+```
+
+which is true, but perhaps not what you want.  Many standard Maple commands have an inert form which doesn't do anything.  For example, typing
+```
+Int(x^2,x)
+```
+
+returns
+$$ \int x^{2} \,dx$$
+
+and note that you can get a nicer version of this by typing `Int` then hitting escape.  
+
+Typing `latex(#)` on the line number returns:
+
+```
+\int \!{x}^{2}\,{\rm d}x
+```
+
+There are many other commands with inert forms like limits, derivatives, etc.  
