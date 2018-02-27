@@ -313,6 +313,33 @@ end proc:</code></pre>
 end do:</code></pre>
 
 
+<p>If you want to skip numbers or count backwards, the following</p>
+
+<pre><code class="(null)">for i from 1 by 2 to 19 do
+  print(i):
+end do:</code></pre>
+
+
+
+
+<pre><code class="(null)">for i from 10 by -1 to 1 do
+  print(i):
+end do:</code></pre>
+
+
+<p>and the following adds numbers in a list.</p>
+
+<pre><code class="(null)">s := 0;
+for i in [3, 5, 7, 11, 13, 19] do
+  s := s+i
+end do</code></pre>
+
+
+<p>Note: there is a command called <code>add</code> that will also do the above.</p>
+
+<pre><code class="(null)">add([3,5,7,11,13,19])</code></pre>
+
+
 <p>This isn&#8217;t a very interesting example, but shows the syntax of a for loop.  Often a for loop is used in conjunction with a procedure.   Above, we used a <code>while</code> loop to create an integer list.  However, it was a loop with a fixed number of steps in which a <code>for</code> loop is better to use.  Here&rsquo;s a different way to create the integer list:</p>
 
 <pre><code class="(null)">intList := proc(n::posint)::list;
@@ -329,7 +356,7 @@ end proc</code></pre>
 
 <p>If Maple didn&#8217;t have a factorial builtin, here&#8217;s a way we could handle it.</p>
 
-<pre><code class="(null)">facty:=proc(n::integer)::integer;
+<pre><code class="(null)">facty:=proc(n::nonnegint)::posint;
    local i,fact:=1:
    for i from 1 to n do
      fact:=fact*i:
@@ -348,6 +375,7 @@ end proc:</code></pre>
 
 <ul>
 <li>If you know that you need to run code for a fixed number of times, use a for loop</li>
+<li>If you need to do something in a list and map doesn&rsquo;t work well, use a for loop.</li>
 <li>If you don&rsquo;t use a while loop.  Generally, the <em>doing</em> something in the loop will affect how many times the loop is run.</li>
 </ul>
 
@@ -379,7 +407,7 @@ $$ n!=\begin{cases}1&amp;n=0\newline n\cdot(n-1)!&amp;\text{otherwise}\end{cases
 
 <p>The big difference is that inside the function is a call to the function.  This is what is called a recursive function.  Often this is very helpful and the factorial is a great example of this.  We can write the factorial this way in the following:</p>
 
-<pre><code class="(null)">factr := proc(n::integer)::posint;
+<pre><code class="(null)">factr := proc(n::nonnegint)::posint;
    if n = 0 then
       return 1
    else
@@ -390,7 +418,7 @@ end proc:</code></pre>
 
 <p>or using the <code>ifelse</code> function:</p>
 
-<pre><code class="(null)">factr :=proc(n::integer)::posint;
+<pre><code class="(null)">factr := proc(n::nonnegint)::posint;
    return ifelse(n=0,1,n*factr(n-1));
 end proc:</code></pre>
 
@@ -416,10 +444,9 @@ end proc:</code></pre>
 <li>The number 13 is a happy number because $1^{2}+3^{2}=10$ and $1^{2}+0^{2}=1$, so the result ends in 1.</li>
 <li>The number 19 is also happy because $1^{2}+9^{2}=1+81=82$, then $8^{2}+2^{2}=64+4=68$, then $6^{2}+8^{2}=36+64=100$, then $1^{2}+0^{2}+0^{2}=1$.</li>
 <li>The number $4$ isn&#8217;t happy because $4^{2}=16$, then $1^{2}+6^{2}=1+36=37$, then $3^{2}+7^{2}=9+49=58$, then $5^{2}+8^{2}=25+64=89$, then $8^{2}+9^{2}=64+81=145$, then $1^{2}+4^{2}+5^{2}=1+16+25=42$, then $4^{2}+2^{2}=16+4=20$, then $2^{2}+0^{2}=4$ and since we have returned to 4, this will continue cycling, so we stop and say 4 is unhappy.</li>
+<li>It has been proven that any unhappy number will eventually hit this cycle.</li>
 </ul>
 
-
-<p>(It has been proven that any unhappy number will eventually hit this cycle.)</p>
 
 <p>To write this in Maple, first, it is helpful to have a procedure that splits any positive integer into its digits.  Here&#1817;s such a procedure:</p>
 
@@ -438,11 +465,12 @@ end proc:</code></pre>
 <p>Then we can write a <code>isHappy</code> procedure in the following way.</p>
 
 <pre><code class="(null)">isHappy := proc(n::posint)::truefalse;
+  local squares, sum:
   if n = 1 then return true end if;
   if n = 4 then return false end if;
-  local squares = map(k-&gt;k^2,splitDigits(n)):
-  local sum = add(squares):
-  return sum:
+  squares := map(k-&gt;k^2,splitDigits(n)):
+  sum := add(squares):
+  return isHappy(sum):
 end proc:</code></pre>
 
 
@@ -530,7 +558,7 @@ There are three choices for $\tilde{a}$.  Either it is 0, then you have found th
 <pre><code class="(null)">[1.41406250,1.416015625]</code></pre>
 
 
-<p>and as long as the condition that the funtion values of two endpoints are opposite signs, then there is a guarantee of a root inside this interval.</p>
+<p>and as long as the condition that the function values of two endpoints are opposite signs, then there is a guarantee of a root inside this interval.</p>
 
 <p>Again, we can go on forever, but a good place to stop (often called a halting condition) is when the length of the interval shrinks to a particular size.  Let&#8217;s say that we stop when the length is $10^{-4}$ and then we should return our best guess at the root, which may be the midpoint of the final interval.   If we stop when the interval is less than $10^{-4}$ and take this midpoint, the answer will be 1.414215088.</p>
 
