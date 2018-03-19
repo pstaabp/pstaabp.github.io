@@ -86,7 +86,7 @@ have called a command called <code>typeset</code> that will help Maple understan
 
 <h3 id="plotting-multiple-functions">Plotting multiple functions</h3>
 
-<p>Often, we would like to include more that one function on a single set of axes. Maple allows us to do this easily. Plot $x^{2}$ as we did above. To add the plot of $x<sup>3</sup>$, enter it as an expression. Then drag the expression until is highlighted in blue. Click and hold the mouse on the expression, until a + appears, then drag and drop onto the other axes. You will see a second plot appear.</p>
+<p>Often, we would like to include more that one function on a single set of axes. Maple allows us to do this easily. Plot $x^{2}$ as we did above. To add the plot of $x^{3}$, enter it as an expression. Then drag the expression until is highlighted in blue. Click and hold the mouse on the expression, until a + appears, then drag and drop onto the other axes. You will see a second plot appear.</p>
 
 <p>This is a bit complicated and doesn&rsquo;t always work (or save well).  A better way to do this is to use plot command by typing <code>plot([x^2 ,x^3 ],x=-2..2)</code> which results in</p>
 
@@ -94,7 +94,7 @@ have called a command called <code>typeset</code> that will help Maple understan
 
 <h4 id="adding-a-legend">Adding a Legend</h4>
 
-<p>A legend is important for any plot containing more than one function. This allows you to distinguish between the curves. There is a legend option to the plot function. For example, to add a legend and a title to the plot of $x^{2}$ and $x<sup>3</sup>$ type:</p>
+<p>A legend is important for any plot containing more than one function. This allows you to distinguish between the curves. There is a legend option to the plot function. For example, to add a legend and a title to the plot of $x^{2}$ and $x^{3}$ type:</p>
 
 <pre><code class="(null)">plot([x^2, x^3], x = -2..2,legend = [x^2, x^3], title = typeset(&quot;A plot of %1 and %2.&quot;, x^2, x^3))</code></pre>
 
@@ -113,13 +113,18 @@ you will see:<br/>
 
 <h3 id="changing-the-aspect-ratio-of-a-plot">Changing the Aspect Ratio of a Plot</h3>
 
-<p>Often it is important to have an aspect ratio of 1:1 for a plot.  For example, consider a plot of $\sqrt{4-x^{2}}$, which is the top half of a circle.  If it is plotted on $-3 \leq x \leq 3$, then the curve looks like an ellipse, not a circle.</p>
+<p>Often it is important to have an aspect ratio of 1:1 for a plot.  For example, consider a plot of $\sqrt{4-x^{2}}$, which is the top half of a circle.  If it is plotted on $-3 \leq x \leq 3$, then the curve looks like an ellipse, not a circle as shown below:</p>
 
-<p>If you click on the plot, the toolbar changes to the following:</p>
+<p><img src="images/ch02/plot21.png" alt="A plot of a circle that looks like an ellipse" /></p>
 
-<p><img src="images/ch02/plot-toolbar.png" alt="Toolbar of a plot" /></p>
+<p>To get the 1:1 aspect ratio on the plot, use the <code>scaling=constrained</code> option on a plot.</p>
 
-<p>And if the 1:1 button is selected, the plot will be forced to have the right aspect ratio.</p>
+<pre><code class="(null)">plot(sqrt(4-x^2),x=-3..3,scaling=constrained)</code></pre>
+
+
+<p>now results in the following plot:</p>
+
+<p><img src="images/ch02/plot22.png" alt="A plot of a circle with a one to one aspect ratio" /></p>
 
 <h3 id="piecewise-functions">Piecewise Functions</h3>
 
@@ -267,16 +272,22 @@ $$x=f(t) \qquad y=g(t)$$</p>
 <p>A nice example is<br/>
 $$x=t^{2} \qquad y=t^{3}-t$$</p>
 
-<p>For a given set of values of $t$, the $x$ and $y$ values can be found by plugging in<br/>
-$$\begin{array}{ccc}<br/>
+<p>For a given set of values of $t$, the $x$ and $y$ values can be found by plugging into the functions $x(t)$ and $y(t)$.  Using the command:</p>
+
+<pre><code class="(null)">Matrix([[t, x(t), y(t)], seq([t, x(t), y(t)], t = -1.5 .. 1.5, .5)])</code></pre>
+
+
+<p>we get the following table:</p>
+
+<p>$$\begin{array}{c|c|c}<br/>
 t &amp; x &amp; y &amp;  \newline \hline<br/>
--1.5 &amp; 2.25 &amp; -4.875 \newline<br/>
+-1.5 &amp; 2.25 &amp; -1.875 \newline<br/>
 -1 &amp; 1 &amp; 0 \newline<br/>
 -1/2 &amp; 1/4 &amp; -3/8 \newline<br/>
 0 &amp; 0 &amp; 0 \newline<br/>
 1/2 &amp; 1/4 &amp; 3/8 \newline<br/>
 1 &amp; 1 &amp; 0 \newline<br/>
-1.5 &amp; 2.25 &amp; 4.875<br/>
+1.5 &amp; 2.25 &amp; 1.875<br/>
 \end{array}$$</p>
 
 <p>We can plot this in Maple using the standard <code>plot</code> command:</p>
@@ -288,6 +299,10 @@ t &amp; x &amp; y &amp;  \newline \hline<br/>
 it is important to note the difference in syntax.  The range for $t$ needs to be there and <em>inside</em> the brackets.  The plot should look like:</p>
 
 <p><img src="images/ch06/plot07.png" alt="Plot of a parametric Curve" /></p>
+
+<h4 id="exercise">Exercise</h4>
+
+<p>Replot the curves as above, except place the <code>t=-2..2</code> outside the brackets.  What is the difference?</p>
 
 <h3 id="another-example">Another example</h3>
 
@@ -384,7 +399,7 @@ $$<br/>
 \frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}}<br/>
 $$</p>
 
-<p>To find the deriavative to the circle above at the point $(3,4)$, we need to find the $t$ value at the point.  We can do this by solving for $t$ by setting $x=3$ and $t=4$.  (It&rsquo;s recommended to use the <code>Roots</code> command on the interval <code>0..</code>$\pi/2$ because the point is in the first quadrant.)</p>
+<p>To find the derivative to the circle above at the point $(3,4)$, we need to find the $t$ value at the point.  We can do this by solving for $t$ by setting $x=3$ and $t=4$.  (It&rsquo;s recommended to use the <code>Roots</code> command on the interval <code>0..</code>$\pi/2$ because the point is in the first quadrant.)</p>
 
 <pre><code class="(null)">Roots(x(t)=3, t = 0 .. (1/2)*Pi)</code></pre>
 
@@ -427,12 +442,12 @@ x=t \qquad y=-\frac{3}{4}(x-3)+4$$</p>
 
 <h2 id="polar-plots--">Polar Plots  </h2>
 
-<p>It is often that one will use polar coordinates to perform a plot.  We will see a few examples where this is helpful.  If a function is written in polar coordinates, then it is written in the form $r=f(\theta)$.</p>
+<p>It is often that one will use polar coordinates to create a plot.  Here are a few examples where this is helpful.  If a function is written in polar coordinates, then it is written in the form $r=f(\theta)$.</p>
 
 <p>This is a specific form of a parametric curve with the form:<br/>
 $$x=r \cos \theta \qquad y=r\sin \theta$$</p>
 
-<p>For example, the cardiod that you plotted above can be written:<br/>
+<p>For example, the cardioid that you plotted above can be written:<br/>
 $$r=1+\cos(\theta)$$<br/>
 and we can plot it using the <code>polarplot</code> command</p>
 
@@ -443,16 +458,16 @@ and we can plot it using the <code>polarplot</code> command</p>
 (and note that you can get theta to look like the greek letter, by hitting ESC after typing <code>theta</code>)</p>
 
 <p>The plot will look like:<br/>
-<img src="images/ch06/plot12.png" alt="A cardiod plotting in polar coords" /></p>
+<img src="images/ch06/plot12.png" alt="A cardioid plotting in polar coords" /></p>
 
-<p>And altenatively, if you don&rsquo;t want the polar axes shown, you can use the regular plot command with the <code>coord=polar</code> option:</p>
+<p>And alternatively, if you don&rsquo;t want the polar axes shown, you can use the regular plot command with the <code>coord=polar</code> option:</p>
 
 <pre><code class="(null)">plot(1+cos(theta),theta=0..2*Pi,coords=polar)</code></pre>
 
 
 <p>
 will generate the plot:<br/>
-<img src="images/ch06/plot13.png" alt="A cardiod plotting in polar coords" /></p>
+<img src="images/ch06/plot13.png" alt="A cardioid plotting in polar coords" /></p>
 
 <h3 id="a-tangent-line-to-a-polar-plot.">A tangent line to a polar plot.</h3>
 
@@ -462,7 +477,7 @@ will generate the plot:<br/>
 
 <p><img src="images/ch06/plot14.png" alt="Plot of the curve $r=1+2\sin \theta$" /></p>
 
-<p>We now seek the tangent line to the curve at the point $P(1,0)$.  It&rsquo;s helpful to define the $x$ and $y$ coorinates parametrically using $x=r \cos \theta$ and $y=r \sin \theta$ for $r=1+2\sin \theta$:</p>
+<p>We now seek the tangent line to the curve at the point $P(1,0)$.  It&rsquo;s helpful to define the $x$ and $y$ coordinates parametrically using $x=r \cos \theta$ and $y=r \sin \theta$ for $r=1+2\sin \theta$:</p>
 
 <pre><code class="(null)">x := theta-&gt;(1+2*sin(theta))*cos(theta)
 y := theta-&gt;(1+2*sin(theta))*sin(theta)</code></pre>
@@ -484,30 +499,25 @@ $$<br/>
 <pre><code class="(null)">Roots(y(theta)=0,theta=0..Pi/2)</code></pre>
 
 
-<p>
-we get  <code>[0]</code>,  which is consistent with above.  The slope of the tangent line here is</p>
+<p>then we get  <code>[0]</code>,  which is consistent with above.  The slope of the tangent line here is</p>
 
 <pre><code class="(null)">y&apos;(0)/x&apos;(0)</code></pre>
 
 
-<p>
-$\frac{1}{2}$.  Then using the point-slope formula for the tangent line, we get:</p>
-
-<pre><code class="(null)">y=\frac{1}{2}(x-1)+0</code></pre>
-
+<p>which is $\frac{1}{2}$.  Then using the point-slope formula for the tangent line, we get:<br/>
+$$y=\frac{1}{2}(x-1)+0$$</p>
 
 <p>To plot both, we&rsquo;ll use the parametric form (an alternative way will be presented below):</p>
 
-<pre><code class="(null)">plot([x(theta),y(theta),theta=0..2*Pi],[t,1/2*(t-1)+0,t=-1..2])</code></pre>
+<pre><code class="(null)">plot([[x(theta),y(theta),theta=0..2*Pi],[t,1/2*(t-1)+0,t=-1..2]])</code></pre>
 
 
-<p>
-get the plot:<br/>
+<p>to get the plot:<br/>
 <img src="images/ch06/plot16.png" alt="A plot of a polar curve and its tangent line" /></p>
 
 <h3 id="exercise">Exercise</h3>
 
-<p>Find the tangent line to the cardiod $r=1+\cos(\theta)$ at the point $(0,1)$.  Plot both on the same axes.</p>
+<p>Find the tangent line to the cardioid $r=1+\cos(\theta)$ at the point $(0,1)$.  Plot both on the same axes.</p>
 
 <h2 id="multiple-plot-types-and-the--code-display--code--command--">Multiple plot types and the <code>display</code> command  </h2>
 
@@ -557,12 +567,16 @@ that the two plot commands have a colon at the end now so the plots aren&rsquo;t
 
 <h2 id="common-options--">Common Options  </h2>
 
+<p>Recall that the following options are available for all plots.</p>
+
 <ul>
 <li><code>view</code> which changes the viewing window.  Note: you should change the plotting domain as well with this.</li>
 <li><code>legend</code> which adds a legend.</li>
 <li><code>color</code> which changes the color.</li>
 </ul>
 
+
+<p>Additionally, look at the help page for plot to determine other helpful options.</p>
 
 <h2 id="scatter-plots--">Scatter Plots  </h2>
 
@@ -654,6 +668,10 @@ then hit the play button on the toolbar, you will see the parameter $a$ change a
 <p>
 if you run this you can see that as $a$ increases the vertex shifts to the right.</p>
 
+<p>The following animation is the result:</p>
+
+<p><img src="images/ch06/animation01.gif" alt="plot of $(x-a)^{2}$" /></p>
+
 <h3 id="a-parametric-example">A Parametric Example</h3>
 
 <p>Perhaps we want to see what happens to the parametric curve<br/>
@@ -667,7 +685,9 @@ for some $b$ values. We also use the animate with plot, but the 2nd parameter ne
 <p>
 the 2nd parameter needs to be in 2 sets of square brackets because for a parametric plot the functions needs to be a list.</p>
 
-<p>The animation shows that the parameter $b$ is the height of the ellipse and you should set the plotting to be 1:1 for an accurate view of this.</p>
+<p>The animation, which is below, shows that the parameter $b$ is the height of the ellipse and you should set the plotting to be 1:1 for an accurate view of this.</p>
+
+<p><img src="images/ch06/animation02.gif" alt="plot of the parametric curve $x(t) = 5 \cos t$, $y(t)=b\sin(t)$" /></p>
 
 <h3 id="an-polar-plot-example">An polar plot example</h3>
 
