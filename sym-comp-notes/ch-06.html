@@ -479,8 +479,8 @@ will generate the plot:<br/>
 
 <p>We now seek the tangent line to the curve at the point $P(1,0)$.  It&rsquo;s helpful to define the $x$ and $y$ coordinates parametrically using $x=r \cos \theta$ and $y=r \sin \theta$ for $r=1+2\sin \theta$:</p>
 
-<pre><code class="(null)">x := theta-&gt;(1+2*sin(theta))*cos(theta)
-y := theta-&gt;(1+2*sin(theta))*sin(theta)</code></pre>
+<pre><code class="(null)">x(theta) := (1+2*sin(theta))*cos(theta)
+y(theta) := (1+2*sin(theta))*sin(theta)</code></pre>
 
 
 <p>And then to find the value of $\theta$ at the point $P(1,0)$, we set $x=1$ and $y=0$.</p>
@@ -494,12 +494,14 @@ $$[0,\arctan \left( 1/3\,{\frac { \left( 28+3\,\sqrt {87} \right) ^{2/3}<br/>
 +4\,\sqrt [3]{28+3\,\sqrt {87}}+1}{\sqrt [3]{28+3\,\sqrt {87}}}}<br/>
  \right) ]<br/>
 $$<br/>
-(and recall these are values for $\theta$.)  The first one is what we want because that is the horizontal axis.  The second value the the point $(1,2.5)$.   If we find $y=0$ using</p>
+(and recall these are values for $\theta$.)  The first one is what we want because $\theta=0$ is the horizontal axis.  Note: if you are interested in the other point where $x=1$, then substitue the other value into $x$ and $y$ above as <code>x((#)[2])</code> and <code>y((#)[2])</code>, for (#) the line number of the expression.  You may need to use simplify or <code>evalf</code> to get an approximate value.  The result is approximately $(1,2.6956)$.</p>
+
+<p>Also, to double check, solve for $y=0$ using</p>
 
 <pre><code class="(null)">Roots(y(theta)=0,theta=0..Pi/2)</code></pre>
 
 
-<p>then we get  <code>[0]</code>,  which is consistent with above.  The slope of the tangent line here is</p>
+<p>then we get  <code>[0]</code>,  which is consistent with above.  The slope of the tangent line at the point $(1,0)$, where $\theta=0$ is</p>
 
 <pre><code class="(null)">y&apos;(0)/x&apos;(0)</code></pre>
 
@@ -695,6 +697,8 @@ the 2nd parameter needs to be in 2 sets of square brackets because for a paramet
 
 <pre><code class="(null)">animate(polarplot, [1-a*sin(theta), theta = 0 .. 2*Pi], a = -4 .. 4)</code></pre>
 
+
+<p><img src="images/ch06/animation03.gif" alt="plot of the polar curve$ r=1-a\sin(\theta)$" /></p>
 
 <h3 id="exercise">Exercise</h3>
 

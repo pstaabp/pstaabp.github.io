@@ -18,7 +18,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="chapter-7:-applications-of-derivatives--">Chapter 7: Applications of Derivatives  </h1>
 
@@ -42,7 +42,7 @@ then we can find where the function is increasing</p>
 <p>
 the result is shown as <code>RealRange(-</code>$\infty$<code>, Open(1)), RealRange(Open(9),</code>$\infty$<code>)</code>, which can be written in the standard way as $(-\infty,1)\cup(9,\infty)$.</p>
 
-<p>The inteval of decrease is found with <code>solve(f'(x)&lt;0)</code> resulting in <code>(Open(1),Open(9))</code> which is the standard interval $(1,9)$.</p>
+<p>The interval of decrease is found with <code>solve(f'(x)&lt;0)</code> resulting in <code>(Open(1),Open(9))</code> which is the standard interval $(1,9)$.</p>
 
 <p>We can see this using the following plot of the function:</p>
 
@@ -355,7 +355,7 @@ $$\left[\begin{array}{cc}<br/>
 
 <p>which returns <code>0, {[{x = 2}, 0]}</code> which is a fairly complicated way to say that the minimum is 0 and is located at $x=2$.</p>
 
-<p>Again, like above, if we are asked for the dimensions of the rectangle, we need to recall that the width is $2x$ and the height is $\sqrt{4-x<sup>2</sup>}$, so</p>
+<p>Again, like above, if we are asked for the dimensions of the rectangle, we need to recall that the width is $2x$ and the height is $\sqrt{4-x^{2}}$, so</p>
 
 <pre><code class="(null)">subs(x=sqrt(2),2x)</code></pre>
 
