@@ -20,7 +20,7 @@ html,body,#wrapper{font-size:10pt!important}
 </head>
 <body class="normal">
   <div id="wrapper">
-      <h1 id="chapter-11:-linear-algebra--">Chapter 11: Linear Algebra  </h1>
+      <h1 id="L-chapter-11:-linear-algebra--"> Chapter 11: Linear Algebra  </h1>
 
 <p><a href="index.html">Return to all notes</a></p>
 
@@ -424,7 +424,7 @@ $$A=\left[\begin{array}{cc}4&amp;-1\newline-2&amp;3\end{array}\right]$$</p>
 <pre><code class="(null)">Determinant(A-lambda*IdentityMatrix(2))=0</code></pre>
 
 
-<p>returns $\lambda<sup>2</sup>-7\lambda+10=0$.  This equation is called the <em>characteristic equation</em> of the matrix $A$.  And then</p>
+<p>returns $\lambda^{2}-7\lambda+10=0$.  This equation is called the <em>characteristic equation</em> of the matrix $A$.  And then</p>
 
 <pre><code class="(null)">solve(#)</code></pre>
 
@@ -442,7 +442,8 @@ To solve this we will append the zero vector on the right or</p>
 <pre><code class="(null)">Aug:=Matrix([A-5*IdentityMatrix(2),Vector([0,0])])</code></pre>
 
 
-<p>which returns $$\left[\begin{array}{ccc}-1&amp;-1&amp;0\newline-2&amp;-2&amp;0\end{array}\right]$$<br/>
+<p>
+returns $$\left[\begin{array}{ccc}-1&amp;-1&amp;0\newline-2&amp;-2&amp;0\end{array}\right]$$<br/>
 and then</p>
 
 <pre><code class="(null)">ReducedRowEchelonForm(Aug)</code></pre>
@@ -510,7 +511,7 @@ $$\left\{\left[\begin{array}{c}1/2\newline1\end{array}\right]\right\}$$</p>
 
 <h3 id="exercise">Exercise</h3>
 
-<p>Use the CharacteristicPolynomial and NullSpace commands to find the eigenvalues and eigenvectors of<br/>
+<p>Use the <code>CharacteristicPolynomial</code> and <code>NullSpace</code> commands to find the eigenvalues and eigenvectors of<br/>
 $$A=\left[\begin{array}{cc}6&amp;2\newline4&amp;4\end{array}\right]$$</p>
 
 <p>that found above.</p>

@@ -53,7 +53,7 @@ and if we use <code>evalf</code> to find the decimal approximation of about 7.54
 
 <p>Even though it seems clear from the plot of the intersection points, let&rsquo;s make sure</p>
 
-<pre><code class="(null)">solve([x=y^{2}-1,x=y+1])</code></pre>
+<pre><code class="(null)">solve([x=y^2-1,x=y+1])</code></pre>
 
 
 <p>returns <code>{x = 0, y = -1}, {x = 3, y = 2}</code> or the points $(0,-1)$ and $(3,2)$.</p>
@@ -83,7 +83,7 @@ and the result is $9/2$, just as above and easier to do.</p>
 
 <p>Another standard application of integration is finding volumes.  This will be a big topic in Multivariate Calculus, but in single variable Calculus, we can find volumes by revolving a curve $y=f(x)$ about an axis of revolution.  Maple has some nice visualization tools to help understand this. These are located in the <code>Student[Calculus1]</code> package, so make sure that you load it.</p>
 
-<pre><code class="(null)">with(Student[Calculus1])</code></pre>
+<pre><code class="(null)">with(Student[Calculus1]):</code></pre>
 
 
 <h4 id="example">Example</h4>
