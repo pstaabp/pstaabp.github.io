@@ -18,7 +18,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal">
   <div id="wrapper">
       <h1 id="chapter-16:-random-numbers-and-monte-carlo-simulations--">Chapter 16: Random Numbers and Monte Carlo Simulations  </h1>
 
@@ -259,8 +259,7 @@ $${1,2,3,4,5,6,1,2,3,4,5,6,\ldots}$$</p>
 end proc:</code></pre>
 
 
-<p>
-the following takes an integer as an input and returns a suit:</p>
+<p>and the following takes an integer as an input and returns a suit:</p>
 
 <pre><code class="(null)">getSuit := proc (n::integer)::string;
   local suits := [&quot;c&quot;, &quot;d&quot;, &quot;h&quot;, &quot;s&quot;];
@@ -294,10 +293,98 @@ end proc;</code></pre>
 
 <p>will shuffle the integers from 1 to 52.  And note that <code>Shuffle</code> is in the <code>Statistics</code> package.  In this section, we are only interested in a single hand off the top of the deck, so we can show the cards by</p>
 
-<pre><code class="(null)">showCards(Shuffe(deck)[1..5])</code></pre>
+<pre><code class="(null)">hand1:=Shuffle(deck)[1..5]
+showCards(hand1)</code></pre>
 
 
-<p>will show a single hand.</p>
+<p>will show a single hand.  As an example, mine prints out:</p>
+
+<pre><code class="(null)">[&quot;2s&quot;, &quot;10d&quot;, &quot;3c&quot;, &quot;2c&quot;, &quot;Kc&quot;]</code></pre>
+
+
+<p>which is the 2 of spades, 10 of diamonds, 3 of clubs, 2 of clubs, and king of clubs.</p>
+
+<h3 id="checking-for-a-full-house">Checking for a full house</h3>
+
+<p>Recall that a full house is a 5-card hand with 3 cards of the same rank and 2 cards of the same (but different) rank.  An example is 10 of clubs, 10 of diamonds, 10 of spades, 4 of hearts, 4 of diamonds. The <a href="https://en.wikipedia.org/wiki/List_of_poker_hands">wikipedia site for poker hands</a> has more information on full house and other standard poker hands.</p>
+
+<p>Later, we will simulate a large number of draws off a deck to determine the probability of getting a full house.  The following code will check if a hand is a full house or not.</p>
+
+<pre><code class="(null)">isFullHouse := proc (hand::list)::truefalse;
+local ranks := sort([seq(getRank(i), i in hand)]);
+  return (ranks[1] = ranks[2] and ranks[2] = ranks[3] and ranks[4] = ranks[5]) or
+        (ranks[1] = ranks[2] and ranks[3] = ranks[4] and ranks[4] = ranks[5]):
+end proc:</code></pre>
+
+
+<p>There are a couple of important lines here</p>
+
+<ol>
+<li>The first gets the ranks (ace, 2, 3,&hellip;, Q, K) of each card in the hand and sorts the result.</li>
+<li>After the hand is sorted, then there are two possibilities in which there are full houses.  Either the first 3 cards have the same rank and the 4th and 5th cards have the same rank or the first 2 cards have the rank and cards 3, 4 and 5 have the same rank.  This is compactly written as the return statement.</li>
+</ol>
+
+
+<p>To test this if we type:</p>
+
+<pre><code class="(null)">isFullHouse(hand1)</code></pre>
+
+
+<p>we get false because it is not a full house.  However, if we define</p>
+
+<pre><code class="(null)">hand2:=[1, 14, 27, 2, 15]
+showCards(hand2)</code></pre>
+
+
+<p>which is <code>["Ac", "Ad", "Ah", "2c", "2d"]</code> and</p>
+
+<pre><code class="(null)">isFullHouse(hand2)</code></pre>
+
+
+<p>returns true.</p>
+
+<h3 id="simulating-a-large-number-of-poker-hands.">Simulating a large number of poker hands.</h3>
+
+<p>There is a way to determine the probability of drawing 5 cards by counting the total number of full house hands and dividing by the total number of poker hands (see <a href="https://en.wikipedia.org/wiki/Poker_probability">the wikipedia page on poker hand probabilities</a>), but here we are going to simulate it.</p>
+
+<p>In short, here are the steps used to repeated check for a full house</p>
+
+<ol>
+<li>Shuffle a deck of cards</li>
+<li>Take as a hand the top 5 cards</li>
+<li>Test if it a full house.  If it is keep a count of it.</li>
+<li>repeat steps 1-3 many, many, many times.</li>
+</ol>
+
+
+<p>This naturally has a for loop because there are steps that are repeated many times.  Also, we will create a procedure that passes in a number of trials and returns the fraction of full houses.</p>
+
+<pre><code class="(null)">fractionFullHouse := proc (n::posint)::numeric;
+  local deck, num_hands, i;
+  deck := [seq(i, i = 1 .. 52)];
+  num_hands := 0;
+  for i to n do
+    if isFullHouse(Shuffle(deck)[1 .. 5]) then
+      num_hands := num_hands+1
+    end if
+  end do;
+  return evalf(num_hands/n)
+end proc</code></pre>
+
+
+<p>And now we run it.  If I run</p>
+
+<pre><code class="(null)">fractionFullHouse(10^5)</code></pre>
+
+
+<p>to run 100,000 times, I get 0.001440000000 (or about 0.144%)</p>
+
+<p>If we run it with more (1 million)</p>
+
+<pre><code class="(null)">fractionFullHouse(10^6)</code></pre>
+
+
+<p>It takes about 3 minutes, but returns 0.001459 (or about 0.1459%).  From the wikipedia page shown about, the answer should be 0.1441%, so both of these answers are close to the actual answer.  This shows an example of running a simulation to solve a mathematical problem and simulations are playing a huge role in solving problems today.</p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
