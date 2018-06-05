@@ -2,8 +2,8 @@
 
 * [Getting Started in Julia](julia.html)
 * [Chapter 1: Introduction to Scientific Computing](ch01.html)
-* [Chapter 2: Functions](ch02.html)
-* [Chapter 3: Data Types](ch03.html)
+* [Chapter 2: Data Types](ch02.html)
+* [Chapter 3: Functions and Functional Programming](ch03.html)
 * [Chapter 4: Number theory](ch04.html)
 * [Chapter 5: Solving Quadratics and Rootfinding in General](ch05.html)
 * [Chapter 6: Loading Packages](ch06.html)
