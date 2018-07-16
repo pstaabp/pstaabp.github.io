@@ -22,7 +22,7 @@ Installing Julia on your personal machine
 
 
 
-There are precompiled versions for Mac, Windows and Linux at [the Julia Download page](http://julialang.org/downloads/).  Currently, there is versions 0.6 available and shortly, version 1.0 should be out. 
+There are precompiled versions for Mac, Windows and Linux at [the Julia Download page](http://julialang.org/downloads/).  Currently, there is version 0.7 available and shortly, version 1.0 should be out. 
 
 Once you download Julia, there should be an app that you can open up as a console (command line).  This is the basic julia installation.
 
@@ -61,7 +61,7 @@ As we will see in the course, accessing the command line version of Julia is hel
 
 2. Navigate to the julia binary on your computer.  You can do
     ```
-    cd /Applications/Julia-0.5.app/Contents/Resources/julia
+    cd /Applications/Julia-0.7.app/Contents/Resources/julia
     ```
 
     or similar (but this may not quite work) OR find the Julia app in the Finder, CTRL-click on the Julia app and select `Show Package Contents`, then navigate as shown:
