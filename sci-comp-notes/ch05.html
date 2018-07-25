@@ -2836,140 +2836,146 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal">
+<body class="normal mkshowcomments firstload">
   <div id="wrapper">
-      <h1 id="chapter5functionalprogrammingandanintroductiontowritingfastcode">Chapter 5: Functional Programming and an Introduction to Writing fast code</h1>
+      <h1 id="Chapter-5%3A-Functional-Programming-and-an-Introduction-to-Writing-fast-code">Chapter 5: Functional Programming and an Introduction to Writing fast code  </h1>
 
 <p><a href="index.html">Return to all notes</a></p>
 
-<p>This chapter introduces ideas of <a href="https://en.wikipedia.org/wiki/Functional_programming">functional programming</a>, which is a way to think about programming using functions. Typically this requires a language that falls into the category of a <em>functional computer language</em>, one of which is Julia. In short, a language that has this feature has a function (or procedure) as a fundamental element of the language and one of which can be passed as arguments. </p>
+<p>This chapter introduces ideas of <a href="https://en.wikipedia.org/wiki/Functional_programming">functional programming</a>, which is a way to think about programming using functions.  Typically this requires a language that falls into the category of a <em>functional computer language</em>, one of which is Julia.  In short, a language that has this feature has a function (or procedure) as a fundamental element of the language and one of which can be passed as arguments.</p>
 
-<h2 id="functionalvsstatement-basedlanguagesnottheterminology">Functional vs. Statement-based languages (Not the terminology)</h2>
+<h2 id="Functional-vs.-Statement-based-languages-%28Not-the-terminology%29">Functional vs. Statement-based languages (Not the terminology)  </h2>
 
-<p>Let&#8217;s look at a relatively simple example of taking an array of integers from 1 to 5 and producing another array which is the square of each number. In a statement-based point-of-view:</p>
+<p>Let&rsquo;s look at a relatively simple example of taking an array of integers from 1 to 5 and producing another array which is the square of each number.  In a statement-based point-of-view:</p>
 
 <pre><code>arr=[1,2,3,4,5]
 newarr=[]
 for num in arr
   push!(newarr,num^2)
 end
-newarr
-</code></pre>
+newarr</code></pre>
 
-<p>which returns the array <code>[1,4,9,16,25]</code>. There are other variations on this. From a functional point-of-view, a common method is a <code>map</code> command which takes in an array and produces another array in which a function acts on each element of the array. In this case, the function is the square.</p>
+
+<p>which returns the array <code>[1,4,9,16,25]</code>. There are other variations on this.  From a functional point-of-view, a common method is a <code>map</code> command which takes in an array and produces another array in which a function acts on each element of the array.  In this case, the function is the square.</p>
 
 <pre><code>f(x)=x^2
 arr=[1,2,3,4,5]
-map(f,arr)
-</code></pre>
+map(f,arr)</code></pre>
+
 
 <p>or more simply using an <strong>anonymous function</strong>,</p>
 
-<pre><code>map(x-&gt;x^2,arr)
-</code></pre>
+<pre><code>map(x-&gt;x^2,arr)</code></pre>
 
-<p>The key to this example is the ability to pass the function as an argument to the <code>map</code> command. </p>
 
-<h3 id="exercise">Exercise</h3>
+<p>The key to this example is the ability to pass the function as an argument to the <code>map</code> command.</p>
+
+<h3 id="Exercise">Exercise</h3>
 
 <ol>
 <li><p>Write a statement-based loop to take the array <code>[1,2,3,4,5]</code> and output an array that is the reciprocal of each number.</p></li>
 <li><p>Write a functional-based code using the <code>map</code> command to do the same.</p></li>
 </ol>
 
+
 <h3 id="map"><code>map!</code></h3>
 
-<p>So maybe we can be really excited about the <code>map</code> command, but <code>map!</code> is similar with an important difference. Let&#8217;s say that you need a new array, but the old one isn&#8217;t important and in this case <code>map!</code> is what should be used. </p>
+<p>So maybe we can be really excited about the <code>map</code> command, but <code>map!</code> is similar with an important difference.  Let&rsquo;s say that you need a new array, but the old one isn&rsquo;t important and in this case <code>map!</code> is what should be used.</p>
 
 <pre><code>A=[1,2,3,4,5]
-map!(x-&gt;x^2,A)
-</code></pre>
+map!(x-&gt;x^2,A)</code></pre>
 
-<p>and now the content of the array <code>A</code> is <code>[1,4,9,16,25]</code>. Check it by just typing <code>A</code>. </p>
+
+<p>and now the content of the array <code>A</code> is <code>[1,4,9,16,25]</code>.  Check it by just typing <code>A</code>.</p>
 
 <p>We will see many functions in julia with a bang (!) and the convention is that such functions alter their arguments.</p>
 
-<p>Note: many languages don&#8217;t allow functions to change the arguments and there is often good reason to do so, mainly preventing bugs from cropping in. The approach in Julia is to allow it, but make sure that the user is aware is is happening. Also, often there are two versions of functions, one which returns a new thing that is altered (the one without the !) and a second that alters the thing (with the !).</p>
+<p>Note: many languages don&rsquo;t allow functions to change the arguments and there is often good reason to do so, mainly preventing bugs from cropping in.  The approach in Julia is to allow it, but make sure that the user is aware is is happening.  Also, often there are two versions of functions, one which returns a new thing that is altered (the one without the !) and a second that alters the thing (with the !).</p>
 
-<h2 id="reducinganarray">Reducing an array</h2>
+<h2 id="Reducing-an-array">Reducing an array</h2>
 
-<p>The <code>map</code> command in general takes in an array and returns an array. Another big idea on array is to reduce the entire array to a single value. The most common example of this is to sum the contents of a numeric array. To do this with the <code>reduce</code> command we type<br/>
-<code>
-reduce(+,arr)
-</code>
-and the result on the array <code>arr=[1,2,3,4,5]</code> is 15. Note: the <code>sum</code> command is basically this function call.</p>
+<p>The <code>map</code> command in general takes in an array and returns an array.  Another big idea on array is to reduce the entire array to a single value.  The most common example of this is to sum the contents of a numeric array. To do this with the <code>reduce</code> command we type</p>
+
+<pre><code>reduce(+,arr)</code></pre>
+
+
+<p>and the result on the array <code>arr=[1,2,3,4,5]</code> is 15.  Note: the <code>sum</code> command is basically this function call.</p>
 
 <p>To multiply all numbers, we can type:</p>
 
-<pre><code>reduce(*,arr)
-</code></pre>
+<pre><code>reduce(*,arr)</code></pre>
 
-<p>These are obvious examples. Here&#8217;s one that returns the count of the number of array elements that are greater than zero:</p>
 
-<pre><code>num_pos(arr) = reduce((n,val)-&gt;ifelse(val&gt;0,n+1,n),arr,init=0)
-</code></pre>
+<p>These are obvious examples.  Here&rsquo;s one that returns the count of the number of array elements that are greater than zero:</p>
+
+<pre><code>num_pos(arr) = reduce((n,val)-&gt;ifelse(val&gt;0,n+1,n),arr,init=0)</code></pre>
+
 
 <p>and then if it is tested on an array of both positive and negative numbers:</p>
 
-<pre><code>num_pos([-3,5,8,-2,11])
-</code></pre>
+<pre><code>num_pos([-3,5,8,-2,11])</code></pre>
 
-<p>this returns 3. How this works is as follows. There are two values stored within reduce. The first is <code>n</code> and the second is <code>val</code></p>
+
+<p>this returns 3.   How this works is as follows.  There are two values stored within reduce.  The first is <code>n</code> and the second is <code>val</code></p>
 
 <ol>
 <li>the variable <code>n</code> is initially 0 (this is the <code>init=0</code> part of the function call)</li>
-<li>On the first step, <code>val</code> takes on the first value in the array (or <code>-3</code>). It is checked if it is positive and if so, return <code>n+1</code> or <code>n</code>, so after the first step the internal function returns 0.</li>
+<li>On the first step, <code>val</code> takes on the first value in the array (or <code>-3</code>).  It is checked if it is positive and if so, return <code>n+1</code> or <code>n</code>, so after the first step the internal function returns 0.</li>
 <li>On the second step, <code>val</code> is 5 and this time the function returns <code>n+1</code> or 1</li>
 <li><code>val</code> is 8 and the function returns <code>n+1</code> or 2</li>
-<li><code>val</code> is &#8211;2 and the function returns <code>n</code> or 2</li>
+<li><code>val</code> is -2 and the function returns <code>n</code> or 2</li>
 <li><code>val</code> is 11 and the function returns <code>n+1</code> or 3.</li>
 <li>Since the array has been passed through, the result of the entire function is 3.</li>
 </ol>
 
-<h4 id="exercise">Exercise</h4>
 
-<p>Write a reduce function that will count the number of times the string &#8220;hi&#8221; appears in an array. Test it on a few arrays. </p>
+<h4 id="Exercise">Exercise</h4>
 
-<h2 id="ranges">Ranges</h2>
+<p>Write a reduce function that will count the number of times the string &ldquo;hi&rdquo; appears in an array.  Test it on a few arrays.</p>
 
-<p>As we saw in Chapter 4, in a <code>for</code> loop, the following syntax:<br/>
-<code>
-for i=1:4
+<h2 id="Ranges">Ranges</h2>
+
+<p>As we saw in Chapter 4, in a <code>for</code> loop, the following syntax:</p>
+
+<pre><code>for i=1:4
   println(i)
-end
-</code>
-where the value of i was printed for 1,2,3,4. The syntax <code>1:4</code> is called a <code>Range</code> and is shorthand for all integer between 1 and 4 inclusively. Technically, this is called a <code>UnitRange</code> because the skips between numbers is 1. </p>
+end</code></pre>
 
-<p>If you type<br/>
-<code>
-1:4
-</code>
-you will it return <code>UnitRange{Int64}</code>, where is a Unit Type with integers. Note the difference using <code>1.0:4.0</code>.</p>
+
+<p>where the value of i was printed for 1,2,3,4.  The syntax <code>1:4</code> is called a <code>Range</code> and is shorthand for all integer between 1 and 4 inclusively.  Technically, this is called a <code>UnitRange</code> because the skips between numbers is 1.</p>
+
+<p>If you type</p>
+
+<pre><code>1:4</code></pre>
+
+
+<p>you will it return <code>UnitRange{Int64}</code>, where is a Unit Type with integers.  Note the difference using <code>1.0:4.0</code>.</p>
 
 <p>A handy command is <code>collect</code>, which returns an array with all of the numbers in the range.</p>
 
-<pre><code>collect(1:10)
-</code></pre>
+<pre><code>collect(1:10)</code></pre>
 
-<p>returns an integer array with all of the numbers expected. typing<br/>
-<code>
-collect(1.0:9.5)
-</code>
-returns an array of all of the floating point numbers between 1.0 and 9.0 and</p>
+
+<p>returns an integer array with all of the numbers expected.  typing</p>
+
+<pre><code>collect(1.0:9.5)</code></pre>
+
+
+<p>returns an array of all of the floating point numbers between 1.0 and 9.0 and</p>
 
 <p><code>collect(1:3:30)</code></p>
 
-<p>returns an array starting a 1 and skipping every 3 integers (stopping at 28). This range is called a <code>StepRange</code></p>
+<p>returns an array starting a 1 and skipping every 3 integers (stopping at 28).  This range is called a <code>StepRange</code></p>
 
-<h3 id="writingfastcode">Writing fast code</h3>
+<h3 id="Writing-fast-code">Writing fast code</h3>
 
-<p>The last part of this chapter will show one aspect of writing fast code, an important aspect of scientific computing. We will study a number of ways to sum up the contents of an array and determine why the timing of things are different.</p>
+<p>The last part of this chapter will show one aspect of writing fast code, an important aspect of scientific computing.  We will study a number of ways to sum up the contents of an array and determine why the timing of things are different.</p>
 
-<h4 id="sumofintegersfrom1tontry1">Sum of integers from 1 to n: Try #1</h4>
+<h4 id="Sum-of-integers-from-1-to-n%3A-Try-%231">Sum of integers from 1 to n: Try #1</h4>
 
-<p>Although this is not a difficult task, we wish to sum all of the integers from one to <code>n</code>, some large positive integer. We have seen this previously, but want to explore a number of ways to do this.</p>
+<p>Although this is not a difficult task, we wish to sum all of the integers from one to <code>n</code>, some large positive integer.  We have seen this previously, but want to explore a number of ways to do this.</p>
 
-<p>Let&#8217;s start by making an array of all of the numbers, then summing them in a for loop:</p>
+<p>Let&rsquo;s start by making an array of all of the numbers, then summing them in a for loop:</p>
 
 <pre><code>function sum1(n::Integer)
     local arr = collect(1:n)
@@ -2978,37 +2984,38 @@ returns an array of all of the floating point numbers between 1.0 and 9.0 and</p
         sum += i
     end
     sum
-end
-</code></pre>
+end</code></pre>
 
-<p>Try calling this for 1000 or a bit higher and you&#8217;ll notice it&#8217;s pretty fast. On a relatively slow machine:</p>
 
-<pre><code>@time sum1(1_000_000)
-</code></pre>
+<p>Try calling this for 1000 or a bit higher and you&rsquo;ll notice it&rsquo;s pretty fast.  On a relatively slow machine:</p>
 
-<p>returns<br/>
-```
-0.021230 seconds (13.84 k allocations: 8.335 MiB)</p>
+<pre><code>@time sum1(1_000_000)</code></pre>
 
-<p>500000500000
-```
-However, if we try it for a billion:</p>
 
-<pre><code>@time sum1(1_000_000_000)
-</code></pre>
+<p>returns</p>
+
+<pre><code>0.021230 seconds (13.84 k allocations: 8.335 MiB)
+
+500000500000</code></pre>
+
+
+<p>However, if we try it for a billion:</p>
+
+<pre><code>@time sum1(1_000_000_000)</code></pre>
+
 
 <p>it takes a while:</p>
 
 <pre><code>20.393715 seconds (7 allocations: 7.451 GiB, 0.25% gc time)
 
-500000000500000000
-</code></pre>
+500000000500000000</code></pre>
 
-<p>The big difference between these is the total memory allocation. Above was 8.335 megabytes and the second was 7.451 gigabytes. I ran this on a machine with 16Gb of RAM and it appears that julia didn&#8217;t need all 7.451 at the same time, but still, that&#8217;s a huge difference.</p>
 
-<h4 id="sumofintegersfrom1tontry2">Sum of integers from 1 to n: Try #2</h4>
+<p>The big difference between these is the total memory allocation.  Above was 8.335 megabytes and the second was 7.451 gigabytes.    I ran this on a machine with 16Gb of RAM and it appears that julia didn&rsquo;t need all 7.451 at the same time, but still, that&rsquo;s a huge difference.</p>
 
-<p>The big difference seemed to be the total memory allocation, so let&#8217;s try a version where we don&#8217;t allocate the array. </p>
+<h4 id="Sum-of-integers-from-1-to-n%3A-Try-%232">Sum of integers from 1 to n: Try #2</h4>
+
+<p>The big difference seemed to be the total memory allocation, so let&rsquo;s try a version where we don&rsquo;t allocate the array.</p>
 
 <pre><code>function sum2(n::Integer)
     local sum = 0
@@ -3016,31 +3023,33 @@ However, if we try it for a billion:</p>
         sum+=i
     end
     sum
-end
-</code></pre>
+end</code></pre>
+
 
 <p>and running it as <code>@time sum2(1_000_000_000)</code> we get:</p>
 
 <pre><code>0.010735 seconds (12.86 k allocations: 686.479 KiB)
 
-500000000500000000
-</code></pre>
+500000000500000000</code></pre>
 
-<p>and you can see a HUGE difference in speed and memory allocation between <code>sum1</code> and <code>sum2</code>. If we crank further with<br/>
-<code>
-@time sum2(1_000_000_000_000)
-</code>
-we get:<br/>
-```
-0.000003 seconds (5 allocations: 176 bytes)</p>
 
-<p>1001882602603448320
-```
-however, this super fast, but incorrect. This is because of integer overflow. </p>
+<p>and you can see a HUGE difference in speed and memory allocation between <code>sum1</code> and <code>sum2</code>.  If we crank further with</p>
 
-<h4 id="sumofintegersfrom1tontry3">Sum of integers from 1 to n: Try #3</h4>
+<pre><code>@time sum2(1_000_000_000_000)</code></pre>
 
-<p>So let&#8217;s write a <code>BigInt</code> version of this:</p>
+
+<p>we get:</p>
+
+<pre><code>0.000003 seconds (5 allocations: 176 bytes)
+
+1001882602603448320</code></pre>
+
+
+<p>however, this super fast, but incorrect.  This is because of integer overflow.</p>
+
+<h4 id="Sum-of-integers-from-1-to-n%3A-Try-%233">Sum of integers from 1 to n: Try #3</h4>
+
+<p>So let&rsquo;s write a <code>BigInt</code> version of this:</p>
 
 <pre><code>function sum3(n::BigInt)
     local sum = big(0)
@@ -3048,91 +3057,97 @@ however, this super fast, but incorrect. This is because of integer overflow. </
         sum+=i
     end
     sum
-end
-</code></pre>
+end</code></pre>
 
-<p>and:<br/>
-<code>
-@time sum3(big(10)^6)
-</code>
-returns<br/>
-```
-1.460529 seconds (13.04 M allocations: 215.475 MiB, 24.04% gc time)</p>
 
-<p>500000500000
-```
-which you can see is much slower due to the fact of operations with BigInts are much slower than the built-in integers. If we do:</p>
+<p>and:</p>
 
-<pre><code>@time sum3(big(10)^7)
-</code></pre>
+<pre><code>@time sum3(big(10)^6)</code></pre>
 
-<p>we get:<br/>
-```
-14.245302 seconds (130.00 M allocations: 2.086 GiB, 22.76% gc time)</p>
 
-<p>50000005000000
-```
-which is 10 time slower, so it appears that this is linear as possibly as expected. </p>
+<p>returns</p>
 
-<h3 id="sumofintegersfrom1tontry4">Sum of integers from 1 to n: Try #4</h3>
+<pre><code>1.460529 seconds (13.04 M allocations: 215.475 MiB, 24.04% gc time)
 
-<p>Let&#8217;s trying using the <code>reduce</code> function on BigInts:</p>
+500000500000</code></pre>
+
+
+<p>which you can see is much slower due to the fact of operations with BigInts are much slower than the built-in integers.  If we do:</p>
+
+<pre><code>@time sum3(big(10)^7)</code></pre>
+
+
+<p>we get:</p>
+
+<pre><code>14.245302 seconds (130.00 M allocations: 2.086 GiB, 22.76% gc time)
+
+50000005000000</code></pre>
+
+
+<p>which is 10 time slower, so it appears that this is linear as possibly as expected.</p>
+
+<h4 id="Sum-of-integers-from-1-to-n%3A-Try-%234">Sum of integers from 1 to n: Try #4</h4>
+
+<p>Let&rsquo;s trying using the <code>reduce</code> function on BigInts:</p>
 
 <pre><code>function sum4(n::BigInt)
     reduce(+,1:n)
-end
-</code></pre>
+end</code></pre>
 
-<p>Then:<br/>
-<code>
-@time sum4(big(10)^6)
-</code>
-returns:<br/>
-```
-0.889843 seconds (9.03 M allocations: 138.714 MiB, 20.15% gc time)</p>
 
-<p>500000500000
-```
-which is about half the time (and half the memory allocation) of the previous one. Also:</p>
+<p>Then:</p>
 
-<pre><code>@time sum4(big(10)^7)
-</code></pre>
+<pre><code>@time sum4(big(10)^6)</code></pre>
+
+
+<p>returns:</p>
+
+<pre><code>0.889843 seconds (9.03 M allocations: 138.714 MiB, 20.15% gc time)
+
+500000500000</code></pre>
+
+
+<p>which is about half the time (and half the memory allocation) of the previous one.  Also:</p>
+
+<pre><code>@time sum4(big(10)^7)</code></pre>
+
 
 <p>returns</p>
 
 <pre><code>8.512681 seconds (90.00 M allocations: 1.341 GiB, 20.20% gc time)
 
-50000005000000
-</code></pre>
+50000005000000</code></pre>
 
-<p>which is about 10 times slower, but half the speed of <code>sum3</code> for the same number <code>n</code>. The <code>reduce</code> command probably has a number of built-in savings compared to running a for-loop.</p>
 
-<h3 id="sumofintegersfrom1tontry4">Sum of integers from 1 to n: Try #4</h3>
+<p>which is about 10 times slower, but half the speed of <code>sum3</code> for the same number <code>n</code>.  The <code>reduce</code> command probably has a number of built-in savings compared to running a for-loop.</p>
 
-<p>Let&#8217;s use the built-in <code>sum</code> command. Entering:</p>
+<h4 id="Sum-of-integers-from-1-to-n%3A-Try-%235">Sum of integers from 1 to n: Try #5</h4>
 
-<pre><code>@time sum(1:big(10)^6)
-</code></pre>
+<p>Let&rsquo;s use the built-in <code>sum</code> command. Entering:</p>
 
-<p>returns<br/>
-```
-0.000081 seconds (62 allocations: 1.172 KiB)</p>
+<pre><code>@time sum(1:big(10)^6)</code></pre>
 
-<p>500000500000
-```
-and note that higher powers of 10 do not increase the time much. For example,</p>
 
-<pre><code>@time sum(1:big(10)^20)
-</code></pre>
+<p>returns</p>
+
+<pre><code>0.000081 seconds (62 allocations: 1.172 KiB)
+
+500000500000</code></pre>
+
+
+<p>and note that higher powers of 10 do not increase the time much. For example,</p>
+
+<pre><code>@time sum(1:big(10)^20)</code></pre>
+
 
 <p>results in</p>
 
 <pre><code>0.002809 seconds (111 allocations: 4.117 KiB)
 
-5000000000000000000050000000000000000000
-</code></pre>
+5000000000000000000050000000000000000000</code></pre>
 
-<p>What is going on? How is this so fast? </p>
+
+<p>What is going on?  How is this so fast?</p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -3149,9 +3164,26 @@ and note that higher powers of 10 do not increase the time much. For example,</p
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config();
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        messageStyle: "normal",
+        linebreaks: {
+            automatic: false
+        }
+    },
+    tex2jax: { 
+        inlineMath: [["$","$"],["\\(","\\)"]], 
+        displayMath: [["$$","$$"],["\\[","\\]"]], 
+        processEscapes: true
+    },
+    TeX: {
+        Macros: {
+            tr: "{\\scriptscriptstyle\\mathrm{T}}",
+        }
+    }
+});
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </div>
 
 
