@@ -2836,80 +2836,78 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal">
+<body class="normal mkshowcomments firstload">
   <div id="wrapper">
-      <h1 id="chapter4booleanstatementsloopsandbranching">Chapter 4: Boolean Statements, Loops and Branching</h1>
+      <h1 id="Chapter-4%3A-Boolean-Statements-Loops-and-Branching">Chapter 4: Boolean Statements, Loops and Branching  </h1>
 
-<p>The basic computer science structures of if statements, while and for loops are crucial in scientific computing. In this chapter, we cover the basics of these structures in Julia. We will see all of these in more context in later chapters. </p>
+<p>The basic computer science structures of if statements, while and for loops are crucial in scientific computing. In this chapter, we cover the basics of these structures in Julia.  We will see all of these in more context in later chapters.</p>
 
-<h2 id="booleanvaluesandifstatements">Boolean values and if statements</h2>
+<h2 id="Boolean-values-and--if-statements">Boolean values and  if statements  </h2>
 
-<p>A boolean value is something that is either <code>true</code> or <code>false</code>. These are built-in constants in Julia. Sometimes we will want to know if a statement is true or false, but generally, we will use them in other structures.</p>
+<p>A boolean value is something that is either <code>true</code> or <code>false</code>.  These are built-in constants in Julia.  Sometimes we will want to know if a statement is true or false, but generally, we will use them in other structures.</p>
 
-<p>We often use boolean to test various conditions. For each, testing equality, or comparison of numbers we use <code>==,&lt;,&gt;,&lt;=,&gt;=</code>.</p>
+<p>We often use boolean to test various conditions.  For each, testing equality, or comparison of numbers we use <code>==,&lt;,&gt;,&lt;=,&gt;=</code>.</p>
 
-<p>If we set <code>x=3</code> and then can just type <code>x==3</code>, <code>x&lt;3</code>, <code>x&gt;=3</code> to test a variety of comparisons. </p>
+<p>If we set <code>x=3</code> and then can just type <code>x==3</code>, <code>x&lt;3</code>, <code>x&gt;=3</code> to test a variety of comparisons.</p>
 
-<h3 id="compoundsbooleanstatements">Compounds boolean statements</h3>
+<h3 id="Compounds-boolean-statements">Compounds boolean statements</h3>
 
-<p>We often want to test multiple boolean statements and can build up compound ones with either the &#8220;and&#8221; (<code>&amp;&amp;</code>) or &#8220;or&#8221; (<code>||</code>) operators. If we have <code>x=3</code> and <code>y=10</code>, if we want to test that <code>x</code> is greater than 0 and <code>y</code> is 5, by</p>
+<p>We often want to test multiple boolean statements and can build up compound ones with either the &ldquo;and&rdquo; (<code>&amp;&amp;</code>) or &ldquo;or&rdquo; (<code>||</code>) operators.  If we have <code>x=3</code> and <code>y=10</code>, if we want to test that <code>x</code> is greater than 0 and <code>y</code> is 5, by</p>
+
 <pre><code>x&gt;=0 &amp;&amp; y==5</code></pre>
 
-<p>which will return <code>false</code>, since only 1 is true and both must be true for this to be true. However,</p>
+
+<p>which will return <code>false</code>, since only 1 is true and both must be true for this to be true.  However,</p>
+
 <pre><code>x&gt;=0 || y==5</code></pre>
 
-<p>returns true, because the first is true. Recall the following table for &amp;&amp; or ||:</p>
+
+<p>returns true, because the first is true.  Recall the following table for &amp;&amp; or ||:</p>
 
 <table>
-<colgroup>
-<col style="text-align:right;"/>
-<col style="text-align:left;"/>
-<col style="text-align:left;"/>
-<col style="text-align:left;"/>
-<col style="text-align:right;"/>
-<col style="text-align:left;"/>
-<col style="text-align:left;"/>
-</colgroup>
-
 <thead>
 <tr>
-	<th style="text-align:right;">AND</th>
-	<th style="text-align:left;">T</th>
-	<th style="text-align:left;" colspan="2">F</th>
-	<th style="text-align:right;">OR</th>
-	<th style="text-align:left;">T</th>
-	<th style="text-align:left;">F</th>
+<th style="text-align:right;"> AND </th>
+<th style="text-align:left;"> T </th>
+<th style="text-align:left;"> F </th>
+<th></th>
+<th style="text-align:right;"> OR </th>
+<th style="text-align:left;"> T </th>
+<th style="text-align:left;"> F </th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
-	<td style="text-align:right;">T</td>
-	<td style="text-align:left;">T</td>
-	<td style="text-align:left;" colspan="2">F</td>
-	<td style="text-align:right;">T</td>
-	<td style="text-align:left;">T</td>
-	<td style="text-align:left;">T</td>
+<td style="text-align:right;"> T  </td>
+<td style="text-align:left;"> T </td>
+<td style="text-align:left;"> F </td>
+<td></td>
+<td style="text-align:right;"> T </td>
+<td style="text-align:left;"> T </td>
+<td style="text-align:left;"> T </td>
 </tr>
 <tr>
-	<td style="text-align:right;">F</td>
-	<td style="text-align:left;">F</td>
-	<td style="text-align:left;" colspan="2">F</td>
-	<td style="text-align:right;">F</td>
-	<td style="text-align:left;">T</td>
-	<td style="text-align:left;">F</td>
+<td style="text-align:right;"> F </td>
+<td style="text-align:left;"> F </td>
+<td style="text-align:left;"> F </td>
+<td></td>
+<td style="text-align:right;"> F </td>
+<td style="text-align:left;"> T </td>
+<td style="text-align:left;"> F </td>
 </tr>
 </tbody>
 </table>
 
-<h3 id="ifstatements">if statements</h3>
 
-<p>An <code>if</code> statement is often used inside of a procedure to do different things depending on the value of a variable. A standard example of this is the piecewise version of the absolute value. Mathematically, we write:<br/>
+<h3 id="if-statements">if statements</h3>
+
+<p>An <code>if</code> statement is often used inside of a procedure to do different things depending on the value of a variable.  A standard example of this is the piecewise version of the absolute value.  Mathematically, we write:<br/>
 $$ |x| = \begin{cases} x &amp; x \geq 0 \newline<br/>
 -x &amp; x&lt;0<br/>
 \end{cases} $$</p>
 
 <p>We can make a Maple procedure for the absolute value the following way:</p>
+
 <pre><code>function absval(x::Number)
   if x &gt;= 0
      return x
@@ -2917,9 +2915,11 @@ $$ |x| = \begin{cases} x &amp; x \geq 0 \newline<br/>
   return -1*x
 end</code></pre>
 
-<p>And to help determine if it is correct, evaluate <code>absval(3)</code> and <code>absval(-7)</code>. </p>
 
-<p>Notice that we basically had two situations here, either x was greater than or equal to 0 or else not. We can rewrite this use an <code>if-else</code> statement.</p>
+<p>And to help determine if it is correct, evaluate <code>absval(3)</code> and <code>absval(-7)</code>.</p>
+
+<p>Notice that we basically had two situations here, either x was greater than or equal to 0 or else not.  We can rewrite this use an <code>if-else</code> statement.</p>
+
 <pre><code>function absval(x::Number)
   if x &gt;= 0
      return x
@@ -2928,11 +2928,13 @@ end</code></pre>
   end
 end</code></pre>
 
+
 <p>try entering this and seeing if the results are the same.</p>
 
-<h3 id="furtherchoiceswithifstatements">Further choices with if statements</h3>
+<h3 id="Further-choices-with-if-statements">Further choices with if statements</h3>
 
-<p>You may need more than 2 choices on an if statement. The following returns a color as a string for given numbers:</p>
+<p>You may need more than 2 choices on an if statement.  The following returns a color as a string for given numbers:</p>
+
 <pre><code>function which_color(n::Integer)
   if n==1
     return &quot;red&quot;
@@ -2945,13 +2947,15 @@ end</code></pre>
   end
 end</code></pre>
 
-<h2 id="loops">Loops</h2>
 
-<p>A <em>loop</em> is a series of statements that are repeated either a fixed number of times or until a condition occurs. They can be very helpful if a large number of operations need to be done in a predictable manner. </p>
+<h2 id="Loops">Loops  </h2>
 
-<h3 id="whileloops">while loops</h3>
+<p>A <em>loop</em> is a series of statements that are repeated either a fixed number of times or until a condition occurs.  They can be very helpful if a large number of operations need to be done in a predictable manner.</p>
 
-<p>Another very common construction for programming is called a while loop. Basically, we want to run a few statements while some boolean statement is true. Here&#8217;s a simple, but uninteresting example:</p>
+<h3 id="while-loops">while loops</h3>
+
+<p>Another very common construction for programming is called a while loop.  Basically, we want to run a few statements while some boolean statement is true.  Here&rsquo;s a simple, but uninteresting example:</p>
+
 <pre><code>let
   local n=1
   while n&lt;10
@@ -2960,7 +2964,9 @@ end</code></pre>
   end
 end</code></pre>
 
-<p>Here is a bit more practical version of this. If we want an array of integers from 1 up to some value, here&#8217;s a way to do this:</p>
+
+<p>Here is a bit more practical version of this.  If we want an array of integers from 1 up to some value, here&rsquo;s a way to do this:</p>
+
 <pre><code>function intArray(n::Integer)
   arr = []
   i=1
@@ -2971,41 +2977,53 @@ end</code></pre>
   arr
 end</code></pre>
 
+
 <ul>
 <li>typing <code>intArray(6)</code> returns an array from 1 to 6</li>
 <li>typing <code>intArray(10)</code> returns an array from 1 to 10</li>
 <li>Note: we will go in-depth into arrays later in the course.</li>
 </ul>
 
-<h4 id="infiniteloops">Infinite Loops</h4>
 
-<p>It is common in a while loop to keep running it forever. This occurs if you don&#8217;t have some code that will stop it. A couple of things:</p>
+<h4 id="Infinite-Loops">Infinite Loops</h4>
+
+<p>It is common in a while loop to keep running it forever.  This occurs if you don&rsquo;t have some code that will stop it.  A couple of things:</p>
 
 <ul>
-<li><p>Make sure something is changing in your loop. If you intend to stop the loop on an index, make sure the index is updating. </p></li>
-<li><p>Look at your code and see if you have something that you think will stop the loop. What ever is in the boolean statement needs to eventually switch.</p></li>
-<li><p>Stop the code if you need to. You may need to interrupt the kernel, but selecting <em>Kernel</em> from the menus at the top of the Jupyter (IJulia) webpage, then <em>Interrupt</em> should stop it.</p></li>
-<li><p>If you can&#8217;t figure out why it is in an infinite loop, put print statements inside to print out values of variables. </p></li>
+<li><p>Make sure something is changing in your loop.  If you intend to stop the loop on an index, make sure the index is updating.</p></li>
+<li><p>Look at your code and see if you have something that you think will stop the loop.  What ever is in the boolean statement needs to eventually switch.</p></li>
+<li><p>Stop the code if you need to.  You may need to interrupt the kernel, but selecting <em>Kernel</em> from the menus at the top of the Jupyter (IJulia) webpage, then <em>Interrupt</em> should stop it.</p></li>
+<li><p>If you can&rsquo;t figure out why it is in an infinite loop, put print statements inside to print out values of variables.</p></li>
 </ul>
 
-<h3 id="forloops">For loops</h3>
+
+<h3 id="For-loops">For loops</h3>
 
 <p>A for loop executes some code a fixed number of times and has a variable (called an index) that updates</p>
 
 <p>The following is a simple for loop that prints out the numbers 1 to 10</p>
+
 <pre><code>for i=1:10
   println(i)
 end</code></pre>
 
+
 <p>If you want to skip numbers or count backwards, the following</p>
+
 <pre><code>for i=1:2:20
   println(i)
 end</code></pre>
+
+
+
+
 <pre><code>for i=20:-2:0
   println(i)
 end</code></pre>
 
+
 <p>and the following adds numbers in a list.</p>
+
 <pre><code>let
   local sum=0
   for i in [1,5,7,11,20]
@@ -3014,7 +3032,9 @@ end</code></pre>
   sum
 end</code></pre>
 
-<p>Here&#8217;s the <code>intArray</code> function from above using a for loop instead.</p>
+
+<p>Here&rsquo;s the <code>intArray</code> function from above using a for loop instead.</p>
+
 <pre><code>function intArray(n::Integer)
   arr = []
   for i=1:n
@@ -3023,30 +3043,38 @@ end</code></pre>
   arr
 end</code></pre>
 
-<h2 id="whileloopsversusforloops">While Loops Versus For Loops</h2>
 
-<p>No this, isn&#8217;t a smackdown between these two. A big question often is when should I use a <code>while</code> loop and when should I use a <code>for</code> loop. The general rule of thumb is:</p>
+<h2 id="While-Loops-Versus-For-Loops">While Loops Versus For Loops  </h2>
+
+<p>No this, isn&rsquo;t a smackdown between these two.  A big question often is when should I use a <code>while</code> loop and when should I use a <code>for</code> loop.  The general rule of thumb is:</p>
 
 <ul>
 <li>If you know that you need to run code for a fixed number of times, use a for loop</li>
-<li>If you need to do something in a list and map doesn&#8217;t work well, use a for loop.</li>
-<li>If you don&#8217;t use a while loop. Generally, the <em>doing</em> something in the loop will affect how many times the loop is run.</li>
+<li>If you need to do something in a list and map doesn&rsquo;t work well, use a for loop.</li>
+<li>If you don&rsquo;t use a while loop.  Generally, the <em>doing</em> something in the loop will affect how many times the loop is run.</li>
 </ul>
 
-<h2 id="ternaryif-elsestatement">Ternary <code>if-else</code> statement</h2>
 
-<p>Often, an if-else statement is quite short and you want to return a value depending on a condition. The absolute value example was such an example. There is what is called a ternary <code>if-else</code> statement that has the form:</p>
+<h2 id="Ternary-if-else-statement">Ternary <code>if-else</code> statement  </h2>
+
+<p>Often, an if-else statement is quite short and you want to return a value depending on a condition.  The absolute value example was such an example.  There is what is called a ternary <code>if-else</code> statement that has the form:</p>
+
 <pre><code>condition ? true_condition : false_condition</code></pre>
 
-<p>which returns <code>true_condition</code> if condition is true otherwise <code>false_condition</code> is returned. </p>
+
+<p>which returns <code>true_condition</code> if condition is true otherwise <code>false_condition</code> is returned.</p>
 
 <p>The absolute value example above can be written as a single line:</p>
+
 <pre><code>absval(x::Number)=(x&gt;=0) ? x : -1*x</code></pre>
 
-<p>and once you practice with this, it will be easy to read and much shorter (1 line versus 7). alternatively, you can write this as</p>
+
+<p>and once you practice with this, it will be easy to read and much shorter (1 line versus 7).  alternatively, you can write this as</p>
+
 <pre><code>absval(x::Number)=ifelse(x&gt;=0,x,-1*x)</code></pre>
 
-<p>We will see else syntax of this operator often throughout this course. </p>
+
+<p>We will see else syntax of this operator often throughout this course.</p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -3063,9 +3091,26 @@ end</code></pre>
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config();
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        messageStyle: "normal",
+        linebreaks: {
+            automatic: false
+        }
+    },
+    tex2jax: { 
+        inlineMath: [["$","$"],["\\(","\\)"]], 
+        displayMath: [["$$","$$"],["\\[","\\]"]], 
+        processEscapes: true
+    },
+    TeX: {
+        Macros: {
+            tr: "{\\scriptscriptstyle\\mathrm{T}}",
+        }
+    }
+});
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </div>
 
 
