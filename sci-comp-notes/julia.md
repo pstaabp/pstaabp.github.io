@@ -6,23 +6,23 @@ Running Julia code
 
 This describes a number of ways to get [Julia](https://julialang.org) up and running.  A recommendation is to start with running Julia from JuliaBox.com (described below) and then getting Julia running on a personal computer.  As you progress within this page, some things are a little more difficult to install and troubleshoot.  I hope to include more information here during the semester to get things up and running more smoothly.
 
-Using Julia on the Cloud
------
+### Using Julia on the Cloud
+
 
 1. Go to [JuliaBox.com](https://juliabox.com/)
 2. Possibly your FSU account may work as sign-in via Google since your email is run by Google.  If not you may need an account.  After getting signed in, it should look like:
 
 ![main juliabox page](images/ch00/juliabox.png)
-3. After signing in, you can select *New* -> *Julia-0.6.2* (or newer)  as a new document.  The result should look like this:
+3. After signing in, you can select *New* -> *Julia-0.6.2* (or hopefully *Julia-1.0*)  as a new document.  The result should look like this:
 ![main juliabox page](images/ch00/juliabox02.png)
 4. To test everything is working, type `2+3` in the box that is highlighted in blue and hit SHIFT-ENTER. You should get the result 5.
 
-Installing Julia on your personal machine
-----
+### Installing Julia on your personal machine
 
 
 
-There are precompiled versions for Mac, Windows and Linux at [the Julia Download page](http://julialang.org/downloads/).  Currently, there is version 0.7 available and shortly, version 1.0 should be out. 
+
+There are precompiled versions for Mac, Windows and Linux at [the Julia Download page](http://julialang.org/downloads/).  Currently, there is version 1.0 available.
 
 Once you download Julia, there should be an app that you can open up as a console (command line).  This is the basic julia installation.
 
