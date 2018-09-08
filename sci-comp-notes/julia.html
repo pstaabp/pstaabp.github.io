@@ -18,7 +18,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal mkshowcomments">
+<body class="normal mkshowcomments firstload">
   <div id="wrapper">
       <h1 id="Running-Julia-code">Running Julia code  </h1>
 
@@ -47,7 +47,18 @@ html,body,#wrapper{font-size:10pt!important}
 
 <h2 id="Installing-the-Browser-Version-on-your-machine">Installing the Browser Version on your machine  </h2>
 
-<p>If you used JuliaBox like we saw above, that is a browser version of Julia and has a lot of nice features.  To get this, it is called IJulia.  Follow the directions at the <a href="https://github.com/JuliaLang/IJulia.jl">IJulia github site</a> for information on getting it installed.</p>
+<p>If you used JuliaBox like we saw above, that is a browser version of Julia and has a lot of nice features.  To get this, it is called IJulia.  Follow the directions at the <a href="https://github.com/JuliaLang/IJulia.jl">IJulia github site</a> for information on getting it installed.   Here they are in a nutshell, but it worth reading the above link if you run into problems:</p>
+
+<ol>
+<li><p>Open up Julia by double clicking the app that you downloaded above.  Make sure you get a julia prompt like:</p>
+
+<p> <pre><code>julia&gt;</code></pre></p></li>
+<li><p>Type <code>using Pkg</code></p></li>
+<li>Type <code>Pkg.add("IJulia")</code> (this step often takes a while)</li>
+<li>Type <code>using IJulia</code></li>
+<li>Type <code>notebook()</code> and your default browser should open up with a webpage that looks a bit like the juliabox.</li>
+</ol>
+
 
 <h2 id="Using-Jupyter-%28via-JuliaBox-or-your-local-machine%29">Using Jupyter (via JuliaBox or your local machine)  </h2>
 
