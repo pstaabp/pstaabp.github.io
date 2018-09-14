@@ -71,7 +71,7 @@ As we will see in the course, accessing the command line version of Julia is hel
 
 2. Navigate to the julia binary on your computer.  You can do
     ```
-    cd /Applications/Julia-0.7.app/Contents/Resources/julia
+    cd /Applications/Julia-1.0.app/Contents/Resources/julia
     ```
 
     or similar (but this may not quite work) OR find the Julia app in the Finder, CTRL-click on the Julia app and select `Show Package Contents`, then navigate as shown:
