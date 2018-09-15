@@ -32,7 +32,17 @@ Once you download Julia, there should be an app that you can open up as a consol
 Installing the Browser Version on your machine
 -----
 
-If you used JuliaBox like we saw above, that is a browser version of Julia and has a lot of nice features.  To get this, it is called IJulia.  Follow the directions at the [IJulia github site](https://github.com/JuliaLang/IJulia.jl) for information on getting it installed.  
+If you used JuliaBox like we saw above, that is a browser version of Julia and has a lot of nice features.  To get this, it is called IJulia.  Follow the directions at the [IJulia github site](https://github.com/JuliaLang/IJulia.jl) for information on getting it installed.   Here they are in a nutshell, but it worth reading the above link if you run into problems:
+
+1. Open up Julia by double clicking the app that you downloaded above.  Make sure you get a julia prompt like:
+    ```
+    julia>
+    ```
+
+2. Type `using Pkg`
+3. Type `Pkg.add("IJulia")` (this step often takes a while)
+4. Type `using IJulia`
+5. Type `notebook()` and your default browser should open up with a webpage that looks a bit like the juliabox.
 
 
 Using Jupyter (via JuliaBox or your local machine)
@@ -61,7 +71,7 @@ As we will see in the course, accessing the command line version of Julia is hel
 
 2. Navigate to the julia binary on your computer.  You can do
     ```
-    cd /Applications/Julia-0.7.app/Contents/Resources/julia
+    cd /Applications/Julia-1.0.app/Contents/Resources/julia
     ```
 
     or similar (but this may not quite work) OR find the Julia app in the Finder, CTRL-click on the Julia app and select `Show Package Contents`, then navigate as shown:
