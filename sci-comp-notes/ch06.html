@@ -18,37 +18,175 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal mkshowcomments firstload">
+<body class="normal firstload">
   <div id="wrapper">
-      <h1 id="Chapter-6%3A-Loading-Packages">Chapter 6: Loading Packages  </h1>
+      <h1 id="chapter6%3Aloadingpackages">Chapter 6: Loading Packages</h1>
 
 <p><a href="index.html">Return to all notes</a></p>
 
-<p>A package is an extra set of commands or functions.  For example, in the next Chapter we will see the <code>Primes</code> package has a few additional commands to help with factoring integers and finding prime numbers.  To load the package, type</p>
+<p>As with many software packages, additional functionality is available in other libraries or packages. If you take a look at [https://juliaobserver.com](Julia&#8217;s Package Listing) there are about 2000 packages (as of Fall 2018). Clicking on any of the package names will give additional information about the package including documentation (hopefully).</p>
 
+<p>If you don&#8217;t have a package installed and try to use it, like:</p>
 <pre><code>using Primes</code></pre>
 
+<p>You will get an error that it isn&#8217;t installed. You can add the package by</p>
+<pre><code>using Pkg
+Pkg.add(&quot;Primes&quot;)</code></pre>
 
-<p>Now, there are additional functions.  For example,</p>
+<p>and after fetching the package, rerunning</p>
+<pre><code>using Primes</code></pre>
 
+<p>should no longer give an error. Then, for example, try</p>
 <pre><code>isprime(17)</code></pre>
 
+<p>which returns true because 17 is a prime number. This is a nondeterministic function that determines if a number is true. The documentation for the Primes package is at <a href="https://github.com/JuliaMath/Primes.jl">https://github.com/JuliaMath/Primes.jl</a> and demonstrates 4 commands including <code>isprime</code> and <code>factor</code> which returns all prime factors (and the order).</p>
 
-<p>returns true because 17 is a prime number.   This is a nondeterministic function that determines if a number is true. The documentation for the Primes package is at  <a href="https://github.com/JuliaMath/Primes.jl">https://github.com/JuliaMath/Primes.jl</a> and demonstrates 4 commands including <code>isprime</code> and <code>factor</code> which returns all prime factors (and the order).</p>
-
-<p><a href="[http://pkg.julialang.org/">The Julia Packages Directory</a> lists all of the official packages for Julia.  A few that we have seen or will see:</p>
+<p>A few other packages that we have seen or will see:</p>
 
 <ul>
-<li>IJulia &ndash; provides the browser interface to Julia.  You are probably already using this.</li>
-<li>ForwardDiff &ndash; does Automatic Differentiation (see Chapter 8)</li>
-<li>Plots &ndash; A plotting packages (See Chapter 11)</li>
-<li>GR &ndash; A backend to the Plots package.</li>
-<li>PlotlyJS &ndash; Another nice backend to the Plots package.</li>
-<li>DataFrames &ndash; a way to nicely handle datasets generally loaded from external files.</li>
+<li>IJulia &#8211; provides the browser interface to Julia. You are probably already using this.</li>
+<li>ForwardDiff &#8211; does Automatic Differentiation (see Chapter 8)</li>
+<li>Plots &#8211; A plotting packages (See Chapter 11)</li>
+<li>GR &#8211; A backend to the Plots package.</li>
+<li>PlotlyJS &#8211; Another nice backend to the Plots package.</li>
+<li>DataFrames &#8211; a way to nicely handle datasets generally loaded from external files.</li>
 </ul>
 
-
 <p><a href="ch14.html">Chapter 14</a> will show how to create our own packages also called a module.</p>
+
+<h2 id="managingpackagesinjulia">Managing Packages in Julia</h2>
+
+<p>Although we can use the <code>Pkg</code> package to handle packages, this section will use the terminal REPL to handle any non-standard packages. Additional documentation on this is given in [https://docs.julialang.org/en/latest/stdlib/Pkg/](Julia&#8217;s package manager help pages) First, open up a terminal version of julia (generally by opening the application that you downloaded). You will get:</p>
+<pre><code>              _
+   _      _ _(_)_      |  Documentation: https://docs.julialang.org
+  (_)    | (_) (_)     |
+  _ _   _| |_  __ _    |  Type &quot;?&quot; for help, &quot;]?&quot; for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.0.0 (2018-08-08)
+ _/ |\__&apos;_|_|_|\__&apos;_|  |  Official https://julialang.org/ release
+|__/                   |
+</code></pre>
+
+<p>or similar and then</p>
+<pre><code>julia&gt;</code></pre>
+
+<p>which means we&#8217;re ready to handle julia commands. If we type <code>]</code>, then the prompt turns into:</p>
+<pre><code>(v1.0) pkg&gt;</code></pre>
+
+<p>There are a number of commands that we will cover here:<br/>
+* add<br/>
+* remove (rm)<br/>
+* develop (dev)<br/>
+* status<br/>
+* update (up)<br/>
+* test<br/>
+* build<br/>
+* precompile</p>
+
+<h3 id="addingapackage">Adding a package</h3>
+
+<p>In the package command line, type <code>add</code> <em>package_name</em> to add the package. For example, to add the <code>ForwardDff</code> package:</p>
+<pre><code>add ForwardDiff</code></pre>
+
+<p>and it is not installed, you will get something like:</p>
+<pre><code>Updating registry at `~/.julia/registries/General`
+  Updating git-repo `https://github.com/JuliaRegistries/General.git`
+  Updating `~/.julia/environments/v1.0/Project.toml`
+  [f6369f11] + ForwardDiff v0.9.0
+  Updating `~/.julia/environments/v1.0/Manifest.toml`
+  [9e28174c] + BinDeps v0.8.10
+  [bbf7d656] + CommonSubexpressions v0.2.0
+  [163ba53b] + DiffResults v0.0.3
+  [b552c78f] + DiffRules v0.0.7
+  [f6369f11] + ForwardDiff v0.9.0
+  [77ba4419] + NaNMath v0.3.2
+  [276daf66] + SpecialFunctions v0.7.0
+  [90137ffa] + StaticArrays v0.8.3</code></pre>
+
+<p>A few things to note: </p>
+
+<ul>
+<li>The line after the 2nd <code>Updating</code> line is the package (and version) that you are installing.</li>
+<li>All of the lines after the 3rd <code>Updating</code> line is all of the packages that this depends on.</li>
+<li>The + sign means that the package is being added.</li>
+</ul>
+
+<p>If you want to add multiple packages at the same time, say packages A, B and C, type <code>add A B C</code>. You can also add particular versions of a package (often for testing or to avoid a bug). For example, if you want version 0.3.0 of <code>ForwardDiff</code> type:</p>
+<pre><code>add ForwardDiff@0.3.0</code></pre>
+
+<p>You will then get info on the dependencies on that version.</p>
+
+<h3 id="packagestatus">Package Status</h3>
+
+<p>The <code>status</code> command (or <code>st</code>) will just list all of the main packages installed. For example,</p>
+<pre><code>Status `~/.julia/environments/v1.0/Project.toml`
+[c52e3926] Atom v0.7.6
+[336ed68f] CSV v0.3.1
+[a93c6f00] DataFrames v0.13.1
+[f6369f11] ForwardDiff v0.9.0
+[7073ff75] IJulia v1.12.0
+[e5e0dc1b] Juno v0.5.3
+[1a8c2f83] Query v0.10.0</code></pre>
+
+<p>and note that these are just the packages added by the <code>add</code> command, not all of the dependencies. If you want all of the dependencies as well, type <code>st --manifest</code> and I get a huge list of packages.</p>
+
+<h3 id="removingapackage">Removing a Package</h3>
+
+<p>You can remove a package by typing <code>remove</code> or <code>rm</code> then the package name. If I want to remove the <code>ForwardDiff</code> package, then</p>
+<pre><code>remove ForwardDiff</code></pre>
+
+<p>we get the following:</p>
+<pre><code>Updating `~/.julia/environments/v1.0/Project.toml`
+ [f6369f11] - ForwardDiff v0.3.0
+ Updating `~/.julia/environments/v1.0/Manifest.toml`
+ [49dc2e85] - Calculus v0.4.1
+ [c5cfe0b6] - DiffBase v0.2.0
+ [f6369f11] - ForwardDiff v0.3.0
+ [77ba4419] - NaNMath v0.3.2</code></pre>
+
+<p>Note:</p>
+
+<ul>
+<li>The <code>rm</code> command removes the package from the list of available packages, but doesn&#8217;t remove them from your harddrive.</li>
+<li>If you want to see everything installed, navigate to the <code>~/.julia/packages</code> directory, which is where they are stored.</li>
+</ul>
+
+<h3 id="updatingpackages">Updating packages</h3>
+
+<p>If you type <code>update</code> or <code>up</code> you will update all of the installed packages (and dependencies). For example:</p>
+<pre><code>Updating `~/.julia/environments/v1.0/Project.toml`
+ [7073ff75] ↑ IJulia v1.11.1 ⇒ v1.12.0
+ Updating `~/.julia/environments/v1.0/Manifest.toml`
+ [7073ff75] ↑ IJulia v1.11.1 ⇒ v1.12.0
+ [b85f4697] ↑ SoftGlobalScope v1.0.5 ⇒ v1.0.7
+ [5e66a065] ↑ TableShowUtils v0.1.1 ⇒ v0.2.0</code></pre>
+
+<p>and all updates will be with an ↑. If you only want to update a single package, type the name after <code>update</code>.</p>
+
+<h3 id="buildingpackages">Building Packages</h3>
+
+<p>Generally a package is built after it is installed. Building a package might include running code (or unpacking files) after it is installed. Sometimes if things get wonky, rebuilding is a good thing to do. </p>
+<pre><code>build</code></pre>
+
+<p>or if you only want say <code>IJulia</code> built,</p>
+<pre><code>build IJulia</code></pre>
+
+<h4 id="precompilingpackages">Precompiling packages</h4>
+
+<p>When a package is used, often it requests to be compiled. For example, when <code>using Primes</code>, then following is shown:</p>
+<pre><code>[ Info: Precompiling Primes [27ebfcd6-29c5-5fa9-bf4b-fb8fc14df3ae]</code></pre>
+
+<p>and basically some code is compiled beforehand, generally to speed up code. You can precompile all code with</p>
+<pre><code>precompile</code></pre>
+
+<p>and it may take a while, but you won&#8217;t have to wait, when you load the package with the <code>using</code> command.</p>
+
+<h3 id="testingapackages">Testing a Packages</h3>
+
+<p>To test a packge, say the <code>ForwardDiff</code> package, then</p>
+<pre><code>test ForwardDiff</code></pre>
+
+<p>It list all of the dependencies first, and then runs a number of tests (and we will show how to write tests soon) and timing information. After a while, it finishes sucessfully.</p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -65,26 +203,9 @@ html,body,#wrapper{font-size:10pt!important}
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    "HTML-CSS": {
-        messageStyle: "normal",
-        linebreaks: {
-            automatic: false
-        }
-    },
-    tex2jax: { 
-        inlineMath: [["$","$"],["\\(","\\)"]], 
-        displayMath: [["$$","$$"],["\\[","\\]"]], 
-        processEscapes: true
-    },
-    TeX: {
-        Macros: {
-            tr: "{\\scriptscriptstyle\\mathrm{T}}",
-        }
-    }
-});
+  MathJax.Hub.Config();
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </div>
 
 
