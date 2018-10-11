@@ -18,27 +18,24 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal mkshowcomments firstload">
+<body class="normal firstload">
   <div id="wrapper">
-      <h1 id="Chapter-10%3A-Arrays">Chapter 10: Arrays  </h1>
+      <h1 id="chapter10%3Aarrays">Chapter 10: Arrays</h1>
 
 <p><a href="index.html">Return to all notes</a></p>
 
-<p>Arrays are a fundamental data structure for nearly every computer language and it is a crucial for scientific computing therefore it is important for julia.  It is recommended to read the <a href="http://docs.julialang.org/en//manual/arrays/">julia documentation on arrays</a></p>
+<p>Arrays are a fundamental data structure for nearly every computer language and it is a crucial for scientific computing therefore it is important for julia. It is recommended to read the <a href="http://docs.julialang.org/en//manual/arrays/">julia documentation on arrays</a></p>
 
-<p>In short an array is a collection of data of (typically) the same type under the same name.  We have seen arrays before.  For example, if we say</p>
-
+<p>In short an array is a collection of data of (typically) the same type under the same name. We have seen arrays before. For example, if we say</p>
 <pre><code>arr = [1,2,3]</code></pre>
 
-
-<p>Then we get a 1-dimensional array of length 3.  Note that when returned, julia says <code>3-element Array{Int64,1}:</code> which means</p>
+<p>Then we get a 1-dimensional array of length 3. Note that when returned, julia says <code>3-element Array{Int64,1}:</code> which means</p>
 
 <ul>
 <li>it is length 3 (since it is a 3-element)</li>
 <li>The internal type is Int64</li>
 <li>it is 1-dimensional, because the 1 as the second element in the {}.</li>
 </ul>
-
 
 <p>There are some basic functions that tell us some information:</p>
 
@@ -47,284 +44,230 @@ html,body,#wrapper{font-size:10pt!important}
 <li><code>eltype(arr)</code> returns <code>Int64</code>, the type of the elements in the array.</li>
 </ul>
 
+<h3 id="constructingarrays">Constructing arrays</h3>
 
-<h3 id="Constructing-arrays">Constructing arrays</h3>
-
-<p>We can create arrays in many ways.  As seen above, the line</p>
-
+<p>We can create arrays in many ways. As seen above, the line</p>
 <pre><code>arr=[1,2,3]</code></pre>
 
-
-<p>creates a 1-D array of length 3.  If we know the element, a 2D array can be made like:</p>
-
+<p>creates a 1-D array of length 3. If we know the element, a 2D array can be made like:</p>
 <pre><code>arr2=[1 2 3; 4 5 6]</code></pre>
 
-
 <p>and this returns:</p>
-
 <pre><code>2×3 Array{Int64,2}:
  1  2  3
  4  6  7</code></pre>
 
+<p>and note that there is now a 2 after the comma in the {}. This indicates it is a 2 dimensional array. </p>
 
-<p>and note that there is now a 2 after the comma in the {}.  This indicates it is a 2 dimensional array.</p>
-
-<p> The following built-in functions are also helpful:</p>
+<p>The following built-in functions are also helpful:</p>
 
 <ul>
-<li><p><code>zeros(type,dims...)</code> makes an array of all zeros with datatype <code>type</code> and given dimensions.  For example,</p>
+<li><code>zeros(type,dims...)</code> makes an array of all zeros with datatype <code>type</code> and given dimensions. For example,</li>
+</ul>
 
 <p><pre><code>zeros(Integer,4,6)</code></pre></p>
 
-<p>  returns an array with 4 rows and 6 columns with integer types.</p></li>
+<pre><code>returns an array with 4 rows and 6 columns with integer types.
+</code></pre>
+
+<ul>
 <li><p><code>ones(type,dims...)</code> is similar to <code>zeros</code> except it is filled with 1s.</p></li>
-<li><p><code>rand(dims...)</code> makes a random array of floating points (uniformly distributed between 0 and 1).</p></li>
+<li><p><code>rand(dims...)</code> makes a random array of floating points (uniformly distributed between 0 and 1). </p></li>
 </ul>
 
+<h2 id="comprehensions">Comprehensions</h2>
 
-<h2 id="Comprehensions">Comprehensions  </h2>
-
-<p>If we know the form of an array element, we can use what is called a comphrension to construct it in a compact manner.  For example, a 1D array with the elements 1,-1,1,-1,1,-1 can be made:</p>
-
+<p>If we know the form of an array element, we can use what is called a comphrension to construct it in a compact manner. For example, a 1D array with the elements 1,&#8211;1,1,&#8211;1,1,&#8211;1 can be made:</p>
 <pre><code>[(-1)^n for n=0:7]</code></pre>
 
-
 <p>and the following:</p>
-
 <pre><code>[m+n for n=1:8,m=1:8]</code></pre>
-
 
 <p>makes an 8 by 8 matrix where each element is the sum of the row and column number.</p>
 
-<h2 id="Accessing-elements-of-an-array">Accessing elements of an array  </h2>
+<h2 id="accessingelementsofanarray">Accessing elements of an array</h2>
 
 <p>Let</p>
-
 <pre><code>x=collect(1:7)</code></pre>
 
-
-<p>which is the vector of numbers 1,2 to 7.  To access the 2nd element, we type <code>x[2]</code>.  To get an array of the middle 3 elements, type</p>
-
+<p>which is the vector of numbers 1,2 to 7. To access the 2nd element, we type <code>x[2]</code>. To get an array of the middle 3 elements, type</p>
 <pre><code>x[3:5]</code></pre>
 
-
 <p>or</p>
-
 <pre><code>x[3:end-2]</code></pre>
 
-
-<p>where <code>end</code> will automatically fill with the index of the last element.</p>
+<p>where <code>end</code> will automatically fill with the index of the last element. </p>
 
 <p>Let</p>
-
 <pre><code>A=[i+j for i=1:4,j=1:5]</code></pre>
 
-
-<p>to access the 1st row, 3rd column, type <code>A[1,3]</code>.  If you want the subarray of the first and 3rd and 5th columns and all rows type:</p>
-
+<p>to access the 1st row, 3rd column, type <code>A[1,3]</code>. If you want the subarray of the first and 3rd and 5th columns and all rows type:</p>
 <pre><code>A[:,1:2:5]</code></pre>
 
-
 <p>returns the matrix</p>
-
 <pre><code>2  4  6
 3  5  7
 4  6  8
 5  7  9</code></pre>
 
-
-<p>where the : in the first slot means all rows and <code>1:2:5</code> are the columns 1, 3 and 5.</p>
+<p>where the : in the first slot means all rows and <code>1:2:5</code> are the columns 1, 3 and 5. </p>
 
 <p>If we want the first 2 rows and then shuffle the 2,3 and 5th columns in the order 5,3,2 type</p>
-
 <pre><code>A[1:2,[5,3,2]]</code></pre>
 
-
 <p>to get</p>
-
 <pre><code>6  4  3
 7  5  4</code></pre>
 
+<p>. There is a bunch of different ways to return submatrices. See <a href="http://docs.julialang.org/en/release-0.5/manual/arrays/#indexing">indexing in Julia matrices documentation</a> for more information.</p>
 
-<p>.  There is a bunch of different ways to return submatrices.  See <a href="http://docs.julialang.org/en/release-0.5/manual/arrays/#indexing">indexing in Julia matrices documentation</a> for more information.</p>
+<h2 id="commonoperationsonmatrices">Common Operations on Matrices</h2>
 
-<h2 id="Common-Operations-on-Matrices">Common Operations on Matrices  </h2>
-
-<p>There are a number of operations on matrices.  For each <code>+</code> and <code>-</code> adds and subtracts two elements (element by element).  For example if</p>
-
+<p>There are a number of operations on matrices. For each <code>+</code> and <code>-</code> adds and subtracts two elements (element by element). For example if</p>
 <pre><code>A=[1 2 3; 4 5 6]</code></pre>
 
-
 <p>and</p>
-
 <pre><code>B=[1 3 5; 2 4 6]</code></pre>
-
 
 <p>then <code>A+B</code> returns the matrix:</p>
 
-<p>$$\left[\begin{array}{ccc} 2 &amp; 5 &amp; 8 \newline 6 &amp; 9 &amp; 12 \end{array} \right]$$</p>
+<p><span class="math">\[\left[\begin{array}{ccc} 2 & 5 & 8 \newline 6 & 9 & 12 \end{array} \right]\]</span></p>
 
 <p>and <code>B-A</code> returns<br/>
-$$\left[\begin{array}{ccc} 0 &amp; 1 &amp; 2 \newline -2 &amp; -1 &amp; 0  \end{array} \right]$$</p>
+<span class="math">\[\left[\begin{array}{ccc} 0 & 1 & 2 \newline -2 & -1 & 0  \end{array} \right]\]</span></p>
 
 <p>The matrix product does not exist between A and B, and if you try <code>A*B</code>, you get:</p>
-
 <pre><code>DimensionMismatch(&quot;matrix A has dimensions (2,3), matrix B has dimensions (2,3)&quot;)</code></pre>
 
+<p>because the number of columns of A does not equal the number of rows of B. If you need element-by-element multiplication, then <code>A.*B</code> returns<br/>
+<span class="math">\[\left[\begin{array}{ccc} 1 & 6 &   15 \newline  
+ 8 & 20 & 36  \end{array} \right].\]</span></p>
 
-<p>because the number of columns of A does not equal the number of rows of B.  If you need element-by-element multiplication, then <code>A.*B</code> returns<br/>
-$$\left[\begin{array}{ccc} 1 &amp; 6 &amp;   15 \newline<br/>
- 8 &amp; 20 &amp; 36  \end{array} \right].$$</p>
-
-<p> If you have<br/>
+<p>If you have<br/>
  <code>C=[4  3  1; 0  0  4; 4  1  1]</code></p>
 
-<p> Then <code>A*C</code> returns<br/>
- $$\left[\begin{array}{ccc} 16 &amp;  6 &amp; 12 \newline<br/>
-40  &amp; 18 &amp; 30 \end{array} \right].$$</p>
+<p>Then <code>A*C</code> returns<br/>
+ <span class="math">\[\left[\begin{array}{ccc} 16 &  6 & 12 \newline  
+40  & 18 & 30 \end{array} \right].\]</span></p>
 
-<p>where matrix-matrix multiplication from linear algebra was used.</p>
+<p>where matrix-matrix multiplication from linear algebra was used. </p>
 
-<p>There is also matrix <em>division</em> in julia which is used to solve linear systems.  For example if<br/>
+<p>There is also matrix <em>division</em> in julia which is used to solve linear systems. For example if<br/>
 <code>y=[16;6]</code><br/>
-then <code>C\Y</code> solves the linear system <code>CX=Y</code> for X.  It returns the vector<br/>
-$$ \left[\begin{array}-3.0\newline 5.0\end{array}\right]$$</p>
+then <code>C\Y</code> solves the linear system <code>CX=Y</code> for X. It returns the vector<br/>
+$$ \left[\begin{array}&#8211;3.0\newline 5.0\end{array}\right]$$</p>
 
-<h2 id="Element-by-Element-Operations">Element by Element Operations  </h2>
+<h2 id="elementbyelementoperations">Element by Element Operations</h2>
 
-<p>Many methods exist to simplify a <em>vectorized</em> method that returns the operation applied element by element to the matrix.  To do this, most operations have a <code>.</code> variety (we saw this above with the <code>.*</code> operation above) To take the square root of every number in the matrix <code>A</code>, we can enter <code>sqrt.(A)</code> which returns:</p>
-
+<p>Many methods exist to simplify a <em>vectorized</em> method that returns the operation applied element by element to the matrix. To do this, most operations have a <code>.</code> variety (we saw this above with the <code>.*</code> operation above) To take the square root of every number in the matrix <code>A</code>, we can enter <code>sqrt.(A)</code> which returns:</p>
 <pre><code>1.0  1.41421  1.73205
  2.0  2.23607  2.44949</code></pre>
 
-
-<h3 id="Exercises">Exercises</h3>
+<h3 id="exercises">Exercises</h3>
 
 <p>Let <code>A=[1,2; 3,4]</code> and <code>B=[1,-1;-1,1]</code>.<br/>
-1.  Explain the results of<br/>
-  * <code>A^2</code><br/>
-  * <code>A.^2</code><br/>
-  * <code>A*B</code><br/>
-  * <code>A.*B</code></p>
+1. Explain the results of<br/>
+ * <code>A^2</code><br/>
+ * <code>A.^2</code><br/>
+ * <code>A*B</code><br/>
+ * <code>A.*B</code></p>
 
 <ol>
 <li>Find the sin of every number in <code>A</code>.</li>
 </ol>
 
+<h2 id="otheroperationsonarrays">Other Operations on Arrays</h2>
 
-<h2 id="Other-Operations-on-Arrays">Other Operations on Arrays  </h2>
-
-<p>There are also other operations on arrays.  For example, summing all elements in an array is just the <code>sum</code> functions. For example:</p>
-
+<p>There are also other operations on arrays. For example, summing all elements in an array is just the <code>sum</code> functions. For example:</p>
 <pre><code>sum(1:10)</code></pre>
 
-
-<p>returns 55.  There are also the <code>min</code>, <code>max</code> and <code>prod</code> functions, with the last one, the product of elements.</p>
-
+<p>returns 55. There are also the <code>min</code>, <code>max</code> and <code>prod</code> functions, with the last one, the product of elements.</p>
 <pre><code>prod([1,3,5,7])</code></pre>
 
-
 <p>and notice that use the <code>prod</code> function can simply get us the double factorial function.</p>
-
 <pre><code>function dfact(n)
     return mod(n,2)==1?prod(1:2:n):prod(2:2:n)
 end</code></pre>
 
+<h2 id="sortingvectorsandmatrices">Sorting Vectors and matrices</h2>
 
-<h2 id="Push-Pop-and-Splice">Push, Pop and Splice  </h2>
+<p>Julia can sort a vector using the <code>sort</code> function. If <code>A=[3,2,1,4,8,6,5]</code>, Then</p>
+<pre><code>sort(A)</code></pre>
 
-<p>We have already seen <code>push!</code> which appends an element to an array.  Recall that if <code>A=collect(1:5)</code> then</p>
+<p>results in <code>[1,2,3,4,5,6,8]</code></p>
 
+<h2 id="pushpopandsplice">Push, Pop and Splice</h2>
+
+<p>We have already seen <code>push!</code> which appends an element to an array. Recall that if <code>A=collect(1:5)</code> then</p>
 <pre><code>push!(A,7)</code></pre>
 
-
-<p>returns <code>A</code> which is now the array <code>[1,2,3,4,5,7]</code>.  And multiple values can  be pushed.</p>
-
+<p>returns <code>A</code> which is now the array <code>[1,2,3,4,5,7]</code>. And multiple values can be pushed.</p>
 <pre><code>push!(A,8,9,10,100)</code></pre>
 
-
-<p>results in the array <code>[1,2,3,4,5,7,8,9,10,100]</code>.  If we want to concatenate two arrays, we should use the <code>append!</code> command.  For example:</p>
-
+<p>results in the array <code>[1,2,3,4,5,7,8,9,10,100]</code>. If we want to concatenate two arrays, we should use the <code>append!</code> command. For example:</p>
 <pre><code>append!([1,2,3],[4,5,6])</code></pre>
-
 
 <p>returns the array <code>[1,2,3,4,5,6]</code></p>
 
 <h3 id="pop">pop!</h3>
 
-<p>To get an element off of the end of the array, we can use <code>pop!</code>.  If <code>A=collect(1:5)</code>, then</p>
-
+<p>To get an element off of the end of the array, we can use <code>pop!</code>. If <code>A=collect(1:5)</code>, then</p>
 <pre><code>pop!(A)</code></pre>
-
 
 <p>returns 5.</p>
 
-<h3 id="Push-pop-and-Stacks">Push, pop and Stacks</h3>
+<h3 id="pushpopandstacks">Push, pop and Stacks</h3>
 
-<p>A <a href="https://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29">stack</a> is a data structure that acts like a stack of paper.  You put things on top of them and remove them from the top.  The commands <code>push!</code> and <code>pop!</code> work with arrays to act like a stack.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29">stack</a> is a data structure that acts like a stack of paper. You put things on top of them and remove them from the top. The commands <code>push!</code> and <code>pop!</code> work with arrays to act like a stack. </p>
 
 <h3 id="splice">splice!</h3>
 
-<p>The <code>splice!</code> function is a <a href="https://en.wikipedia.org/wiki/Swiss_Army_knife">Swiss Army knife</a> for arrays.  It can take an array, pull elements out and put elements in.</p>
+<p>The <code>splice!</code> function is a <a href="https://en.wikipedia.org/wiki/Swiss_Army_knife">Swiss Army knife</a> for arrays. It can take an array, pull elements out and put elements in.</p>
 
 <p>To remove elements out of the array. If <code>A=collect(1:2:9)</code> then</p>
-
 <pre><code>splice!(A,4)</code></pre>
 
-
-<p>removes and returns the 4th element which is 7.  Also, the array <code>A</code> is the original array without the 7 or  <code>[1,3,5,9]</code>.</p>
+<p>removes and returns the 4th element which is 7. Also, the array <code>A</code> is the original array without the 7 or <code>[1,3,5,9]</code>.</p>
 
 <p>If we let <code>A=collect(1:2:11)</code>, then</p>
-
 <pre><code>splice!(A,3:5)</code></pre>
-
 
 <p>removes and returns the 3rd, 4th and 5th elements of <code>A</code> (or <code>[3,5,7]</code>) and <code>A</code> is now the vector <code>[1,3,11]</code></p>
 
-<p>Now, as I mentioned, <code>splice!</code> is the swiss army knife, because it doesn&rsquo;t even more!! (Now, how much would you pay?).  We can use it to replace elements into the center of an array.</p>
+<p>Now, as I mentioned, <code>splice!</code> is the swiss army knife, because it doesn&#8217;t even more!! (Now, how much would you pay?). We can use it to replace elements into the center of an array.</p>
 
 <p>If <code>A=collect(1:2:11)</code>, then</p>
-
 <pre><code>splice!(A,3,4)</code></pre>
 
-
-<p>replaces the 3rd position with the number 4.  Note: the 3rd element is returned.  This is 5.</p>
+<p>replaces the 3rd position with the number 4. Note: the 3rd element is returned. This is 5. </p>
 
 <p>If <code>A=collect(1:2:11)</code>, then replacing the 3rd element with <code>[-1,-2,-3]</code> by</p>
-
 <pre><code>splice!(A,3,[-1,-2,-3])</code></pre>
 
+<p>returns <code>[1,3,-1,-2,-3,7,9,11]</code> and again 5 is returned. </p>
 
-<p>returns <code>[1,3,-1,-2,-3,7,9,11]</code> and again 5 is returned.</p>
-
-<p>To insert a number without removing one, we can also use <code>splice!</code>.  If <code>A=collect(1:2:11)</code> and we want to insert <code>[-1,-2,-3]</code> at element 3 and shift the rest down:</p>
-
+<p>To insert a number without removing one, we can also use <code>splice!</code>. If <code>A=collect(1:2:11)</code> and we want to insert <code>[-1,-2,-3]</code> at element 3 and shift the rest down:</p>
 <pre><code>splice!(A,3:2,[-1,-2,-3])</code></pre>
-
 
 <p>returns a 0-length array and <code>A=[1,3,-1,-2,-3,5,7,9,11]</code>.</p>
 
-<h3 id="filtering-elements"><code>filter</code>ing elements</h3>
+<h3 id="filteringelements"><code>filter</code>ing elements</h3>
 
 <p>A very handle array method, is <code>filter</code> which takes an array and returns only the elements that satisfy some condition.</p>
 
 <p>If <code>A=collect(1:20)</code>, then</p>
-
 <pre><code>filter(n-&gt;n%2==0,A)</code></pre>
-
 
 <p>returns all elements that satisfy that the mod 2 is 0 (or even numbers).</p>
 
-<h3 id="removing-duplicates-with-unique">removing duplicates with <code>unique</code></h3>
+<h3 id="removingduplicateswithunique">removing duplicates with <code>unique</code></h3>
 
 <p>Another handy function is the <code>unique</code> function that takes an array and returns only the unique elements.</p>
 
 <p>If <code>A=[1,2,3,2,3,4,3,4,5,4,3,2,1]</code> then</p>
-
 <pre><code>unique(A)</code></pre>
 
-
-<p>returns <code>[1,2,3,4,5]</code>.</p>
+<p>returns <code>[1,2,3,4,5]</code>. And if you want to update the given array, use the <code>unique!</code> function instead.</p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -341,26 +284,9 @@ end</code></pre>
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    "HTML-CSS": {
-        messageStyle: "normal",
-        linebreaks: {
-            automatic: false
-        }
-    },
-    tex2jax: { 
-        inlineMath: [["$","$"],["\\(","\\)"]], 
-        displayMath: [["$$","$$"],["\\[","\\]"]], 
-        processEscapes: true
-    },
-    TeX: {
-        Macros: {
-            tr: "{\\scriptscriptstyle\\mathrm{T}}",
-        }
-    }
-});
+  MathJax.Hub.Config();
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </div>
 
 

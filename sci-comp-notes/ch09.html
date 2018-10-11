@@ -18,37 +18,32 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal mkshowcomments firstload">
+<body class="normal firstload">
   <div id="wrapper">
-      <h1 id="Chapter-9%3A-Advanced-Features-of-Functions">Chapter 9: Advanced Features of Functions  </h1>
+      <h1 id="chapter9%3Aadvancedfeaturesoffunctions">Chapter 9: Advanced Features of Functions</h1>
 
 <p><a href="index.html">Return to all notes</a></p>
 
-<p>This chapter covers a bit more on Functions&hellip;</p>
+<p>This chapter covers a bit more on Functions&#8230;</p>
 
 <p>We know how to define an argument with a type, but what if more information is needed for an argument. Recall our factorial function</p>
-
 <pre><code>function fact(n::Integer)
   n==0 ? 1 : n*fact(n-1)
 end</code></pre>
 
-
-<p>but what happens if you put in a negative number?  Try it.</p>
+<p>but what happens if you put in a negative number? Try it.</p>
 
 <p>We can prevent it with the following:</p>
-
 <pre><code>function fact(n::Integer)
   n&gt;=0 || throw(ArgumentError(&quot;The argument must be a nonnegative integer.&quot;))
   n==0 ? 1 : n*fact(n-1)
 end</code></pre>
 
+<p>The first line of this evaluates <code>n&gt;=0</code> if that is false, the second after the || is evaluated and an error is thrown. </p>
 
-<p>The first line of this evaluates <code>n&gt;=0</code> if that is false, the second after the || is evaluated and an error is thrown.</p>
+<h2 id="optionalarguments">Optional arguments</h2>
 
-<h2 id="Optional-arguments">Optional arguments  </h2>
-
-<p>Let&rsquo;s return to Newton&rsquo;s method, which we wrote before as</p>
-
+<p>Let&#8217;s return to Newton&#8217;s method, which we wrote before as</p>
 <pre><code>function newton(f::Function, x0::Number)
   local x1 = x0
   local xstep = f(x1)/ForwardDiff.derivative(f,x1)
@@ -61,8 +56,7 @@ end</code></pre>
   x1
 end</code></pre>
 
-
-<p>Notice that we hard-coded the stopping criteria and the max number of steps. Let&rsquo;s adapt this function to include the following:</p>
+<p>Notice that we hard-coded the stopping criteria and the max number of steps. Let&#8217;s adapt this function to include the following:</p>
 
 <ol>
 <li>Make the stopping condition and max steps as optional parameters.</li>
@@ -70,9 +64,7 @@ end</code></pre>
 <li>If the number of steps exceeds the maximum number of steps, then throw an <code>ErrorException</code> and a reasonable message.</li>
 </ol>
 
-
-<p>First, we can define an argument to be option by assigning a default value.  Let&rsquo;s define the tolerance (<code>tol</code>) and the max number of step (<code>max_steps</code>) in the following way:</p>
-
+<p>First, we can define an argument to be option by assigning a default value. Let&#8217;s define the tolerance (<code>tol</code>) and the max number of step (<code>max_steps</code>) in the following way:</p>
 <pre><code>function newton(f::Function, x0::Number,tol=1e-6,max_steps=10)
   local x1 = x0
   local xstep = f(x1)/ForwardDiff.derivative(f,x1)
@@ -85,120 +77,146 @@ end</code></pre>
   x1
 end</code></pre>
 
-
-<p>This seems more robust in that we can now call Newton&rsquo;s method with different values of tolerance and steps. So:</p>
-
+<p>This seems more robust in that we can now call Newton&#8217;s method with different values of tolerance and steps. So:</p>
 <pre><code>newton(x-&gt;x^2-5,2)</code></pre>
 
-
-<p>returns <code>2.236067977499809</code>.  But if we use a lower tolerance:</p>
-
+<p>returns <code>2.236067977499809</code>. But if we use a lower tolerance:</p>
 <pre><code>newton(x-&gt;x^2-5,2,1e-3)</code></pre>
 
+<p>returns <code>2.2360568742361395</code>. </p>
 
-<p>returns <code>2.2360568742361395</code>.</p>
+<p>There may be a problem though. If</p>
 
-<p>There may be a problem though.  If</p>
-
-<p>$$f(x)=- 0.00002776075556\,{x}^{4}- 0.0005550391111\,{x}^{3}+ 0.03053947111\,<br/>
-{x}^{2}+ 0.3328122667\,x- 10.0$$</p>
+<p><span class="math">\[f(x)=- 0.00002776075556\,{x}^{4}- 0.0005550391111\,{x}^{3}+ 0.03053947111\,  
+{x}^{2}+ 0.3328122667\,x- 10.0\]</span></p>
 
 <p>and we run:</p>
-
 <pre><code>newton(f,25)</code></pre>
 
-
 <p>we get the response <code>20.807345491764316</code>, however note that</p>
-
 <pre><code>f(ans)=-0.05670058064912986</code></pre>
 
+<p>which doesn&#8217;t appear to be a root. What happened. If we temporarily print out the values of x1 within the loop, we&#8217;ll see that the x values bounce all around and then just stops. The max number of steps is reached.</p>
 
-<p>which doesn&rsquo;t appear to be a root.  What happened.  If we temporarily print out the values of x1 within the loop, we&rsquo;ll see that the x values bounce all around and then just stops.  The max number of steps is reached.</p>
-
-<p>In this case, we should alert the user that we&rsquo;ve reached the max number of steps.  Before the last line of the function, let&rsquo;s include</p>
-
+<p>In this case, we should alert the user that we&#8217;ve reached the max number of steps. Before the last line of the function, let&#8217;s include</p>
 <pre><code>steps &lt; max_steps || throw(ErrorException(&quot;The maximum number of steps: $max_steps was reached without convergence&quot;))</code></pre>
 
+<p>and then rerunnning <code>newton(f,25)</code> gives a error. </p>
 
-<p>and then rerunnning <code>newton(f,25)</code> gives a error.</p>
+<h2 id="keywordarguments">Keyword Arguments</h2>
 
-<h2 id="Keyword-Arguments">Keyword Arguments  </h2>
+<p>If we want to change the number of steps used, but not the tolerance, we would need to put in</p>
 
-<p>If we want to change the number of steps used, but not the tolerance, we technically,</p>
+<h2 id="variablenumberofarguments">Variable Number of arguments</h2>
 
-<h2 id="Variable-Number-of-arguments">Variable Number of arguments  </h2>
-
-<p>Recall that the geometric mean of a set of numbers $x_1,x_2, \ldots, x_n$ is given by</p>
+<p>Recall that the geometric mean of a set of numbers <span class="math">\(x_1,x_2, \ldots, x_n\)</span> is given by</p>
 
 <p>$$ \sqrt[n]{x_1x_2 \cdots x_n}$$</p>
 
 <p>It would be great to write a <code>geom_mean</code> function which computed the geometric mean for any number of elements.<br/>
-It would be unfortunate if we have to write different functions for different number of arguments.   We can write a variable number of arguments with a &hellip; trailing the last argument.  The following is a generalized version of the geometric mean:</p>
-
+It would be unfortunate if we have to write different functions for different number of arguments. We can write a variable number of arguments with a &#8230; trailing the last argument. The following is a generalized version of the geometric mean:</p>
 <pre><code>function geom_mean(x::Number...)
     prod(x)^(length(n))
 end</code></pre>
 
-
 <p>and this allows the following:</p>
-
 <pre><code>geom_mean(1,2)</code></pre>
 
-
 <p>as well as</p>
-
 <pre><code>geom_mean(1,2,3,4)</code></pre>
-
 
 <p>See <a href="http://docs.julialang.org/en/latest/manual/functions/#varargs-functions">The Julia documentation on Variable Arguments</a> for more information on variable arguments.</p>
 
-<h2 id="Multiple-Dispatch">Multiple Dispatch  </h2>
+<h2 id="multipledispatch">Multiple Dispatch</h2>
 
-<p>Generally each function that you write (or is built-in to Julia) has a signature which is the number and types of arguments.  For example, the function <code>newton</code> above has three arguments.  The first two are functions, and the second is a number.</p>
+<p>Generally each function that you write (or is built-in to Julia) has a signature which is the number and types of arguments. For example, the function <code>newton</code> above has three arguments. The first two are functions, and the second is a number.</p>
 
-<p>Julia allows functions of the same name with different signatures.  The execution of this is called <em>multiple dispatch</em>.   The classic example is the <code>+</code> function.  If we only consider those with 2 arguments, then + can take 2 integers an integer and a float, two complex, a float and a complex, etc.  Each one of those functions have the same name with different signatures.</p>
+<p>Julia allows functions of the same name with different signatures. The execution of this is called <em>multiple dispatch</em>. The classic example is the <code>+</code> function. If we only consider those with 2 arguments, then + can take 2 integers an integer and a float, two complex, a float and a complex, etc. Each one of those functions have the same name with different signatures. </p>
 
-<p>To view all of the methods, use the <code>methods</code> command.  For example, typing <code>methods(+)</code> lists 163 methods and the signature of each.</p>
+<p>To view all of the methods, use the <code>methods</code> command. For example, typing <code>methods(+)</code> lists 163 methods and the signature of each. </p>
 
-<h2 id="Example-of-Multiple-dispatch">Example of Multiple dispatch  </h2>
+<h2 id="exampleofmultipledispatch">Example of Multiple dispatch</h2>
 
-<p>Let&rsquo;s consider a function called <code>the_max</code> which return the maximum number of a whole bunch of possible arguments.  Let&rsquo;s start going through them:</p>
+<p>Let&#8217;s consider a function called <code>the_max</code> which return the maximum number of a whole bunch of possible arguments. Let&#8217;s start going through them:</p>
 
 <ul>
 <li><p>2 numbers</p>
+<pre><code>function the_max(x::Number,y::Number)
 
-<p>  <pre><code>function the_max(x::Number,y::Number)
-
-end</code></pre></p></li>
+end</code></pre></li>
 <li><p>3 numbers</p>
+<pre><code>function the_max(x::Number,y::Number,z::Number)
 
-<p>  <pre><code>function the_max(x::Number,y::Number,z::Number)
-
-end</code></pre></p></li>
+end</code></pre></li>
 <li><p>variable number of numbers</p>
+<pre><code>function the_max(x::Number...)
 
-<p>  <pre><code>function the_max(x::Number...)
-
-end</code></pre></p></li>
-<li><p>a 1-D array of numbers</p>
-
-<p>  <pre><code>function the_max(arr::Array{Number,1})
-
-end</code></pre></p></li>
-<li><p>a UnitRange</p>
-
-<p>  <pre><code>function the_max(r::FloatRange)
-
-end</code></pre></p></li>
-<li><p>A FloatRange</p>
-
-<p>  <pre><code>function the_max(r::FloatRange)
-
-end</code></pre></p></li>
+end</code></pre></li>
 </ul>
 
+<p>It is also nice to return the maximum value of a range (technically an <code>AbstractRange</code> type) which includes a <code>UnitRange</code>, <code>StepRange</code> and <code>LinRange</code>. We can put all of these together with the function</p>
+<pre><code>function the_max(r::AbstractRange)
 
-<p>After we put these all in, type <code>methods(the_max)</code> to see the 5 different signatures of the function.</p>
+end</code></pre>
+
+<p>and note that <code>r</code> is an abstract range, then <code>first(r)</code> returns the first element of the range, <code>last(r)</code> returns the last element and <code>step(r)</code> returns the step size of the range. Write this function and test with</p>
+
+<ol>
+<li><code>the_max(1:10)</code></li>
+<li><code>the_max(10:-1:1)</code></li>
+<li><code>the_max(3:0.5:9)</code></li>
+<li><code>the_max(LinRange(1,5,9))</code> which makes a range from 1 to 5 using 9 steps.</li>
+</ol>
+
+<p>once you have created these, and type <code>methods(the_max)</code> julia should return:</p>
+<pre><code>4 methods for generic function the_max:</code></pre>
+
+<p>and list the 4 methods with their types. </p>
+
+<h2 id="parametricmethods">Parametric Methods</h2>
+
+<p>As we are thinking about writing other <code>the_max</code> functions with a different argument signature, a natural one would be an array of <code>Real</code>s (mainly because we will need to do something different for <code>Complex</code> arrays).</p>
+
+<p>If we write:</p>
+<pre><code>function the_max(arr::Array{Real,1})
+  local max = -Inf
+  for num in arr
+    if num &gt; max
+      max = num
+    end
+  end
+  max
+end</code></pre>
+
+<p>which is similar to that above for any number of numbers and then let&#8217;s test it with the array <code>x=collect(1:10)</code>, we&#8217;ll get the error:</p>
+<pre><code>MethodError: no method matching the_max(::Array{Int64,1})
+Closest candidates are:
+  the_max(!Matched::Array{Real,1}) at In[XXX]:2</code></pre>
+
+<p>and this is because even though <code>x</code> is of type <code>Array{Int64,1}</code> that doesn&#8217;t fit the signature <code>Array{AbstractFloat,1}</code>. </p>
+
+<p>One way to get around this is to write a function for each number type we may want to find the max of (<code>Int128</code>, <code>Int64</code>, &#8230;, <code>BigInt</code>,<code>Float64</code>,<code>Float32</code>,<code>Float16</code>), but if you notice every function will be identical and this would be painful and a lot of code copying. </p>
+
+<p>Instead, we will use something in julia called <a href="https://docs.julialang.org/en/latest/manual/methods/#Parametric-Methods-1">parametric functions</a> which allows us to write a large number of nearly identical functions with the same code. To do this with the <code>the_max</code> function, we will write:</p>
+<pre><code>function the_max(arr::Array{T,1}) where T &lt;: Real
+  local max = -Inf
+  for num in arr
+    if num &gt; max
+      max = num
+    end
+  end
+  max
+end</code></pre>
+
+<p>and the expression <code>where T &lt;: Real</code> is used as any type <code>T</code> that is a subset of the <code>Real</code> numbers (including integers, floats and rational)</p>
+
+<p>and then <code>the_max(x)</code> returns 10. Also if we have</p>
+<pre><code>the_max(collect(1.0:10.0))</code></pre>
+
+<p>returns <code>10.0</code> and</p>
+<pre><code>the_max(collect(big(1):big(10)))</code></pre>
+
+<p>returns <code>10</code> (as a <code>BigInt</code>). </p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -215,26 +233,9 @@ end</code></pre></p></li>
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    "HTML-CSS": {
-        messageStyle: "normal",
-        linebreaks: {
-            automatic: false
-        }
-    },
-    tex2jax: { 
-        inlineMath: [["$","$"],["\\(","\\)"]], 
-        displayMath: [["$$","$$"],["\\[","\\]"]], 
-        processEscapes: true
-    },
-    TeX: {
-        Macros: {
-            tr: "{\\scriptscriptstyle\\mathrm{T}}",
-        }
-    }
-});
+  MathJax.Hub.Config();
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </div>
 
 
