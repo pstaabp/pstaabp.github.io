@@ -18,91 +18,122 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal mkshowcomments firstload">
   <div id="wrapper">
-      <h1 id="chapter13%3Acreatingnewdatatypesinjulia">Chapter 13: Creating New Data Types in Julia</h1>
+      <h1 id="Chapter-13%3A-Creating-New-Data-Types-in-Julia">Chapter 13: Creating New Data Types in Julia  </h1>
 
 <p><a href="../index.html">Return to all notes</a></p>
 
-<p>We will start to look at playing cards (poker) probabilities below. Before that, let&#8217;s look at a different datatype in Julia that allows us to store more that one variable together. This is often called a composite type or a struct (from C) and similar to an object however you can&#8217;t have a function as a member of the type.</p>
+<p>We will start to look at playing cards (poker) probabilities below.  Before that, let&rsquo;s look at a different datatype in Julia that allows us to store more that one variable together.  This is often called a composite type or a struct (from C) and similar to an object however you can&rsquo;t have a function as a member of the type.</p>
 
-<h3 id="carddatatype">Card datatype</h3>
+<h3 id="Card-datatype">Card datatype</h3>
 
-<p>For our playing card example, a card has a rank (1 to 13 corresponding to Ace, 2, through 10, J, Q, K) and a suit (1 to 4 corresponding to the suits &#8220;spades&#8221;, &#8220;diamonds&#8221;, &#8220;hearts&#8221;, &#8220;clubs&#8221;), which we define</p>
+<p>For our playing card example, a card has a rank (1 to 13 corresponding to Ace, 2, through 10, J, Q, K) and a suit (1 to 4 corresponding to the suits  &ldquo;spades&rdquo;, &ldquo;diamonds&rdquo;, &ldquo;hearts&rdquo;, &ldquo;clubs&rdquo;), which we define</p>
+
 <pre><code>ranks = [&quot;A&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;T&quot;,&quot;J&quot;,&quot;Q&quot;,&quot;K&quot;];
 suits = [&quot;\u2660&quot;,&quot;\u2661&quot;,&quot;\u2662&quot;,&quot;\u2663&quot;]</code></pre>
 
-<p>where the suits are the unicode characters for the suits. See <a href="http://docs.julialang.org/en/latest/manual/unicode-input/">the julia documentation on unicode</a>.</p>
+
+<p>where the suits are the unicode characters for the suits.   See <a href="http://docs.julialang.org/en/latest/manual/unicode-input/">the julia documentation on unicode</a>.</p>
 
 <p>We can define this using a Julia <a href="http://docs.julialang.org/en/latest/manual/types/#composite-types">composite type.</a>.</p>
+
 <pre><code>struct Card
     rank::Integer
     suit::Integer
 end</code></pre>
 
+
 <p>and if we type</p>
+
 <pre><code>c = Card(3,2)</code></pre>
 
-<p>this will create a card of rank 3 and suit 2 (spades). To access the fields of the type, we use dot notation. For example <code>c.rank</code> will return 3 and <code>c.suit</code> will return 2. </p>
 
-<p>Although it&#8217;s not very interesting to have the card <code>c</code> just give the rank and suit, so we will make the output much more interesting. To do this we will define Base.show for our type. To do this, we</p>
+<p>this will create a card of rank 3 and suit 2 (spades). To access the fields of the type, we use dot notation.  For example <code>c.rank</code> will return 3 and <code>c.suit</code> will return 2.</p>
+
+<p>Although it&rsquo;s not very interesting to have the card <code>c</code> just give the rank and suit, so we will make the output much more interesting.  To do this we will define Base.show for our type.  To do this, we</p>
+
 <pre><code>Base.show(io::IO, c::Card) =  print(io, string(ranks[c.rank],suits[c.suit]))</code></pre>
 
-<p>where the arguments of <code>Base.show</code> should be of type <code>IO</code> and then a print should be called as above. Note: this is different than just a println within a function, which is highly discouraged. This function is called whenever a card type is displayed. So if one types <code>c</code>, you should now get <code>3♡</code>.</p>
 
-<p>When we evaluate <code>Card(3,2)</code> we call a special function called a constructor, which creates an instance of the type. Although Julia creates the basic constructor&#8211;that is the one that fills the fields of the type, we may want another constructor that will take an integer between 1 and 52 and returns the appropriate card. The following example will do this.</p>
+<p>where the arguments of <code>Base.show</code> should be of type <code>IO</code> and then a print should be called as above.  Note: this is different than just a println within a function, which is highly discouraged.  This function is called whenever a card type is displayed.  So if one types <code>c</code>, you should now get <code>3♡</code>.</p>
+
+<p>When we evaluate <code>Card(3,2)</code> we  call a special function called a constructor, which creates an instance of the type.  Although Julia creates the basic constructor&ndash;that is the one that fills the fields of the type, we may want another constructor that will take an integer between 1 and 52 and returns the appropriate card.  The following example will do this.</p>
+
 <pre><code>struct Card
     rank::Int
     suit::Int
     Card(r::Int,s::Int)=new(r,s)
-    Card(i::Int) = i&lt;1||i&gt;52?throw(ArgumentError(&quot;The argument must be an integer between 1 and 52&quot;)):i%13==0?new(13,div(i,13)):new(i%13,div(i,13)+1)
+    Card(i::Int) = i&lt;1||i&gt;52 ? throw(ArgumentError(&quot;The argument must be an integer between 1 and 52&quot;))     
+        : i%13==0 ? new(13,div(i,13)) : new(i%13,div(i,13)+1)
 end</code></pre>
 
-<p>Notice that there is a function <code>new</code> that is called. The first constructor is the default constructor. If a second one is made (as is in this example), you need to explicitly create it. See <a href="http://docs.julialang.org/en/release-0.5/manual/constructors">additional information about constructors in the Julia Documentation</a>.</p>
 
-<p>You will need to restart the kernel and replace the previous struct with this one because structs are non-mutable. </p>
+<p>Notice that there is a function <code>new</code> that is called.  The first constructor is the default constructor.  If a second one is made (as is in this example), you need to explicitly create it.  See <a href="https://docs.julialang.org/en/latest/manual/constructors/#man-constructors-1">additional information about constructors in the Julia Documentation</a>.</p>
 
-<p>The second constructor will create a card from a number between 1 and 52 (and throw an error if it is not in this range). We can now create a card from an integer. For example:</p>
+<p>You will need to restart the kernel and replace the previous struct with this one because structs are non-mutable.</p>
+
+<p>The second constructor will create a card from a number between 1 and 52 (and throw an error if it is not in this range).  We can now create a card from an integer.  For example:</p>
+
 <pre><code>c1=Card(45)</code></pre>
 
+
 <p>Since a Hand is also helpful in playing card games, we will define a hand in the following way:</p>
+
 <pre><code>struct Hand
     cards::Array{Card,1}
 end</code></pre>
 
-<p>which is just an array of cards. (Note: there is nothing here that specifies that the Hand has to be 5 cards, but that could be included by doing some error checking in the constructor)</p>
 
-<p>Let&#8217;s create a Hand by typing</p>
+<p>which is just an array of cards.  (Note: there is nothing here that specifies that the Hand has to be 5 cards, but that could be included by doing some error checking in the constructor)</p>
+
+<p>Let&rsquo;s create a Hand by typing</p>
+
 <pre><code>h=Hand([Card(2,3),Card(12,1),Card(10,1),Card(10,4),Card(5,2)])</code></pre>
 
-<p>and again, since this looks a bit ugly, we can define a Base.show method for a hand:</p>
-<pre><code>Base.show(io::IO,h::Hand) = print(io, join(h.cards,&quot;,&quot;))</code></pre>
 
-<p>returns &#8220;2♢,Q♠,T♠,T♣,5♡&#8221;</p>
+<p>and again, since this looks a bit ugly, we can define a Base.show method for a hand:</p>
+
+<pre><code>Base.show(io::IO,h::Hand) = print(io, string(&quot;[&quot;,join(h.cards,&quot;, &quot;),&quot;]&quot;))</code></pre>
+
+
+<p>
+returns &ldquo;2♢,Q♠,T♠,T♣,5♡&rdquo;</p>
 
 <p>We now have some nice additional types, however, we now want to do something interesting with them.</p>
 
-<h3 id="findprobabilitiesofpokerhands">Find Probabilities of Poker Hands</h3>
+<h3 id="Find-Probabilities-of-Poker-Hands">Find Probabilities of Poker Hands</h3>
 
-<p>Let&#8217;s actually look at determining if a hand is a particular poker hand. Some of them are fairly difficult to test for. Let&#8217;s first try a full house, which is a hand of 5 cards, 2 of which have the same rank and 3 of which have the same rank. The two ranks are not the same. For more information about poker hands, see the <a href="https://en.wikipedia.org/wiki/List_of_poker_hands">Wikipedia page on Poker Hands</a>.</p>
+<p>Let&rsquo;s actually look at determining if a hand is a particular poker hand.  Some of them are fairly difficult to test for. Let&rsquo;s first try a full house, which is a hand of 5 cards, 2 of which have the same rank and 3 of which have the same rank.  The two ranks are not the same. For more information about poker hands, see the <a href="https://en.wikipedia.org/wiki/List_of_poker_hands">Wikipedia page on Poker Hands</a>.</p>
 
-<p>A template for the <code>is_full_house</code> function is as follows. </p>
+<p>A template for the <code>is_full_house</code> function is as follows.</p>
+
 <pre><code>function is_full_house(h::Hand)
 
 end</code></pre>
 
-<p>Once we have the function written, we should test it on a few known and unknown full house hands. Try testing:</p>
+
+<p>Once we have the function written, we should test it on a few known and unknown full house hands.  Try testing:</p>
+
 <pre><code>fh1= Hand(Card[Card(4,1),Card(4,3),Card(4,4),Card(7,1),Card(7,2)])</code></pre>
+
+
+
+
 <pre><code>fh2=Hand([Card(4,1),Card(4,3),Card(7,4),Card(7,1),Card(7,2)])</code></pre>
 
+
 <p>and</p>
+
 <pre><code>fh3=Hand([Card(2,1),Card(4,3),Card(4,4),Card(7,1),Card(7,2)])</code></pre>
+
 
 <p>And note that the first 2 are full house hands and the last is not.</p>
 
-<h4 id="runningasimulation">Running a Simulation</h4>
+<h4 id="Running-a-Simulation">Running a Simulation</h4>
 
-<p>Now, let&#8217;s perform a Monte Carlo simulation on a large number of poker hands and test if this gives the result we want:</p>
+<p>Now, let&rsquo;s perform a Monte Carlo simulation on a large number of poker hands and test if this gives the result we want:</p>
+
 <pre><code>deck=collect(1:52) # creates the array [1,2,3,...,52]
 numhands=0
 trials = 100_000
@@ -115,19 +146,25 @@ for i=1:trials
 end
 numhands/trials</code></pre>
 
-<p>will create 100,000 poker hands and test how many are full house. It would be helpful to put this in a function. We will do this and put all of these in a package together in the next chapter.</p>
 
-<h3 id="parametrictypes">Parametric Types</h3>
+<p>will create 100,000 poker hands and test how many are full house.  It would be helpful to put this in a function.  We will do this and put all of these in a package together in the next chapter.</p>
 
-<p>Let’s say that we wish to create a function that does basically the same thing for different types of arguments. Let&#8217;s look at an example. Consider the basic type of Polynomial. </p>
+<h3 id="Parametric-Types">Parametric Types</h3>
+
+<p>Let’s say that we wish to create a function that does basically the same thing for different types of arguments. Let&rsquo;s look at an example.  Consider the basic type of Polynomial.</p>
+
 <pre><code>struct Polynomial{T}
   coeffs::Vector{T}
 end</code></pre>
 
+
 <p>This definition allows us to create a polynomial with coefficient of any type:</p>
+
 <pre><code>poly1=Polynomial([1,2,3])</code></pre>
 
-<p>And if the result is: <code>Polynomial{Int64}([1, 2, 3])</code>. It would be nice if the result looked like a polynomial. In this case, we can use the <code>show</code> command. </p>
+
+<p>And if the result is: <code>Polynomial{Int64}([1, 2, 3])</code>.  It would be nice if the result looked like a polynomial.  In this case, we can use the <code>show</code> command.</p>
+
 <pre><code>function Base.show(stream::IO, p::Polynomial)
   str = &quot;&quot;
   for i = 1:length(p.coeffs)
@@ -136,29 +173,54 @@ end</code></pre>
   show(stream, str)
 end</code></pre>
 
-<p>and another nice thing that we&#8217;d like to do is an add command:</p>
+
+<p>and another nice thing that we&rsquo;d like to do is an add command.  However, if we do:</p>
+
 <pre><code>function +(p1::Polynomial{T},p2::Polynomial{S}) where {T &lt;: Number, S &lt;: Number}
   Polynomial(p1.coeffs+p2.coeffs)
 end</code></pre>
 
-<p>which will allow us to add two polynomials and the information after the where says that the types of polynomials should be subsets of <code>Number</code> and not for example a string. </p>
+
+<p>we get the error:</p>
+
+<pre><code>error in method definition: function Base.+ must be explicitly imported to be extended</code></pre>
+
+
+<p>so we need to do:</p>
+
+<pre><code>import Base.+</code></pre>
+
+
+<p>and then we can rerun the function above.</p>
+
+<p>which will allow us to add two polynomials and the information after the where says that the types of polynomials should be subsets of <code>Number</code> and not for example a string.</p>
 
 <p>To show how to add, let</p>
+
 <pre><code>poly2 = Polynomial([2,3,4])</code></pre>
 
+
 <p>then <code>poly1+poly2</code> returns:</p>
+
 <pre><code>3x^0+5x^1+7x^2</code></pre>
 
-<h3 id="polynomialwithstringcoefficients">Polynomial with string coefficients?</h3>
+
+<h3 id="Polynomial-with-string-coefficients">Polynomial with string coefficients?</h3>
 
 <p>What if we have Strings as coefficients?</p>
+
 <pre><code>poly3 = Polynomial([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])</code></pre>
 
+
 <p>returns</p>
+
 <pre><code>ax^0+bx^1+cx^2</code></pre>
 
+
 <p>Note that there is no problem with this, but if we try to add <code>poly1</code> and <code>poly3</code> there will be an error:</p>
+
 <pre><code>MethodError: no method matching +(::Polynomial{Int64}, ::Polynomial{String})</code></pre>
+
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -175,9 +237,26 @@ end</code></pre>
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config();
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        messageStyle: "normal",
+        linebreaks: {
+            automatic: false
+        }
+    },
+    tex2jax: { 
+        inlineMath: [["$","$"],["\\(","\\)"]], 
+        displayMath: [["$$","$$"],["\\[","\\]"]], 
+        processEscapes: true
+    },
+    TeX: {
+        Macros: {
+            tr: "{\\scriptscriptstyle\\mathrm{T}}",
+        }
+    }
+});
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </div>
 
 
