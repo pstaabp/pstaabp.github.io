@@ -3,8 +3,8 @@ if !("." in LOAD_PATH)
     push!(LOAD_PATH,".")
 end
 
-using PlayingCards
-using Base.Test
+using .PlayingCards
+using Test
 
 function isequal(x::Card,y::Card)
     return x.rank==y.rank && x.suit==y.suit 
@@ -22,12 +22,11 @@ c4=Card(3,3)
 fh1 = Hand("4♠,4♢,4♣,A♣,A♡") # this is a full house
 fh2 = Hand("3♠,3♢,3♣,A♣,3♡") # this is a 4-of-a-kind
 
-@testset "Playing Card Tests" begin
-   
     @testset "Legal Card Constructor" begin
         @test isa(Card(1,3),Card)
         @test isa(Card(45),Card)
         @test isa(Card("3\u2660"),Card)
+        @test isa(Card("T♣"),Card)
     end
     @testset "Illegal Cards throws exceptions" begin
         @test_throws ArgumentError Card(0,3)
@@ -60,7 +59,5 @@ fh2 = Hand("3♠,3♢,3♣,A♣,3♡") # this is a 4-of-a-kind
         @test !is_full_house(fh2)
     end
     
-end
-
 
 
