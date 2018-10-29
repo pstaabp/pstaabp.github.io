@@ -18,162 +18,191 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal mkshowcomments firstload">
   <div id="wrapper">
-      <h1 id="chapter12%3Arandomnumbersandmontecarlosimulations">Chapter 12: Random Numbers and Monte Carlo Simulations</h1>
+      <h1 id="Chapter-12%3A-Random-Numbers-and-Monte-Carlo-Simulations">Chapter 12: Random Numbers and Monte Carlo Simulations  </h1>
 
 <p><a href="../index.html">Return to all notes</a></p>
 
-<h2 id="montecarlosimulations">Monte Carlo Simulations</h2>
+<h2 id="Monte-Carlo-Simulations">Monte Carlo Simulations  </h2>
 
-<p>One big part of scientific computation is the subject of Monte Carlo simulations in which random numbers are used to model some situation. We&#8217;ll spend the next part of this course covering this subject. </p>
+<p>One big part of scientific computation is the subject of Monte Carlo simulations in which random numbers are used to model some situation.  We&rsquo;ll spend the next part of this course covering this subject.</p>
 
-<h2 id="probability">Probability</h2>
+<h2 id="Probability">Probability  </h2>
 
-<p>To fully understand how to use random numbers and how Monte Carlo simulations work, we need some basic probability. When understanding probability there are two types continuous and discrete, which for what we need will come down to using floating point or integers.</p>
+<p>To fully understand how to use random numbers and how Monte Carlo simulations work, we need some basic probability.  When understanding probability there are two types continuous and discrete, which for what we need will come down to using floating point or integers.</p>
 
-<h3 id="discreteprobability">Discrete Probability</h3>
+<h3 id="Discrete-Probability">Discrete Probability</h3>
 
-<p>We&#8217;ll first discuss discrete probability. A <em>discrete probability distribution</em> is a finite set (often will be a subset of integers.) For example, let&#8217;s use the set</p>
+<p>We&rsquo;ll first discuss discrete probability.  A <em>discrete probability distribution</em> is a finite set (often will be a subset of integers.)  For example, let&rsquo;s use the set</p>
 
-<p><span class="math">\[A=\{1,2,3,4,5,6\}\]</span></p>
+<p>$$A={1,2,3,4,5,6}$$</p>
 
-<p>and an event, <span class="math">\(X\)</span> is subset of these numbers. For example, let <span class="math">\(X=\{1\}\)</span>, then the probability that this event occurs in the ratio of the number of elements in each set or<br/>
-<span class="math">\[P(X)=\frac{N(X)}{N(A)}\]</span></p>
+<p>and an event, $X$ is subset of these numbers.  For example, let $X={1}$, then the probability that this event occurs in the ratio of the number of elements in each set or<br/>
+$$P(X)=\frac{N(X)}{N(A)}$$</p>
 
-<p>In this case, <span class="math">\(P(X)=1/6\)</span> and that means that the probability that the number 1 comes up is 1/6. Think about this in the case of rolling a die. This says that the probability that 1 comes up is 1/6. </p>
+<p>In this case, $P(X)=1/6$ and that means that the probability that the number 1 comes up is 1/6.  Think about this in the case of rolling a die.  This says that the probability that 1 comes up is 1/6.</p>
 
-<h3 id="continuousprobability">Continuous Probability</h3>
+<h3 id="Continuous-Probability">Continuous Probability</h3>
 
-<p>Another type of probability distribution is called a continuous distribution and in this case we&#8217;ll only consider a type of continuous probability distribution called a uniform distribution.</p>
+<p>Another type of probability distribution is called a continuous distribution and in this case we&rsquo;ll only consider a type of continuous probability distribution called a uniform distribution.</p>
 
-<p>Let&#8217;s consider a set <span class="math">\(A=\{x \; | \; 0 \leq x \leq 1\}\)</span> or all real numbers between 0 and 1. Events are still subsets of the set <span class="math">\(A\)</span>, however the probability that events occur is the fraction of the set. </p>
+<p>Let&rsquo;s consider a set $A={x \; | \; 0 \leq x \leq 1}$ or all real numbers between 0 and 1. Events are still subsets of the set $A$, however the probability that events occur is the fraction of the set.</p>
 
-<p>For example, if <span class="math">\(X=\{x \; | \; 1/3 \leq x \leq 1/2\}\)</span>, then <span class="math">\(P(X)\)</span> is the fraction<br/>
-<span class="math">\[P(X) = \frac{\frac{1}{2}-\frac{1}{3}}{1-0}=\frac{1}{6}\]</span></p>
+<p>For example, if $X={x \; | \; 1/3 \leq x \leq 1/2}$, then $P(X)$ is the fraction<br/>
+$$P(X) = \frac{\frac{1}{2}-\frac{1}{3}}{1-0}=\frac{1}{6}$$</p>
 
-<h2 id="pseudorandomnumbergenerator">Pseudo Random Number Generator</h2>
+<h2 id="Pseudo-Random-Number-Generator">Pseudo Random Number Generator  </h2>
 
-<p><a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">The Wikipedia Pseudo-random Number Generator page</a> gives an overview of the subject and a lot of technical details. In short, a truly random number on a computer is very difficult to generate and generally not necessary because a pseudorandom number is sufficient. I also won&#8217;t try to explain this in general term since you&#8217;d need a significant mathematical background.</p>
+<p><a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">The Wikipedia Pseudo-random Number Generator page</a> gives an overview of the subject and a lot of technical details.  In short, a truly random number on a computer is very difficult to generate and generally not necessary because a pseudorandom number is sufficient.  I also won&rsquo;t try to explain this in general term since you&rsquo;d need a significant mathematical background.</p>
 
-<p>A pseudo-random number generator is a function that produces a sequence of numbers that act like random numbers. Let&#8217;s examine what this means in terms of the discrete probability with set <span class="math">\(A=\{1,2,3,4,5,6\}\)</span>. </p>
+<p>A pseudo-random number generator is a function that produces a sequence of numbers that act like random numbers.  Let&rsquo;s examine what this means in terms of the discrete probability with set $A={1,2,3,4,5,6}$.</p>
 
 <p>If a pseudo-random number generator produces a sequence from this set then the sequence should have the following property:</p>
 
 <ul>
-<li>If the event <span class="math">\(X=\{i\}\)</span> for any <span class="math">\(i\)</span> between 1 and 6, then <span class="math">\(P(X)\approx 1/6\)</span>. And by approximately, as the sequence gets larger, the approximation becomes closer to 1/6.</li>
+<li>If the event $X={i}$ for any $i$ between 1 and 6, then $P(X)\approx 1/6$.  And by approximately, as the sequence gets larger, the approximation becomes closer to 1/6.</li>
 </ul>
 
-<p>Is this enough? No, the sequence<br/>
-<span class="math">\[\{1,2,3,4,5,6,1,2,3,4,5,6,\ldots\}\]</span></p>
 
-<p>satisfies the above property, but I don&#8217;t think anyone would consider this random. Another property would be:</p>
+<p>Is this enough?  No, the sequence<br/>
+$${1,2,3,4,5,6,1,2,3,4,5,6,\ldots}$$</p>
+
+<p>satisfies the above property, but I don&rsquo;t think anyone would consider this random.  Another property would be:</p>
 
 <ul>
-<li>If we know the sequence <span class="math">\(\{a_1,a_2,a_3,\ldots,a_n\}\)</span> then we can&#8217;t predict the next number <span class="math">\(a_{n+1}\)</span>.</li>
+<li>If we know the sequence ${a_1,a_2,a_3,\ldots,a_n}$ then we can&rsquo;t predict the next number $a_{n+1}$.</li>
 </ul>
 
-<p>This is obviously violated in the sequence above. </p>
 
-<p>A little more technical definition of a sequence of pseudo-random numbers Let <span class="math">\((a_1,a_2,a_3, \ldots)\)</span> be a random sequence. Typically we mean the following properties need to hold:</p>
+<p>This is obviously violated in the sequence above.</p>
+
+<p>A little more technical definition of a sequence of pseudo-random numbers Let $(a_1,a_2,a_3, \ldots)$ be a random sequence.  Typically we mean the following properties need to hold:</p>
 
 <ol>
 <li>any number in the range 1 to 6 is equally likely to occur.</li>
-<li>Take N random numbers and let <span class="math">\(s_n\)</span> be the number of times the number <span class="math">\(n\)</span> occurs. The fraction <span class="math">\(s_n/N\)</span> should go to 1/6 in the limit as <span class="math">\(n\rightarrow \infty\)</span>.</li>
-<li>Knowing the sequence <span class="math">\(s_1, s_2, \ldots, s_k\)</span> does not allow us to predict <span class="math">\(s_{k+1}\)</span></li>
+<li>Take N random numbers and let $s_n$ be the number of times the number $n$ occurs.    The fraction $s_n/N$ should go to 1/6 in the limit as $n\rightarrow \infty$.</li>
+<li>Knowing the sequence $s_1, s_2, \ldots, s_k$ does not allow us to predict $s_{k+1}$</li>
 </ol>
 
-<p>If instead we use floating point numbers, there are a few different properties. Assume that the floating point number is in the range <span class="math">\(0 \lt x \lt 1\)</span>. Then the sequence <span class="math">\((a_1,a_2,a_3, \ldots)\)</span> is random if</p>
+
+<p>If instead we use floating point numbers, there are a few different properties.  Assume that the floating point number is in the range $0 \lt x \lt 1$.  Then the  sequence   $(a_1,a_2,a_3, \ldots)$ is random if</p>
 
 <ol>
-<li>Let <span class="math">\(s_{[c,d]}(a_1,a_2,a_3, \ldots)\)</span> be the total of the numbers that satisfy <span class="math">\(c \lt a_k \lt d\)</span>. Then as the number of random numbers approach infinity <span class="math">\(s_{[c,d]}=d-c\)</span></li>
+<li>Let $s<em>{[c,d]}(a_1,a_2,a_3, \ldots)$ be the total of the numbers that satisfy $c \lt a_k \lt d$.  Then as the number of random numbers approach infinity $s</em>{[c,d]}=d-c$</li>
 </ol>
 
-<h2 id="usingjuliatosimulatetherollingofadie">Using Julia to simulate the rolling of a die</h2>
 
-<p>First, the main commands that are built-in to Julia are listed in the <a href="http://docs.julialang.org/en/release-0.5/stdlib/base/?highlight=findfirst#random-numbers">Julia Manual for Random Numbers</a>. We can generate 100 random numbers between 1 and 6 using</p>
+<h2 id="Using-Julia-to-simulate-the-rolling-of-a-die">Using Julia to simulate the rolling of a die  </h2>
+
+<p>First, the main commands that are built-in to Julia are listed in the <a href="http://docs.julialang.org/en/release-0.5/stdlib/base/?highlight=findfirst#random-numbers">Julia Manual for Random Numbers</a>.  We can generate 100 random numbers between 1 and 6 using</p>
+
 <pre><code>S=rand(1:6,100)</code></pre>
 
-<p>and notice that if you rerun the command, you&#8217;ll get a different sequence of random numbers. We can check that this is doing what we expect by checking the probability that we get a 1 (or any other number).</p>
+
+<p>and notice that if you rerun the command, you&rsquo;ll get a different sequence of random numbers.  We can check that this is doing what we expect by checking the probability that we get a 1 (or any other number).</p>
 
 <p>To check the count of the number 1 that appears, try</p>
+
 <pre><code>count(a-&gt;a==1,S)</code></pre>
 
-<h3 id="exercise">Exercise</h3>
 
-<p>Convert this to a probability. Is it close to what you expect? Try changing the number of random numbers used to larger numbers. Does your answer get closer to what you expect? </p>
+<h3 id="Exercise">Exercise</h3>
 
-<h2 id="floatingpointrandomnumbers">Floating Point random numbers</h2>
+<p>Convert this to a probability.  Is it close to what you expect? Try changing the number of random numbers used to larger numbers.  Does your answer get closer to what you expect?</p>
 
-<p>Let&#8217;s look a floating point random numbers between 0 and 1. To generate a sequence (array) of such numbers, type</p>
+<h2 id="Floating-Point-random-numbers">Floating Point random numbers  </h2>
+
+<p>Let&rsquo;s look a floating point random numbers between 0 and 1.  To generate a sequence (array) of such numbers, type</p>
+
 <pre><code>S=rand(100)</code></pre>
 
+
 <p>and we can check the number of values less than 0.1 with the command:</p>
+
 <pre><code>count(a-&gt;a&lt;0.1,S)</code></pre>
 
+
 <p>and if we want the number of values between 0.4 and 0.7 then type</p>
+
 <pre><code>count(a-&gt;0.4&lt;a&lt;0.7,S)</code></pre>
 
-<h3 id="exercise">Exercise</h3>
 
-<p>Change the number of random numbers used to much larger set and return the above commands. What are the results? Is this what you expect?</p>
+<h3 id="Exercise">Exercise</h3>
+
+<p>Change the number of random numbers used to much larger set and return the above commands.  What are the results?  Is this what you expect?</p>
 
 <p>How to do find the fraction of number that are less that 0.25 and greater than 0.75?</p>
 
-<h2 id="themapslicescommands">The <code>mapslices</code> commands</h2>
+<h2 id="The-mapslices-commands">The <code>mapslices</code> commands  </h2>
 
-<p>Below we will encounter another nice function that we can use with arrays. If we have the following array:</p>
+<p>Below we will encounter another nice function that we can use with arrays.  If we have the following array:</p>
+
 <pre><code>A = [1 2 3; 4 5 6; 7 8 9]</code></pre>
 
-<p>and we wish to sum the rows. For any given row, this isn&#8217;t difficult. If we want to do all of the rows and return a 1D array (vector), we can use the <code>mapslices</code> function. See <a href="http://docs.julialang.org/en/release-0.5/stdlib/arrays/#Base.mapslices">the julia documentatation on mapslices</a>.</p>
+
+<p>and we wish to sum the rows.  For any given row, this isn&rsquo;t difficult.  If we want to do all of the rows and return a 1D array (vector), we can use the <code>mapslices</code> function.   See <a href="http://docs.julialang.org/en/release-0.5/stdlib/arrays/#Base.mapslices">the julia documentatation on mapslices</a>.</p>
+
 <pre><code>mapslices(sum,A; dims = [2])</code></pre>
 
+
 <p>returns the column vector <code>[6,15,24]</code> which are the row sums and</p>
+
 <pre><code>mapslices(sum,A; dims = [1])</code></pre>
 
-<p>returns the row vector <code>[12,15,18]</code> or the column sums. </p>
 
-<h3 id="exercise">Exercise</h3>
+<p>returns the row vector <code>[12,15,18]</code> or the column sums.</p>
 
-<p>For the matrix above, find the result if you multiply the rows together. Do the same for the columns. </p>
+<h3 id="Exercise">Exercise</h3>
 
-<h2 id="otherexamples">Other Examples</h2>
+<p>For the matrix above, find the result if you multiply the rows together.  Do the same for the columns.</p>
 
-<h3 id="rolling2dice">Rolling 2 dice</h3>
+<h2 id="Other-Examples">Other Examples  </h2>
 
-<p>How do we handle the rolling of two dice? Here&#8217;s an array with each row having 2 dice.</p>
+<h3 id="Rolling-2-dice">Rolling 2 dice</h3>
+
+<p>How do we handle the rolling of two dice?  Here&rsquo;s an array with each row having 2 dice.</p>
+
 <pre><code>S=rand(1:6,100,2)</code></pre>
 
+
 <p>and then to find the sum of the dice:</p>
+
 <pre><code>dicesum = mapslices(sum,S;dims=[2])</code></pre>
 
-<p>which sums along the rows. This is 100 rolls of 2 dice with the sum recorded. First, to get an idea of the distribution of the dice sums, let&#8217;s plot the results using <code>Plots</code>. So first, load it in</p>
+
+<p>which sums along the rows.  This is  100 rolls of 2 dice with the sum recorded.  First, to get an idea of the distribution of the dice sums, let&rsquo;s plot the results using <code>Plots</code>.  So first, load it in</p>
+
 <pre><code>using Plots
 gr()</code></pre>
+
 
 <p>or use your favorite backend.</p>
 
 <p>and then to plot the sum</p>
+
 <pre><code>histogram(dicesum,nbins=11)</code></pre>
 
-<p>where <code>nbins</code> is the number of bins and in this case, since it runs from 2 to 12, there&#8217;s a total of 11.</p>
+
+<p>where <code>nbins</code> is the number of bins and in this case, since it runs from 2 to 12, there&rsquo;s a total of 11.</p>
 
 <p>generates the following plot:</p>
 
-<figure>
-<img src="images/ch12/plot01.png" alt="distribution of the sum of 100 rolls of pairs of dice" />
-<figcaption>distribution of the sum of 100 rolls of pairs of dice</figcaption>
-</figure>
+<p><img src="images/ch12/plot01.png" alt="distribution of the sum of 100 rolls of pairs of dice" /></p>
 
-<p>We could find the number of 2&#8217;s 3&#8217;s, etc. using the <code>mapslices</code> function as above, however there is a nice way to do this use the <code>StatsBase</code> package. You may need to add the package and then load it with</p>
+<p>We could find the number of 2&rsquo;s 3&rsquo;s, etc. using the <code>mapslices</code> function as above, however there is a nice way to do this use the <code>StatsBase</code> package.  You may need to add the package and then load it with</p>
+
 <pre><code>using StatsBase</code></pre>
 
+
 <p>and then the <code>counts</code> function ( <a href="http://juliastats.github.io/StatsBase.jl/latest/counts.html#StatsBase.counts">Read the online documentation</a>) can be used:</p>
+
 <pre><code>counts(dicesum,2:12)</code></pre>
 
-<p>returns a vector of how many of the dice sum fall into each number. </p>
 
-<h3 id="exercise">Exercise</h3>
+<p>returns a vector of how many of the dice sum fall into each number.</p>
+
+<h3 id="Exercise">Exercise</h3>
 
 <p>Change the code above to use 1000 dice rolls. Estimate the probability that you</p>
 
@@ -183,42 +212,52 @@ gr()</code></pre>
 <li>roll an even number.</li>
 </ul>
 
-<p>Plot a the histogram using 1000 dice rolls. </p>
 
-<h2 id="calculatingpiusingpseudorandomnumbers">Calculating <span class="math">\(\pi\)</span> using pseudo random numbers</h2>
+<p>Plot a the histogram using 1000 dice rolls.</p>
+
+<h2 id="Calculating-%24%5Cpi%24-using-pseudo-random-numbers">Calculating $\pi$ using pseudo random numbers  </h2>
 
 <ul>
-<li><p><a href="https://en.wikipedia.org/wiki/Buffon%27s_needle">Buffon&#8217;s Needle Experiment (18th C.)</a> </p></li>
-<li><p>Circle in the Square. </p>
+<li><a href="https://en.wikipedia.org/wiki/Buffon%27s_needle">Buffon&rsquo;s Needle Experiment (18th C.)</a></li>
+<li><p>Circle in the Square.</p>
 
-<p>Consider the square <span class="math">\(\{ (x,y)\; | \; 0\leq x\leq 1, 0 \leq y \leq 1\}\)</span> and the quarter circle that falls within <span class="math">\(x^{2}+y^{2} \leq 1\)</span>. The area within the circle is the fraction of the cirle in the square or <span class="math">\(\pi/4\)</span>.</p>
+<p>  Consider the square ${ (x,y)\; | \; 0\leq x\leq 1, 0 \leq y \leq 1}$ and the quarter circle that falls within $x^{2}+y^{2} \leq 1$.  The area within the circle is the fraction of the cirle in the square or $\pi/4$.</p>
 
-<p>We can use this to estimate a value of <span class="math">\(\pi\)</span>. </p>
+<p>  We can use this to estimate a value of $\pi$.</p>
 
 <ol>
-<li>Randomly choose points <span class="math">\(x\)</span> and <span class="math">\(y\)</span> in the range [0,1].</li>
+<li>Randomly choose points $x$ and $y$ in the range [0,1].</li>
 <li>Count all points that fall within the circle.</li>
 <li>Find the fraction of the points in the circle.</li>
-<li>Since this fraction should be <span class="math">\(\pi/4\)</span>, multiply by 4 to estimate <span class="math">\(\pi\)</span>.</li>
+<li>Since this fraction should be $\pi/4$, multiply by 4 to estimate $\pi$.</li>
 </ol>
 
-<p>This can be done in julia using<br/>
-1. <code>S1=rand(100,2)</code><br/>
-2. <code>S2 = mapslices(x-&gt;x[1]^2+x[2]^2,S1; dims=[2])</code><br/>
-3. <code>S3 = count(a-&gt;a&lt;1,S2)</code><br/>
-3. <code>fr=S2/100</code><br/>
-4. <code>est=4*fr</code></p>
 
-<p>or combine all of these into one command:</p>
-<pre><code>4*count(a-&gt;a&lt;1,mapslices(x-&gt;x[1]^2+x[2]^2,rand(100,2); dims=[2]))</code></pre></li>
+<p>  This can be done in julia using</p>
+
+<ol>
+<li><code>S1=rand(100,2)</code></li>
+<li><code>S2 = mapslices(x-&gt;x[1]^2+x[2]^2,S1; dims=[2])</code></li>
+<li><code>S3 = count(a-&gt;a&lt;1,S2)</code></li>
+<li><code>fr=S2/100</code></li>
+<li><code>est=4*fr</code></li>
+</ol>
+
+
+<p>  or combine all of these into one command:</p>
+
+<p>  <pre><code>4*count(a-&gt;a&lt;1,mapslices(x-&gt;x[1]^2+x[2]^2,rand(100,2); dims=[2]))</code></pre></p></li>
 </ul>
 
-<h3 id="exercises">Exercises</h3>
+
+<h3 id="Exercises">Exercises</h3>
 
 <ul>
-<li><p>Write a function that take a positive integer <span class="math">\(n\)</span>, in and performs the approximate-<span class="math">\(\pi\)</span> calculation described above using <span class="math">\(n\)</span> points. It should return the approximate value of <span class="math">\(\pi\)</span>.</p></li>
-<li><p>Test it will high values of <span class="math">\(n\)</span> and time it.</p></li>
+<li><p>Write a function that take a positive integer $n$, in and performs the approximate-$\pi$ calculation described above using $n$ points.  It should return the approximate value of $\pi$.</p></li>
+<li><p>Test it will high values of $n$ and time it.</p></li>
+<li><p>for $N=10<sup>5</sup>$, $N=10<sup>6</sup>$ and $N=10<sup>7</sup>$ find the relative error of the estimate using your function and using the built-in value <code>pi</code>.</p></li>
 </ul>
+
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -235,9 +274,26 @@ gr()</code></pre>
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config();
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        messageStyle: "normal",
+        linebreaks: {
+            automatic: false
+        }
+    },
+    tex2jax: { 
+        inlineMath: [["$","$"],["\\(","\\)"]], 
+        displayMath: [["$$","$$"],["\\[","\\]"]], 
+        processEscapes: true
+    },
+    TeX: {
+        Macros: {
+            tr: "{\\scriptscriptstyle\\mathrm{T}}",
+        }
+    }
+});
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </div>
 
 
