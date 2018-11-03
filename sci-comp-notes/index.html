@@ -18,9 +18,9 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal firstload">
+<body class="normal mkshowcomments firstload">
   <div id="wrapper">
-      <h2 id="listofnotesforscientificcomputingfsufall2018">List of notes for Scientific Computing (FSU, Fall 2018)</h2>
+      <h2 id="List-of-notes-for-Scientific-Computing-%28FSU-Fall-2018%29">List of notes for Scientific Computing (FSU, Fall 2018)</h2>
 
 <ul>
 <li><a href="julia.html">Getting Started in Julia</a></li>
@@ -39,19 +39,21 @@ html,body,#wrapper{font-size:10pt!important}
 <li><a href="ch13.html">Chapter 13: Creating New Data Types in Julia</a></li>
 <li><a href="ch14.html">Chapter 14: Creating A Module and Performing Unit Tests</a></li>
 <li><a href="ch15.html">Chapter 15: Parallel Computing</a></li>
-<li><a href="ch16.html">Chapter 16: Shortest Paths through a Graph and the Traveling Salesperson Problem</a></li>
-<li><a href="ch17.html">Chapter 17: Dictionaries and JSON Files</a></li>
-<li><a href="ch18.html">Chapter 18: Data, Data everywhere</a></li>
+<li><a href="ch16.html">Chapter 16: Data, Data everywhere</a></li>
+<li><a href="ch17.html">Chapter 17: Shortest Paths through a Graph and the Traveling Salesperson Problem</a></li>
+<li><a href="ch18.html">Chapter 18: Dictionaries and JSON Files</a></li>
 <li><a href="ch19.html">Chapter 19: Rational and Complex Numbers</a></li>
 <li><a href="ch20.html">Chapter 20: Images</a></li>
-<li><a href="ch21.html">Chapter 21: Newton&#8217;s Method in the Complex Plane</a></li>
+<li><a href="ch21.html">Chapter 21: Newton&rsquo;s Method in the Complex Plane</a></li>
 </ul>
 
-<h3 id="appendices">Appendices</h3>
+
+<h3 id="Appendices">Appendices</h3>
 
 <ul>
 <li><a href="append01.html">Appendix 1:: The Google Maps Distance Matrix API</a></li>
 </ul>
+
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -68,9 +70,26 @@ html,body,#wrapper{font-size:10pt!important}
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config();
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        messageStyle: "normal",
+        linebreaks: {
+            automatic: false
+        }
+    },
+    tex2jax: { 
+        inlineMath: [["$","$"],["\\(","\\)"]], 
+        displayMath: [["$$","$$"],["\\[","\\]"]], 
+        processEscapes: true
+    },
+    TeX: {
+        Macros: {
+            tr: "{\\scriptscriptstyle\\mathrm{T}}",
+        }
+    }
+});
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </div>
 
 
