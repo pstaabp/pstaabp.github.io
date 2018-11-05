@@ -169,7 +169,7 @@ which returns 2.5 and 2.604845168468006.</p>
 
 <p>And the nice thing about the pipe is to string together a number of functions together.  Consider</p>
 
-<pre><code>collect(1:10) |&gt; @map(_^2) |&gt; @filter(_%2==0) |&gt; a-&gt;mean(a)</code></pre>
+<pre><code>collect(1:10) |&gt; @map(_^2) |&gt; @filter(_%2==0) |&gt; mean</code></pre>
 
 
 <p>which is the mean of all of the even squares up to 100.  To understand this, we need to pick it apart.</p>
@@ -178,7 +178,7 @@ which returns 2.5 and 2.604845168468006.</p>
 <li><code>collect(1:10)</code> creates an array from 1 to 10</li>
 <li><code>@map(_^2)</code> squares each element</li>
 <li><code>@filter(_%2==0)</code> removes all non-even numbers.</li>
-<li><code>arr-&gt;mean(arr)</code> finds the mean of the result.</li>
+<li><code>mean</code> finds the mean of the result.</li>
 </ol>
 
 
@@ -265,7 +265,7 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 
 <p>The trouble with this is that there are many many census areas with very little population.  We can fix this with a log scale.  If you enter</p>
 
-<pre><code>census_data[:POP10] |&gt; arr-&gt;histogram(arr,xscale=:log10,xlims=(10^3,10^7</code></pre>
+<pre><code>census_data[:POP10] |&gt; arr-&gt;histogram(arr,xscale=:log10,xlims=(10^3,10^7))</code></pre>
 
 
 <p>then the result is:<br/>
@@ -309,7 +309,7 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 
 <p>Since it it comma delimited, the following will load the file:</p>
 
-<pre><code>oly = load(&quot;../code/datasets/OlympicAthletes_0.csv&quot;) |&gt; DataFrame;</code></pre>
+<pre><code>oly = load(&quot;OlympicAthletes_0.csv&quot;) |&gt; DataFrame;</code></pre>
 
 
 <p>and view the first few rows with</p>
