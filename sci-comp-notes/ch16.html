@@ -143,26 +143,73 @@ Pkg.add(&quot;StatPlots&quot;)</code></pre>
 
 <h3 id="Stats-of-the-columns">Stats of the columns</h3>
 
+<p>First, we&rsquo;ll load in the <code>Statistics</code> package (which you may have to add):</p>
+
+<pre><code>using Statistics</code></pre>
+
+
+<p>Now, we can find the mean and standard deviation of columns.  For example: <code>mean(df[:A])</code> and <code>std(df[:C])</code><br/>
+which returns 2.5 and 2.604845168468006.</p>
+
+<h3 id="The-pipe-command">The pipe command</h3>
+
+<p>For the following example, we start to use some of the function in the <code>Query</code> package, so you will need to load and perhaps add it.</p>
+
+<p>Julia has a command that sends the results from one function to another via what is called a pipe command.  For example, consider a array that we apply the map command.  In Chapter ??, we saw the following example:</p>
+
+<pre><code>map(a-&gt;a^2,[1,2,3,4,5])</code></pre>
+
+
+<p>which returns the array <code>[1,4,9,16,25]</code>.  We can get this the same way by</p>
+
+<pre><code>[1,2,3,4,5] |&gt; @map(_^2)</code></pre>
+
+
+<p>and the way to think of this is to start with the array and then send the array to the map command via the pipe <code>|&gt;</code>.  The argument in the map command uses <code>_</code> as the variable and we want to square it.</p>
+
+<p>And the nice thing about the pipe is to string together a number of functions together.  Consider</p>
+
+<pre><code>collect(1:10) |&gt; @map(_^2) |&gt; @filter(_%2==0) |&gt; a-&gt;mean(a)</code></pre>
+
+
+<p>which is the mean of all of the even squares up to 100.  To understand this, we need to pick it apart.</p>
+
+<ol>
+<li><code>collect(1:10)</code> creates an array from 1 to 10</li>
+<li><code>@map(_^2)</code> squares each element</li>
+<li><code>@filter(_%2==0)</code> removes all non-even numbers.</li>
+<li><code>arr-&gt;mean(arr)</code> finds the mean of the result.</li>
+</ol>
+
+
+<p>We are going to use the pipe operator throughout the rest of this chapter.</p>
+
 <h3 id="Getting-data-from-a-file">Getting data from a file</h3>
 
-<p>Download the file <a href="other/Gaz_ua_national.txt">Gaz_ua_national.txt</a> and save it somewhere that you can access it from Julia. This file has a lot of census data that we will try to find answers.</p>
+<p>Download the file <a href="other/Gaz_ua_national.csv">Gaz_ua_national.csv</a> and save it somewhere that you can access it from Julia. This file has a lot of census data that we will try to find answers.  Information about the data is <a href="http://www.census.gov/geo/maps-data/data/gazetteer2010.html">on the census website</a></p>
 
 <h3 id="Load-in-the-data">Load in the data</h3>
 
-<p>The data is a CSV file with tab delimeters and information about the data is <a href="http://www.census.gov/geo/maps-data/data/gazetteer2010.html">on the census website</a>  To load it in type:</p>
+<p>We are going to use the <code>CSVFiles</code> package (so add it if necessary and do <code>using CSVFiles</code>).  This includes the <code>load</code> function:</p>
 
-<pre><code>census_data=readtable(&quot;Gaz_ua_national.txt&quot;,separator=&apos;\t&apos;)</code></pre>
-
-
-<p>and readtable returns a dataframe, but doesn&rsquo;t print it out.  It is often helpful to see the top few lines using</p>
-
-<pre><code>head(census_data)</code></pre>
+<pre><code>census_data = load(&quot;Gaz_ua_national.csv&quot;)</code></pre>
 
 
-<p>Here&rsquo;s a few questions we may want to know:</p>
+<p>and although this looks like a DataFrame, it isn&rsquo;t.  Note that using <code>typeof(census_data)</code> returns <code>CSVFiles.CSVFile</code> type, which isn&rsquo;t as useful as a DataFrame.  So instead, let&rsquo;s load it in as</p>
+
+<pre><code>census_data = load(&quot;Gaz_ua_national.csv&quot;)</code></pre>
+
+
+<p>
+and checking the type shows that it is now a <code>DataFrame</code>.</p>
+
+<h3 id="Analyzing-the-data">Analyzing the data</h3>
+
+<p>Let&rsquo;s say that we have the following questions that the data can answer:</p>
 
 <ol>
 <li>What are the top 10 areas in population</li>
+<li>How many population areas are west of 120 degrees longitude?</li>
 <li>Give a histogram plot in terms of population?  (What are good bin sizes?)</li>
 <li>What is the total population of all areas?</li>
 <li>What the top 10 area in housing units?</li>
@@ -176,72 +223,67 @@ Pkg.add(&quot;StatPlots&quot;)</code></pre>
 </ol>
 
 
-<h3 id="Getting-the-data-into-a-reasonable-form%3A">Getting the data into a reasonable form:</h3>
-
-<p>One of the great things about DataFrames and the <code>readtable</code> function is that it usually detects the datatype and converts it to a proper form.</p>
-
-<p>The only issue with this is the GEOID, which should be a string instead of an Int64.  We need to actually go back and reread in the data.  If we</p>
-
-<pre><code>census_data=readtable(&quot;Gaz_ua_national.txt&quot;,separator=&apos;\t&apos;,eltypes=[String,String,String,Int64,Int64,Int64,Int64,Float64,Float64,Float64,Float64])</code></pre>
-
-
-<p>then the GEOID is now a String.  Check it.</p>
+<p>Also, in this section, it is assumed that <code>DataFrames, Query, Statistics</code> and <code>StatPlots</code> are all loaded via <code>using</code>.  Since many of the more-difficult aspects of the code below are in the <code>Query</code> package, I would recommend checking out the <a href="http://www.queryverse.org/Query.jl/stable/">documentation</a>.  Also most of the macros that we are using below are in the Experimental section.</p>
 
 <h3 id="Sorting-Data-Frames">Sorting Data Frames</h3>
 
-<p>We can sort the data frames with the <code>sort!</code> function.  For example, if we want to sort by the <code>POP10</code> column, we can</p>
+<p>We can answer the first question with a simple sort, which is from the <code>Query</code> package.</p>
 
-<pre><code>sort!(census_data,cols=[:POP10])</code></pre>
+<pre><code>census_data |&gt; @orderby_descending(_.POP10) |&gt; DataFrame |&gt; df-&gt;head(df,10)</code></pre>
 
 
-<p>and the result is the first 30 rows of the census_data printed out.  We probably want the last 30 rows (or to sort in reverse), which we can get with:</p>
+<p>returns the top 10 rows of the table ordered from largest to smallest.  Let&rsquo;s see how this is done:</p>
 
-<pre><code>sort!(census_data,cols=[:POP10],rev=true)</code></pre>
+<ol>
+<li><code>census_data</code> starts with the original DataFrame.</li>
+<li><code>|&gt; @orderby_descending(_.POP10)</code> sorts by the column <code>POP10</code>.  The <code>_</code> is like we saw above an anonymous function and the dot notation is used like a struct, but in this case returns the column of that name.</li>
+<li><code>|&gt; DataFrame</code> then switches it back to a dataframe.</li>
+<li><code>|&gt; df-&gt;head(df,10)</code> returns only the first 10 columns of the dataframe.</li>
+</ol>
 
 
 <h3 id="Filtering-the-data">Filtering the data</h3>
 
-<p>Let&rsquo;s try to find all of the location to the west of 120 degrees west longitude.  This is store in the column INTPTLONG.  We can find all of these by doing:</p>
+<p>Let&rsquo;s try to find all of the location to the west of 120 degrees west longitude.  This is store in the column INTPTLONG.  We can find all of these by using the <code>@filter</code> macro.</p>
 
-<pre><code>west = census_data[census_data[:INTPTLONG].&lt;-120,:]</code></pre>
-
-
-<p>where you need to make sure to use <code>.&lt;</code> as a vector version of less than.  We can see how many places there are by doing</p>
-
-<pre><code>size(west)</code></pre>
+<pre><code>census_data |&gt; @filter(_.INTPTLONG &lt; -120) |&gt; DataFrame |&gt; nrow</code></pre>
 
 
-<p>and getting <code>(279,11)</code> or 279 areas west of 120 degrees west.</p>
+<p>which returns 279.</p>
 
-<p>One of our questions in the list above is to find the areas in Massachusetts.  How can we do that?   We can use the <code>contains</code> function to determine if the <code>NAME</code> contains &ldquo;MA&rdquo;.  The following will do just this:</p>
+<p>The new parts of this is the <code>@filter</code> command which returns only the rows of the dataframe in which the INTPTLONG column is smaller that -120.    Also the <code>nrow</code> command returns the number of rows in the dataframe.</p>
 
-<pre><code>census_data[map(a-&gt;contains(a,&quot;MA&quot;),census_data[:NAME]) .== true,:]</code></pre>
+<h3 id="Histogram-of-the-Population">Histogram of the Population</h3>
 
+<p>To produce a histogram of the population, we will use the <code>histogram</code> function of <code>StatsPlots</code>.  <a href="https://github.com/JuliaPlots/StatPlots.jl">Check out the documentation</a>.  If we do:</p>
 
-<p>It&rsquo;s not quite as nice as the previous example due to the type needed to extract the rows of a data frame.  It&rsquo;s important that the array passed into the first slot of the array must be a Boolean Array.</p>
-
-<h3 id="Creating-a-new-DataFrame">Creating a new DataFrame</h3>
-
-<p>It is common that a calculation is done and the result is placed in a DataFrame.  This section explains that through an example.</p>
-
-<p>If we want to determine the housing density of the dataset, we need to do arithmetic on the dataframe.  In this case, to determine the number of people per housing unit, we just divide the appropriate columns.</p>
-
-<p>The following creates a new dataframe:</p>
-
-<pre><code>density=DataFrame(GEOID=census_data[:GEOID],NAME=census_data[:NAME],DENSITY=census_data[:POP10]./census_data[:HU10]);</code></pre>
+<pre><code>histogram(census_data[:POP10])</code></pre>
 
 
-<p>with 3 columns: the first is the GEOID, the second is the name and the third is the population over the number of housing units.</p>
+<p>then we get the following plot:<br/>
+<img src="images/ch16/plot04.png" alt="default histogram" /></p>
 
-<p>To determine the part of the country with the highest housing density, we sort by this:</p>
+<p>The trouble with this is that there are many many census areas with very little population.  We can fix this with a log scale.  If you enter</p>
 
-<pre><code>sort!(density,cols=[:DENSITY],rev=true);</code></pre>
+<pre><code>census_data[:POP10] |&gt; arr-&gt;histogram(arr,xscale=:log10,xlims=(10^3,10^7</code></pre>
 
 
-<p>and then print out the top using</p>
+<p>then the result is:<br/>
+<img src="images/ch16/plot05.png" alt="histogram with a log scale" /></p>
 
-<pre><code>head(density)</code></pre>
+<h3 id="Adding-another-column-to-the-Dataframe">Adding another column to the Dataframe</h3>
 
+<p>We are interested in finding the highest housing density, that is the number of people per housing units.  We will create a new column to do this:</p>
+
+<pre><code>census_data[:HOUSE_DENSITY] = census_data[:POP10]./census_data[:HU10];</code></pre>
+
+
+<p>and now sorting:</p>
+
+<pre><code>census_data |&gt; @orderby_descending(_.HOUSE_DENSITY) |&gt; DataFrame |&gt; head</code></pre>
+
+
+<p>shows the result.</p>
 
 <h3 id="Olympic-Athletes">Olympic Athletes</h3>
 
@@ -267,12 +309,24 @@ Pkg.add(&quot;StatPlots&quot;)</code></pre>
 
 <p>Since it it comma delimited, the following will load the file:</p>
 
-<pre><code>oly = readtable(&quot;OlympicAthletes_0.csv&quot;,separator=&apos;,&apos;);</code></pre>
+<pre><code>oly = load(&quot;../code/datasets/OlympicAthletes_0.csv&quot;) |&gt; DataFrame;</code></pre>
 
 
 <p>and view the first few rows with</p>
 
 <pre><code>head(oly)</code></pre>
+
+
+<p>It&rsquo;s helpful to have column names without spaces in them, so we will replace all of the spaces with underscores.</p>
+
+<p>First, we create a Dictionary (we will see these later) from the old to new names:</p>
+
+<pre><code>newnames = collect(zip(names(oly),map(s-&gt;Symbol(replace(string(s),&quot; &quot;=&gt;&quot;_&quot;)),names(oly))))</code></pre>
+
+
+<p>and then rename the columns of the DataFrame:</p>
+
+<pre><code>rename!(oly,newnames)</code></pre>
 
 
 <h4 id="1.-What-is-the-total-number-of-medals-given-in-all-Olympics-in-the-dataset">1. What is the total number of medals given in all Olympics in the dataset?</h4>
@@ -288,30 +342,35 @@ Pkg.add(&quot;StatPlots&quot;)</code></pre>
 
 <p>In this case, we will get a subset of the DataFrame and sort by Total Medals or</p>
 
-<pre><code>sort!(oly[oly[:Year] .== 2000,:],cols=[:Total_Medals],rev=true)</code></pre>
+<pre><code>oly |&gt; @filter(_.Year == 2000) |&gt; @orderby_descending(_.Total_Medals) |&gt; DataFrame |&gt; head</code></pre>
 
 
 <p>and this shows that Aleksey Nemov of Russia had the most with 6 medals.</p>
 
 <h4 id="3.-Collectively-taking-each-olympics-give-the-top-10-athletes-by-number-of-medals.">3. Collectively taking each olympics, give the top 10 athletes by number of medals.</h4>
 
-<p>We need to do a bit of work for this one.  Since over all olympics for each athlete we need to add up all of the medals.  Fortunately, in the <code>DataFrames</code> package, there is a function that does this, the <code>by</code> function and go check it out in the <a href="http://juliastats.github.io/DataFrames.jl/stable/man/split_apply_combine/">DataFrames documentation</a>.</p>
+<p>We need to do a bit of work for this one.  Since over all olympics for each athlete we need to add up all of the medals.  This is known as grouping a dataset and the <code>Query</code> package does this.   Before we answer the question about the athletes, consider a simpler example:</p>
+
+<pre><code>df = DataFrame(name=[&quot;Fred&quot;,&quot;Fred&quot;,&quot;Fred&quot;,&quot;Jose&quot;,&quot;Jose&quot;,&quot;Caroline&quot;],car=[&quot;Camry&quot;,&quot;Rav4&quot;,&quot;Corolla&quot;,&quot;Odyssey&quot;,&quot;Rio&quot;,&quot;Prius&quot;])</code></pre>
+
+
+<p>lists 3 people and the cars they own.  We want to summarize the data as the total number of cars each person has.  If we</p>
+
+<pre><code>df |&gt; @groupby(_.name)</code></pre>
+
+
+<p>and although a bit hard to read, it is now a list of the 3 people and collectively the cars they own:</p>
+
+<pre><code>df |&gt; @groupby(_.name) |&gt; @map({Name=_.name,Num_cars=length(_.car)}) |&gt; DataFrame</code></pre>
+
 
 <p>First, we group the data by Athlete&rsquo;s name (in the Athlete column)  To see what happens with this, do</p>
 
-<pre><code>groupby(oly,:Athlete)</code></pre>
-
-
-<p>and you will see 6956 groups of Athletes and julia will print out the first and last one.  Since we would like to just total up the number of medals, we want want to sum within each subgroup.  The following will do this:</p>
-
-<pre><code>total = by(oly,:Athlete) do df
-    DataFrame(Total_Medals=sum(df[:Total_Medals]))
-end</code></pre>
-
-
-<p>The <code>by</code> function create the subgroups and then creates a new DataFrame with a new column that is the sum of the Total_Medals.  And then we sort:</p>
-
-<pre><code>sort!(total,cols=[:Total_Medals],rev=true)</code></pre>
+<pre><code>oly |&gt;
+  @groupby(_.Athlete) |&gt;
+  @map({Athlete = unique(_.Athlete)[1], total = sum(_.Total_Medals)}) |&gt;
+  @orderby_descending(_.total) |&gt;
+  DataFrame</code></pre>
 
 
 <h4 id="4.-Who-has-the-most-Olympic-Silver-medals-in-the-data-set-%28Collectively-over-multiple-olympics%29">4. Who has the most Olympic Silver medals in the data set (Collectively over multiple olympics)</h4>
@@ -322,77 +381,81 @@ end</code></pre>
 
 <p>This is similar to the total numbers by athletes:</p>
 
-<pre><code>medals= by(oly, :Country) do df
-    DataFrame(Total_Medals = sum(df[:Total_Medals]))
-end;</code></pre>
+<pre><code>medals = oly |&gt;
+  @groupby(_.Country) |&gt;
+  @map({Country=unique(_.Country)[1],Total_Medals=sum(_.Total_Medals)})  |&gt;
+  @orderby_descending(_.Total_Medals) |&gt;
+  DataFrame;</code></pre>
 
 
-<p>and then use Gadfly, we do a histogram plot:</p>
+<p>which does the following</p>
 
-<pre><code>plot(medals,x=&quot;Total_Medals&quot;,Geom.histogram)</code></pre>
+<ol>
+<li>groups the dataset by country.</li>
+<li>summarizes the data into a new dataframe which is country and total medals</li>
+<li>sorts them in decreasing order.</li>
+</ol>
+
+
+<p>and the following (which uses <code>StatPlots</code>):</p>
+
+<pre><code>@df medals histogram(:Total_Medals,bins=120)</code></pre>
 
 
 <p>which results in</p>
 
-<p><img src="images/ch16/plot1.png" alt="Plot of total medals by country" /></p>
+<p><img src="images/ch16/plot06.png" alt="Plot of total medals by country" /></p>
 
 <h4 id="6.-Plot-the-number-of-medals-that-the-U.S.-collected-over-each-olympic-year.">6. Plot the number of medals that the U.S. collected over each olympic year.</h4>
 
 <p>In this case, we need to just get a subset of the U.S. medals:</p>
 
-<pre><code>us_medals = oly[oly[:Country] .== &quot;United States&quot;,:]</code></pre>
-
-
-<p>and then subgroup by year:</p>
-
-<pre><code>us_by_year = by(us_medals,:Year) do df
-    DataFrame(Total_Medals=sum(df[:Total_Medals]))
-end</code></pre>
+<pre><code>us_medals_by_year = oly |&gt;
+  @filter(_.Country == &quot;United States&quot;) |&gt;
+  @groupby(_.Year) |&gt;
+  @map({Year = unique(_.Year)[1], Total_Medals = sum(_.Total_Medals)})  |&gt;
+  @orderby(_.Year) |&gt; DataFrame</code></pre>
 
 
 <p>and the following gives a decent plot:</p>
 
-<pre><code>plot(us_by_year,x=&quot;Year&quot;,y=&quot;Total_Medals&quot;,Geom.bar)</code></pre>
+<pre><code>@df us_medals_by_year bar(:Year,:Total_Medals)</code></pre>
 
 
-<p><img src="images/ch16/plot2.png" alt="Plot of U.S. Medals by Year" /></p>
+<p><img src="images/ch16/plot07.png" alt="Plot of U.S. Medals by Year" /></p>
 
 <h4 id="7.-What-is-the-age-with-the-most-number-of-total-medals">7. What is the age with the most number of total medals?</h4>
 
 <p>In this case, we group by age and sum total medals:</p>
 
-<pre><code>medals_by_age = by(oly,:Age) do df
-    DataFrame(Total_Medals=sum(df[:Total_Medals]))
-end;</code></pre>
-
-
-<p>and then sort</p>
-
-<pre><code>sort!(medals_by_age,cols=[:Total_Medals],rev=true)</code></pre>
+<pre><code>medals_by_age = oly |&gt;
+  @groupby(_.Age) |&gt;
+  @map({Age = unique(_.Age)[1], Total_Medals = sum(_.Total_Medals)}) |&gt;
+  @orderby_descending(_.Total_Medals)</code></pre>
 
 
 <p>show that age 24 has the most medals.</p>
 
 <h4 id="8.-Produce-a-new-data-set-with-total-number-of-medals-per-sport-per-year.--What-are-the-top-five-sports-in-medals-for-2002-2012">8. Produce a new data set with total number of medals per sport per year.  What are the top five sports in medals for 2002, 2012?</h4>
 
-<p>In this case, we need to subgroup by both year and sport:</p>
+<p>First, we&rsquo;ll consider the 2002 year:</p>
 
-<pre><code>medals_by_year = by(oly,[:Year,:Sport]) do df
-    DataFrame(Total_Medals=sum(df[:Total_Medals]))
-end</code></pre>
-
-
-<p>
-and then sort</p>
-
-<pre><code>sort!(medals_by_year[medals_by_year[:Year] .== 2002,:],cols=[:Total_Medals], rev=true)</code></pre>
+<pre><code>oly |&gt;
+  @filter(_.Year == 2002) |&gt;
+  @groupby(_.Sport) |&gt;
+  @map({Year = _.Year[1], Sport=_.Sport[1],Total_Medals=sum(_.Total_Medals)}) |&gt;
+  @orderby_descending(_.Total_Medals)</code></pre>
 
 
 <p>results in Ice Hockey, Cross Country Skiing, Short-Track Speed Skating, Biathlon and Alpine Skiing.</p>
 
 <p>And in 2012:</p>
 
-<pre><code>sort!(medals_by_year[medals_by_year[:Year] .== 2012,:],cols=[:Total_Medals], rev=true)</code></pre>
+<pre><code>oly |&gt;
+  @filter(_.Year == 2012) |&gt;
+  @groupby(_.Sport) |&gt;
+  @map({Year = _.Year[1], Sport=_.Sport[1],Total_Medals=sum(_.Total_Medals)}) |&gt;
+  @orderby_descending(_.Total_Medals)</code></pre>
 
 
 <p>This shows the top 5 are Swimming, Athletics (Track and Field), Rowing, Football (Soccer) and Hockey (probably field hockey).</p>
