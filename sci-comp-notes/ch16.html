@@ -342,7 +342,11 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 
 <p>In this case, we will get a subset of the DataFrame and sort by Total Medals or</p>
 
-<pre><code>oly |&gt; @filter(_.Year == 2000) |&gt; @orderby_descending(_.Total_Medals) |&gt; DataFrame |&gt; head</code></pre>
+<pre><code>oly |&gt;
+  @filter(_.Year == 2000) |&gt;
+  @orderby_descending(_.Total_Medals) |&gt;
+  DataFrame |&gt;
+  head</code></pre>
 
 
 <p>and this shows that Aleksey Nemov of Russia had the most with 6 medals.</p>
@@ -361,7 +365,10 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 
 <p>and although a bit hard to read, it is now a list of the 3 people and collectively the cars they own:</p>
 
-<pre><code>df |&gt; @groupby(_.name) |&gt; @map({Name=_.name,Num_cars=length(_.car)}) |&gt; DataFrame</code></pre>
+<pre><code>df |&gt;
+  @groupby(_.name) |&gt;
+  @map({Name=_.name,Num_cars=length(_.car)}) |&gt;
+  DataFrame</code></pre>
 
 
 <p>First, we group the data by Athlete&rsquo;s name (in the Athlete column)  To see what happens with this, do</p>
@@ -459,6 +466,76 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 
 
 <p>This shows the top 5 are Swimming, Athletics (Track and Field), Rowing, Football (Soccer) and Hockey (probably field hockey).</p>
+
+<h2 id="Missing-Data">Missing Data</h2>
+
+<p>A common situation for data sets is that of missing data.  We may not have all of the information needed when it was collected.  Julia now has a standard data type called <code>Missing</code> and it has a single value of that data called <code>missing</code>.  The <a href="https://docs.julialang.org/en/latest/manual/missing/">julia Documentation on Missing Data</a> is a good place to read up on details of this.</p>
+
+<p>There is some interesting properties of this.  For example</p>
+
+<pre><code>missing + 6</code></pre>
+
+
+<p>returns <code>missing</code> and pretty much any operation on a missing value returns missing because the idea is that if you don&rsquo;t know the value, how can calculate it.</p>
+
+<h3 id="Missing-Data-in-a-Dataset">Missing Data in a Dataset</h3>
+
+<p>Take the following dataset:</p>
+
+<pre><code>df = DataFrame(
+name=[&quot;Homer&quot;,&quot;Marge&quot;,&quot;Lisa&quot;,&quot;Bart&quot;,&quot;Maggie&quot;],
+age =[45,42,8,10,1],
+salary = [50000,25000,10000,missing,missing],
+favorite_food = [&quot;pork chops&quot;,&quot;casserole&quot;,&quot;salad&quot;,&quot;hamburger&quot;,missing])</code></pre>
+
+
+<p>where a number of missing values have been put in.   We&rsquo;ll notice something different about the data types.  If we look at the salary column:</p>
+
+<pre><code>typeof(df[:salary])</code></pre>
+
+
+<p>we see that the type is <code>Array{Union{Missing, Int64},1}</code> which means that the type of elements in the array are <code>Union{Missing,Int64}</code> which is julia&rsquo;s way of saying that the type can be either <code>Missing</code> or <code>Int64</code>.</p>
+
+<p>Now, let&rsquo;s get down to some analyzing of the data.  If we want to find the largest age by</p>
+
+<pre><code>maximum(df[:age])</code></pre>
+
+
+<p>which returns 45, but if we want to find the mean salary:</p>
+
+<pre><code>mean(df[:salary])</code></pre>
+
+
+<p>we get <code>missing</code>, which makes sense from the above discussion that nearly every operation with missing returns missing.  Instead, we may want to ignore the missing values, so we can use the <code>skipmissing</code> function.</p>
+
+<pre><code>sal = skipmissing(df[:salary])</code></pre>
+
+
+<p>we get</p>
+
+<pre><code>Base.SkipMissing{Array{Union{Missing, Int64},1}}(Union{Missing, Int64}[50000, 25000, 10000, missing, missing])</code></pre>
+
+
+<p>which seems quite complicated in that we get another array, however, if we</p>
+
+<pre><code>mean(sal)</code></pre>
+
+
+<p>then it finds the mean of the non-missing values and returns <code>28333.333333333332</code></p>
+
+<h3 id="Missing-values-in-the-Olympic-data">Missing values in the Olympic data</h3>
+
+<p>If we just find the average age of all in the Olympic database, then</p>
+
+<pre><code>mean(oly[:Age])</code></pre>
+
+
+<p>we get <code>missing</code> however, if we</p>
+
+<pre><code>mean(skipmissing(oly[:Age]))</code></pre>
+
+
+<p>then the result is <code>26.405433646812956</code></p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
