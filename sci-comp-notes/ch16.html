@@ -355,7 +355,9 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 
 <p>We need to do a bit of work for this one.  Since over all olympics for each athlete we need to add up all of the medals.  This is known as grouping a dataset and the <code>Query</code> package does this.   Before we answer the question about the athletes, consider a simpler example:</p>
 
-<pre><code>df = DataFrame(name=[&quot;Fred&quot;,&quot;Fred&quot;,&quot;Fred&quot;,&quot;Jose&quot;,&quot;Jose&quot;,&quot;Caroline&quot;],car=[&quot;Camry&quot;,&quot;Rav4&quot;,&quot;Corolla&quot;,&quot;Odyssey&quot;,&quot;Rio&quot;,&quot;Prius&quot;])</code></pre>
+<pre><code>df = DataFrame(
+  name=[&quot;Fred&quot;,&quot;Fred&quot;,&quot;Fred&quot;,&quot;Jose&quot;,&quot;Jose&quot;,&quot;Caroline&quot;],
+  car=[&quot;Camry&quot;,&quot;Rav4&quot;,&quot;Corolla&quot;,&quot;Odyssey&quot;,&quot;Rio&quot;,&quot;Prius&quot;])</code></pre>
 
 
 <p>lists 3 people and the cars they own.  We want to summarize the data as the total number of cars each person has.  If we</p>
@@ -371,11 +373,27 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
   DataFrame</code></pre>
 
 
+<p>Let&rsquo;s now do the same with the Olympic Athlete dataset:</p>
+
+<pre><code>oly |&gt;
+  @groupby(_.Sport) |&gt;
+  @map(key(_))</code></pre>
+
+
+<p>shows the top list of the Sports.  We can then find the number of athletes listed for each sport in the following way:</p>
+
+<pre><code>oly |&gt;
+  @groupby(_.Sport) |&gt;
+  @map({Sport=key(_), Number_of_Athlete=length(_.Athlete)})</code></pre>
+
+
+<p>Lastly, to actually answer the question at the top of this section, how we find the total number of medals for each athlete.</p>
+
 <p>First, we group the data by Athlete&rsquo;s name (in the Athlete column)  To see what happens with this, do</p>
 
 <pre><code>oly |&gt;
   @groupby(_.Athlete) |&gt;
-  @map({Athlete = unique(_.Athlete)[1], total = sum(_.Total_Medals)}) |&gt;
+  @map({Athlete = key(_), total = sum(_.Total_Medals)}) |&gt;
   @orderby_descending(_.total) |&gt;
   DataFrame</code></pre>
 
@@ -420,8 +438,9 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 <pre><code>us_medals_by_year = oly |&gt;
   @filter(_.Country == &quot;United States&quot;) |&gt;
   @groupby(_.Year) |&gt;
-  @map({Year = unique(_.Year)[1], Total_Medals = sum(_.Total_Medals)})  |&gt;
-  @orderby(_.Year) |&gt; DataFrame</code></pre>
+  @map({Year = key(_), Total_Medals = sum(_.Total_Medals)})  |&gt;
+  @orderby(_.Year)
+  |&gt; DataFrame</code></pre>
 
 
 <p>and the following gives a decent plot:</p>
@@ -437,7 +456,7 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 
 <pre><code>medals_by_age = oly |&gt;
   @groupby(_.Age) |&gt;
-  @map({Age = unique(_.Age)[1], Total_Medals = sum(_.Total_Medals)}) |&gt;
+  @map({Age = key(_), Total_Medals = sum(_.Total_Medals)}) |&gt;
   @orderby_descending(_.Total_Medals)</code></pre>
 
 
@@ -450,7 +469,7 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 <pre><code>oly |&gt;
   @filter(_.Year == 2002) |&gt;
   @groupby(_.Sport) |&gt;
-  @map({Year = _.Year[1], Sport=_.Sport[1],Total_Medals=sum(_.Total_Medals)}) |&gt;
+  @map({Sport=key(_),Total_Medals=sum(_.Total_Medals)}) |&gt;
   @orderby_descending(_.Total_Medals)</code></pre>
 
 
@@ -461,7 +480,7 @@ and checking the type shows that it is now a <code>DataFrame</code>.</p>
 <pre><code>oly |&gt;
   @filter(_.Year == 2012) |&gt;
   @groupby(_.Sport) |&gt;
-  @map({Year = _.Year[1], Sport=_.Sport[1],Total_Medals=sum(_.Total_Medals)}) |&gt;
+  @map({Sport=key(_),Total_Medals=sum(_.Total_Medals)}) |&gt;
   @orderby_descending(_.Total_Medals)</code></pre>
 
 
