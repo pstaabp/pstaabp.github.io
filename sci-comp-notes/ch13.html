@@ -38,7 +38,7 @@ suits = [&quot;\u2660&quot;,&quot;\u2661&quot;,&quot;\u2662&quot;,&quot;\u2663&q
 
 <p>We can define this using a Julia <a href="http://docs.julialang.org/en/latest/manual/types/#composite-types">composite type.</a>.</p>
 
-<pre><code>struct Card
+<pre><code>mutable struct Card
     rank::Integer
     suit::Integer
 end</code></pre>
@@ -51,6 +51,8 @@ end</code></pre>
 
 <p>this will create a card of rank 3 and suit 2 (spades). To access the fields of the type, we use dot notation.  For example <code>c.rank</code> will return 3 and <code>c.suit</code> will return 2.</p>
 
+<p>The <em>mutable</em> keyword in front of the <code>struct</code> allows the struct to be altered later.  Generally, this is not desireable, but while testing a struct, this is the right way to go and often after testing is done, one can remove that.</p>
+
 <p>Although it&rsquo;s not very interesting to have the card <code>c</code> just give the rank and suit, so we will make the output much more interesting.  To do this we will define Base.show for our type.  To do this, we</p>
 
 <pre><code>Base.show(io::IO, c::Card) =  print(io, string(ranks[c.rank],suits[c.suit]))</code></pre>
@@ -60,7 +62,7 @@ end</code></pre>
 
 <p>When we evaluate <code>Card(3,2)</code> we  call a special function called a constructor, which creates an instance of the type.  Although Julia creates the basic constructor&ndash;that is the one that fills the fields of the type, we may want another constructor that will take an integer between 1 and 52 and returns the appropriate card.  The following example will do this.</p>
 
-<pre><code>struct Card
+<pre><code>mutable struct Card
     rank::Int
     suit::Int
     Card(r::Int,s::Int)=new(r,s)
@@ -98,7 +100,7 @@ end</code></pre>
 
 
 <p>
-returns &ldquo;2♢,Q♠,T♠,T♣,5♡&rdquo;</p>
+returns &ldquo;[2♢,Q♠,T♠,T♣,5♡]&rdquo;</p>
 
 <p>We now have some nice additional types, however, we now want to do something interesting with them.</p>
 
@@ -153,24 +155,30 @@ numhands/trials</code></pre>
 
 <p>Let’s say that we wish to create a function that does basically the same thing for different types of arguments. Let&rsquo;s look at an example.  Consider the basic type of Polynomial.</p>
 
-<pre><code>struct Polynomial{T}
+<pre><code>mutable struct Polynomial{T &lt;: Number}
   coeffs::Vector{T}
 end</code></pre>
 
 
 <p>This definition allows us to create a polynomial with coefficient of any type:</p>
 
-<pre><code>poly1=Polynomial([1,2,3])</code></pre>
+<pre><code>poly1=Polynomial([1,2,3])
+poly2=Polynomial([1.0,2.0,3.0])
+poly3=Polynomial([2//3,3//4,5//8])
+poly4=Polynomial([im,2+0im,3-2im,-im])</code></pre>
 
 
-<p>And if the result is: <code>Polynomial{Int64}([1, 2, 3])</code>.  It would be nice if the result looked like a polynomial.  In this case, we can use the <code>show</code> command.</p>
+<p>
+and the result of the last will be <code>Polynomial{Complex{Int64}}(Complex{Int64}[0+1im, 2+0im, 3-2im, 0-1im])</code>.  The first <code>Polynomial{Complex{Int64}}</code> is the type of the Polynomial.  The <code>Complex{Int64}</code> inside the parentheses is the type of the Array.  Each of the results will be a different type. Try <code>typeof</code> all the other ones to see the type.</p>
 
-<pre><code>function Base.show(stream::IO, p::Polynomial)
+<p>It would be nice if the result looked like a polynomial.  In this case, we can use the <code>show</code> command.</p>
+
+<pre><code>function Base.show(io::IO, p::Polynomial)
   str = &quot;&quot;
   for i = 1:length(p.coeffs)
       str = string(str,p.coeffs[i],&quot;x^&quot;,i-1,i&lt;length(p.coeffs)?&quot;+&quot;:&quot;&quot;)
   end
-  show(stream, str)
+  print(io, str)
 end</code></pre>
 
 
@@ -195,32 +203,98 @@ end</code></pre>
 
 <p>which will allow us to add two polynomials and the information after the where says that the types of polynomials should be subsets of <code>Number</code> and not for example a string.</p>
 
-<p>To show how to add, let</p>
-
-<pre><code>poly2 = Polynomial([2,3,4])</code></pre>
-
-
 <p>then <code>poly1+poly2</code> returns:</p>
 
-<pre><code>3x^0+5x^1+7x^2</code></pre>
+<pre><code>2.0x^0+4.0x^1+6.0x^2</code></pre>
 
 
-<h3 id="Polynomial-with-string-coefficients">Polynomial with string coefficients?</h3>
+<p>Note that this now a polynomial with Floating Point coeffs.</p>
 
-<p>What if we have Strings as coefficients?</p>
+<h3 id="Evaluating-the-polynomial">Evaluating the polynomial</h3>
 
-<pre><code>poly3 = Polynomial([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])</code></pre>
+<p>Another helpful function is to actually evaluate the polynomial.  The basic way to do this is to sum the squares of the variable.</p>
+
+<pre><code>function eval(poly::Polynomial{T},x::S) where {S &lt;: Number ,T&lt;: Number}
+  sum=zero(T)
+  for i=1:length(poly.coeffs)
+    sum += poly.coeffs[i]*x^(i-1)
+  end
+  sum
+end</code></pre>
 
 
-<p>returns</p>
+<p>(talk about Horner&rsquo;s form of a polynomial)</p>
 
-<pre><code>ax^0+bx^1+cx^2</code></pre>
+<h3 id="Plotting-new-datatypes">Plotting new datatypes</h3>
+
+<p>Since all datatypes are based on previous ones, we can always plot them, however, it may be nice to plot them by calling <code>plot</code> (from the <code>Plots</code> package) and a package associated with it called <code>RecipesBase</code>, so the material here will require <code>using RecipesBase</code>, which includes the macro <code>@recipe</code> and although the documentation is sparse, <a href="https://github.com/JuliaPlots/RecipesBase.jl">this page</a> is helpful in the background.</p>
+
+<p>We will create a recipe for a <code>Polynomial</code> which will tell julia how to plot a particular object.  In general a plot recipe has the form:</p>
+
+<pre><code>@recipe f(t::TheType,...)
+
+end</code></pre>
 
 
-<p>Note that there is no problem with this, but if we try to add <code>poly1</code> and <code>poly3</code> there will be an error:</p>
+<p>and it needs to either return some number of  vectors of points (depending on if it is 1D, 2D or a 3D plot) and <code>TheType</code> is a user-defined type. All other arguments afterwards are parameters needed for the    For the <code>Polynomial</code>:</p>
 
-<pre><code>MethodError: no method matching +(::Polynomial{Int64}, ::Polynomial{String})</code></pre>
+<pre><code>@recipe function f(poly::Polynomial,xmin::Number=-2,xmax::Number=2)
+  xpts = LinRange(xmin,xmax,200)
+  ypts = map(x-&gt;eval(poly,x),xpts)
+  xpts,ypts
+end</code></pre>
 
+
+<p>and we can now use this to plot a polynomial and we will need to <code>using Plots</code> to:</p>
+
+<pre><code>plot(poly1)</code></pre>
+
+
+<p>and since we defaulted the plot range from -2 to 2, we get the following plot:<br/>
+<img src="images/ch13/plot01.png" alt="plot of a polynomial" /></p>
+
+<p>and if we want to specify the plotting range:</p>
+
+<pre><code>plot(poly1,0,4)</code></pre>
+
+
+<p>we get</p>
+
+<p><img src="images/ch13/plot02.png" alt="plot of a polynomial" /></p>
+
+<h4 id="Changing-other-parameters">Changing other parameters</h4>
+
+<p>But wait&hellip; There&rsquo;s more&hellip;  One of the fantastic things about this is that we can still use all of the other parameters associated with plot as we normally would.  For example:</p>
+
+<pre><code>plot(poly1,0,4,linecolor=:orange,title=&quot;A quadratic&quot;, leg=false)</code></pre>
+
+
+<p>produces the plot:</p>
+
+<p><img src="images/ch13/plot03.png" alt="plot of a polynomial" /></p>
+
+<h4 id="Setting-Default-parameters">Setting Default parameters</h4>
+
+<p>Recipes also allow to set default parameters.  Let&rsquo;s say that if we want to always plot a polynomial green without a legend that we can put these default<br/>
+parameters in the recipe:</p>
+
+<pre><code>@recipe function f(poly::Polynomial,xmin::Number=-2,xmax::Number=2)
+  leg --&gt; false
+  linecolor --&gt; :green
+  xpts = LinRange(xmin,xmax,200)
+  ypts = map(x-&gt;eval(poly,x),xpts)
+  xpts,ypts
+end</code></pre>
+
+
+<p>If we have this definition then</p>
+
+<pre><code>plot(poly1,0,4)</code></pre>
+
+
+<p>produces the following plot:</p>
+
+<p><img src="images/ch13/plot04.png" alt="plot of a polynomial" /></p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
