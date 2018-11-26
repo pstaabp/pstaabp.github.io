@@ -22,11 +22,17 @@ If you have an existing directory that you want to turn into a git repository, s
 
 The main chunk of things that git understands is a repository, which is a directory on your local computer with some special structure that are mostly hidden.
 
-After you have created a repository using Git Desktop, move all your project code into that directory.  
+After you have created a repository using Git Desktop, move all your project code into that directory.  There's few things to note with this:
+
+* This is a directory like others on your computer.
+* git will notice any changes that you make to any file to your repository
+* Make sure you don't have sensitive information in the directory. We will post this on github, which is public.  
 
 #### Commits
 
-Once you have reached a point in your code that you want to mark, you will commit the code.
+Once you have reached a point in your code that you want to mark, you will commit the code.  The way you do this with a GUI varies, but here is how it goes in GitHub Desktop.  The following picture shows the repository when something has changed and you want to commit your changes:
+
+![GitHub Desktop ready for a commit](images/append03/plot02.png)
 
 ### Cloning a respository
 
