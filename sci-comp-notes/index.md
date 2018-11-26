@@ -17,11 +17,12 @@
 * [Chapter 14: Creating A Module and Performing Unit Tests](ch14.html)
 * [Chapter 15: Parallel Computing](ch15.html)
 * [Chapter 16: Data, Data everywhere](ch16.html)
-* [Chapter 17: Shortest Paths through a Graph and the Traveling Salesperson Problem](ch17.html)
-* [Chapter 18: Dictionaries and JSON Files](ch18.html)
+* [Chapter 17: Optimizing Functions and fitting curves to a dataset](ch17.html)
+* [Chapter 18: Shortest Paths through a Graph and the Traveling Salesperson Problem](ch18.html)
+<!--* [Chapter 18: Dictionaries and JSON Files](ch18.html)
 * [Chapter 19: Rational and Complex Numbers](ch19.html)
 * [Chapter 20: Images](ch20.html)
-* [Chapter 21: Newton's Method in the Complex Plane](ch21.html)
+* [Chapter 21: Newton's Method in the Complex Plane](ch21.html) -->
 
 
 ### Appendices
