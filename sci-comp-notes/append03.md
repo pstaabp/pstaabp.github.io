@@ -34,9 +34,20 @@ Once you have reached a point in your code that you want to mark, you will commi
 
 ![GitHub Desktop ready for a commit](images/append03/plot02.png)
 
+There is only one file changed here and it is listed on the left.  It is highlighted and the main panel on the right shows the changes.  The line in red is deleted and the area in green is added.  
+
+To commit a change in GitHub Desktop:
+1. Have all of the files that you want to commit checked off (this is selected by default)
+2. Add a short summary of the changes in the small input box. You may add a longer description below it.
+3. Click "Commit to master" (where master is the current branch you are working on)
+4. If you wish to push your changes to github, the top bar has a "Push Origin" button.  Click there.
+
 ### Cloning a respository
 
-To effectively work together on a project using git, one of you will clone the repository of the other.  This is most-easily done at github.  
+To effectively work together on a project using git, one of you will clone the repository of the other.  This is most-easily done at github.  If you go to any repository at Github, there is a "clone or download" button.
+
+
+![Cloning a Repository on Github](images/append03/plot03.png)
 
 
 
