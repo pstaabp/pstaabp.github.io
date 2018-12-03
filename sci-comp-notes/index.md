@@ -27,4 +27,4 @@
 
 ### Appendices
 
-* [Appendix 1:: The Google Maps Distance Matrix API](append01.html)
+* [Appendix 1: Requesting Webpages in Julia](append01.html)
