@@ -176,3 +176,15 @@ localhost:8081
 ```
 
 You should get a webpage that says **Hello! :)**
+
+```
+HTTP.listen("127.0.0.1", 8081) do http
+  HTTP.setheader(http, "Content-Type" => "text/html")
+  params = HTTP.queryparams(split(http.message.target,"?")[2])
+  write(http, "<h1>Hello, " * params["name"] * " </h1>")
+end
+```
+
+and if you run this with `http://localhost?name=Gerry`
+
+You will get a nice message!!

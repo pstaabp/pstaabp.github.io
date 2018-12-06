@@ -18,74 +18,55 @@ html,body,#wrapper{font-size:10pt!important}
 
 
 </head>
-<body class="normal mkshowcomments firstload">
+<body class="normal">
   <div id="wrapper">
-      <h1 id="Chapter-19%3A-Dictionaries-and-JSON-Files">Chapter 19: Dictionaries and JSON Files  </h1>
+      <h1 id="chapter19%3Adictionariesandjsonfiles">Chapter 19: Dictionaries and JSON Files</h1>
 
 <p><a href="index.html">Return to all notes</a></p>
 
-<p>A dictionary or <a href="https://docs.julialang.org/en/v1.0/base/collections/#Dictionaries-1">associative array</a> in Julia is a bit like a dictionary that sits on your bookcase&ndash;yes the one that you use to look up words.  It is an array that is indexed by a string, like a definition is indexed by the word.  For example,</p>
-
+<p>A dictionary or <a href="https://docs.julialang.org/en/v1.0/base/collections/#Dictionaries-1">associative array</a> in Julia is a bit like a dictionary that sits on your bookcase&#8211;yes the one that you use to look up words. It is an array that is indexed by a string, like a definition is indexed by the word. For example,</p>
 <pre><code>dict=Dict(&quot;A&quot;=&gt;1,&quot;B&quot;=&gt;7,&quot;C&quot;=&gt;-7)</code></pre>
 
-
 <p>The value can be looked up by</p>
-
 <pre><code>dict[&quot;A&quot;]</code></pre>
 
-
-<p>
-which returns 1.  A couple of helpful functions on dictionary are <code>values</code> which returns all of the values of a dictionary and <code>keys</code>, all of the indexes (or keys) of the dictionary.</p>
+<p>which returns 1. A couple of helpful functions on dictionary are <code>values</code> which returns all of the values of a dictionary and <code>keys</code>, all of the indexes (or keys) of the dictionary. </p>
 
 <p>For example,</p>
-
 <pre><code>collect(values(dict))</code></pre>
 
-
 <p>returns the array <code>[7,1,-7]</code> and</p>
-
 <pre><code>collect(keys(dict))</code></pre>
 
+<p>returns the array <code>[&quot;B&quot;,&quot;A&quot;,&quot;C&quot;]</code> and notice in both cases, the order changed from the way it was put in. </p>
 
-<p>returns the array <code>["B","A","C"]</code> and notice in both cases, the order changed from the way it was put in.</p>
+<h3 id="complexdictionaries">Complex Dictionaries</h3>
 
-<h3 id="Complex-Dictionaries">Complex Dictionaries</h3>
+<p>The above was a simple dictionary, however, Dictionaries can be a mixture of various data types. As seen above, a dictionary has keys and values, and are typically of either Ints, Chars or Strings, where String are the most common as shown above. </p>
 
-<p>The above was a simple dictionary, however, Dictionaries can be a mixture of various data types.  As seen above, a dictionary has keys and values, and are typically of either Ints, Chars or Strings, where String are the most common as shown above.</p>
-
-<p>The values of a Dictionary can vary and don&rsquo;t need to be the same type with a dictionary. For example:</p>
-
+<p>The values of a Dictionary can vary and don&#8217;t need to be the same type with a dictionary. For example:</p>
 <pre><code>dict2 = Dict(&quot;A&quot;=&gt;1, &quot;B&quot;=&gt;&quot;Hello&quot;, &quot;C&quot;=&gt; 1.23)</code></pre>
 
-
-<p>
-and when Julia returns:</p>
-
+<p>and when Julia returns:</p>
 <pre><code>Dict{String,Any} with 3 entries:
   &quot;B&quot; =&gt; &quot;Hello&quot;
   &quot;A&quot; =&gt; 1
   &quot;C&quot; =&gt; 1.23</code></pre>
 
-
-<p>then notice that it doesn&rsquo;t keep the order of the pairs, mainly because the order doesn&rsquo;t matter for a Dictionary.  This has key type <code>String</code> and value type <code>Any</code>.  And Dictionaries can nest:</p>
-
+<p>then notice that it doesn&#8217;t keep the order of the pairs, mainly because the order doesn&#8217;t matter for a Dictionary. This has key type <code>String</code> and value type <code>Any</code>. And Dictionaries can nest:</p>
 <pre><code>dict3 = Dict(1=&gt; &quot;Hello&quot;, 3 =&gt; [1,2,3,4,5], 5 =&gt; Dict(&quot;homer&quot;=&gt; 2.34,&quot;marge&quot;=&gt;3.19))</code></pre>
 
-
 <p>which returns:</p>
-
 <pre><code>Dict{Int64,Any} with 3 entries:
   3 =&gt; [1, 2, 3, 4, 5]
   5 =&gt; Dict(&quot;homer&quot;=&gt;2.34,&quot;marge&quot;=&gt;3.19)
   1 =&gt; &quot;Hello&quot;</code></pre>
 
+<p>which shows that the key is an <code>Int64</code> and then the values are <code>Any</code> and you can see that again the keys are not in the same order as entered. </p>
 
-<p>which shows that the key is an <code>Int64</code> and then the values are <code>Any</code> and you can see that again the keys are not in the same order as entered.</p>
+<h2 id="jsonfiles">JSON files</h2>
 
-<h2 id="JSON-files">JSON files</h2>
-
-<p>There are many different types of files that are used to transfer data.  A very common one is a <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> which stands for JavaScript Object Notation, which is a way to store data associated with javascript an webpages.  An example (from the wikipedia page) is</p>
-
+<p>There are many different types of files that are used to transfer data. A very common one is a <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> which stands for JavaScript Object Notation, which is a way to store data associated with javascript an webpages. An example (from the wikipedia page) is</p>
 <pre><code>{
   &quot;firstName&quot;: &quot;John&quot;,
   &quot;lastName&quot;: &quot;Smith&quot;,
@@ -111,11 +92,9 @@ and when Julia returns:</p>
   }
 }</code></pre>
 
+<p>where many of these are field/value pairs, but also arrays are valid. </p>
 
-<p>where many of these are field/value pairs, but also arrays are valid.</p>
-
-<p>Generally, the use of these is importing or exporting an object in JSON.  For example, the above can be written as a Julia string:</p>
-
+<p>Generally, the use of these is importing or exporting an object in JSON. For example, the above can be written as a Julia string:</p>
 <pre><code>str = &quot;{
   \&quot;firstName\&quot;: \&quot;John\&quot;,
   \&quot;lastName\&quot;: \&quot;Smith\&quot;,
@@ -141,19 +120,13 @@ and when Julia returns:</p>
   }
 }&quot;</code></pre>
 
-
-<p>and to load this, we need to (maybe you&rsquo;ll need add the <code>JSON</code> package and then) load the package:</p>
-
+<p>and to load this, we need to (maybe you&#8217;ll need add the <code>JSON</code> package and then) load the package:</p>
 <pre><code>using JSON</code></pre>
 
-
 <p>and parsing the JSON:</p>
-
 <pre><code>info = JSON.parse(str)</code></pre>
 
-
 <p>returns</p>
-
 <pre><code>Dict{String,Any} with 6 entries:
   &quot;gender&quot;      =&gt; Dict{String,Any}(Pair{String,Any}(&quot;type&quot;,&quot;male&quot;))
   &quot;phoneNumber&quot; =&gt; Any[Dict{String,Any}(Pair{String,Any}(&quot;number&quot;,&quot;212 555-1234…
@@ -162,67 +135,44 @@ and when Julia returns:</p>
   &quot;age&quot;         =&gt; 25
   &quot;address&quot;     =&gt; Dict{String,Any}(Pair{String,Any}(&quot;streetAddress&quot;,&quot;21 2nd St…</code></pre>
 
-
-<p>which is a Dictionary.  (Note that the keys are type <code>String</code> but since the values have a mixed type, the type is listed as <code>Any</code>).   For example, we can echo the first and last name with:</p>
-
+<p>which is a Dictionary. (Note that the keys are type <code>String</code> but since the values have a mixed type, the type is listed as <code>Any</code>). For example, we can echo the first and last name with:</p>
 <pre><code>string(info[&quot;firstName&quot;],&quot; &quot;,info[&quot;lastName&quot;])</code></pre>
 
-
 <p>and we can echo the fax number as</p>
-
 <pre><code>info[&quot;phoneNumber&quot;][2][&quot;number&quot;]</code></pre>
 
+<p>since it is the &#8220;number&#8221; of the 2nd &#8220;phoneNumber&#8221;.</p>
 
-<p>since it is the &ldquo;number&rdquo; of the 2nd &ldquo;phoneNumber&rdquo;.</p>
+<h3 id="writingoutexportingadictionary">writing out/exporting a Dictionary</h3>
 
-<h3 id="writing-out%2Fexporting-a-Dictionary">writing out/exporting a Dictionary</h3>
-
-<p>Let&rsquo;s say we have a restaurant menu stored as the following dictionary:</p>
-
+<p>Let&#8217;s say we have a restaurant menu stored as the following dictionary:</p>
 <pre><code>menu=Dict(&quot;pancakes&quot;=&gt;Dict(&quot;type&quot;=&gt;&quot;Breakfast&quot;,&quot;cost&quot;=&gt;7.00,&quot;options&quot;=&gt;[&quot;Chocolate Chip&quot;,&quot;Buckwheat&quot;]),
 &quot;hamburger&quot;=&gt;Dict(&quot;type&quot;=&gt;[&quot;Lunch&quot;,&quot;Dinner&quot;],&quot;cost&quot;=&gt;9.00,&quot;options&quot;=&gt;[&quot;Cheddar&quot;,&quot;Mushrooms&quot;,&quot;Bacon&quot;]),
 &quot;onion soup&quot;=&gt;Dict(&quot;type&quot;=&gt;[&quot;Lunch&quot;,&quot;Dinner&quot;],&quot;cost&quot;=&gt;5.00))</code></pre>
 
-
-<p>A good way to store it would be to export it as a JSON format.  typing</p>
-
+<p>A good way to store it would be to export it as a JSON format. typing</p>
 <pre><code>JSON.json(menu)</code></pre>
 
-
 <p>returns</p>
-
 <pre><code>&quot;{\&quot;hamburger\&quot;:{\&quot;options\&quot;:[\&quot;Cheddar\&quot;,\&quot;Mushrooms\&quot;,\&quot;Bacon\&quot;],\&quot;cost\&quot;:9.0,\&quot;onion soup\&quot;:{\&quot;cost\&quot;:5.0,\&quot;type\&quot;:[\&quot;Lunch\&quot;,\&quot;Dinner\&quot;]},\&quot;type\&quot;:[\&quot;Lunch\&quot;,\&quot;Dinner\&quot;]},\&quot;pancakes\&quot;:{\&quot;options\&quot;:[\&quot;Chocolate Chip\&quot;,\&quot;Buckwheat\&quot;],\&quot;cost\&quot;:7.0,\&quot;type\&quot;:\&quot;Breakfast\&quot;}}&quot;</code></pre>
 
+<p>It can also be easily written to a file with the following:</p>
+<pre><code>f = open(&quot;menu.json&quot;,&quot;w&quot;)
+JSON.print(f,menu)
+close(f)</code></pre>
 
-<p>It can also be easily written to a file if we first define</p>
+<p>and then look at the file &#8220;menu.json&#8221; in the same directory as where your julia document is.</p>
 
-<pre><code>f = open(&quot;menu.json&quot;,&quot;w&quot;)</code></pre>
+<h3 id="parsingajsonfile.">Parsing a JSON file.</h3>
 
-
-<p>then write the menu to the file:</p>
-
-<pre><code>JSON.write(f,menu)</code></pre>
-
-
-<p>and make sure to close the file:</p>
-
-<pre><code>close(f)</code></pre>
-
-
-<p>and then look at the file &ldquo;menu.json&rdquo; in the same directory as where your julia document is.</p>
-
-<h3 id="Parsing-a-JSON-file.">Parsing a JSON file.</h3>
-
-<p>Let&rsquo;s say that we have a more extensive menu in the JSON file <a href="menu2.json">menu2.json</a>.</p>
+<p>Let&#8217;s say that we have a more extensive menu in the JSON file <a href="other/menu2.json">menu2.json</a>.</p>
 
 <p>To load this file and parse it, <code>JSON</code> has everything wrapped together:</p>
-
 <pre><code>menu2=JSON.parsefile(&quot;menus2.json&quot;)</code></pre>
 
+<h3 id="exercise">Exercise</h3>
 
-<h3 id="Exercise">Exercise</h3>
-
-<p>Find the sum of the costs of all of the menu items using the dictionary.</p>
+<p>Find the sum of the costs of all of the menu items using the dictionary. </p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
 
@@ -239,26 +189,9 @@ and when Julia returns:</p>
 <div style="display:none" markdown="0">
 <!--This seemingly unnecessary div markup is the only thing keeping this script working after Markdown conversion. Trust me.-->
  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    "HTML-CSS": {
-        messageStyle: "normal",
-        linebreaks: {
-            automatic: false
-        }
-    },
-    tex2jax: { 
-        inlineMath: [["$","$"],["\\(","\\)"]], 
-        displayMath: [["$$","$$"],["\\[","\\]"]], 
-        processEscapes: true
-    },
-    TeX: {
-        Macros: {
-            tr: "{\\scriptscriptstyle\\mathrm{T}}",
-        }
-    }
-});
+  MathJax.Hub.Config();
 </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </div>
 
 
