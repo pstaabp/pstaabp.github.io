@@ -29,3 +29,4 @@
 ### Appendices
 
 * [Appendix 1: Requesting Webpages in Julia](append01.html)
+* [Appendix 2: MapQuest API](append02.html)

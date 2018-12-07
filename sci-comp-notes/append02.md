@@ -62,4 +62,68 @@ Dict{String,Any} with 23 entries:
 ```  
 
 
-and the information that we are looking for is in the distance element which is 47.345 (given in miles). 
+and the information that we are looking for is in the distance element which is 47.345 (given in miles).
+
+
+The MapQuest API also allows to find distances between multiple locations.  Let's say that we want to find the distance matrix of the following cities in Massachusetts: Fitchburg, Lowell, Worcester, Springfield, Greenfield.  We create a Dictionary of the form:
+```
+towns = Dict("locations"=>["Fitchburg, MA", "Lowell, MA",  "Worcester, MA", "Springfield, MA",  "Greenfield, MA"],
+"options"=>Dict("allToAll"=>true))
+```
+
+where the second element means that we want the distances between all towns.  
+
+In order to send this information, we need to encode it using JSON.
+```
+towns_json = JSON.json(towns)
+```
+
+and you will get a JSON-stringified version of the dictionary above.  Then we make a POST request to mapquest:
+```
+resp = HTTP.request("POST","http://www.mapquestapi.com/directions/v2/routematrix?key=XXX",[],ex_json)
+```
+
+where again, you need to replace XXX with your mapquest key.  You should get a OK status from the server and then parsing the result:
+```
+body = JSON.parse(String(resp.body))
+```
+
+you will see:
+```
+"locations" => Any[Dict{String,Any}("latLng"=>Dict{String,Any}("lat"=>42.5808…
+  "distance"  => Any[Any[0, 32.395, 26.318, 78.475, 50.174], Any[31.481, 0, 41.…
+  "time"      => Any[Any[0, 2306, 1843, 4928, 3833], Any[2211, 0, 2540, 5625, 5…
+  "allToAll"  => true
+  "info"      => Dict{String,Any}("messages"=>Any[],"statuscode"=>0,"copyright"…
+  "manyToOne" => false
+```
+
+and the information is stored in the distance element:
+```
+A=body["distance"]
+```
+returns
+```
+5-element Array{Any,1}:
+ Any[0, 32.395, 26.318, 78.475, 50.174]
+ Any[31.481, 0, 41.33, 93.486, 78.709]
+ Any[26.394, 42.312, 0, 52.274, 85.072]
+ Any[77.918, 93.836, 51.882, 0, 38.93]
+ Any[49.534, 79.207, 85.089, 39.174, 0]
+```
+
+and this is an array of arrays, but we need 2D array.  There are a number of ways to do this including:
+```
+collect(transpose(reshape(collect(Iterators.flatten(A)),(5,5))))
+```
+
+which returns
+```
+5×5 Array{Real,2}:
+  0      32.395  26.318  78.475  50.174
+ 31.481   0      41.33   93.486  78.709
+ 26.394  42.312   0      52.274  85.072
+ 77.918  93.836  51.882   0      38.93
+ 49.534  79.207  85.089  39.174   0   
+```
+and we can now use this.  
