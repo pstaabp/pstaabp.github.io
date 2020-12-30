@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ch-17</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="chapter-16-random-numbers-and-monte-carlo-simulations">Chapter 16: Random Numbers and Monte Carlo Simulations</h1>
+<p><a href="index.html">Return to all notes</a></p>
+<p>Random numbers are quite useful and interesting to play with. One of the most useful is that of a Monte Carlo simulation which uses random number to solve problems in probability or other fields.</p>
+<h2 id="probability">Probability</h2>
+<p>To fully understand how to use random numbers and how Monte Carlo simulations work, we need some basic probability. When understanding probability there are two types continuous and discrete, which for what we need will come down to using floating point or integers.</p>
+<p>###Discrete Probability</p>
+<p>We’ll first discuss discrete probability. A <em>discrete probability distribution</em> is a finite set (often will be a subset of integers.) For example, let’s use the set</p>
+<p>\[A={1,2,3,4,5,6}\]</p>
+<p>and an event, \(X\) is subset of these numbers. For example, let \(X={1}\), then the probability that this event occurs in the ratio of the number of elements in each set or \[P(X)=\]</p>
+<p>In this case, \(P(X)=1/6\) and that means that the probability that the number 1 comes up is 1/6. Think about this in the case of rolling a die. This says that the probability that 1 comes up is 1/6.</p>
+<p>###Continuous Probability</p>
+<p>Another type of probability distribution is called a continuous distribution and in this case we’ll only consider a type of continuous probability distribution called a uniform distribution.</p>
+<p>Let’s consider a set \(A={x ; | ; 0 x }\) or all real numbers between 0 and 1. Events are still subsets of the set \(A\), however the probability that events occur is the fraction of the set.</p>
+<p>For example, if \(X={x ; | ; 1/3 x /2}\), then \(P(X)\) is the fraction \[P(X) = =\]</p>
+<h2 id="pseudo-random-number-generator">Pseudo Random Number Generator</h2>
+<p><a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">The Wikipedia Pseudo-random Number Generator page</a> gives an overview of the subject and a lot of technical details. In short, a truly random number on a computer is very difficult to generate and generally not necessary because a pseudorandom number is sufficient. I also won’t try to explain this in general term since you’d need a significant mathematical background.</p>
+<p>A pseudo-random number generator is a function that produces a sequence of numbers that act like random numbers. Let’s examine what this means in terms of the discrete probability with set <span class="math inline">\(A=\{1,2,3,4,5,6\}\)</span>.</p>
+<p>If a pseudo-random number generator produces a sequence from this set then the sequence should have the following property:</p>
+<ul>
+<li>If the event <span class="math inline">\(X=\{i\}\)</span> for any <span class="math inline">\(i\)</span> between 1 and 6, then \(P(X)/6\). And by approximately, as the sequence gets larger, the approximation becomes closer to 1/6.</li>
+</ul>
+<p>Is this enough? No, the sequence <span class="math display">\[\{1,2,3,4,5,6,1,2,3,4,5,6,\ldots\}\]</span></p>
+<p>satisfies the above property, but I don’t think anyone would consider this random. Another property would be:</p>
+<ul>
+<li>If we know the sequence <span class="math inline">\(\{a_1,a_2,a_3,\ldots,a_n\}\)</span> then we can’t predict the next number <span class="math inline">\(a_{n+1}\)</span>.</li>
+</ul>
+<p>This is obviously violated in the sequence above.</p>
+<p>A little more technical definition of a sequence of pseudo-random numbers Let \((a_1,a_2,a_3, , \) be a random sequence. Typically we mean the following properties need to hold:</p>
+<ol type="1">
+<li>any number in the range 1 to 6 is equally likely to occur.</li>
+<li>Take N random numbers and let \(s_n\) be the number of times the number \(n\) occurs. The fraction \(s_n/N\) should go to 1/6 in the limit as \( n\).</li>
+<li>Knowing the sequence \(s_1, s_2, , s_k\) does not allow us to predict \(s_{k+1}\)</li>
+</ol>
+<p>If instead we use floating point numbers, there are a few different properties. Assume that the floating point number is in the range $ 0 a_k  $. Then the sequence $(a_1,a_2,a_3, ,) $ is random if</p>
+<p>Let $s_{[c,d]}=(a_1,a_2,a_3, ) $ be the total of the numbers that satisfy \(c a_k d\). Then as the number of random numbers approach infinity \(s_{[c,d]}=d-c\)</p>
+<h2 id="pseudorandom-numbers-in-maple">Pseudorandom Numbers in Maple</h2>
+<p>Maple has some nice features to generate random numbers of many distributions. Look in the <code>RandomTools</code> package for details.</p>
+<p>Here’s an example that would be like rolling a die 100 times. First, load the</p>
+<pre><code>with(RandomTools):</code></pre>
+<p>And the calling</p>
+<pre><code>rolls:=Generate(list(integer(range = 1 .. 6), 100))</code></pre>
+<p>creates a list of length 100 of random numbers of integers between 1 and 6. (Note: put your cursor back up on the command and hit return to see that you get different sets of numbers each time.)</p>
+<p>This list then acts like rolling a single die 100 times. We now want to check how many times the number 1 was rolled. There are a few command in the <code>ListTools</code> package that can help us with these.</p>
+<pre><code>with(ListTools)</code></pre>
+<p>and now we can type</p>
+<pre><code>[SearchAll(1,rolls)]</code></pre>
+<p>returns a location where all of the 1s are in the list of 1. We don’t really care where these came up, but typing</p>
+<pre><code>nops((#))</code></pre>
+<p>where <strong>(#)</strong> is the line number of the list of 1s above. When I ran this I got 21, but your mileage may vary due to the nature of randomization.</p>
+<h3 id="histograms">Histograms</h3>
+<p>A nice visual for rolling the die is that of a Histogram, which is a bar chart of the frequency of rolling each number. The <code>Histogram</code> command of the <code>Statistics</code> package is where we’ll turn:</p>
+<pre><code>Histogram(rolls)</code></pre>
+<p>gives the following:</p>
+<figure>
+<img src="images/ch16/plot01.png" alt="Histogram of rolling 1 die" /><figcaption aria-hidden="true">Histogram of rolling 1 die</figcaption>
+</figure>
+<p>and again, your plot will look different or rerunning the lines that generated the rolls will change the plot.</p>
+<h3 id="rolling-2-dice">Rolling 2 dice</h3>
+<p>There are many cases where rolling 2 dice and summing the values is interesting. Although there are many ways to do this, consider</p>
+<pre><code>roll2 := [Generate(list(integer(range = 1 .. 6), 100)), Generate(list(integer(range = 1 .. 6), 100))]</code></pre>
+<p>returns a list of pairs (as a list) of dice as two lists.</p>
+<p>We can then add each pair of dice as</p>
+<pre><code>sum2dice := add(i, i in roll2)</code></pre>
+<p>which returns a list of the sums of the dice?</p>
+<p><em>Question:</em> Since this returns numbers between 2 and 12, why didn’t we just create a list of length 100 which takes on values between 2 and 12?</p>
+<h4 id="what-is-the-probability-that-we-rolled-an-odd-number">What is the probability that we rolled an odd number?</h4>
+<p>We can do this by the following:</p>
+<pre><code>SelectFirst(100, n -&gt; n mod 2 = 1, sum2dice)</code></pre>
+<p>where <code>SelectFirst</code> is in the <code>ListTools</code> package. This function returns the first 100 elements of <code>sum2dice</code> that satisfy the function <code>n -&gt; n mod 2 = 1</code> or odd. If we do <code>nops</code> around this function, we get 57 (again this can vary.)</p>
+<h3 id="lets-histogram-it">Let’s Histogram it!!</h3>
+<p>And if we create a histogram of this with</p>
+<pre><code>Histogram(sum2dice)</code></pre>
+<p>one example of this is:</p>
+<figure>
+<img src="images/ch16/plot02.png" alt="Histogram of rolling 2 dice" /><figcaption aria-hidden="true">Histogram of rolling 2 dice</figcaption>
+</figure>
+<h3 id="exercise">Exercise</h3>
+<ol type="1">
+<li><p>Rerun the commands above however changing the number of rolls of the pairs of dice to 1000. (Note: you probably want to hide the actual results with a colon (:) )</p></li>
+<li><p>What is the probability that you roll a 7. (This is a important roll in craps, a dice game) Compare your result to the known value of the probability if you have background in this (or you can perform an internet search.)</p></li>
+<li><p>Produce a histogram of your results.</p></li>
+</ol>
+<h2 id="pseudorandom-floating-point-and-other-types-of-numbers">Pseudorandom Floating-Point (and other types of ) numbers</h2>
+<p>Another important use of simulation involves using floating-point numbers as random numbers. The <code>Generate</code> function can do this easily using the following:</p>
+<pre><code>Generate(list(float(range = 0 .. 1), 10))</code></pre>
+<p>generates a list length 10 of floating points in the range 0 to 1.</p>
+<h4 id="exercise-1">Exercise</h4>
+<p>Try to generate a list of 10 random numbers of type rational in the range from 0 to 5 with a denominator of 24.</p>
+<h2 id="calculating-using-pseudo-random-numbers">Calculating \(\) using pseudo random numbers</h2>
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/Buffon%27s_needle">Buffon’s Needle Experiment (18th C.)</a></p></li>
+<li><p>Circle in the Square.</p>
+<p>Consider the square \({ (x,y); | ; 0x, 0 y }\) and the quarter circle that falls within \( x<sup>{2}+y</sup>{2} \). The area within the circle is the fraction of the cirle in the square or \(/4\).</p>
+<p>We can use this to estimate a value of \(\).</p>
+<ol type="1">
+<li>Randomly choose points \(x\) and \(y\) in the range [0,1].<br />
+</li>
+<li>Count all points that fall within the circle.</li>
+<li>Find the fraction of the points in the circle.</li>
+<li>Since this fraction should be \(/4\), multiply by 4 to estimate \(\).</li>
+</ol></li>
+</ul>
+<p>We can do this using Maple as the following:</p>
+<pre><code>pts := Matrix(100, 2, Generate(float(range = 0 .. 1), makeproc = true))</code></pre>
+<p>will create a 100 by 2 matrix of random numbers between 0 and 1. Then we can calculate the distance-squared of each row of the matrix:</p>
+<pre><code>dist2 := [seq(add(x^2, x in pts[n, ..]), n = 1 .. 100)]</code></pre>
+<p>and we can count up the number of points that are inside the circle of radius 1 by</p>
+<pre><code>inside_circle:=nops(SelectFirst(100, proc (x) options operator, arrow; evalb(x &lt; 1.0) end proc, dist2))</code></pre>
+<p>The fraction is this over 100 and then the value of <span class="math inline">\(\pi\)</span> is this times 4.</p>
+<pre><code>4*inside_circle/100</code></pre>
+<p>And we I ran this I got 2.8</p>
+<h3 id="exercise-2">Exercise</h3>
+<p>Repeat this with 1000, 10_000 or more points.</p>
+<h2 id="card-game-simulations">Card Game simulations</h2>
+<p>This section shows how we can simulate card games. In particular this will show the probability of getting a particular poker hand, but you can extend this idea to other games.</p>
+<p>To get started, we need a deck of cards. We will use a list of integers from 1 to 52.</p>
+<pre><code>deck := [seq(i, i = 1 .. 52)]</code></pre>
+<p>but this isn’t very interesting and is difficult to tell what the cards themselves are. The following few procedures will help us:</p>
+<p>this takes an integer and returns the rank (ace, 2, …, Jack, queen, king) of a card.</p>
+<pre><code>getRank := proc (n::integer)::string;
+  local ranks := [&quot;A&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;J&quot;, &quot;Q&quot;, &quot;K&quot;];
+  return ranks[ifelse(n mod 13  = 0, 13, n mod 13)]:
+end proc:</code></pre>
+<p>and the following takes an integer as an input and returns a suit:</p>
+<pre><code>getSuit := proc (n::integer)::string;
+  local suits := [&quot;c&quot;, &quot;d&quot;, &quot;h&quot;, &quot;s&quot;];
+  return suits[ifelse(n mod 13= 0, iquo(n, 13), iquo(n, 13)+1)]:
+end proc:</code></pre>
+<p>and the following prints a Card:</p>
+<pre><code>getCard := proc (n::integer)::string;
+   cat(getRank(n), getSuit(n))
+end proc:</code></pre>
+<p>and finally this shows a bunch of cards (hand or a deck)</p>
+<pre><code>showCards := proc (cards::list)::list;
+  return [seq(getCard(i), i in cards)]:
+end proc;</code></pre>
+<p>Now we will use these.</p>
+<pre><code>showCards(deck)</code></pre>
+<p>will print the deck (from “Ac” or ace of clubs to “Ks” or king of spades). Now one thing that is common to nearly every card game is that the deck gets shuffled. To do this in Maple,</p>
+<pre><code>Shuffle(deck)</code></pre>
+<p>will shuffle the integers from 1 to 52. And note that <code>Shuffle</code> is in the <code>Statistics</code> package. In this section, we are only interested in a single hand off the top of the deck, so we can show the cards by</p>
+<pre><code>hand1:=Shuffle(deck)[1..5]
+showCards(hand1)</code></pre>
+<p>will show a single hand. As an example, mine prints out:</p>
+<pre><code>[&quot;2s&quot;, &quot;10d&quot;, &quot;3c&quot;, &quot;2c&quot;, &quot;Kc&quot;]</code></pre>
+<p>which is the 2 of spades, 10 of diamonds, 3 of clubs, 2 of clubs, and king of clubs.</p>
+<h3 id="checking-for-a-full-house">Checking for a full house</h3>
+<p>Recall that a full house is a 5-card hand with 3 cards of the same rank and 2 cards of the same (but different) rank. An example is 10 of clubs, 10 of diamonds, 10 of spades, 4 of hearts, 4 of diamonds. The <a href="https://en.wikipedia.org/wiki/List_of_poker_hands">wikipedia site for poker hands</a> has more information on full house and other standard poker hands.</p>
+<p>Later, we will simulate a large number of draws off a deck to determine the probability of getting a full house. The following code will check if a hand is a full house or not.</p>
+<pre><code>isFullHouse := proc (hand::list)::truefalse;
+local ranks := sort([seq(getRank(i), i in hand)]);
+  return (ranks[1] = ranks[2] and ranks[2] = ranks[3] and ranks[4] = ranks[5]) or
+        (ranks[1] = ranks[2] and ranks[3] = ranks[4] and ranks[4] = ranks[5]):
+end proc:</code></pre>
+<p>There are a couple of important lines here</p>
+<ol type="1">
+<li>The first gets the ranks (ace, 2, 3,…, Q, K) of each card in the hand and sorts the result.</li>
+<li>After the hand is sorted, then there are two possibilities in which there are full houses. Either the first 3 cards have the same rank and the 4th and 5th cards have the same rank or the first 2 cards have the rank and cards 3, 4 and 5 have the same rank. This is compactly written as the return statement.</li>
+</ol>
+<p>To test this if we type:</p>
+<pre><code>isFullHouse(hand1)</code></pre>
+<p>we get false because it is not a full house. However, if we define</p>
+<pre><code>hand2:=[1, 14, 27, 2, 15]
+showCards(hand2)</code></pre>
+<p>which is <code>["Ac", "Ad", "Ah", "2c", "2d"]</code> and</p>
+<pre><code>isFullHouse(hand2)</code></pre>
+<p>returns true.</p>
+<h3 id="simulating-a-large-number-of-poker-hands.">Simulating a large number of poker hands.</h3>
+<p>There is a way to determine the probability of drawing 5 cards by counting the total number of full house hands and dividing by the total number of poker hands (see <a href="https://en.wikipedia.org/wiki/Poker_probability">the wikipedia page on poker hand probabilities</a>), but here we are going to simulate it.</p>
+<p>In short, here are the steps used to repeated check for a full house</p>
+<ol type="1">
+<li>Shuffle a deck of cards</li>
+<li>Take as a hand the top 5 cards</li>
+<li>Test if it a full house. If it is keep a count of it.</li>
+<li>repeat steps 1-3 many, many, many times.</li>
+</ol>
+<p>This naturally has a for loop because there are steps that are repeated many times. Also, we will create a procedure that passes in a number of trials and returns the fraction of full houses.</p>
+<pre><code>fractionFullHouse := proc (n::posint)::numeric;
+  local deck, num_hands, i;
+  deck := [seq(i, i = 1 .. 52)];
+  num_hands := 0;
+  for i to n do
+    if isFullHouse(Shuffle(deck)[1 .. 5]) then
+      num_hands := num_hands+1
+    end if
+  end do;
+  return evalf(num_hands/n)
+end proc</code></pre>
+<p>And now we run it. If I run</p>
+<pre><code>fractionFullHouse(10^5)</code></pre>
+<p>to run 100,000 times, I get 0.001440000000 (or about 0.144%)</p>
+<p>If we run it with more (1 million)</p>
+<pre><code>fractionFullHouse(10^6)</code></pre>
+<p>It takes about 3 minutes, but returns 0.001459 (or about 0.1459%). From the wikipedia page shown about, the answer should be 0.1441%, so both of these answers are close to the actual answer. This shows an example of running a simulation to solve a mathematical problem and simulations are playing a huge role in solving problems today.</p>
+</body>
+</html>
