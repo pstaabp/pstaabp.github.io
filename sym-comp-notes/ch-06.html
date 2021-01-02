@@ -224,210 +224,215 @@ end</code></pre>
 <p>Write a procedure call <code>isOdd</code> that take a positive integer (type <code>posint</code>) and returns <code>true</code> if the number is odd and <code>false</code> if not. Use the modulus with the divisor 2.</p>
 <h2 id="loops">Loops</h2>
 <p>A <em>loop</em> is a series of statements that are repeated either a fixed number of times or until a condition occurs. They can be very helpful if a large number of operations need to be done in a predictable manner.</p>
-<p>###while loops</p>
-<p>Another very common construction for programming is called a while loop. Basically, we want to run a few statements while some boolean statement is true. Here’s a simple example:</p>
-<pre><code>n:=1:
-while n&lt;10 do
-  print(n):
-  n:=n+1:
-end do:</code></pre>
-<p>And that isn’t very interesting, but we can reproduce the <code>seq</code> command crudely in the following way. Let’s say we want to return a list of numbers from 1 to <span class="math inline">\(n\)</span>, where <span class="math inline">\(n\)</span> is a positive integer.</p>
-<pre><code>intList := proc (n::posint)::list;
-   local list := []:
-   local i := 1:
-   while i &lt;= n do
-     list := [op(list), i]:
-     i := i+1:
-   end do:2
-   return list:
-end proc:</code></pre>
+<h3 id="while-loops"><code>while</code> loops</h3>
+<p>Another very common construction for programming is called a while loop. Basically, we want to run a few statements while some boolean statement is true.</p>
+<p>Here’s the general framework</p>
+<pre><code>while bool_statement
+
+
+end</code></pre>
+<p>anything can go inside the block and the <code>bool_statement</code> is anything that returns a boolean. This could be a simple check for equality or inequality or calling a function that returns a boolean.</p>
+<p>Here’s a simple example:</p>
+<pre><code>n=1
+while n&lt;10
+  n=n+1
+end</code></pre>
+<p>and you should see as output the individual lines for <code>n</code>. Note the only line inside the while loop is the assignment <code>n=n+1</code> which takes the current value for the number <code>n</code> adds one to it and then assigns that to <code>n</code>. This is a simple way to update the value of a variable.</p>
+<p>And that isn’t very interesting, but we can reproduce the <code>:</code> command crudely in the following way. Let’s say we want to return a list of numbers from 1 to <span class="math inline">\(n\)</span>, where <span class="math inline">\(n\)</span> is a positive integer.</p>
+<pre><code>function result = intList(n)
+  result=ones(1);
+  i=2;
+  while i&lt;=n
+    result(end+1)=i;
+    i = i+1;
+  end
+end</code></pre>
 <p>A few things to note about this:</p>
 <ul>
-<li>Putting <code>local</code> in front of a variable tells Maple the variables are local to the procedure. That is, don’t use the values outside the procedure if they exist.</li>
-<li>The line <code>list:=[op(list), i]</code> simply adds the value of <code>i</code> to the end of the list. Other languages have a <code>push</code> command to do this.<br />
-</li>
-<li>The <code>op</code> command in the line strips the brackets off of the list, returning a sequence.</li>
+<li>The first line makes an array with a single 1 in it.</li>
+<li>The while loop is run with i is less than or equal to n. </li>
+<li>The line <code>result(end+1)=i</code> is a way to add another element to the end of an array. In this case we add the next value which is kept track in the variable <code>i</code>.</li>
 </ul>
 <p>Let’s run some examples:</p>
 <ul>
 <li>typing <code>intList(6)</code> returns <code>[1,2,3,4,5,6]</code></li>
 <li>typing <code>intList(10)</code> returns <code>[1,2,3,4,5,6,7,8,9,10]</code></li>
 </ul>
-<p>The following is a more interesting example. If you have a positive integer <span class="math inline">\(n\)</span>, the following returns a list of all factors of <span class="math inline">\(n\)</span>. Recall that for a positive integer <span class="math inline">\(n\)</span>, the factors of <span class="math inline">\(n\)</span> are all numbers that divide <span class="math inline">\(n\)</span> with 0 remainder. Both 1 and <span class="math inline">\(n\)</span> are always factors of <span class="math inline">\(n\)</span>.</p>
-<pre><code>allfactors:=proc(num::posint)::posint;
-  local factors := [1]:
-  local n := 2:
-  while n &lt;= num do
-    if num mod n = 0 then
-      factors := [op(factors), n]:
-    end if:
-    n := n+1:
-  end do:
-  return factors:
-end proc:</code></pre>
+<h3 id="number-theory-examples">Number Theory Examples</h3>
+<p>The next few examples come from number theory. Since primes are key in this field, we will create functions that test if an integer is prime. Recall the following defintion:</p>
+<p><em>A number <span class="math inline">\(n\)</span> is prime if the only factors are 1 and itself.</em></p>
+<p>If we can find the factors of a number, <span class="math inline">\(n\)</span> then testing for prime isn’t too hard. So we start with a function that finds the factors of the number <span class="math inline">\(n\)</span>.</p>
+<p>The key part of this is to test if some number, <span class="math inline">\(i\)</span> is a factor. We will use the remainder of <span class="math inline">\(n \div i\)</span> which is built-in as the modulus (<code>mod</code>). For example</p>
+<ul>
+<li><code>mod(7,3)</code> returns 1.</li>
+<li><code>mod(24,4)</code> returns 0</li>
+</ul>
+<p>Here’s a function that will find all of the factors of a given number</p>
+<pre><code>function factors = findAllFactors(n)
+  factors=ones(1); % we know that 1 is a factor of every number
+  i=2;
+  while i&lt;n
+    if mod(n,i) == 0 % if i is a multiple of n, then it&#39;s a factor
+      factors(end+1)=i;
+    end
+    i = i+1;
+  end
+  factors(end+1)=n; % we also know that n is a factor of itself.
+end</code></pre>
 <p>And here’s a couple of examples of this</p>
 <ul>
-<li>type <code>allfactors(6)</code> returns <code>[1,2,3,6]</code></li>
-<li>type <code>allfactors(29)</code> returns <code>[1,29]</code></li>
+<li>type <code>findAllFactors(6)</code> returns <code>[1,2,3,6]</code></li>
+<li>type <code>findAllFactors(29)</code> returns <code>[1,29]</code></li>
 </ul>
-<p>Another possible procedure that you want is to determine if a number is prime. Although this is built-in, let’s find a way to do this using the allfactors command.</p>
-<pre><code>isPrime := proc(n::posint)::boolean;
-  local factors := allfactors(n);
-  return evalb(factors[2] = n)
-end proc:</code></pre>
-<p>Alternatively, prime numbers have only 2 numbers in factor list and so it can be checked if the length (using the <code>nops</code>, for number of operands, command) is 2.</p>
-<pre><code>isPrime := proc(n::posint)::boolean;
-  return evalb(nops(allfactors(n))=2)
-end proc:</code></pre>
-<p>where <code>evalb</code> will return true or false instead of (perhaps) the equation. Note that this nests a number of commands that could be done as steps.</p>
+<h4 id="checking-if-a-number-is-prime">Checking if a number is prime</h4>
+<p>We mentioned above that an important aspect of number theory is prime numbers. Here’s a function that will test this:</p>
+<pre><code>function p = isPrime(n)
+  factors = findAllFactors(n);
+  p = factors(2)==n;
+end</code></pre>
+<p>Alternatively, prime numbers have only 2 numbers in factor list and so it can be checked if the length of the factors is 2.</p>
+<pre><code>function p = isPrime(n)
+  p = length(findAllFactors(n)) == 2;
+end</code></pre>
 <p>Another nice use of all factors is the use of a theorem that says that the total number of factors is even (factors pair up) unless the number is a perfect square. We will then use this and the <code>isOdd</code> function you wrote above to write an <code>isPerfectSquare</code> procedure.</p>
-<pre><code>isPerfectSquare := proc(n::nonnegint)::truefalse;
-  if isOdd(nops(allfactors(n))) then
-    return true
-  else
-    return false
-  end if
-end proc:</code></pre>
-<p>or to even shorten this more, we can write this as:</p>
-<pre><code>isPerfectSquare := proc(n::nonnegint)::truefalse;
-  return isOdd(nops(allfactors(n)))
-end proc:</code></pre>
+<pre><code>function p = isPerfectSquare(n)
+  factors = findAllFactors(n);
+  p = isOdd(length(factors));
+end</code></pre>
 <h4 id="infinite-loops">Infinite Loops</h4>
-<p>It is common in a while loop to keep running it forever. This occurs if you don’t have some code that will stop it. A couple of things:</p>
+<p>Although not what is generally intended, it is common to write a while loop that doesn’t stop (in fact while writing these notes I unintentionally created one). Here’s some things to consider when writing a for loop.</p>
 <ul>
 <li><p>Make sure something is changing in your loop. If you intend to stop the loop on an index, make sure the index is updating.</p></li>
 <li><p>Look at your code and see if you have something that you think will stop the loop. What ever is in the boolean statement needs to eventually switch.</p></li>
-<li><p>Stop the code if you need to. Maple has a Stop Sign on the toolbar. This will interrupt the kernel. Often you will need to do this, but this may not actually give you control back. You can also restart the kernel using the circle arrow on the toolbar.</p></li>
-<li><p>If you can’t figure out why it is in an infinite loop, put print statements inside to print out values of variables.</p></li>
+<li><p>Stop the code if you need to. To stop any code running in Matlab, enter CTRL-C (that is, hold the control key, then the <code>C</code> character).</p></li>
+<li><p>If you can’t figure out why it is in an infinite loop, make sure you don’t have semicolons on lines inside the loop so you can see what’s happening.</p></li>
 </ul>
 <h3 id="compound-booleans-in-an-if-statement-or-while-loop">Compound booleans in an <code>if</code> statement or <code>while</code> loop</h3>
-<p>Recall that a boolean is something that evaluates to true or false and is needed in an <code>if</code> statement or <code>while</code> loop. Often more than one boolean is needed. This is called a compound boolean and is created with either an <code>and</code> or an <code>or</code>.</p>
+<p>Recall that a boolean is something that evaluates to true or false and is needed in an <code>if</code> statement or <code>while</code> loop. Often more than one boolean is needed. This is called a compound boolean and is created with either an <code>&amp;&amp;</code> for and or an <code>||</code> for or.</p>
 <ul>
 <li><p>An <code>or</code> compound statement. If either or both are true, the result is true, otherwise false.</p>
 <ul>
-<li>true or true is true</li>
-<li>true or false is true</li>
-<li>false or true is true</li>
-<li>false or false is false</li>
+<li><code>true</code> or <code>true</code> is <code>true</code></li>
+<li><code>true</code> or <code>false</code> is <code>true</code></li>
+<li><code>false</code> or <code>true</code> is <code>true</code></li>
+<li><code>false</code> or <code>false</code> is <code>false</code></li>
 </ul></li>
 <li><p>An <code>and</code> compound statement. Both must be true to be true, otherwise false</p>
 <ul>
-<li>true and true is true</li>
-<li>true and false is false</li>
-<li>false and true is false</li>
-<li>false and false is false</li>
+<li><code>true</code> and <code>true</code> is <code>true</code></li>
+<li><code>true</code> and <code>false</code> is <code>false</code></li>
+<li><code>false</code> and <code>true</code> is <code>false</code></li>
+<li><code>false</code> and <code>false</code> is <code>false</code></li>
 </ul></li>
 </ul>
-<p>Here’s an example, where we just print out all odd perfect squares less than 100. (Note: there is a better way to do this, but the point is to show how to use a compound statement)</p>
-<pre><code>n:=1:
-while n&lt;=100 do
-  if isOdd(n) and isPerfectSquare(n) then
-    print(n)
-  end if:
-  n:=n+1:
-end do:</code></pre>
-<p>In addition, the <code>not</code> command switches a true to false and a false to true. A simple version of this would be if we had an <code>isOdd</code> function as written above, then the following would be an <code>isEven</code> function:</p>
-<pre><code>isEven:=proc(n::nonnegint)::truefalse;
-  return not isOdd(n)
-end proc:</code></pre>
+<p>Here’s an example, where we make an array with all odd perfect squares less than 100. (Note: there is a better way to do this, but the point is to show how to use a compound statement)</p>
+<pre><code>odd_perfects=ones(1); % we know 1 is an odd perfect square
+n=2;
+while n&lt;=100
+  if isOdd(n) &amp;&amp; isPerfectSquare(n)
+    odd_perfects(end+1) = n;
+  end
+  n=n+1;
+end
+odd_perfects</code></pre>
+<p>In addition, the <code>~</code> operator switches a true to false and a false to true. A simple version of this would be if we had an <code>isOdd</code> function as written above, then the following would be an <code>isEven</code> function:</p>
+<pre><code>function even = isEven(n)
+  even = ~isOdd(n);
+end</code></pre>
 <h3 id="more-functions-with-prime-numbers">More functions with prime numbers</h3>
 <p>We want to find the smallest prime number bigger than a number n. We will make a procedure that return the next prime.</p>
-<pre><code>theNextPrime := proc(n::integer)::integer;
-  local k := n+1:
-  while not(isPrime(k)) do
-     k := k+1
-  end do:
-  return k:
-end proc:</code></pre>
-<p>###Exercise</p>
-<p>A perfect number is a positive integer <span class="math inline">\(n\)</span>, that has the property that the sum of the factors (other than <span class="math inline">\(n\)</span> itself) equals <span class="math inline">\(n\)</span>. We will write a few procedures here to find perfect numbers.</p>
+<pre><code>function p = theNextPrime(n)
+  p = n+1;
+  while ~isPrime(p)
+    p = p+1;
+  end
+end</code></pre>
+<ul>
+<li>The return variable <code>p</code> will start out one larger than <code>n</code>.</li>
+<li>The while loop runs while p is not prime.</li>
+<li>p is just incremented by 1 each time through.</li>
+</ul>
+<p>As some examples:</p>
+<ul>
+<li><code>theNextPrime(17)</code> returns <code>19</code></li>
+<li><code>theNextPrime(19)</code> returns <code>23</code></li>
+<li><code>theNextPrime(1000)</code> returns <code>1009</code></li>
+</ul>
+<h4 id="exercise-1">Exercise</h4>
+<p>A perfect number is a positive integer <span class="math inline">\(n\)</span>, that has the property that the sum of the factors (other than <span class="math inline">\(n\)</span> itself) equals <span class="math inline">\(n\)</span>. The two smallest examples are 6 and 28.<br />
+* The factors of 6 are 1,2,3 and 6. The sum of the first three are 6. * The factors of 28 are 1,2,4,7,14,28. The sum of the first 5 is 28.</p>
+<p>We will write a few procedures here to find perfect numbers.</p>
 <ol type="1">
-<li><p>Write a procedure called <code>isPerfect</code> which takes a positive integer, <span class="math inline">\(n\)</span> and return either true or false on whether or not <span class="math inline">\(n\)</span> is a perfect number. (Hint: use the built-in function <code>add</code> which will take a list of numbers and return the sum.)</p></li>
+<li><p>Write a procedure called <code>isPerfect</code> which takes a positive integer, <span class="math inline">\(n\)</span> and return either true or false on whether or not <span class="math inline">\(n\)</span> is a perfect number. (Hint: use the built-in function <code>sum</code> which will take an array of numbers and return the sum. Also, it’s easier to check if the sum of all factors is twice the number <span class="math inline">\(n\)</span>)</p></li>
 <li><p>Test your procedure on some known perfect numbers (6 and 28) and others (like all other numbers less than 100 are not perfect.)</p></li>
 <li><p>Write a procedure called <code>nextPerfect</code> which takes an integer, <span class="math inline">\(n\)</span> and return the next perfect number greater than <span class="math inline">\(n\)</span>.</p></li>
-<li><p>Test your procedure to find the first few perfect numbers. (Don’t go too big or Maple will bog down. )</p></li>
+<li><p>Test your procedure to find the first few perfect numbers. (Don’t go too big or Matlab will bog down. )</p></li>
 </ol>
 <h3 id="for-loops">For loops</h3>
+<p>A for loop is a loop that goes through a list of numbers.</p>
 <p>The following is a simple for loop that prints out the numbers 1 to 10</p>
-<pre><code>for i from 1 to 10 do
-  print(i):
-end do:</code></pre>
+<pre><code>for i=1:10
+  i
+end</code></pre>
 <p>If you want to skip numbers or count backwards, the following</p>
-<pre><code>for i from 1 by 2 to 19 do
-  print(i):
-end do:</code></pre>
-<pre><code>for i from 10 by -1 to 1 do
-  print(i):
-end do:</code></pre>
+<pre><code>for i=1:2:19
+  i
+end</code></pre>
+<pre><code>for i=10:-1:1
+  i
+end</code></pre>
 <p>and the following adds numbers in a list.</p>
-<pre><code>s := 0;
-for i in [3, 5, 7, 11, 13, 19] do
-  s := s+i
-end do</code></pre>
-<p>Note: there is a command called <code>add</code> that will also do the above.</p>
-<pre><code>add([3,5,7,11,13,19])</code></pre>
+<pre><code>s = 0;
+for i=[3, 5, 7, 11, 13, 19]
+  s = s+i;
+end
+s</code></pre>
+<p>which returns 58.</p>
+<p>Note: there is a command called <code>sum</code> that will also do the above.</p>
+<pre><code>sum([3,5,7,11,13,19])</code></pre>
 <p>This isn’t a very interesting example, but shows the syntax of a for loop. Often a for loop is used in conjunction with a procedure. Above, we used a <code>while</code> loop to create an integer list. However, it was a loop with a fixed number of steps in which a <code>for</code> loop is better to use. Here’s a different way to create the integer list:</p>
-<pre><code>intList := proc(n::posint)::list;
-   local li := [];
-   local i;
-   for i to n do
-     li := [op(li), i]
-   end do;
-   return li
-end proc</code></pre>
-<p>Also, there are two variables that live inside the procedure: <code>i</code> and <code>li</code>. Because they are not needed outside the procedure, we declare them <strong>local</strong>. If you don’t declare them as local, Maple will give a warning.</p>
-<p>If Maple didn’t have a factorial builtin, here’s a way we could handle it.</p>
-<pre><code>facty:=proc(n::nonnegint)::posint;
-   local i,fact:=1:
-   for i from 1 to n do
-     fact:=fact*i:
-   end do:
-   return fact:
-end proc:</code></pre>
+<pre><code>function result = intList2(n)
+  result=ones(1);
+  for i=2:n
+    result(end+1)=i;
+  end
+end</code></pre>
+<p>This is nearly identical to the <code>intList</code> function above except that we use a for loop which is shorter because we don’t need to include the line that increments the index.</p>
+<p>Running <code>intList2(6)</code> returns <code>[1 2 3 4 5 6]</code>, which is the same as <code>1:6</code>.</p>
+<p>Recall that the factorial function <span class="math inline">\(n!\)</span> is <span class="math display">\[ n! = 1 \cdot 2 \cdot 3 \cdots n\]</span> and although Matlab has this built-in as <code>factorial</code>, we’ll write our own:</p>
+<pre><code>function result = fact(n)
+  result = 1;
+  for i=1:n
+    result = result*i;
+  end
+end</code></pre>
 <p>and the heart of this is that the for loop multiplies all of the numbers from 1 to n together (it does this one step at a time).</p>
-<p>Note: if you call this function <code>factorial</code>, you will get a warning from Maple, which is why it is called <code>facty</code>.</p>
+<h4 id="exercise-2">Exercise</h4>
+<p>Compare the <code>fact</code> function for a few small nonnegative integers with that of <code>factorial</code> to ensure that they return the same result.</p>
 <h2 id="while-loops-versus-for-loops">While Loops Versus For Loops</h2>
 <p>No this, isn’t a smackdown between these two. A big question often is when should I use a <code>while</code> loop and when should I use a <code>for</code> loop. The general rule of thumb is:</p>
 <ul>
 <li>If you know that you need to run code for a fixed number of times, use a for loop</li>
-<li>If you need to do something in a list and map doesn’t work well, use a for loop.</li>
-<li>If you don’t use a while loop. Generally, the <em>doing</em> something in the loop will affect how many times the loop is run.</li>
-</ul>
-<h2 id="types">Types</h2>
-<p>All of these procedures have the arguments and return typed. That is, it is important to say what type of Maple object you can pass it. Here’s a list of many common types:</p>
-<ul>
-<li><strong>integer</strong>: the standard mathematical integer</li>
-<li><strong>posint</strong>: positive integer. That is 1,2,3,…</li>
-<li><strong>negint</strong>: negative integer. That is, -1, -2, -3, ….</li>
-<li><strong>nonnegint</strong>: non negative integer, 0, 1, 2, 3 …</li>
-<li><strong>nonposint</strong>: non-positive integer: 0,-1,-2,-3,…</li>
-<li><strong>rational</strong>: rational (fraction) number.</li>
-<li><strong>realcons</strong>: a real constant</li>
-<li><strong>numeric</strong>: a number (integer, real, rational)</li>
-<li><strong>truefalse</strong>: a boolean (a true or false value)</li>
-<li><strong>list</strong>: a list, like <code>[1,2,3]</code></li>
-<li><strong>procedure</strong>: a mathematical function.</li>
-<li><strong>range</strong>: an interval, like <code>1..2</code> all numbers between 1 and 2.</li>
+<li>If you need to do something to everything in an array, a for loop is good, although there might be other ways without loops to do these.</li>
+<li>If you don’t know how many times you need to go through a block of code, use a while loop. Generally this means you need to do something until a condition occurs.</li>
 </ul>
 <h2 id="recursion">Recursion</h2>
-<p>Above, we saw how to compute the factorial of a number using a for loop. There’s another way to do this. We can define the factorial in the following way: <span class="math display">\[ n!=\begin{cases}1&amp;n=0\newline n\cdot(n-1)!&amp;\text{otherwise}\end{cases}\]</span></p>
+<p>Above, we saw how to compute the factorial of a number using a for loop. There’s another way to do this. We can define the factorial in the following way: <span class="math display">\[ n!=\begin{cases}1&amp;n=0\\ 
+n\cdot(n-1)!&amp;\text{otherwise}\end{cases}\]</span></p>
 <p>The big difference is that inside the function is a call to the function. This is what is called a recursive function. Often this is very helpful and the factorial is a great example of this. We can write the factorial this way in the following:</p>
-<pre><code>factr := proc(n::nonnegint)::posint;
-   if n = 0 then
-      return 1
-   else
-      return n*factr(n-1);
-   end if
-end proc:</code></pre>
-<p>or using the <code>ifelse</code> function:</p>
-<pre><code>factr := proc(n::nonnegint)::posint;
-   return ifelse(n=0,1,n*factr(n-1));
-end proc:</code></pre>
-<h3 id="exercise-1">Exercise</h3>
+<pre><code>function result = factr(n)
+  if n==0
+    result = 1;
+  else
+    result = n * factr(n-1);
+  end
+end</code></pre>
+<p>Notice that this looks just like other piecewise functions, like the absolute value, defined above.</p>
+<h3 id="exercise-3">Exercise</h3>
 <ol type="1">
 <li>Try the function <code>factr</code> for various values of <span class="math inline">\(n\)</span>.<br />
 </li>
-<li>Compare the results to the built-in factorial !.</li>
+<li>Compare the results to the built-in factorial.</li>
 </ol>
 <h2 id="another-fun-recursive-example">Another Fun Recursive example</h2>
 <p>Here’s another fun example. A number <span class="math inline">\(n\)</span> is called <em>happy</em> by the following 1. Take the digits of <span class="math inline">\(n\)</span> and square each one. 2. Sum the squares.<br />
@@ -441,188 +446,48 @@ end proc:</code></pre>
 </li>
 <li>It has been proven that any unhappy number will eventually hit this cycle.</li>
 </ul>
-<p>To write this in Maple, first, it is helpful to have a procedure that splits any positive integer into its digits. Hereܙs such a procedure:</p>
-<pre><code>splitDigits := proc(n::posint)::list;
-   local list := [], k := n;
-   while 9 &lt; k do
-      list := [k mod 10, op(list)];
-      k := iquo(k, 10)
-   end do;
-   return [k, op(list)]
-end proc:</code></pre>
-<p>and test this a bit using some 3 and 4 digits numbers.</p>
+<p>First, it is helpful to have a procedure that splits any positive integer into its digits. Hereܙs such a function:</p>
+<pre><code>function d=splitDigits(n)
+  d=arrayfun( @str2double, num2str(n));
+end</code></pre>
+<p>Basically this works because it takes the number n and turns it into a string and the the function <span class="citation" data-cites="str2double">@str2double</span> does the reverse, however applied inside the <code>arrayfun</code>, the string is an array of characters.</p>
+<p>Test it a bit with a few numbers.</p>
 <p>Then we can write a <code>isHappy</code> procedure in the following way.</p>
-<pre><code>isHappy := proc(n::posint)::truefalse;
-  local squares, sum:
-  if n = 1 then return true end if;
-  if n = 4 then return false end if;
-  squares := map(k-&gt;k^2,splitDigits(n)):
-  sum := add(squares):
-  return isHappy(sum):
-end proc:</code></pre>
+<pre><code>function h = isHappy(n)
+  if n==1
+    h = true;
+  elseif n==4
+    h = false;
+  else
+    digits = splitDigits(n);
+    sum_of_squares = sum(arrayfun(@(n) n^2,digits)); % sum the squares of the digits
+    h = isHappy(sum_of_squares); 
+  end
+end</code></pre>
 <p>A few things about this:</p>
 <ul>
 <li>note that this is recursive in that it calls itself.<br />
 </li>
-<li>The last three list can be written compactly as <code>return isHappy(add(k^2, k in splitDigits(n)))</code></li>
+<li>If you want this more compactly, writ the last <code>else</code> block as <code>h = isHappy(sum(arrayfun(@(n) n^2,splitDigits)))</code> which is just a nested version.</li>
 </ul>
 <p>Let’s now say that we wish to find all numbers less than 100 that are happy. To run this command on every number between 1 and 100, can be done many ways. A for loop comes to mind, but using the <code>seq</code> command is better:</p>
-<pre><code>allhappies:=[seq(isHappy(n),n=1..100)]</code></pre>
-<p>and you will see a list of true or false and perhaps that isn’t that helpful. We can use the <code>Search</code> and <code>SearchAll</code> commands in the <code>ListTools</code> package to help us out.</p>
-<pre><code>with(ListTools)</code></pre>
-<p>and if we have the list</p>
-<pre><code>letters:=[&quot;a&quot;,&quot;c&quot;,&quot;a&quot;,&quot;e&quot;,&quot;f&quot;,&quot;f&quot;,&quot;a&quot;]</code></pre>
-<p>We can use <code>Search</code> to find where the letter “a” is</p>
-<pre><code>Search(&quot;a&quot;, letters);</code></pre>
-<p>and this returns 1. If instead we use</p>
-<pre><code>SearchAll(&quot;a&quot;, letters);</code></pre>
-<p>we get 1,3,7, which are the locations of the “a”s above.</p>
-<p>So if we use</p>
-<pre><code>SearchAll(true,allhappies)</code></pre>
-<p>we get a list of all of the happy numbers up to 100.</p>
-<p>###Exercise</p>
-<p>A fibonacci number is defined as <span class="math inline">\(F(1)=1, F(2)=1\)</span>, then <span class="math inline">\(F(n)=F(n-1)+F(n-2)\)</span> for <span class="math inline">\(n \geq 3\)</span>. This is naturally a recursive function. Write a procedure <span class="math inline">\(F\)</span> that take a positive integer <span class="math inline">\(n\)</span> and returns the <span class="math inline">\(n\)</span>th Fibonacci number using recursion. Find the first 20 Fibonacci number (hint: use the <code>seq</code> command)</p>
-<h2 id="rootfinding-techniques">Rootfinding techniques</h2>
-<p>Before continuing with this chapter, we look at a way to find the zeros (or roots) of a function. Although Maple (and most CASs) have this built-in, we examine the details here.</p>
-<p>Consider the function <span class="math inline">\(f(x)=x^{2}-2\)</span>, which is plotted below:</p>
-<figure>
-<img src="images/ch05/plot01.png" alt="Plot of x^{2}-2" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}-2\)</span></figcaption>
-</figure>
-<p>It has two roots <span class="math inline">\(x=\sqrt{2}\)</span> and <span class="math inline">\(x=-\sqrt{2}\)</span>. We will use this example to find a numerical approximation of this.</p>
-<p>If we evaluate the function at <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=2\)</span>, note that <span class="math inline">\(f(0)=-2\)</span> and <span class="math inline">\(f(2)=2\)</span>. The intermediate value theorem states that if a function <span class="math inline">\(f\)</span> is continuous on an interval <span class="math inline">\([a,b]\)</span>, then <span class="math inline">\(f\)</span> takes on all values (<span class="math inline">\(y\)</span>-values or heights) between <span class="math inline">\(f(a)\)</span> and <span class="math inline">\(f(b)\)</span>. Specifically if <span class="math inline">\(d\)</span> is between <span class="math inline">\(f(a)\)</span> and <span class="math inline">\(f(b)\)</span>, then there exists at least one value <span class="math inline">\(c\)</span> such that <span class="math inline">\(f( c )=d\)</span>. See <a href="http://www.mathsisfun.com/algebra/intermediate-value-theorem.html">this page</a> for more information.</p>
-<p>For this example, <span class="math inline">\(f\)</span> is continuous, so <span class="math inline">\(f\)</span> takes on all values between <span class="math inline">\(f(0)=-2\)</span> and <span class="math inline">\(f(2)=2\)</span>, including 0. That is, there is a number <span class="math inline">\(c\)</span> such that <span class="math inline">\(f( c )=0\)</span>. The value of <span class="math inline">\(c\)</span> is the root we seek.</p>
-<h2 id="bisection-method">Bisection Method</h2>
-<p>The bisection method exploits the intermediate value theorem to make sure that we always have a interval that contains a root. First, we will walk through the bisection method for the example and then write it down in general.</p>
-<p>Let <span class="math inline">\(\tilde{a}\)</span> be the midpoint between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> or <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=2\)</span> in our case. That is <span class="math display">\[\tilde{a} = \frac{a+b}{2} = \frac{0+2}{2}=1\]</span> There are three choices for <span class="math inline">\(\tilde{a}\)</span>. Either it is 0, then you have found the root or it is less than zero or greater than zero. Since <span class="math inline">\(f(1)=-1\)</span>, then it is less than zero. Because our left endpoint was less than zero, we replace it with zero. That is our interval goes from <span class="math inline">\([0,2]\)</span> to <span class="math inline">\([1,2]\)</span>.</p>
-<p>And then we repeat. The midpoint of this interval is 1.5 and <span class="math inline">\(f(1.5)=1.5^{2}-2=0.25\)</span> and since this is positive, we replace the 2 with 1.5 and our new interval is <span class="math inline">\([1,1.5]\)</span>.</p>
-<p>###Exercise</p>
-<p>Find the next 3 intervals using this technique. Recall that you always need to have the function value of one side be less than and the other be greater than 0.</p>
-<p>###Stop this crazy thing!!!</p>
-<p>Since you are wise, you notice that you can continue this process forever and you just don't have that much time. For example, on the tenth iteration, you should have the interval</p>
-<pre><code>[1.41406250,1.416015625]</code></pre>
-<p>and as long as the condition that the function values of two endpoints are opposite signs, then there is a guarantee of a root inside this interval.</p>
-<p>Again, we can go on forever, but a good place to stop (often called a halting condition) is when the length of the interval shrinks to a particular size. Let’s say that we stop when the length is <span class="math inline">\(10^{-4}\)</span> and then we should return our best guess at the root, which may be the midpoint of the final interval. If we stop when the interval is less than <span class="math inline">\(10^{-4}\)</span> and take this midpoint, the answer will be 1.414215088.</p>
-<p>###Creating a Procedure to do this</p>
-<p>This section will slowly build up a procedure that does this. The goal of this section is to learn how to take an algorithm (explained above) and make a procedure that does this.</p>
-<ol type="1">
-<li><p>Shell of a procedure. Let’s start with the declaration of the procedure. We want to take a function and an interval in and return an approximate root.</p>
-<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
-
-end proc:</code></pre>
-<p>This will just do that. Note that a function type is called a <code>procedure</code> and an interval is called a <code>range</code>. The return type will be a number, so <code>numeric</code>. It’s a good idea to just run this at this point.</p></li>
-<li><p>Define the midpoint and return it.</p>
-<p>Next, let’s do something super simple and define the midpoint and then return it. To get the endpoints of an interval or range, use <code>lhs</code> and <code>rhs</code>, which stands for left hand side and right hand side respectively.</p>
-<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
-   local mid:=0.5*(lhs(interval)+rhs(interval)):
-    return mid:
-end proc:</code></pre>
-<p>and then execute this block of code. Make sure there are no errors. Then you can test it using the example above by typing <code>bisect(x-&gt;x^2,0..2)</code> and you should get the answer 1.0.</p></li>
-<li><p>Create a new interval</p>
-<p>Now, let’s also create a variable called <code>inter</code> that is the new interval. Recall that you want to make sure that the endpoints of the new interval are opposite signs. The easiest way to check this is to determine if the product of the function values is negative.</p>
-<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
-   local mid:=0.5*(lhs(interval)+rhs(interval)):
-   local inter:=interval:
-   if f(lhs(inter))*f(mid) &lt; 0 then
-       inter := lhs(inter) .. mid
-   else
-      inter := mid .. rhs(inter)
-   end if:
-   return inter:
-end proc:</code></pre>
-<p>If we test this with <code>bisect(x-&gt;x^2-2,0..2)</code> we get <code>1.0 .. 2</code></p>
-<p>which means that the root is in the interval [1.0,2.0].</p></li>
-<li><p>Put in a loop to run a few times.</p>
-<p>Next, we will run this a few times using a <code>for</code> loop to test the procedure.</p>
-<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
-   local mid:=0.5*(lhs(interval)+rhs(interval)):
-   local inter:=interval:
-   local i:
-
-   for i to 4 do
-     if f(lhs(inter))*f(mid) &lt; 0 then
-       inter := lhs(inter) .. mid
-     else
-       inter := mid .. rhs(inter)
-     end if:
-     mid := .5*(lhs(inter)+rhs(inter)):
-     print(inter):
-    end do;
-  return mid
-end proc:</code></pre>
-<p>This will print out the interval to make sure it is working. You should see the interval printed 4 times and then the midpoint returned (and then printed): <code>1.0 .. 2  1.0 .. 1.50  1.250 .. 1.50  1.3750 .. 1.50  1.43750</code></p>
-<p>so this appears that the root is 1.43750 and is guaranteed to be in the interval [1.375,1.5]</p></li>
-<li><p>Replace the for loop with a while loop</p>
-<p>We don’t want to run this a fixed number of times, but instead, run this until the halting condition.</p>
-<p>We will execute the loop while the length of the interval is greater than <span class="math inline">\(10^{-4}\)</span>.</p>
-<pre><code>bisect := proc (f::procedure, interval::range)::numeric;
-  local mid := .5*(lhs(interval)+rhs(interval));
-  local inter := interval;
-  while rhs(inter)-lhs(inter) &gt; 10^(-4) do
-    if f(lhs(inter))*f(mid) &lt; 0 then
-      inter := lhs(inter) .. mid
-    else
-      inter := mid .. rhs(inter)
-    end if;
-    mid := .5*(lhs(inter)+rhs(inter));
-    print(inter):
-  end do;
-  return mid:
-end proc:</code></pre>
-<p>If we test the procedure by typing: <code>bisect(x-&gt;x^2-2,0..2)</code>, you will get 1.414215088. Note that we can determine the number of digits of accuracy for <span class="math inline">\(\sqrt{2}\)</span> by typing <code>evalf(|sqrt(2)-1.414215088|)</code> will result in 0.000001526 or 5 digits of accuracy.</p></li>
-<li><p>Adding a parameter for the halting condition.</p>
-<p>If we want the halting condition to be smaller than <span class="math inline">\(10^{-4}\)</span>, we will make it a parameter. Here’s how that works.</p>
-<pre><code>bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
-  local mid := .5*(lhs(interval)+rhs(interval));
-  local inter := interval;
-  while rhs(inter)-lhs(inter) &gt; eps do
-    if f(lhs(inter))*f(mid) &lt; 0 then
-      inter := lhs(inter) .. mid
-    else
-      inter := mid .. rhs(inter)
-    end if;
-    mid := .5*(lhs(inter)+rhs(inter));
-  end do;
-  return mid:
-end proc:</code></pre>
-<p>and we have removed the print statement because all seems to be working well. Now if we call this procedure as above, <code>bisect(x-&gt;x^2-2,0..2)</code> then we get the same result as above.</p>
-<p>But this allows us to get more precision. Type <code>bisect(x-&gt;x^2-2,0..2,eps=10^(-7))</code></p>
-<p>gives this time 8 digits of accuracy.</p></li>
-<li><p>Adding some help and error checking to this</p>
-<p>It’s often helpful to add a description to the function, so here’s the final result:</p>
-<pre><code>bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
-  description &quot;This procedure performs the bisection method on the function f with given range.  The parameter eps will determine  the halting condition.&quot;
-  local mid := .5*(lhs(interval)+rhs(interval));
-  local inter := interval;
-  if f(rhs(inter))*f(lhs(inter))&gt;0 then
-     error &quot;A root is not guaranteed to be in this interval.&quot;:
-  end if:
-  while rhs(inter)-lhs(inter) &gt; eps do
-    if f(lhs(inter))*f(mid) &lt; 0 then
-      inter := lhs(inter) .. mid
-    else
-      inter := mid .. rhs(inter)
-    end if;
-    mid := .5*(lhs(inter)+rhs(inter));
-  end do;
-  return mid:
-end proc:</code></pre>
-<p>The description is helpful to remember what the function does. If you type: <code>Describe(bisect)</code> You will see <code># This procedure performs the bisection method on the function f with given  # range.  # The parameter eps will determine the halting condition.  # The procedure returns the root of the function f within the given interval  # such that the  # interval is no wider than eps.  bisect( f::procedure, interval::range,      { eps := .1e-3 } ) :: numeric</code></p>
-<p>and give a brief description of the function.</p>
-<p>Also, we now have error checking built it.</p></li>
-</ol>
-<p>We will use this procedure in a homework problem.</p>
-<!-- Creating a Package or Module-->
-<!-- We have loaded packages using the `with` command.  In this section, we will create a package of common tools.  For example, many of the examples in this chapter fall into the realm of number theory, so let's create a package called `NumberTheory`.  The shell of the package will look like: -->
-<!-- ```
-NumberTheory:=module()
-
-
-end module:
-``` -->
-<!-- and once it is saved in the correct form, by typing `with(NumberTheory)`, we will get all the commands in the package/module. Let&#8217;'s start simple.  We will put the `allfactors` and `isPrime` procedures in this module:
-
-(NEED TO FINISH THIS) -->
-<!-- Troubleshooting
-------- -->
+<pre><code>arrayfun(@isHappy,1:100)</code></pre>
+<p>This isn’t very helpful results though. We’ll look at the <code>find</code> function</p>
+<h4 id="finding-elements-in-an-array">Finding elements in an array</h4>
+<p>The <code>find</code> function is very helpful. We’re going to use it to help us understand Happy numbers, but first let’s do some other examples. Define <code>A</code> to be</p>
+<pre><code>A=1:10</code></pre>
+<p>we can find all of the number greater that 5 with</p>
+<pre><code>find(A &gt; 5)</code></pre>
+<p>which returns the array <code>[6 7 8 9 10]</code>. This works because <code>A&gt;5</code> returns true (1) or false (0) for every number that satisfies the condition. Then <code>find</code> returns the array indices of each number that is true.</p>
+<p>Another example finds the elements that are even:</p>
+<pre><code>find(mod(A,2)==0)</code></pre>
+<p>which returns <code>[2 4 6 8 10]</code></p>
+<h4 id="finding-happy-numbers">Finding Happy Numbers</h4>
+<p>Now we return to finding Happy Numbers. Recall that <code>find</code> returns the indices of a matrix that are true and from above, we used the <code>arrayfun</code> to apply <code>isHappy</code> to all of the numbers 1:100. We just nest these:</p>
+<pre><code>find(arrayfun(@isHappy,1:100))</code></pre>
+<p>returns the numbers: 1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49, 68, 70, 79, 82, 86, 91, 94, 97, 100</p>
+<h4 id="exercise-4">Exercise</h4>
+<p>A fibonacci number is defined as <span class="math inline">\(F(1)=1, F(2)=1\)</span>, then <span class="math inline">\(F(n)=F(n-1)+F(n-2)\)</span> for <span class="math inline">\(n \geq 3\)</span>. This is naturally a recursive function. Write a procedure <span class="math inline">\(F\)</span> that take a positive integer <span class="math inline">\(n\)</span> and returns the <span class="math inline">\(n\)</span>th Fibonacci number using recursion. Find the first 20 Fibonacci number.</p>
+<p>Hint: First, make sure that you return 1 for <code>n==1</code> or <code>n==2</code>, otherwise uses the formula given here. To find the first 20 fibonaaci numbers, after defining the <code>fibonacci</code> function, you can use the <code>arrayfun</code> on the array <code>1:20</code>.</p>
 </body>
 </html>

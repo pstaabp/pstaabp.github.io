@@ -153,15 +153,13 @@
 <h1 class="title">Chapter 9: Integral Calculus</h1>
 </header>
 <p><a href="index.html">Return to all notes</a></p>
-<p>Naturally, Maple and most CAS find antiderviatives. There are a few ways to do this. If we want the antiderivative of a function like <span class="math inline">\(x^{2}\)</span>, then we can type:</p>
+<p>Naturally, Matlab and most CAS find antiderviatives. There are a few ways to do this. If we want the antiderivative of a function like <span class="math inline">\(x^{2}\)</span>, then we can type:</p>
 <pre><code>syms x
 int(x^2,x)</code></pre>
-<p>which returns <span class="math inline">\(\dfrac{x^{3}}{3}\)</span> And note that Maple does not return an integration constant.</p>
-<p>Additionally, we can make the command look like an integral, by typing <code>int</code>, then hitting escape and selecting the proper integration. Lastly, you can use palette as well.</p>
-<p>Maple has many standard integration techniques (subsitution, trig substitution, by parts, among others). For example, evaluating: <span class="math display">\[\int {\frac {x\cos \left( \sqrt {x^{2}+1} \right) }{\sqrt {x^{2}+1}}}\, dx\]</span> results in <span class="math inline">\(\sin(\sqrt{x^{2}+1})\)</span> (where subsitution has been used).</p>
-<p>Another example is the antiderivative of <span class="math inline">\(x^{7}{\rm e}^{2x}\)</span> which results in <span class="math display">\[\frac{1}{16} \left( 8\,{x}^{7}-28\,{x}^{6}+84\,{x}^{5}-210\,{x}^{4}+420\,{x}
-^{3}-630\,{x}^{2}+630\,x-315 \right) { {\rm e}^{2\,x}}\]</span> in which the integration by parts formula has been applied 7 times.</p>
-<p>Other times, you might get strange results. If we find the antiderivative of <span class="math inline">\({\rm e}^{-x^{2}}\)</span>, Maple returns <span class="math display">\[\frac{1}{2}\sqrt {\pi }\, {\rm erf}\left( x \right) \]</span></p>
+<p>which returns <span class="math inline">\(\dfrac{x^{3}}{3}\)</span> And note that there is no integration constant.</p>
+<p>Matlab has many standard integration techniques (subsitution, trig substitution, by parts, among others). For example, evaluating: <span class="math display">\[\int {\frac {x\cos \left( \sqrt {x^{2}+1} \right) }{\sqrt {x^{2}+1}}}\, dx\]</span> results in <span class="math inline">\(\sin(\sqrt{x^{2}+1})\)</span> (where subsitution has been used).</p>
+<p>Another example is the antiderivative of <span class="math inline">\(x^{7}{\rm e}^{2x}\)</span> which results in <span class="math display">\[\frac{{\mathrm{e}}^{2\,x} \,{\left(128\,x^7 -448\,x^6 +1344\,x^5 -3360\,x^4 +6720\,x^3 -10080\,x^2 +10080\,x-5040\right)}}{256}\]</span> in which the integration by parts formula has been applied 7 times.</p>
+<p>Other times, you might get strange results. If we find the antiderivative of <span class="math inline">\({\rm e}^{-x^{2}}\)</span>, Maple returns <span class="math display">\[\frac{\sqrt{\pi }\,\mathrm{erf}\left(x\right)}{2} \]</span></p>
 <p>What is this erf? Take a look in the Help Browser.</p>
 <p>Quite amazingly, very few functions have a nice antiderivative, where nice means that you can write the result as a algebraic combination of functions that we know from Precalc and Calculus. Instead, functions, like <code>erf</code> (otherwise known as the error function), are defined as solutions to a differential equation or as an antiderivative. Here’s a list of a few</p>
 <ul>
@@ -170,23 +168,26 @@ int(x^2,x)</code></pre>
 <li><span class="math inline">\(\displaystyle\int \frac{1}{\sqrt{1-\sin^{2} \theta }} \, d\theta\)</span></li>
 </ul>
 <h2 id="definite-integrals">Definite Integrals</h2>
-<p>Maple will also find definite integrals and there are a few ways to enter those. To enter <span class="math inline">\(\displaystyle \int_0^{1} x^{2} \, dx\)</span>, type</p>
-<pre><code>int(x^2,x=0..1)</code></pre>
-<p>and it will return <span class="math inline">\(\frac{1}{3}\)</span>. You can also type <code>int</code>, hit ESC and select the definite integral (the one with the limits on the integral sign).</p>
-<p>###Exercise</p>
+<p>You can find definite integrals also with the <code>int</code> command. To enter <span class="math inline">\(\displaystyle \int_0^{1} x^{2} \, dx\)</span>, type</p>
+<pre><code>int(x^2,x,[0,1])</code></pre>
+<p>and it will return <span class="math inline">\(\frac{1}{3}\)</span>.</p>
+<h4 id="exercise">Exercise</h4>
 <p>Try the following:</p>
 <ul>
 <li><span class="math inline">\(\displaystyle \int_0^{\pi/2} \sin x \, dx\)</span></li>
 <li><span class="math inline">\(\displaystyle \int_{-1}^{2} {\rm e}^{2x} \, dx\)</span></li>
 <li><span class="math inline">\(\displaystyle \int_0^{1} \tan^{-1} x \, dx\)</span>.</li>
 </ul>
-<p>###Definite Integrals with infinite bounds</p>
-<p>You can also do definite integrals with infinite bounds. For example <span class="math display">\[\int_0^{\infty} {\rm e}^{-x} \,dx\]</span> returns 1.</p>
+<h3 id="definite-integrals-with-infinite-bounds">Definite Integrals with infinite bounds</h3>
+<p>You can also do definite integrals with infinite bounds. For example <span class="math display">\[\int_0^{\infty} {\rm e}^{-x} \,dx\]</span> is entered as</p>
+<pre><code>int(exp(-x),[0 inf])</code></pre>
+<p>and returns 1.</p>
 <p>Let’s recall what this means. If you have any integral with an infinite limit, and if <span class="math inline">\(F(x)\)</span> is an antiderivative of <span class="math inline">\(f(x)\)</span>, then <span class="math display">\[\int_a^{\infty} f(x) \, dx = \lim_{b \rightarrow \infty} F(b)-F(a)\]</span></p>
-<p>And we can let Maple help us understand this. For example using the example of <span class="math inline">\(\int_0^{\infty} {\rm e}^{-x} \, dx\)</span> above, the antiderivative of <span class="math inline">\({\rm e}^{-x}\)</span> is <span class="math inline">\(-{\rm e}^{-x}\)</span> and let’s define this to be <span class="math inline">\(F\)</span> using</p>
-<pre><code>F:=x-&gt;-e^(-x)</code></pre>
+<p>And we can let Matlab help us understand this. For example using the example of <span class="math inline">\(\int_0^{\infty} {\rm e}^{-x} \, dx\)</span> above, the antiderivative of <span class="math inline">\({\rm e}^{-x}\)</span> is <span class="math inline">\(-{\rm e}^{-x}\)</span> and let’s define this to be <span class="math inline">\(F\)</span> using</p>
+<pre><code>F(x) = int(exp(-x),x)</code></pre>
 <p>Then we take the limit of <span class="math inline">\(F(b)-F(0)\)</span></p>
-<pre><code>limit(F(b)-F(0), b = infinity)</code></pre>
+<pre><code>syms b
+limit(F(b)-F(0),b,inf)</code></pre>
 <p>returns 1.</p>
 <p>###Exercise</p>
 <p>Find the following:</p>
@@ -197,13 +198,15 @@ int(x^2,x)</code></pre>
 <h2 id="reimann-sums">Reimann Sums</h2>
 <p>When we first saw a definite integral in Calculus, we defined it in terms of a Reimann sum. For example if we are looking for the area under the curve <span class="math inline">\(f(x)=x^{2}+1\)</span>, and we use rectangles based on the left endpoint, the following plot is helpful:</p>
 <figure>
-<img src="images/ch08/plot01.png" alt="Plot of x^{2}+1 and its Riemann sum using left endpoints" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}+1\)</span> and its Riemann sum using left endpoints</figcaption>
+<img src="images/ch09/plot01.png" alt="Plot of x^{2}+1 and its Riemann sum using left endpoints" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}+1\)</span> and its Riemann sum using left endpoints</figcaption>
 </figure>
-<p>We then define the definite integral in terms of a limit: \[<em>a^{b} f(x) ,dx={</em>{x }}_{i=1}^{N} f(x_i^{}) x \]</p>
+<p>We then define the definite integral in terms of a limit: <span class="math display">\[
+\int_a^{b} f(x) \,dx={\lim_{\Delta x \rightarrow 0}}\sum_{i=1}^{N} f(x_i^{\star}) \Delta x
+\]</span></p>
 <p>where <span class="math inline">\(\Delta x=(b-a)/N\)</span> and <span class="math inline">\(x_i^{\star}\)</span> is a number in the ith subinterval. Generally, <span class="math inline">\(x_i^{\star}\)</span> can be the left endpoint, the right end point, the mid point or a value at the minimum or maximum of the function in the subinterval.</p>
 <p>Maple allows us to visualize all of these. If we load the <code>Student[Caclulus1]</code> package, then</p>
 <pre><code>RiemannSum(1+x^2,x=0..1,output=plot)</code></pre>
-<p>will return the following plot: <img src="images/ch08/plot02.png" alt="Plot of x^{2}+1 and a Riemann Sum" /></p>
+<p>will return the following plot: <img src="images/ch09/plot02.png" alt="Plot of x^{2}+1 and a Riemann Sum" /></p>
 <p>Take a look at the options for the <code>RiemannSum</code> command for other options.</p>
 <p>###Exercises:</p>
 <ol type="1">
@@ -212,7 +215,7 @@ int(x^2,x)</code></pre>
 </ol>
 <h2 id="numerical-integration">Numerical Integration</h2>
 <p>As we have mentioned above often it is impossible to find the value of an integral or that a new function is defined to be the antiderivative (like the error function). However, it’s fairly clear that for many functions, that the area under the curve is well defined and we should be able to find an answer or at least an approximate answer.</p>
-<p>For example, what if we want to find the area under <span class="math inline">\(e^{-x^{2}}\)</span> on the interval <span class="math inline">\([0,1]\)</span>. From a plot: <img src="images/ch08/plot03.png" alt="Plot of e^{-x^{2}} on the interval [0,1]" /> it appears to have an answer is probably between 0.5 and 1.</p>
+<p>For example, what if we want to find the area under <span class="math inline">\(e^{-x^{2}}\)</span> on the interval <span class="math inline">\([0,1]\)</span>. From a plot: <img src="images/ch09/plot03.png" alt="Plot of e^{-x^{2}} on the interval [0,1]" /> it appears to have an answer is probably between 0.5 and 1.</p>
 <p>One way to find an approximate answer would be to use the Riemann sum. For example,</p>
 <pre><code>RiemannSum(e^(-x^2),x=0..1)</code></pre>
 <p>returns an algebraic expression and can be approximated using <code>evalf</code> to 0.74713 which is an approximation using midpoints and 10 subintervals.</p>

@@ -153,6 +153,134 @@
 <h1 class="title">Chapter 13: Recursive Iteration, Rootfinding and Newton’s Method</h1>
 </header>
 <p><a href="index.html">Return to all notes</a></p>
+<p>Before continuing with this chapter, we look at a way to find the zeros (or roots) of a function. Although Maple (and most CASs) have this built-in, we examine the details here.</p>
+<p>Consider the function <span class="math inline">\(f(x)=x^{2}-2\)</span>, which is plotted below:</p>
+<figure>
+<img src="images/ch05/plot01.png" alt="Plot of x^{2}-2" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}-2\)</span></figcaption>
+</figure>
+<p>It has two roots <span class="math inline">\(x=\sqrt{2}\)</span> and <span class="math inline">\(x=-\sqrt{2}\)</span>. We will use this example to find a numerical approximation of this.</p>
+<p>If we evaluate the function at <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=2\)</span>, note that <span class="math inline">\(f(0)=-2\)</span> and <span class="math inline">\(f(2)=2\)</span>. The intermediate value theorem states that if a function <span class="math inline">\(f\)</span> is continuous on an interval <span class="math inline">\([a,b]\)</span>, then <span class="math inline">\(f\)</span> takes on all values (<span class="math inline">\(y\)</span>-values or heights) between <span class="math inline">\(f(a)\)</span> and <span class="math inline">\(f(b)\)</span>. Specifically if <span class="math inline">\(d\)</span> is between <span class="math inline">\(f(a)\)</span> and <span class="math inline">\(f(b)\)</span>, then there exists at least one value <span class="math inline">\(c\)</span> such that <span class="math inline">\(f( c )=d\)</span>. See <a href="http://www.mathsisfun.com/algebra/intermediate-value-theorem.html">this page</a> for more information.</p>
+<p>For this example, <span class="math inline">\(f\)</span> is continuous, so <span class="math inline">\(f\)</span> takes on all values between <span class="math inline">\(f(0)=-2\)</span> and <span class="math inline">\(f(2)=2\)</span>, including 0. That is, there is a number <span class="math inline">\(c\)</span> such that <span class="math inline">\(f( c )=0\)</span>. The value of <span class="math inline">\(c\)</span> is the root we seek.</p>
+<h2 id="bisection-method">Bisection Method</h2>
+<p>The bisection method exploits the intermediate value theorem to make sure that we always have a interval that contains a root. First, we will walk through the bisection method for the example and then write it down in general.</p>
+<p>Let <span class="math inline">\(\tilde{a}\)</span> be the midpoint between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> or <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=2\)</span> in our case. That is <span class="math display">\[\tilde{a} = \frac{a+b}{2} = \frac{0+2}{2}=1\]</span> There are three choices for <span class="math inline">\(\tilde{a}\)</span>. Either it is 0, then you have found the root or it is less than zero or greater than zero. Since <span class="math inline">\(f(1)=-1\)</span>, then it is less than zero. Because our left endpoint was less than zero, we replace it with zero. That is our interval goes from <span class="math inline">\([0,2]\)</span> to <span class="math inline">\([1,2]\)</span>.</p>
+<p>And then we repeat. The midpoint of this interval is 1.5 and <span class="math inline">\(f(1.5)=1.5^{2}-2=0.25\)</span> and since this is positive, we replace the 2 with 1.5 and our new interval is <span class="math inline">\([1,1.5]\)</span>.</p>
+<p>###Exercise</p>
+<p>Find the next 3 intervals using this technique. Recall that you always need to have the function value of one side be less than and the other be greater than 0.</p>
+<p>###Stop this crazy thing!!!</p>
+<p>Since you are wise, you notice that you can continue this process forever and you just don't have that much time. For example, on the tenth iteration, you should have the interval</p>
+<pre><code>[1.41406250,1.416015625]</code></pre>
+<p>and as long as the condition that the function values of two endpoints are opposite signs, then there is a guarantee of a root inside this interval.</p>
+<p>Again, we can go on forever, but a good place to stop (often called a halting condition) is when the length of the interval shrinks to a particular size. Let’s say that we stop when the length is <span class="math inline">\(10^{-4}\)</span> and then we should return our best guess at the root, which may be the midpoint of the final interval. If we stop when the interval is less than <span class="math inline">\(10^{-4}\)</span> and take this midpoint, the answer will be 1.414215088.</p>
+<p>###Creating a Procedure to do this</p>
+<p>This section will slowly build up a procedure that does this. The goal of this section is to learn how to take an algorithm (explained above) and make a procedure that does this.</p>
+<ol type="1">
+<li><p>Shell of a procedure. Let’s start with the declaration of the procedure. We want to take a function and an interval in and return an approximate root.</p>
+<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
+
+end proc:</code></pre>
+<p>This will just do that. Note that a function type is called a <code>procedure</code> and an interval is called a <code>range</code>. The return type will be a number, so <code>numeric</code>. It’s a good idea to just run this at this point.</p></li>
+<li><p>Define the midpoint and return it.</p>
+<p>Next, let’s do something super simple and define the midpoint and then return it. To get the endpoints of an interval or range, use <code>lhs</code> and <code>rhs</code>, which stands for left hand side and right hand side respectively.</p>
+<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
+   local mid:=0.5*(lhs(interval)+rhs(interval)):
+    return mid:
+end proc:</code></pre>
+<p>and then execute this block of code. Make sure there are no errors. Then you can test it using the example above by typing <code>bisect(x-&gt;x^2,0..2)</code> and you should get the answer 1.0.</p></li>
+<li><p>Create a new interval</p>
+<p>Now, let’s also create a variable called <code>inter</code> that is the new interval. Recall that you want to make sure that the endpoints of the new interval are opposite signs. The easiest way to check this is to determine if the product of the function values is negative.</p>
+<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
+   local mid:=0.5*(lhs(interval)+rhs(interval)):
+   local inter:=interval:
+   if f(lhs(inter))*f(mid) &lt; 0 then
+       inter := lhs(inter) .. mid
+   else
+      inter := mid .. rhs(inter)
+   end if:
+   return inter:
+end proc:</code></pre>
+<p>If we test this with <code>bisect(x-&gt;x^2-2,0..2)</code> we get <code>1.0 .. 2</code></p>
+<p>which means that the root is in the interval [1.0,2.0].</p></li>
+<li><p>Put in a loop to run a few times.</p>
+<p>Next, we will run this a few times using a <code>for</code> loop to test the procedure.</p>
+<pre><code>bisect:=proc(f::procedure,interval::range)::numeric;
+   local mid:=0.5*(lhs(interval)+rhs(interval)):
+   local inter:=interval:
+   local i:
+
+   for i to 4 do
+     if f(lhs(inter))*f(mid) &lt; 0 then
+       inter := lhs(inter) .. mid
+     else
+       inter := mid .. rhs(inter)
+     end if:
+     mid := .5*(lhs(inter)+rhs(inter)):
+     print(inter):
+    end do;
+  return mid
+end proc:</code></pre>
+<p>This will print out the interval to make sure it is working. You should see the interval printed 4 times and then the midpoint returned (and then printed): <code>1.0 .. 2  1.0 .. 1.50  1.250 .. 1.50  1.3750 .. 1.50  1.43750</code></p>
+<p>so this appears that the root is 1.43750 and is guaranteed to be in the interval [1.375,1.5]</p></li>
+<li><p>Replace the for loop with a while loop</p>
+<p>We don’t want to run this a fixed number of times, but instead, run this until the halting condition.</p>
+<p>We will execute the loop while the length of the interval is greater than <span class="math inline">\(10^{-4}\)</span>.</p>
+<pre><code>bisect := proc (f::procedure, interval::range)::numeric;
+  local mid := .5*(lhs(interval)+rhs(interval));
+  local inter := interval;
+  while rhs(inter)-lhs(inter) &gt; 10^(-4) do
+    if f(lhs(inter))*f(mid) &lt; 0 then
+      inter := lhs(inter) .. mid
+    else
+      inter := mid .. rhs(inter)
+    end if;
+    mid := .5*(lhs(inter)+rhs(inter));
+    print(inter):
+  end do;
+  return mid:
+end proc:</code></pre>
+<p>If we test the procedure by typing: <code>bisect(x-&gt;x^2-2,0..2)</code>, you will get 1.414215088. Note that we can determine the number of digits of accuracy for <span class="math inline">\(\sqrt{2}\)</span> by typing <code>evalf(|sqrt(2)-1.414215088|)</code> will result in 0.000001526 or 5 digits of accuracy.</p></li>
+<li><p>Adding a parameter for the halting condition.</p>
+<p>If we want the halting condition to be smaller than <span class="math inline">\(10^{-4}\)</span>, we will make it a parameter. Here’s how that works.</p>
+<pre><code>bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
+  local mid := .5*(lhs(interval)+rhs(interval));
+  local inter := interval;
+  while rhs(inter)-lhs(inter) &gt; eps do
+    if f(lhs(inter))*f(mid) &lt; 0 then
+      inter := lhs(inter) .. mid
+    else
+      inter := mid .. rhs(inter)
+    end if;
+    mid := .5*(lhs(inter)+rhs(inter));
+  end do;
+  return mid:
+end proc:</code></pre>
+<p>and we have removed the print statement because all seems to be working well. Now if we call this procedure as above, <code>bisect(x-&gt;x^2-2,0..2)</code> then we get the same result as above.</p>
+<p>But this allows us to get more precision. Type <code>bisect(x-&gt;x^2-2,0..2,eps=10^(-7))</code></p>
+<p>gives this time 8 digits of accuracy.</p></li>
+<li><p>Adding some help and error checking to this</p>
+<p>It’s often helpful to add a description to the function, so here’s the final result:</p>
+<pre><code>bisect := proc (f::procedure, interval::range,{eps:=10^(-4)})::numeric;
+  description &quot;This procedure performs the bisection method on the function f with given range.  The parameter eps will determine  the halting condition.&quot;
+  local mid := .5*(lhs(interval)+rhs(interval));
+  local inter := interval;
+  if f(rhs(inter))*f(lhs(inter))&gt;0 then
+     error &quot;A root is not guaranteed to be in this interval.&quot;:
+  end if:
+  while rhs(inter)-lhs(inter) &gt; eps do
+    if f(lhs(inter))*f(mid) &lt; 0 then
+      inter := lhs(inter) .. mid
+    else
+      inter := mid .. rhs(inter)
+    end if;
+    mid := .5*(lhs(inter)+rhs(inter));
+  end do;
+  return mid:
+end proc:</code></pre>
+<p>The description is helpful to remember what the function does. If you type: <code>Describe(bisect)</code> You will see <code># This procedure performs the bisection method on the function f with given  # range.  # The parameter eps will determine the halting condition.  # The procedure returns the root of the function f within the given interval  # such that the  # interval is no wider than eps.  bisect( f::procedure, interval::range,      { eps := .1e-3 } ) :: numeric</code></p>
+<p>and give a brief description of the function.</p>
+<p>Also, we now have error checking built it.</p></li>
+</ol>
+<p>We will use this procedure in a homework problem.</p>
 <h2 id="rootfinding-and-the-bisection-method">Rootfinding and the Bisection method</h2>
 <p>Recall that we encountered the Bisection method in <a href="ch05.html">Chapter 5</a>. This was another way to do rootfinding. If we reenter the bisection procedure:</p>
 <pre><code>function result = bisect(f,a,b,options)

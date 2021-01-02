@@ -270,27 +270,43 @@ second matrix. To perform elementwise multiplication, use &#39;.*&#39;.</code></
 <p>One of the first concepts in linear algebra is how to solve linear systems. For example, <span class="math display">\[\begin{array}{rl} 3x- 2y &amp; = 4 \\
 x + 5y &amp; = 7 \end{array}\]</span></p>
 <p>Maple can solve this by using the <code>solve</code> command such as</p>
-<pre><code>solve([3x-2y=4,x+5y=7])</code></pre>
+<pre><code>syms x y
+[x_ans,y_ans]=solve([3*x-2*y==4,x+5*y==7])</code></pre>
 <p>which returns <span class="math inline">\(\{x=2,y=1\}\)</span>. In linear algebra, we find the augmented coefficient matrix as <span class="math display">\[\left[\begin{array}{ccc} 3 &amp; -2 &amp; 4 \\ 1 &amp; 5 &amp; 7 \end{array}\right]\]</span></p>
-<p>One method is to use row operations on the matix to reduce the matrix to a more useful form. One of these is called <em>Gaussian Elimination</em>. If we define the matrix above by <span class="math inline">\(A\)</span>, then in Maple,</p>
-<pre><code>GaussianElimination(A)</code></pre>
-<p>returns <span class="math display">\[ \left[ \begin {array}{ccc} 3&amp;-2&amp;4\\
-0&amp;17/3&amp;17/3\end {array} \right]\]</span></p>
-<p>To find the solution, we can use <em>back substitution</em></p>
-<p>The last row can be written back in equation form as <span class="math display">\[\frac{17}{3} y = \frac{17}{3}\]</span><br />
-or <span class="math inline">\(y=1\)</span>. Then writting the first equation: <span class="math display">\[3x-2y=4\]</span> or substituting in <span class="math inline">\(y=1\)</span> <span class="math display">\[\begin{array}{rl}3x-2(1)&amp; =4\\
-3x&amp; = 6 \\
-x &amp; = 2\end{array}\]</span></p>
-<h2 id="reduced-row-echelon-form">Reduced Row Echelon Form</h2>
-<p>Maple can help us even more. If we type:</p>
-<pre><code>ReducedRowEchelonForm(A)</code></pre>
-<p>This returns: <span class="math display">\[\left[\begin{array}{ccc}1 &amp; 0 &amp; 2\\0 &amp;1 &amp;1\end{array}\right]\]</span> and this can be written as the two equations <span class="math inline">\(x=2\)</span>, <span class="math inline">\(y=1\)</span>, same as above.</p>
+<p>One method is to use row operations on the matix to reduce the matrix to a more useful form. We can put the matrix into Reduced-Row Echelon Form with</p>
+<pre><code>rref(A)</code></pre>
+<p>which returns:</p>
+<p><span class="math display">\[\left[\begin{array}{ccc}1 &amp; 0 &amp; 2\\0 &amp;1 &amp;1\end{array}\right]\]</span> and this can be written as the two equations <span class="math inline">\(x=2\)</span>, <span class="math inline">\(y=1\)</span>, same as above.</p>
+<p>Another example is</p>
+<pre><code>A=[ ...
+    5 3 5 1; ...
+    5 4 1 1 ; ...
+    5 2 2 5]</code></pre>
+<p>where the … means to continue the input. This is used to make it easier to read as a matrix. If we do <code>rref(A)</code>, then the result is:</p>
+<pre><code>    1.0000         0         0    2.1429
+         0    1.0000         0   -2.2857
+         0         0    1.0000   -0.5714</code></pre>
+<p>and perhaps we want fractions instead of decimals–to ensure no round off errors. To use exact arithmetic, we’ll make a symbolic version of the matrix with</p>
+<pre><code>A= sym([ ...
+    5 3 5 1; ...
+    5 4 1 1 ; ...
+    5 2 2 5])</code></pre>
+<p>and then row-reducing with</p>
+<pre><code>rref(A)</code></pre>
+<p>results in <span class="math display">\[
+\left(\begin{array}{cccc}
+1 &amp; 0 &amp; 0 &amp; \frac{15}{7}\\
+0 &amp; 1 &amp; 0 &amp; -\frac{16}{7}\\
+0 &amp; 0 &amp; 1 &amp; -\frac{4}{7}
+\end{array}\right)
+\]</span></p>
+<p>This shows the solution, <span class="math inline">\(x=15/7, y=-16/7, z=-4/7\)</span>.</p>
 <p>###Exercise</p>
 <p>The linear system <span class="math display">\[\begin{array}{rl}-3x+4y-5z &amp; = 8\\
 -4x-2y-z &amp; = 0 \\
 5x-4y+3z &amp; = -16\end{array}\]</span> can be written as an Augmented Coefficient Matrix: <span class="math display">\[\left[\begin{array}{cccc}-3 &amp; 4 &amp; -5 &amp; 8\\
 -4&amp;-2&amp;-1&amp;0\\5&amp;-4&amp;3&amp;-16\end{array}\right]\]</span></p>
-<p>Use <code>ReducedRowEchelonForm</code> to reduce the matrix and then write the solution.</p>
+<p>Use <code>rref</code> to reduce the matrix and then write the solution.</p>
 <h2 id="determinants">Determinants</h2>
 <p>The <a href="http://www.mathsisfun.com/algebra/matrix-determinant.html">determinant of a matrix</a> is helpful in many different matrix applications including determining if the matrix is singular and it can be used in solving linear systems using <a href="https://en.wikipedia.org/wiki/Cramer%27s_rule">Cramer’s Rule</a>.</p>
 <p>The determinant is applied only to square matrices and is denoted <span class="math inline">\({\rm det}(A)\)</span> or <span class="math inline">\(|A|\)</span>. If the matrix is a 2 by 2, then <span class="math display">\[\left|\begin{array}{cc} a &amp; b \\ c &amp; d \end{array} \right|=ad-bc\]</span></p>
@@ -298,17 +314,16 @@ x &amp; = 2\end{array}\]</span></p>
 <p><span class="math display">\[\left|\begin {array}{ccc} 2&amp;-3&amp;1\\ 3&amp;3&amp;0\\2&amp;3&amp;-3\end {array} \right|=2\left|\begin{array}{cc}3&amp;0\\3&amp;-3\end{array}\right|-(-3)\left|\begin{array}{cc}3&amp;0\\2&amp;-3\end{array}\right|+1\left|\begin{array}{cc}3&amp;3\\2&amp;3\end{array}\right|\]</span></p>
 <p><span class="math display">\[\begin{array}{rl}&amp;=2\left((3)(-3)-(3)(0)\right)+3\left((3)(-3)-2(0)\right)+\left((3)(3)-2(3)\right)\\
 &amp;=2(-9)+3(-9)+(9-6)=-42\end{array}\]</span></p>
-<p>And using Maple on the 3 by 3 matrix <span class="math inline">\(A\)</span> above (again this in the <code>LinearAlgebra</code> library)</p>
-<pre><code>Determinant(A)</code></pre>
+<p>And using</p>
+<pre><code>det(A)</code></pre>
 <p>returns <span class="math inline">\(-42\)</span> as well.</p>
 <h2 id="matrix-inverse">Matrix Inverse</h2>
 <p>If a matrix, <span class="math inline">\(A\)</span> is square and it’s determiant is not zero, then there exists a matrix called the <em>inverse</em> and denoted with the property <span class="math inline">\(AA^{-1}=I\)</span>,</p>
 <p>One way to find the matrix inverse of <span class="math inline">\(A\)</span> is write the matrix augmented with the identity matrix and then put it in Reduced Row echelon form.</p>
 <p>For example, consider the matrix</p>
 <p><span class="math display">\[A=\left[\begin{array}{ccc}-3&amp;4&amp;-5\\-4&amp;-2&amp;-1\\5&amp;-4&amp;3\end{array}\right]\]</span> then we write the augmented matrix where the 3 by 3 identity matrix is append on the right side. We can to this using the command:</p>
-<pre><code>Aug:=Matrix([A,IdentityMatrix(3)])</code></pre>
-<p>which returns <span class="math display">\[\left[\begin{array}{ccc}-3&amp;4&amp;-5&amp;1&amp;0&amp;0\\-4&amp;-2&amp;-1&amp;0&amp;1&amp;0\\5&amp;-4&amp;3&amp;0&amp;0&amp;1\end{array}\right]\]</span></p>
-<p>and using the <code>ReducedRowEchelonForm</code> command, we get:</p>
+<pre><code>Aug:=cat(2,A,eye(3))</code></pre>
+<p>where the 2 means to concatenate by colums (dimension 2), the two matrices <code>A</code> and <code>eye(3)</code>, 3 by 3 identity matrix. This returns <span class="math display">\[\left[\begin{array}{ccc}-3&amp;4&amp;-5&amp;1&amp;0&amp;0\\-4&amp;-2&amp;-1&amp;0&amp;1&amp;0\\5&amp;-4&amp;3&amp;0&amp;0&amp;1\end{array}\right]\]</span> We can then use <code>rref(Aug)</code> to get</p>
 <p><span class="math display">\[\left[ \begin {array}{cccccc} 1&amp;0&amp;0&amp;{\frac {5}{36}}&amp;-\frac{1}{9}&amp;{\frac {7}{
 36}}\\ 0&amp;1&amp;0&amp;-{\frac {7}{72}}&amp;-\frac{2}{9}&amp;-{\frac {17}{72}}
 \\ 0&amp;0&amp;1&amp;-{\frac {13}{36}}&amp;-\frac{1}{9}&amp;-{\frac {11}{36}}
@@ -317,13 +332,13 @@ x &amp; = 2\end{array}\]</span></p>
 36}}\\ -{\frac {7}{72}}&amp;-\frac{2}{9}&amp;-{\frac {17}{72}}
 \\ -{\frac {13}{36}}&amp;-\frac{1}{9}&amp;-{\frac {11}{36}}
 \end {array} \right]\]</span></p>
-<p>We can also get the same result from the command <code>MatrixInverse</code>:</p>
-<pre><code>MatrixInverse(A)</code></pre>
+<p>We can also get the same result from the command <code>inv</code>:</p>
+<pre><code>inv(sym(A))</code></pre>
 <p>returns the same matrix above.</p>
 <p>###Exercise</p>
 <ol type="1">
 <li>Find the inverse of <span class="math display">\[C=\left[ \begin {array}{ccc} -1&amp;-3&amp;0\\-3&amp;2&amp;-1\\1&amp;-3&amp;0\end {array} \right]\]</span> using the augmented matrix with the identity matrix.</li>
-<li>Find the inverse of <span class="math inline">\(C\)</span> using the command <code>MatrixInverse</code></li>
+<li>Find the inverse of <span class="math inline">\(C\)</span> using the command <code>inv</code></li>
 <li>What happens when you try to find the inverse of <span class="math display">\[\left[ \begin {array}{ccc} -1&amp;-3&amp;0\\-3&amp;2&amp;-1\\2&amp;-5&amp;1\end{array}\right]?\]</span></li>
 </ol>
 <p>###Using the Matrix Inverse to solve a linear system.</p>
@@ -333,20 +348,20 @@ x &amp; = 2\end{array}\]</span></p>
 5x-4y+3z &amp; = -16\end{array}\]</span></p>
 <p>and used the Augumented Matrix to find the solution. Instead, we can write: <span class="math display">\[\begin{array}{rl}A=\left[ \begin {array}{ccc} -3&amp;4&amp;-5\\-4&amp;-2&amp;-1
 \\5&amp;-4&amp;3\end {array} \right]&amp;\vec{b}=\left[\begin{array}{c}8\\0\\-16\end{array}\right]\end{array}\]</span></p>
-<p>and then if we write the vector <span class="math display">\[\vec{x}=\left[\begin{array}{c}x\\ y\\ z\end{array}\right]\]</span>, then the linear system can be written as <span class="math inline">\(A\vec{x}=\vec{b}\)</span>. We can solve this in the following way. <span class="math display">\[A\vec{x}=\vec{b}\]</span> Multiply the equation by <span class="math inline">\(A^{-1}\)</span> <span class="math display">\[\begin{array}{rl}A^{-1}A\vec{x}&amp;=A^{-1}\vec{b}\\
+<p>and then if we write the vector <span class="math display">\[\vec{x}=\left[\begin{array}{c}x\\ y\\ z\end{array}\right],\]</span> then the linear system can be written as <span class="math inline">\(A\vec{x}=\vec{b}\)</span>. We can solve this in the following way. <span class="math display">\[A\vec{x}=\vec{b}\]</span> Multiply the equation by <span class="math inline">\(A^{-1}\)</span> <span class="math display">\[\begin{array}{rl}A^{-1}A\vec{x}&amp;=A^{-1}\vec{b}\qquad
 \text{since $A^{-1}A=I\qquad\qquad$}&amp;\\
-I\vec{x}&amp;=A^{-1}\vec{b}\\
+I\vec{x}&amp;=A^{-1}\vec{b}\qquad
 \text{since $I\vec{x}=\vec{x}\qquad\qquad$}&amp;\\
 \vec{x}&amp;=A^{-1}\vec{b}\end{array}\]</span></p>
 <p>Use this to solve the linear system above.</p>
 <p>First, we will find <span class="math inline">\(A^{-1}\)</span> using the <code>MatrixInverse</code> command:</p>
-<pre><code>Ainv:=MatrixInverse(A)</code></pre>
+<pre><code>Ainv=inv(sym(A))</code></pre>
 <p>which returns <span class="math display">\[\left[ \begin {array}{ccc} {\frac {5}{36}}&amp;-\frac{1}{9}&amp;{\frac {7}{
 36}}\\ -{\frac {7}{72}}&amp;-\frac{2}{9}&amp;-{\frac {17}{72}}
 \\ -{\frac {13}{36}}&amp;-\frac{1}{9}&amp;-{\frac {11}{36}}
 \end {array} \right]\]</span> as we saw above.</p>
 <p>Lastly, we multiply <span class="math inline">\(A^{-1}\)</span> and <span class="math inline">\(\vec{b}\)</span></p>
-<pre><code>Ainv.b</code></pre>
+<pre><code>Ainv*b</code></pre>
 <p>to get: <span class="math display">\[\left[\begin{array}{c}-2\\3\\2\end{array}\right]\]</span></p>
 <p>so the result is <span class="math inline">\(x=-2,y=3,z=2\)</span>, the same as we found above.</p>
 <h2 id="eigenvalues-and-eigenvectors">Eigenvalues and Eigenvectors</h2>
@@ -357,52 +372,72 @@ I\vec{x}&amp;=A^{-1}\vec{b}\\
 </ol>
 <p>###Example</p>
 <p>Find the eigenvalues and eigenvectors of the matrix <span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\-2&amp;3\end{array}\right]\]</span></p>
-<p>Step 1: Solve <span class="math inline">\(|A-\lambda I|=0\)</span></p>
-<pre><code>Determinant(A-lambda*IdentityMatrix(2))=0</code></pre>
-<p>returns <span class="math inline">\(\lambda^{2}-7\lambda+10=0\)</span>. This equation is called the <em>characteristic equation</em> of the matrix <span class="math inline">\(A\)</span>. And then</p>
-<pre><code>solve(#)</code></pre>
-<p>where (#) is the line number of the equation, Maple returns <span class="math inline">\(5,2\)</span>. There are two eigenvalues for this. Note: the maximum number of eigenvalues for an <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrix is <span class="math inline">\(n\)</span>.</p>
-<p>Step 2: For each of the eigenvalues, solve <span class="math inline">\((A-\lambda I)\vec{v}=0\)</span>. First, consider <span class="math inline">\(\lambda=5\)</span></p>
-<pre><code>A-5*IdentityMatrix(2)</code></pre>
+<p>Step 1: Solve <span class="math inline">\(|A-\lambda I|=0\)</span>, the <em>characteristic equation</em> of the matrix <span class="math inline">\(A\)</span>.</p>
+<pre><code>syms s
+A = [4 -1; -2 3]
+c_eqn = det(A-s*eye(2))</code></pre>
+<p>returns <span class="math inline">\(s^{2}-7s+10=0\)</span>. Matlab doesn’t have the ability to use <span class="math inline">\(\lambda\)</span> as a vraiable.</p>
+<pre><code>eigs = solve(c_eqn==0)</code></pre>
+<p>returns <span class="math inline">\(2,5\)</span>. There are two eigenvalues for this. Note: the maximum number of eigenvalues for an <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrix is <span class="math inline">\(n\)</span>.</p>
+<p>Step 2: For each of the eigenvalues, solve <span class="math inline">\((A-\lambda I)\vec{v}=0\)</span>. First, consider <span class="math inline">\(\lambda=2\)</span></p>
+<pre><code>A-eigs(1)*eye(2)</code></pre>
+<p>returns <span class="math display">\[
+\left[\begin{array}{cc}
+2 &amp; -1\\
+-2 &amp; 1
+\end{array}\right]
+\]</span> The eigenvector is a solution to <span class="math inline">\((A-\lambda I)\vec{v} = \vec{0}\)</span>. We can find <span class="math inline">\(\vec{v}\)</span> by row-reducing the augmented matrix found by</p>
+<pre><code>aug = cat(2,A-eigs(1)*eye(2),zeros(2,1))</code></pre>
+<p>which is the matrix: <span class="math display">\[
+\left[\begin{array}{ccc}
+2 &amp; -1 &amp; 0\\
+-2 &amp; 1 &amp; 0
+\end{array}\right]
+\]</span> and row-reducing this with</p>
+<pre><code>rref(aug)</code></pre>
+<p>returns: <span class="math display">\[
+\left[\begin{array}{ccc}
+1 &amp; -\frac{1}{2} &amp; 0\\
+0 &amp; 0 &amp; 0
+\end{array}\right]
+\]</span> If we use variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> with this system, the first row of the matrix becomes: <span class="math display">\[
+x -\frac{1}{2}y = 0 
+\]</span> or <span class="math display">\[ x = \frac{1}{2}y\]</span> and if we select <span class="math inline">\(y=2\)</span>, then <span class="math inline">\(x=1\)</span> and then the vector <span class="math display">\[ \vec{v}_1 = 
+\left[\begin{array}{c}
+1 \\ 2
+\end{array}\right]
+\]</span> is the eigenvector.</p>
+<p>The eigenvector associated with <span class="math inline">\(\lambda = 5\)</span> is</p>
 <p>return the matrix: <span class="math display">\[\left[\begin{array}{cc}-1&amp;-1\\-2&amp;-2\end{array}\right]\]</span>. To solve this we will append the zero vector on the right or</p>
-<pre><code>Aug:=Matrix([A-5*IdentityMatrix(2),Vector([0,0])])</code></pre>
+<pre><code>aug2 = cat(2,A-eigs(2)*eye(2),zeros(2,1))</code></pre>
 <p>which returns <span class="math display">\[\left[\begin{array}{ccc}-1&amp;-1&amp;0\\-2&amp;-2&amp;0\end{array}\right]\]</span> and then</p>
-<pre><code>ReducedRowEchelonForm(Aug)</code></pre>
+<pre><code>rref(aug2)</code></pre>
 <p>which returns <span class="math display">\[\left[\begin{array}{ccc}1&amp;1&amp;0\\0&amp;0&amp;0\end{array}\right]\]</span></p>
-<p>The first row of the equation, means that <span class="math inline">\(x+y=0\)</span>. We seek any nonzero solution to this, if <span class="math inline">\(y=-1\)</span> and <span class="math inline">\(x=1\)</span>, then the vector is <span class="math display">\[\vec{v}_1=\left[\begin{array}{c}1\\-1\end{array}\right]\]</span>.</p>
-<p>Next, find the eigenvector with eigenvalue <span class="math inline">\(\lambda=2\)</span>.</p>
-<pre><code>Aug:=Matrix([A-2*IdentityMatrix(2),Vector([0,0])])</code></pre>
-<p>returns <span class="math display">\[\left[\begin{array}{ccc} 2&amp;-1&amp;0\\ -2&amp;1&amp;0\end{array} \right]\]</span></p>
-<p>and putting in reduced row echelon form: <span class="math display">\[\left[\begin{array}{ccc} 2&amp;-1&amp;0\\ 0&amp;0&amp;0\end{array} \right]\]</span></p>
-<p>Lastly, we find the eigenvector associated with this. The first row is <span class="math inline">\(2x-y=0\)</span> and we seek a nonzero solution to this. Let <span class="math inline">\(x=1\)</span>, then <span class="math inline">\(y=2\)</span> and the vector will be <span class="math display">\[\vec{v}_2=\left[\begin{array}{c}1\\2\end{array}\right]\]</span></p>
+<p>The first row of the equation, means that <span class="math inline">\(x+y=0\)</span>. We seek any nonzero solution to this, if <span class="math inline">\(y=-1\)</span> and <span class="math inline">\(x=1\)</span>, then the vector is <span class="math display">\[\vec{v}_2=\left[\begin{array}{c}1\\-1\end{array}\right]\]</span>.</p>
 <p>In summary for the matrix <span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\-2&amp;3\end{array}\right]\]</span></p>
-<p>The eigenvalues are 5 and 2 and the associated eigenvectors are <span class="math display">\[\begin{array}{rl}\vec{v}\_1=\left[\begin{array}{c}1\\-1\end{array}\right]&amp; \vec{v}\_2=\left[\begin{array}{c}1\\2\end{array}\right]\end{array}\]</span></p>
-<p>###Exercise</p>
+<p>The eigenvalues are 5 and 2 and the associated eigenvectors are <span class="math display">\[\begin{array}{rl}\vec{v}_1=\left[\begin{array}{c}1\\-1\end{array}\right]&amp; \vec{v}_2=\left[\begin{array}{c}1\\2\end{array}\right]\end{array}\]</span></p>
+<h4 id="exercise-2">Exercise</h4>
 <p>Use the steps above to find the eigenvalues and eigenvectors of <span class="math display">\[A=\left[\begin{array}{cc}6&amp;2\\4&amp;4\end{array}\right]\]</span></p>
-<p>###More Built-in commands for Maple</p>
-<p>Recall that above, the first step in finding the eigenvalues of the matrix is to write down the characteristic equation of the matrix or <span class="math inline">\(|A-\lambda I|=0\)</span>. If we return to the matrix above, <span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\-2&amp;3\end{array}\right]\]</span> we can use Maple to find the characteristic equation by</p>
-<pre><code>CharacteristicPolynomial(A,lambda)=0</code></pre>
-<p>which returns as above, <span class="math inline">\(\lambda^{2}-7\lambda+10=0\)</span>, which we can solve with the <code>solve</code> command to get <span class="math inline">\(5,2\)</span>.</p>
-<p>Then the next step was to solve <span class="math inline">\((A-\lambda I)\vec{v}\)</span> for the given values of <span class="math inline">\(\lambda\)</span>. Another name for this is the null space of the matrix. If we enter</p>
-<pre><code>NullSpace(A-5*IdentityMatrix(2))</code></pre>
-<p>Maple returns <span class="math display">\[\left\\{ \left[\begin{array}{c}-1\\ 1\end{array}\right] \right\\}\]</span></p>
-<p>so the only vector in the null space is the one above. This is just <span class="math inline">\(-1\)</span> times the eigenvector that we found above. (Note: there is a theorem that says that any nonzero scalar times an eigenvector is also an eigenvector. In other words, eigenvectors are not unique.)</p>
-<p>If we type:</p>
-<pre><code>NullSpace(A-2*IdentityMatrix(2))</code></pre>
-<p>Maple returns <span class="math display">\[\left\\{\left[\begin{array}{c}1/2\\1\end{array}\right]\right\\}\]</span></p>
-<p>which is <span class="math inline">\(1/2\)</span> times the eigenvector that we found.</p>
-<p>###Exercise</p>
-<p>Use the <code>CharacteristicPolynomial</code> and <code>NullSpace</code> commands to find the eigenvalues and eigenvectors of <span class="math display">\[A=\left[\begin{array}{cc}6&amp;2\\4&amp;4\end{array}\right]\]</span></p>
-<p>that found above.</p>
-<p>###Maple can find the eigenvalues and eigenvectors in one shot!!!</p>
+<h3 id="finding-the-eigenvalues-and-eigenvectors-with-a-single-command">Finding the Eigenvalues and Eigenvectors with a single command</h3>
+<p>Matlab (along with many related software packages) will find the eigenvalues and eigenvectors of a matrix. Technically, they are usually approximations because the general eigenvalue problem is hard to do from a computational point of view as the matrices get large.</p>
 <p>Of course, Maple can just find the eigenvalues and eigenvectors as well.</p>
 <p>Returning to the matrix:<span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\ -2&amp;3\end{array}\right]\]</span> type</p>
 <pre><code>Eigenvalues(A)</code></pre>
 <p>and one gets: <span class="math display">\[\left[\begin{array}{c}5\\2\end{array}\right]\]</span></p>
 <p>Note: this is not a vector, but the two eigenvectors are just 5 and 2 as we saw above.</p>
-<p>To find the eigenvectors, type</p>
-<pre><code>Eigenvectors(A)</code></pre>
-<p>and you get: <span class="math display">\[\left[\begin{array}{c}5\\2\end{array}\right],\left[\begin{array}{cc}\frac{1}{2} &amp; -1\\1&amp;1\end{array}\right]\]</span></p>
-<p>The first vector is the eigenvalues again and the matrix contain the eigenvectors as column vectors. Note: these are the same eigenvectors that we found using the <code>NullSpace</code> command.</p>
+<p>To find the eigenvalues, type</p>
+<pre><code>eig(A)</code></pre>
+<p>and you get: <span class="math display">\[\left[\begin{array}{c}5\\2\end{array}\right]\]</span> which are the roots of the characteristic polynomial. If you enter:</p>
+<pre><code>[v,s] = eig(A)</code></pre>
+<p>it returns both the eigenvectors and eigenvalues. You’ll see:</p>
+<pre><code>v = 2×2    
+    0.7071    0.4472
+   -0.7071    0.8944</code></pre>
+<p>and</p>
+<pre><code>s = 2×2    
+     5     0
+     0     2</code></pre>
+<p>The columns of the <code>v</code> matrix are the eigenvectors. Recall that any scalar multiple of an eigenvector is an eigenvector. Matlab scales everything so the length of eigenvectors are 1.</p>
+<p>The matrix <code>s</code> has the eigenvalues on the diagonal. These are returned as matrices because there are some nice features of eigenvalue/vectors in matrix form.</p>
 </body>
 </html>
