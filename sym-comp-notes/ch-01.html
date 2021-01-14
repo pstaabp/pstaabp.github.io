@@ -161,9 +161,9 @@
 <p>which is close to 2, but not exactly, whereas in the CAS, the answer will be 2.</p>
 <p>Additionally, a CAS allows one to enter in mathematical expressions and manipulate them. For example if you enter <span class="math display">\[(x+2)^{2}\]</span></p>
 <p>and then have the CAS expand it (skipping exactly how to do this until later), the CAS will return: <span class="math display">\[x^{2}+4x+4\]</span> which is how to expand it via the distributive law (or doing FOIL). Standard calculators can’t handle such an operation.</p>
-<p>Another classic example of a CAS is that of precision of numbers. Later in the course, we will discuss the number of digits in an approximation, say in finding <span class="math inline">\(\sqrt{2}\)</span> , but recall that the factorial of a positive integer is the product of the number and all subsequence smaller integers until reaching one. For example 5!=5·4·3·2·1=120. Maple will compute factorials easily, note that</p>
+<p>Another classic example of a CAS is that of precision of numbers. Later in the course, we will discuss the number of digits in an approximation, say in finding <span class="math inline">\(\sqrt{2}\)</span> , but recall that the factorial of a positive integer is the product of the number and all subsequence smaller integers until reaching one. For example 5!=5·4·3·2·1=120. Matlab will compute factorials easily, note that</p>
 <p><span class="math display">\[10! = 3628800\]</span> <span class="math display">\[20! = 2432902008176640000\]</span></p>
-<p>and so on. Most calculators cannot display more that 12-15 digits, so 20! may not be represented accuracy. Maple however can display as many digits as there are. Note that <span class="math display">\[50! = 30414093201713378043612608166064768844377641568960512000000000000\]</span> <span class="math display">\[100!=93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000\]</span></p>
+<p>and so on. Most calculators cannot display more that 12-15 digits, so 20! may not be represented accuracy. Matlab however can display as many digits as there are. Note that <span class="math display">\[50! = 30414093201713378043612608166064768844377641568960512000000000000\]</span> <span class="math display">\[100!=93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000\]</span></p>
 <p>Again, this is a big difference between a calculator and a CAS. If you try these on a calculator, you will probably get an error (typically an overflow error).</p>
 <h2 id="computer-algebra-software">Computer Algebra Software</h2>
 <p>Before we venture too much into the realm of CAS, we need to discuss some specifics of software. There are a lot of programs that fall into Computer Algebra Systems, and if you are interested in seeing the breadth of such software, visit the <a href="https://en.wikipedia.org/wiki/List_of_computer_algebra_systems">Wikipedia site that lists CAS’s</a>. The major commercial ones are <a href="http://www.wolfram.com/mathematica/">Mathematica</a> and <a href="http://www.maplesoft.com/">Maple</a> and a nice open source one is <a href="http://sagemath.org">Sage</a>.</p>
@@ -181,12 +181,12 @@
 <li><strong>Other:</strong> This is not an exhaustive list. There are things like lists, arrays and plots that can be manipulated.</li>
 </ul>
 <h2 id="live-editor-in-matlab">Live Editor in Matlab</h2>
-<p>Matlab has a lot of features. We’re going to start using what is called the <em>Live Editor</em> which makes formatting symbolic expressions much nicer.</p>
+<p>Matlab has a lot of features. We’re going to start using what is called the <em>Live Editor</em> which mixes commands, plots and mathematics in a nice-looking manner.</p>
 <p>Once you open up Matlab, there is a toolbar at the top. Under the <em>Home</em> tab, click the <em>New Live Script</em> button.</p>
 <h3 id="entering-expressions-in-matlab">Entering Expressions in Matlab</h3>
 <p>When opening a file in <em>Live Editor</em> mode, you’ll see a gray cell. This is where we can enter code.</p>
 <ol type="1">
-<li><p>To enter an integer number, just type it in: 123 and hit CTRL-ENTER or CMD-ENTER. Alternatively, you can click on the gray and white striped bar to the left of the numbers. You’ll see <code>ans = 123</code> in an area to the right. There is a matlab variable (which we’ll talk about soon) called <code>ans</code> which has the value 123.</p></li>
+<li><p>To enter an integer number, just type it in: 123 and hit CTRL-ENTER (on Windows) or CMD-ENTER (on MacOS). Alternatively, you can click on the gray and white striped bar to the left of the numbers. You’ll see <code>ans = 123</code> in an area to the right. There is a matlab variable (which we’ll talk about soon) called <code>ans</code> which has the value 123.</p></li>
 <li><p>To enter <span class="math inline">\(\sqrt{2}\)</span>, type <code>sqrt(2)</code>. You’ll see <code>ans = 1.4142</code>. Note: this is an approximate value of the square root of 2.</p></li>
 <li><p>If instead, you want the symbolic version of the square root of 2, type: <code>sym(sqrt(2))</code>. And you’ll see <span class="math inline">\(\sqrt{2}\)</span>.</p></li>
 <li><p>To enter the expression: <span class="math inline">\((x + 2)(x + 5)\)</span>, we first need to tell matlab to create a variable named <span class="math inline">\(x\)</span>. First type <code>syms x</code>. It doesn’t return anything, but you’ll see in the <code>Workspace</code> pane on the lower right corner of the app, there is now <code>x</code> which is a <code>1x1 sym</code>–we’ll explain this later.</p>
@@ -196,11 +196,12 @@
 <p>Note: you must use parentheses in the numerator.</p></li>
 <li><p>The transcendental functions must be written with parentheses around the argument. In other words, <span class="math inline">\(\sin x\)</span> must be typed <code>sin(x)</code> in Maple. Many of these functions also appear in the Expression Palette or other palettes.</p></li>
 <li><p>The exponential function seems like we should type in <code>e^x</code>, but we’ll get the error <code>Unrecognized function or variable 'e'</code>. Basically this means that e isn’t defined. Alternatively, type in <code>exp(x)</code></p></li>
-<li><p>The absolute value of x is entered <code>|x|</code> needs to entered <code>abs(x)</code>.</p></li>
+<li><p>The natural log, <span class="math inline">\(\ln x\)</span> is defined in Matlab as <code>log(x)</code>.</p></li>
+<li><p>The absolute value of x or <span class="math inline">\(|x|\)</span> needs to entered as <code>abs(x)</code>.</p></li>
 <li><p>If we just enter <code>pi</code>, you’ll get a floating-point approximation of <span class="math inline">\(\pi\)</span>. If you want the symbolic version of it, enter <code>sym(pi)</code>.</p></li>
 </ol>
 <h3 id="exercise">Exercise</h3>
-<p>Put the following into Maple:</p>
+<p>Put the following into Matlab:</p>
 <ol type="1">
 <li><p><span class="math inline">\((x-3)^{3}\)</span></p></li>
 <li><p><span class="math inline">\(\displaystyle \frac{7+3x}{11+x}\)</span></p></li>
@@ -233,6 +234,7 @@
 <li><p>Inside the main window for entering commands, typing <code>doc(command)</code> will open the help browser. Note that the command must be in double quotes. For example</p>
 <pre><code>doc(&quot;expand&quot;)</code></pre>
 <p>opens up information about the expand command in the help documentation browser.</p></li>
+<li><p>Of course googling is natural for anyone–although I prefer to use <a href="http://duckduckgo.com">Duck Duck go</a> for search, just make sure that you put in matlab in your search term. I finally generally when searching on the web, the Matlab help pages pop up first anyway.</p></li>
 </ol>
 </body>
 </html>

@@ -152,11 +152,12 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 2: Plotting Basics</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
+<p><a href="ch-01.htm">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-03.html">Next chapter</a></p>
+<p>This chapter explain some plotting basics. We will see how to plot functions and change aspects of the plot, then we will plot some data as scatter plots and finally show how the two types can be blended. Before starting on plots, however, we will discuss how to save objects (numbers, expressions) in Matlab.</p>
 <h2 id="storing-numbers-and-expressions">Storing Numbers and Expressions</h2>
 <p>Below we will be plotting <span class="math inline">\(x^{2}\)</span> with many different options. In the case of <span class="math inline">\(x^{2}\)</span> it is short enough to type out each time, but if we have a complicated function, we probably don’t want to. In such a case, we will store the expression as a name. To do this, we’ll use <code>=</code>. For example</p>
 <pre><code>f=x^2</code></pre>
-<p>will give the expression <span class="math inline">\(x^{2}\)</span> a name (or a variable in the computer science sense) called <code>f</code>. Note: if you get an error, like <code>x not defined</code>, don’t forget to tell matlab that <span class="math inline">\(x\)</span> is a symbolic variable with <code>syms x</code>.</p>
+<p>will give the expression <span class="math inline">\(x^{2}\)</span> a name (or a variable in the computer science sense) called <code>f</code>. Note: if you get an error, like <code>x not defined</code>, don’t forget to tell Matlab that <span class="math inline">\(x\)</span> is a symbolic variable with <code>syms x</code>.</p>
 <p>By “doing” something to <code>f</code>, we are in fact doing that to <span class="math inline">\(x^{2}\)</span>. A better example is if we type</p>
 <pre><code>g=(x+2)^2</code></pre>
 <p>and the we can expand it by</p>
@@ -164,8 +165,10 @@
 <p>which returns <span class="math inline">\(x^{2}+4x+4\)</span>.</p>
 <h3 id="anything-can-be-stored">Anything can be stored</h3>
 <p>We can store numbers, equations, expressions (and other things) using the same syntax. For example</p>
-<pre><code>eqn:=x^2=9</code></pre>
-<p>and then <code>solve(eqn)</code> returns 3,-3, the two solutions to the equation <span class="math inline">\(x^{2}=9\)</span>.</p>
+<pre><code>eqn=x^2==9</code></pre>
+<p>and then <code>solve(eqn)</code> returns <span class="math display">\[
+\left(\begin{array}{c}-3 \\ 3\end{array}\right)
+\]</span> which means that both 3 and -3 are the two solutions to the equation <span class="math inline">\(x^{2}=9\)</span>.</p>
 <h3 id="rules-for-names">Rules for names</h3>
 <p>The rules for giving something a name is that it contain a digit, a letter (upper- or lower-case) or an _ (underscore). It must also start with a letter.</p>
 <h2 id="plotting">Plotting</h2>
@@ -173,7 +176,7 @@
 <h3 id="plotting-functions">Plotting Functions</h3>
 <p>In order to plot the expression <span class="math inline">\(x^{2}\)</span>, try typing <code>fplot(x^2)</code>. You should see a plot similar to</p>
 <figure>
-<img src="images/ch02/plot01.png" alt="Plot of x^{2}" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span></figcaption>
+<img src="images/ch02/plot01.png" alt="Plot of x^{2} using the default plotting range" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> using the default plotting range</figcaption>
 </figure>
 <h3 id="changing-the-plotting-window-of-a-plot">Changing the Plotting Window of a plot</h3>
 <p>Typically, the easiest way to change the plotting window of the plot is to use an option in the plot command. For example, if we want a plot on the interval <span class="math inline">\([-2,2]\)</span>, then typing <code>fplot(x^2,[-2 2])</code> will produce the plot:</p>
@@ -195,7 +198,7 @@ title(&quot;A plot of x^2&quot;)</code></pre>
 <h3 id="exercise">Exercise</h3>
 <p>Plot <span class="math inline">\(f(x) = \sin x\)</span> on the domain <span class="math inline">\([−6.25, 6.25]\)</span>. Give the plot a title that includes the function.</p>
 <h3 id="changing-the-tick-marks">Changing the tick marks</h3>
-<p>I’m sure you notice (since you are quite astute) that the tick marks are in decimals and it would be nice to see the function plot in fractions of <span class="math inline">\(\pi\)</span> instead. We can change this with the <code>xticks</code> and <code>xticklabels</code> functions. Here is a cosine plot with some nicer ticks:</p>
+<p>I’m sure you noticed (since you are quite astute) that the tick marks are in decimals and it would be nice to see the function plot in fractions of <span class="math inline">\(\pi\)</span> instead. We can change this with the <code>xticks</code> and <code>xticklabels</code> functions. Here is a cosine plot with some nicer ticks:</p>
 <pre><code>fplot(cos(x),[-2*pi 2*pi])
 S =  sym(-2*pi:pi/2:2*pi);
 xticks(double(S))
@@ -204,8 +207,16 @@ xticklabels(arrayfun(@texlabel,S,&#39;UniformOutput&#39;,false))</code></pre>
 <figure>
 <img src="images/ch02/plot05.png" alt="Plot of \cos(x) on [-2\pi,2\pi]" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(\cos(x)\)</span> on <span class="math inline">\([-2\pi,2\pi]\)</span></figcaption>
 </figure>
+<p>Before just plowing on, let’s go through those last statements in detail. The line:</p>
+<pre><code>S =  sym(-2*pi:pi/2:2*pi);</code></pre>
+<p>creates an array of symbolic values from <span class="math inline">\(-2\pi\)</span> to <span class="math inline">\(2\pi\)</span> by steps of <span class="math inline">\(\pi/2\)</span>. (Take the semicolon off the end of the line and rerun to see). The line</p>
+<pre><code>xticks(double(S))</code></pre>
+<p>sets the xticks to the numerical values (that’s what the <code>double</code> function does) to the numbers in <code>S</code>. Then</p>
+<pre><code>xticklabels(arrayfun(@texlabel,S,&#39;UniformOutput&#39;,false))</code></pre>
+<p>set’s the tick labels on the x-axis to the values in <code>S</code>. We’ll see the <code>arrayfun</code> later and the <code>@texlabel</code> function is a way to ensure that the latex command is used to make things look better. Again, we’ll talk about latex later in the course.</p>
+<p>Make a mental note that this allows us to change the x-ticks to multiples of <span class="math inline">\(\pi\)</span> is a much nicer way. You’ll need this later.</p>
 <h3 id="plotting-multiple-functions">Plotting multiple functions</h3>
-<p>Often, we would like to include more that one function on a single set of axes. Matlab does this by doing multiple plots but holding the plot. Here is how to plot both <span class="math inline">\(x^2\)</span> and <span class="math inline">\(x^3\)</span>.</p>
+<p>Often, we would like to include more that one function on a single set of axes. Here is how to plot both <span class="math inline">\(x^2\)</span> and <span class="math inline">\(x^3\)</span>.</p>
 <pre><code>fplot([x^2, x^3],[-3,3])</code></pre>
 <p>The result is:</p>
 <figure>
@@ -231,7 +242,7 @@ daspect([1 1 1])</code></pre>
 <p>and the result is: <img src="images/ch02/plot09.png" alt="A plot the top half of a circle" /></p>
 <p>Note: there are three numbers here because we will see 3D plots need can have different aspects as well. Matlab does this in general by ensuring that it know the relative sizes of all three axes.</p>
 <h3 id="exercise-2">Exercise</h3>
-<p>Plot the functions <span class="math inline">\(f(x)=2x+3\)</span> and <span class="math inline">\(g(x)=-\frac{1}{2}x+1\)</span> and make the plot ratio 1:1. The two lines should be perpendicular. (Why?)</p>
+<p>Plot the functions <span class="math inline">\(f(x)=2x+3\)</span> and <span class="math inline">\(g(x)=-\frac{1}{2}x+1\)</span> and make the plot ratio 1:1. Do the lines look perpendicular? Should they? if so, why?</p>
 <h2 id="plotting-a-function-with-a-parameter">Plotting a function with a parameter</h2>
 <p>Maple is also helpful in understanding how a parameter (a variable that just takes on certain values) affects a plot. For example, if we plot <span class="math inline">\(y=x^2+C\)</span> for <span class="math inline">\(C=-2,-1,0,1,2\)</span> and we want to see what happens to the plot.</p>
 <p>To make this easier, we first define the functions:</p>
@@ -248,24 +259,25 @@ legend(&quot;C=-2&quot;,&quot;C=-1&quot;,&quot;C=0&quot;,&quot;C=1&quot;,&quot;C
 <p>And from this you can see that the parameter C shifts the lines vertically.</p>
 <h2 id="piecewise-functions">Piecewise Functions</h2>
 <p>Another common plot is that of a piecewise function, consider <span class="math display">\[f(x) = \begin{cases} x &amp; x&lt;0 \\ 3-x^{2} &amp; x \geq 0 \end{cases}\]</span></p>
-<p>We will see a way to create functions like this later in the course, but here we will plot them. Recall that what this means is that the function <span class="math inline">\(f\)</span> takes on the values of <span class="math inline">\(x\)</span> when <span class="math inline">\(x&lt;0\)</span> and when <span class="math inline">\(x \geq 0\)</span>, then it has the functional form <span class="math inline">\(3-x^2\)</span>. We wil plot this by creating a plot with two different curves on it.</p>
+<p>Recall that a piecewise function is a function <span class="math inline">\(f\)</span> takes on the values of <span class="math inline">\(x\)</span> when <span class="math inline">\(x&lt;0\)</span> and when <span class="math inline">\(x \geq 0\)</span>, then it has the functional form <span class="math inline">\(3-x^2\)</span>. We wil plot this by creating a plot with two different curves on it.</p>
 <p>The way to enter this in is the following:</p>
-<pre><code>f(x) = piecewise(x&lt;0,x,x&gt;=0,3-x^2)
-fplot(f(x), [-3 3])</code></pre>
+<pre><code>f = piecewise(x&lt;0,x,x&gt;=0,3-x^2)
+fplot(f, [-3 3])</code></pre>
 <p>and this results in the following plot: <img src="images/ch02/plot11.png" alt="Plot of a piecewise function" /></p>
-<p>The vertical line connecting (0,0) with (0,3) is not part of the plot. Matlab simply just connects a bunch of points. Sometimes it seems that it can figure out that it’s not part of the plot. Unfortunately, if it doesn’t automatically remove the line, you need to do something different.</p>
-<pre><code>fplot(f(x),[0,3])
+<p>The vertical line connecting (0,0) with (0,3) is not part of the plot. Matlab simply just connects a bunch of points. Sometimes it seems that it can figure out that it’s not part of the plot. Unfortunately, if it doesn’t automatically remove the line, you need to do something different, like the following:</p>
+<pre><code>fplot(f,[0,3])
 hold on
-fplot(f(x),[-3,-0.0001])
+fplot(f,[-3,-0.0001])
 hold off</code></pre>
-<p>results in</p>
+<p>which first plots the function on the interval <span class="math inline">\([0,3]\)</span>, then holds the plot which means that we can add additional graphs on the plot. Then we plot the function on <span class="math inline">\([-3,-0.0001]\)</span>, which is just an approximation of 0–if you put in 0, you get the same results as above. Lastly, <code>hold off</code> switches the plot back to normal (meaning don’t add additional graphs).</p>
+<p>The result is</p>
 <figure>
 <img src="images/ch02/plot12.png" alt="Improved plot of a piecewise function" /><figcaption aria-hidden="true">Improved plot of a piecewise function</figcaption>
 </figure>
 <p>which is better but it looks like two different curves becaues the two pieces are different colors. We can set them both to be the same color with:</p>
-<pre><code>fplot(f(x),[0,3],&#39;blue&#39;)
+<pre><code>fplot(f,[0,3],&#39;blue&#39;)
 hold on
-fplot(f(x),[-3,-0.0001],&#39;blue&#39;)
+fplot(f,[-3,-0.0001],&#39;blue&#39;)
 hold off</code></pre>
 <figure>
 <img src="images/ch02/plot13.png" alt="Improved plot of a piecewise function" /><figcaption aria-hidden="true">Improved plot of a piecewise function</figcaption>
@@ -280,7 +292,7 @@ hold off</code></pre>
     \end{cases}
 \]</span></p>
 <h2 id="plotting-functions-with-discontinuities">Plotting Functions with discontinuities</h2>
-<p>Although Matlab doesn’t often pick up on jump discontinuities from piecewise functions, it does to well with other types. Consider:</p>
+<p>Although Matlab doesn’t often pick up on jump discontinuities from piecewise functions, it seems to do well with infinite discontinuities. Consider:</p>
 <pre><code>fplot(1/(x-1),[-3,3])</code></pre>
 <p>which has the result:</p>
 <figure>
@@ -300,6 +312,7 @@ y=[1,0,1,0]</code></pre>
 <figure>
 <img src="images/ch02/plot15.png" alt="Example of a scatter plot" /><figcaption aria-hidden="true">Example of a scatter plot</figcaption>
 </figure>
+<p>Notice that the points by default are open circles, which are hard to see. The next exercise goes through how to change the type and size.</p>
 <h4 id="exercise-5">Exercise</h4>
 <ol type="1">
 <li>Search for <code>scatter</code> in the help documentation. There is a number of ways to change the size, shaped and color of the dots.</li>
@@ -313,11 +326,12 @@ y=[1,0,1,0]</code></pre>
 <p>We can combine a scatter and function plots using the <code>hold</code> command. Let’s say we have the points: (0,10),(2,9),(3,7),(5,6),(7,4),(8,2) and we wish to plot a best fit line as well. First, let’s define the points</p>
 <pre><code>x = [0,2,3,5,7,8];
 y = [10,9,7,6,4,2];</code></pre>
-<p>Later we will show how to get a best-fit line</p>
+<p>The best-fit line can be found to be <span class="math inline">\(y=10.8665-0.9680x\)</span> and we will show how to do this later.</p>
 <pre><code>scatter(x,y,100,&#39;blue&#39;,&#39;filled&#39;);
 hold on
 fplot(@(x) 10.8665-0.9680*x,[-0.5,9])
 hold off</code></pre>
+<p>Note: above, we have generally done <code>fplot(10.8665-0.9680*x,[0.5,9])</code> to plot the line. However, becase we defined <code>x</code> to be an array of points, this won’t work. Try it!! The <code>@(x)</code> is way to redeclare <code>x</code> as a different variable. We’ll see this more later.</p>
 <p>This will produce a plot that looks like:</p>
 <figure>
 <img src="images/ch02/plot17.png" alt="Plot with functions and dots" /><figcaption aria-hidden="true">Plot with functions and dots</figcaption>

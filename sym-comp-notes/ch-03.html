@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Chapter 3: Solving Equations and Mathematical Functions</title>
+  <title>Chapter 3: Mathematical Functions and Solving Equations</title>
   <style>
     html {
       line-height: 1.5;
@@ -150,9 +150,53 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Chapter 3: Solving Equations and Mathematical Functions</h1>
+<h1 class="title">Chapter 3: Mathematical Functions and Solving Equations</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
+<p><a href="ch-02.htm">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-04.html">Next chapter</a></p>
+<h2 id="mathematical-functions-and-expressions">Mathematical Functions and Expressions</h2>
+<p>In the previous chapter, we plotted the function <span class="math inline">\(x^2\)</span> as an example with</p>
+<pre><code>syms x
+fplot(x^2,[-2 2])</code></pre>
+<p>However, from the point of view of a CAS, <span class="math inline">\(x^2\)</span> is simply an expression. Let’s say that we wish to evaluate this at <span class="math inline">\(x=3\)</span>, we can use the <code>subs</code> commands as</p>
+<pre><code>subs(x^2,x,3)</code></pre>
+<p>which returns 9. This will be quite handy if we have a more complex expression (or a other objects)</p>
+<pre><code>syms x0 y0 r y
+circle = (x-x0)^2 + (y-y0)^2 == r^2</code></pre>
+<p>and then we want to substitute <span class="math inline">\(x=1,y=-2\)</span>, <span class="math inline">\(r=3\)</span> and we can with:</p>
+<pre><code>subs(circle,[x0,y0,r],[1,-2,3])</code></pre>
+<p>and then the result is the equation: <span class="math display">\[
+{{\left(x-1\right)}}^2 +{{\left(y+2\right)}}^2 =9
+\]</span></p>
+<h3 id="mathematical-functions">Mathematical Functions</h3>
+<p>Above, we substituted the value <span class="math inline">\(x=3\)</span> into the expression <span class="math inline">\(x^2\)</span>. Instead, we could make a mathematical function with</p>
+<pre><code>f(x)=x^2</code></pre>
+<p>and then <code>f(3)</code> will return 9.</p>
+<p>This also allows us to do composition. For example, if we</p>
+<pre><code>syms h</code></pre>
+<p>then the difference quotient</p>
+<pre><code>(f(x+h)-f(x))/h</code></pre>
+<p>returns: <span class="math display">\[\frac{{{\left(h+x\right)}}^2 -x^2 }{h}\]</span> or if we simplify this with:</p>
+<pre><code>simplify((f(x+h)-f(x))/h)</code></pre>
+<p>returns <span class="math inline">\(2x+h\)</span> and we will see this with derivatives in <a href="ch-05.html">Chapter 5</a>.</p>
+<p>Additionally, we can do formal composition. For example if</p>
+<pre><code>f(x) = x^3+x
+g(x) = 1/(x+2)</code></pre>
+<p>Then <code>f(g(x))</code> returns <span class="math display">\[
+\frac{1}{x+2}+\frac{1}{{{\left(x+2\right)}}^3 }
+\]</span> and <code>g(f(x))</code> returns <span class="math display">\[
+\frac{1}{x^3 +x+2}
+\]</span></p>
+<h4 id="exercise">Exercise</h4>
+<p>Let <span class="math inline">\(g(x) = \sqrt{x^2+1}\)</span> and <span class="math inline">\(h(x) = e^x\)</span>, find</p>
+<ul>
+<li><span class="math inline">\(g(h(x))\)</span></li>
+<li><span class="math inline">\(h(g(x))\)</span></li>
+<li><span class="math inline">\(h(h(x))\)</span></li>
+<li><span class="math inline">\(g(g(x))\)</span></li>
+</ul>
+<h2 id="expressions-versus-functions">Expressions versus Functions</h2>
+<p>Now that we see both expressions and functions, what’s the difference? When should I use one versus the other?</p>
+<p>In short, if you think of an expression as a function itself, probably use function notation. Especially if you need to take a derivative. Also, as we will see, if you want a number of values substituted into an expression quickly, a function should be used. Otherwise, either is often fine and I often don’t know when I start solving a problem the best thing to use.</p>
 <h2 id="solving-equations">Solving Equations</h2>
 <p>You probably recall from throughout your mathematical career that solving an equation can be difficult.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Matlab can often solve equations effortlessly. For example if we type</p>
 <pre><code>syms x
@@ -163,7 +207,7 @@ solve(x^2-3*x-4==0)</code></pre>
 \left( \begin{array}{c}-1 \\4 \end{array}\right)
 \]</span> meaning that both 4 and -1 are solutions to the equation.</p>
 <p>Quadratics are fairly straightforward to get solutions for both us (mathematicians) and computers. There is factoring or the quadratic formula.</p>
-<h4 id="exercise">Exercise</h4>
+<h4 id="exercise-1">Exercise</h4>
 <p>Solve the following quadratic equations.</p>
 <ol type="1">
 <li><span class="math inline">\(x^2-x-30=0\)</span></li>
@@ -185,7 +229,7 @@ root(z^3+4z^2-3z+11,z,2) \\
 root(z^3+4z^2-3z+11,z,3) \\
 \end{array}\right)
 \]</span></p>
-<p>which is Matlab’s way of saying that the roots of the cubic are the roots of the cubic. Below, we will learn how to find both the exact answer and approximations to this.</p>
+<p>which is Matlab’s way of saying that the roots of the cubic are the roots of the cubic. (Super helpful, Matlab!) Below, we will learn how to find both the exact answer and approximations to this.</p>
 <h2 id="solving-trigonometric-equations">Solving Trigonometric Equations</h2>
 <p>You should have seen how to solve trigonometric equations (an equation containing trigonometric functions) in Precalculus. In general these are quite difficult to solve, however Maple can handle many kinds of Trigonometric equations. Try solving <span class="math display">\[\sin 3x = \frac{1}{2}.\]</span> with</p>
 <pre><code>eqn = sin(3*x)==1/2
@@ -200,12 +244,12 @@ solve(eqn,x)</code></pre>
 S =  sym(0:pi/4:2*pi);
 xticks(double(S))
 xticklabels(arrayfun(@texlabel,S,&#39;UniformOutput&#39;,false))</code></pre>
-<p>where the last three lines gives nicer tick marks (See Chapter 2). The results is a plot the functions <span class="math inline">\(f(x)=\sin 3x\)</span> and <span class="math inline">\(g(x)=1/2\)</span> on the interval <span class="math inline">\(0\leq x\leq 2\pi\)</span>:</p>
+<p>where the last three lines gives nicer tick marks (See <a href="ch-02.html">Chapter 2</a>). The result is a plot the functions <span class="math inline">\(f(x)=\sin 3x\)</span> and <span class="math inline">\(g(x)=1/2\)</span> on the interval <span class="math inline">\(0\leq x\leq 2\pi\)</span>:</p>
 <figure>
 <img src="images/ch03/plot03.png" alt="plot of the sides of the equation sin(3x)=1/2" /><figcaption aria-hidden="true">plot of the sides of the equation sin(3x)=1/2</figcaption>
 </figure>
 <p>On the interval that we plotted, there are 6 intersection points, but if we changed the plotting interval, that would change. There are actually an infinite number of intersection points.</p>
-<p>Notice that the solutions found are the smallest intersection point2 in the plot above. The next couple of sections will show how to find all solutions and then solutions on a given interval.</p>
+<p>Notice that the solutions found are the smallest intersection points in the plot above. The next couple of sections will show how to find all solutions and then solutions on a given interval.</p>
 <h3 id="finding-all-solutions-to-a-trigonometric-equation">Finding all solutions to a trigonometric equation</h3>
 <p>We now find out how Matlab can find all of the solutions above. If we enter:</p>
 <pre><code>[solx,parameters,conditions] = solve(eqn,x,&#39;ReturnConditions&#39;,true)</code></pre>
@@ -224,8 +268,12 @@ xticklabels(arrayfun(@texlabel,S,&#39;UniformOutput&#39;,false))</code></pre>
 <ul>
 <li><p>The <code>solx</code> is the all solutions. There are in pairs and you can think of them as paired from the plot above along each hump of the sine curve.</p></li>
 <li><p>The <code>parameters</code> variable lists the parameters (note the <span class="math inline">\(k\)</span> in the <code>solx</code>).</p></li>
-<li><p>The <code>conditions</code> lists what values the parameters can take on. In this case, <span class="math inline">\(k\)</span> can take on an integer.</p></li>
+<li><p>The <code>conditions</code> lists what values the parameters can take on. In this case, <span class="math inline">\(k\)</span> can take on any integer.</p></li>
 </ul>
+<p>If we are looking for all solutions to the solution, then the information in <code>solx</code> is the result or <span class="math display">\[\frac{\pi}{18} + \frac{2\pi k}{3}, \frac{5\pi}{18} + \frac{2\pi k}{3}
+\qquad \text{for $k \in \mathbb{Z}$}\]</span></p>
+<h4 id="exercise-2">Exercise</h4>
+<p>Find all solutions to <span class="math inline">\(\tan 2x = 1\)</span>.</p>
 <h4 id="finding-solutions-to-equations-on-an-interval">Finding solutions to equations on an interval</h4>
 <p>In this section, we will find the solutions to <span class="math inline">\(\sin 3x=1/2\)</span> on the interval <span class="math inline">\(0 \leq x \leq 2\pi\)</span>. The following command will do this</p>
 <pre><code>assume(conditions)
@@ -250,11 +298,8 @@ valx = subs(solx,parameters,solk)</code></pre>
 \frac{29\pi}{18}\\[5pt]
 \end{array}\right)
 \]</span></p>
-<h4 id="exercise-1">Exercise</h4>
-<ol type="1">
-<li>Find all the solutions for <span class="math inline">\(\tan 2x=1\)</span>. Write a sentence explaining the result.</li>
-<li>Find all the solutions for <span class="math inline">\(2\cos 4x =\sqrt{2}\)</span> on <span class="math inline">\([0,\pi]\)</span>. Write a sentence explaining the result.</li>
-</ol>
+<h4 id="exercise-3">Exercise</h4>
+<p>Find all the solutions for <span class="math inline">\(2\cos 4x =\sqrt{2}\)</span> on <span class="math inline">\([0,\pi]\)</span>.</p>
 <h2 id="exact-versus-approximate-solutions">Exact versus approximate solutions</h2>
 <p>Above, we solved, <span class="math display">\[x^{3}+3x^{2}-11x-10=0\]</span> and got an array of something called <code>root</code>, but wasn’t helpful. If we add:</p>
 <pre><code>eqn = x^3+3*x^2-11*x-10==0
@@ -290,41 +335,22 @@ solve(eqn, x, &#39;MaxDegree&#39;, 3)</code></pre>
 <pre><code>[xsol,params,cond] = solve(x^2-9&gt;=0,x,&#39;ReturnConditions&#39;,true)</code></pre>
 <p>the important part returns the array <span class="math display">\[
 \left(\begin{array}{c} x \leq -3 \\ 3 \leq x \end{array}\right)\]</span></p>
-<p>which is the union of the two intervals or <span class="math display">\[ (-\infty,-3) \cup (3, \infty)\]</span> .</p>
-<h2 id="substituting-values-into-expressions">Substituting values into expressions</h2>
-<p>Often, if we have an expression, it’s nice to substitute values into this. There is a command called <code>subs</code> (short for substitute) that will do this. For example, if we use Matlab to solve the equation <span class="math inline">\(x^{2}-5x+4=0\)</span>, we will get <span class="math inline">\(1,4\)</span> as an answer (that is both <span class="math inline">\(x=1\)</span> and <span class="math inline">\(x=4\)</span> are solutions). How do we show this? One ways to to evaluate <span class="math inline">\(1^{2}-5(1)+4\)</span> and <span class="math inline">\(4^{2}-5(4)+4\)</span> and show each is zero, however a better way is to use a variable to write the left side or</p>
-<pre><code>f=x^2-5*x+4</code></pre>
-<p>Then if we type <code>subs(f,x,1)</code> and <code>subs(f,x,4)</code>, then these subsitutes <span class="math inline">\(x=1\)</span> and <span class="math inline">\(x=4\)</span> into the expression in <code>f</code>. Both will be zero.</p>
-<p>We can substitute anything into anything else. First enter:</p>
-<pre><code>syms t h</code></pre>
-<p>Try the following: 1. <code>subs(f,x,10)</code> 2. <code>subs(f,x,t)</code> 3. <code>subs(f,x,x+h)</code> 4. <code>(subs(f,x,x+h)-f)/h</code></p>
-<p>where the last one is the difference quotient related to the derivative. We’ll see this later in the course.</p>
-<h2 id="functions">Functions</h2>
-<p>Matlab has mathematical functions much like we expect such as a number as an input (or multiple numbers) and returns a number. You can also think of it as a rule from an <span class="math inline">\(x\)</span> value to a <span class="math inline">\(y\)</span>. For example if we have the square function, the standard way to write it is</p>
-<pre><code>f(x)=x^2</code></pre>
-<p>Note that this looks like a definition of a function that we would write mathematically.</p>
-<p>The great thing about functions is that they act much like mathematical functions. If you have defined the function <span class="math inline">\(f\)</span> as above, now we can do things to functions including</p>
-<ul>
-<li>evaluating functions at points.</li>
-<li>evaluating functions at other expressions like <span class="math inline">\(x+h\)</span>.</li>
-<li>function composition</li>
-<li>differentiating.</li>
-</ul>
-<h4 id="exercise-2">Exercise</h4>
-<p>Try the following:</p>
-<ul>
-<li><span class="math inline">\(f(2), f(-2), f(10)\)</span>.</li>
-<li><span class="math inline">\(f(y), f(x+1)\)</span></li>
-<li><span class="math display">\[\frac{f(x+h)-f(x)}{h}\]</span></li>
-<li>Define <span class="math inline">\(g(x)=\dfrac{x}{x+1}\)</span> and find <span class="math inline">\(g(f(x))\)</span> and <span class="math inline">\(f(g(x))\)</span>.</li>
-</ul>
+<p>which is the union of the two intervals or <span class="math display">\[ (-\infty,-3) \cup (3, \infty)\]</span></p>
+<p>Notice that if we switch the inequality sign and enter</p>
+<pre><code>[xsol,params,cond] = solve(x^2-9&lt;=0,x,&#39;ReturnConditions&#39;,true)</code></pre>
+<p>The result for <code>cond</code> is <span class="math display">\[
+\left(\begin{array}{c}
+-3&lt;x\wedge x&lt;3\\
+y\in \mathbb{R}
+\end{array}\right)
+\]</span> and this can translate to the interval <span class="math inline">\([-3,3]\)</span>.</p>
 <h2 id="finding-the-domain-of-a-function">Finding the domain of a function</h2>
 <p>Maple can be helpful for finding the domain of functions, however, we need to recall some basics of functions. Recall that the domain of <span class="math inline">\(\sqrt{x}\)</span> is <span class="math inline">\([0,\infty)\)</span>, or the inside must be greater than or equal to zero. We can then use Matlab to help find say the domain of <span class="math inline">\(\sqrt{4x-x^{2}-4}\)</span>, by solving</p>
 <pre><code>[xsol,params,cond] = solve(5*x-x^2-4&gt;=0,x,&#39;ReturnConditions&#39;,true)</code></pre>
 <p>and the interesting part of the solution is the <code>cond</code> variable, which returns <span class="math display">\[
 \left(\begin{array}{c} 1\leq x\wedge x\leq 4\\ y\in \mathbb{R} \end{array}\right)
-\]</span> which is Matlab’s nonstandard way of saying that this is the interval <span class="math inline">\([-1,4]\)</span>, so this is the domain of <span class="math inline">\(\sqrt{4x-x^{2}-4}\)</span>.</p>
-<h4 id="exercise-3">Exercise</h4>
+\]</span> which is Matlab’s nonstandard way of saying that this is the interval <span class="math inline">\([1,4]\)</span>, so this is the domain of <span class="math inline">\(\sqrt{4x-x^{2}-4}\)</span>.</p>
+<h4 id="exercise-4">Exercise</h4>
 <p>Find the domain of each of the following 1. <span class="math inline">\(\dfrac{1}{x^{2}-16}\)</span> 2. <span class="math inline">\(\ln(5x+7)\)</span> 3. <span class="math inline">\(\sin^{-1}(3x^{3}+5)\)</span></p>
 <p>Hint: 1. it’s easier to solve the bottom equal to 0, then exclude it. 2. recall that the natural log in Matlab is <code>log</code> and you’ll need to recall the domain of it, then restrict the inside, just like the square root above. 3. what is the domain of the inverse sine?</p>
 <h2 id="inverse-functions">Inverse Functions</h2>
@@ -372,13 +398,12 @@ f(x) = \ln\left(3\,x^2 +10\,x-8\right)
 </figure>
 <p>and you should note that they look like inverses because they are symmetric across the line <span class="math inline">\(y=x\)</span>.</p></li>
 </ol>
-<h2 id="expressions-versus-functions">Expressions versus Functions</h2>
-<p>Now that we see both expressions and functions, what’s the difference? When should I use one versus the other?</p>
-<p>In short, if you think of an expression as a function itself, probably use function notation. Especially if you need to take a derivative. Also, as we will see, if you want a number of values substituted into an expression quickly, a function should be used. Otherwise, either is often fine and I often don’t know when I start solving a problem the best thing to use.</p>
 <h2 id="odd-and-even-functions">Odd and Even functions</h2>
 <p>Recall that an <strong>odd</strong> function satisfies <span class="math inline">\(f(-x)=-f(x)\)</span> for all <span class="math inline">\(x\)</span> on its domain and an <strong>even</strong> function satisfies <span class="math inline">\(f(-x)=f(x)\)</span> for all <span class="math inline">\(x\)</span> on its domain. Here’s a nice way to show these are satisfied in Maple.</p>
-<p>Show <span class="math inline">\(f(x)=x^{3}\)</span> is an odd function. It seems logical to show in Maple <code>f(-x)=-f(x)</code>. In this simple case, both sides are the same, so it seems it is an odd function. Let’s look at a more complex function, <span class="math display">\[f(x)=\frac{4x^{3}+2x}{x^{2}+5}\]</span> and in Maple, we do <code>f(-x)=-f(x)</code>, then Maple returns <span class="math display">\[\frac{-4x^{3}-2x}{x^{2}+5}=-\frac{4x^{3}+2x}{x^{2}+5}\]</span> which takes a bit of work to recall that these are equal. To make it clearer, we will rewrite <span class="math inline">\(f(-x)=-f(x)\)</span> by adding <span class="math inline">\(f(x)\)</span> to both sides to get <span class="math inline">\(f(-x)+f(x)=0\)</span>. If we type <code>f(-x)+f(x)</code> into Maple, we get: <span class="math display">\[\frac{-4x^{3}-2x}{x^{2}+5}+\frac{4x^{3}+2x}{x^{2}+5}\]</span> which again, isn’t so clear, but if we simplify by typing <code>simplify(f(-x)+f(x))</code>, we get 0. This shows it is odd.</p>
-<p>###Exercise</p>
+<p>Show <span class="math inline">\(f(x)=x^{3}\)</span> is an odd function. It seems logical to show in Maple <code>f(-x)=-f(x)</code>. In this simple case, both sides are the same, so it seems it is an odd function. Let’s look at a more complex function, <span class="math display">\[f(x)=\frac{4x^{3}+2x}{x^{2}+5}\]</span> and in Matlab, we do <code>f(-x)=-f(x)</code>, then Maple returns <span class="math display">\[
+-\frac{4\,x^3 +2\,x}{x^2 +5}=-\frac{4\,x^3 +2\,x}{x^2 +5}
+\]</span> which shows that the function is odd. However, this doesn’t always work, however, we can rewrite <span class="math inline">\(f(-x)=-f(x)\)</span> by adding <span class="math inline">\(f(x)\)</span> to both sides to get <span class="math inline">\(f(-x)+f(x)=0\)</span>. If we type <code>f(-x)+f(x)</code> into Matlab, we get 0, however if you don’t get a zero, try doing <code>simplify(f(-x)+f(x))</code>.</p>
+<h4 id="exercise-5">Exercise</h4>
 <ol type="1">
 <li>Show that <span class="math inline">\(g(x)={\rm e}^{x^{2}}\)</span> is an even function.</li>
 <li>Is <span class="math inline">\(h(x)=\sqrt{3x+4}\)</span> even, odd or neither.</li>
@@ -463,6 +488,7 @@ leqn(2)==reqn(2)</code></pre>
 <p>and to determine that this worked, typing</p>
 <pre><code>simplifyFraction(x^2-2*x+4-7/(3*x+1))</code></pre>
 <p>returns the improper form of <span class="math inline">\(Q\)</span> as above.</p>
+<p><a href="ch-02.htm">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-04.html">Next chapter</a></p>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
