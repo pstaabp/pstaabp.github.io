@@ -2,7 +2,7 @@
 
 * [Chapter 1: Introduction to Symbolic Computing and Computer Algebra Systems](ch-01.html)
 * [Chapter 2: Plotting Basics](ch-02.html)
-* [Chapter 3: Precalculus Topics](ch-03.html)
+* [Chapter 3: Solving Equations and Mathematical Functions](ch-03.html)
 * [Chapter 4: Everything in Matlab is an Array](ch-04.html)
 * [Chapter 5: Differential Calculus](ch-05.html)
 * [Chapter 6: Introduction to Programming](ch-06.html)

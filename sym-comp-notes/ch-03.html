@@ -432,7 +432,7 @@ f(x) = \ln\left(3\,x^2 +10\,x-8\right)
 <p>at this point we <em>equate coefficients</em> by finding the coefficients of the <span class="math inline">\(x\)</span> term and the constant term on either side of the equation. This results in two equations: <span class="math display">\[\begin{array}{rl}2&amp;=A+B\newline -2&amp;=A+3B\end{array}\]</span></p>
 <p>subtracting these, results in <span class="math inline">\(4=-2B\)</span> or <span class="math inline">\(B=-2\)</span> and then you can find <span class="math inline">\(A=4\)</span>. This shows that</p>
 <p><span class="math display">\[\frac{2x-2}{x^{2}+4x+3}=\frac{4}{x+3}-\frac{2}{x+1}\]</span></p>
-<p>###Using Maple to help us find partial fractions</p>
+<h3 id="using-a-cas-to-find-partial-fractions">Using a CAS to find partial fractions</h3>
 <p>We start again with</p>
 <pre><code>R(x) = (2*x-2)/(x^2+4*x+3)</code></pre>
 <p>and get the numerator and denominator:</p>
@@ -463,18 +463,18 @@ leqn(2)==reqn(2)</code></pre>
 <p>and the answer is <span class="math inline">\(A=4, b=-2\)</span>, so then</p>
 <pre><code>subs(eqn,[A,B],[a,b])</code></pre>
 <p>results in <span class="math display">\[\frac{2x-2}{x^{2}+4x+3}=\frac{4}{x+3}-\frac{2}{x+1}\]</span></p>
-<p>###Converting an expanded form back.</p>
+<h3 id="converting-an-expanded-form-back.">Converting an expanded form back.</h3>
 <p>How do you reverse the partial fraction? If you are doing it by hand, it is simply finding a common denominator and combining terms. In Matlab,</p>
 <pre><code>simplifyFraction(rhs(eq5))</code></pre>
 <p>returns <span class="math display">\[\frac{2(x-1)}{x^{2}+4x+3}.\]</span></p>
 <p>which is what we started with.</p>
-<p>###Exercise</p>
+<h4 id="exercise-6">Exercise</h4>
 <p>Find the partial fraction form of <span class="math display">\[\frac{9x^{2}+8x-4}{x^{3}-4x}\]</span> using the steps above. Check your answer by reversing the partial fraction form.</p>
-<p>###Using the built-in method</p>
+<h3 id="using-the-built-in-method">Using the built-in method</h3>
 <p>Of course, Matlab can do all of these steps at once. If we use the <span class="math inline">\(R\)</span> from above, typing</p>
 <pre><code>partfrac(R(x))</code></pre>
 <p>returns <span class="math display">\[\frac{4}{x+3}-\frac{2}{x+1}.\]</span> which of course is much easier, but note that the steps above remind us how this is actually done.</p>
-<p>###Exercise</p>
+<h4 id="exercise-7">Exercise</h4>
 <p>Find the partial fraction form of <span class="math display">\[{\frac {4\,x^{6}+15\,x^{5}+34\,x^{4}+66\,x^{3}+94\,x^{2}+56\,x+40}{x^{4}+2\,x^{3}+5\,x^{2}+8\,x+4}}\]</span> using the built-in method.</p>
 <h2 id="long-division-of-polynomials">Long Division of Polynomials</h2>
 <p>Another common technique needed to do is long division of polynomials.</p>
