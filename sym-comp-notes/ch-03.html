@@ -152,7 +152,7 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 3: Mathematical Functions and Solving Equations</h1>
 </header>
-<p><a href="ch-02.htm">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-04.html">Next chapter</a></p>
+<p><a href="ch-02.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-04.html">Next chapter</a></p>
 <h2 id="mathematical-functions-and-expressions">Mathematical Functions and Expressions</h2>
 <p>In the previous chapter, we plotted the function <span class="math inline">\(x^2\)</span> as an example with</p>
 <pre><code>syms x
@@ -351,8 +351,18 @@ y\in \mathbb{R}
 \left(\begin{array}{c} 1\leq x\wedge x\leq 4\\ y\in \mathbb{R} \end{array}\right)
 \]</span> which is Matlab’s nonstandard way of saying that this is the interval <span class="math inline">\([1,4]\)</span>, so this is the domain of <span class="math inline">\(\sqrt{4x-x^{2}-4}\)</span>.</p>
 <h4 id="exercise-4">Exercise</h4>
-<p>Find the domain of each of the following 1. <span class="math inline">\(\dfrac{1}{x^{2}-16}\)</span> 2. <span class="math inline">\(\ln(5x+7)\)</span> 3. <span class="math inline">\(\sin^{-1}(3x^{3}+5)\)</span></p>
-<p>Hint: 1. it’s easier to solve the bottom equal to 0, then exclude it. 2. recall that the natural log in Matlab is <code>log</code> and you’ll need to recall the domain of it, then restrict the inside, just like the square root above. 3. what is the domain of the inverse sine?</p>
+<p>Find the domain of each of the following</p>
+<ol type="1">
+<li><span class="math inline">\(\dfrac{1}{x^{2}-16}\)</span></li>
+<li><span class="math inline">\(\ln(5x+7)\)</span></li>
+<li><span class="math inline">\(\sin^{-1}(3x^{3}+5)\)</span></li>
+</ol>
+<p>Hint:</p>
+<ol type="1">
+<li>it’s easier to solve the bottom equal to 0, then exclude it.</li>
+<li>recall that the natural log in Matlab is <code>log</code> and you’ll need to recall the domain of it, then restrict the inside, just like the square root above.</li>
+<li>what is the domain of the inverse sine?</li>
+</ol>
 <h2 id="inverse-functions">Inverse Functions</h2>
 <p>Recall that the inverse of a function <span class="math inline">\(f(x)\)</span> is a function <span class="math inline">\(g(x)\)</span> if <span class="math inline">\(f(g(x))=x\)</span> and <span class="math inline">\(g(f(x))=x\)</span>. For example if <span class="math display">\[ 
 f(x) = \frac{3x+2}{x-1} \qquad g(x)=\frac{x+2}{x-3}
@@ -488,7 +498,8 @@ leqn(2)==reqn(2)</code></pre>
 <p>and to determine that this worked, typing</p>
 <pre><code>simplifyFraction(x^2-2*x+4-7/(3*x+1))</code></pre>
 <p>returns the improper form of <span class="math inline">\(Q\)</span> as above.</p>
-<p><a href="ch-02.htm">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-04.html">Next chapter</a></p>
+<pre><code></code></pre>
+<p><a href="ch-02.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-04.html">Next chapter</a></p>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>

@@ -152,7 +152,7 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 6: Introduction to Programming</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
+<p><a href="ch-05.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-07.html">Next chapter</a></p>
 <p>The following are number of advanced techniques in Matlab. Again, these are general ideas that appear in any CAS, but the format will be specific to Matlab. We will use these techniques to solve more complicated series of mathematical steps in a nice way. The following techniques are described here:</p>
 <ul>
 <li><em>functions</em> A function in computer science is similar to that of a mathematical function, however, but allow more complicated steps to occur.</li>
@@ -188,7 +188,7 @@ end</code></pre>
 <li>Add it to the bottom of the script you are working on.</li>
 <li>Trying running it to make sure it works.</li>
 </ul>
-<p>###Exercises</p>
+<h4 id="exercises">Exercises</h4>
 <ol type="1">
 <li><p>remove the semicolon from the end of the line in the funtion, reenter it and see what happens. Can you understand what is going on?</p></li>
 <li><p>Write a procedure called <code>mult</code> that multiplies two numbers and returns the product.</p></li>
@@ -290,15 +290,17 @@ end</code></pre>
   factors = findAllFactors(n);
   p = factors(2)==n;
 end</code></pre>
-<p>Alternatively, prime numbers have only 2 numbers in factor list and so it can be checked if the length of the factors is 2.</p>
+<p>Alternatively, prime numbers have only 2 numbers in factor list and so it can be checked if the length of the factors array is 2.</p>
 <pre><code>function p = isPrime(n)
   p = length(findAllFactors(n)) == 2;
 end</code></pre>
+<p>These examples not only show how to do some programming but also show how to build up functions based on other functions. Note that since the definition of primality has to do with the number of factors, by using the <code>findAllFactors</code> that we already wrote, it breaks down the problem into simpler pieces.</p>
 <p>Another nice use of all factors is the use of a theorem that says that the total number of factors is even (factors pair up) unless the number is a perfect square. We will then use this and the <code>isOdd</code> function you wrote above to write an <code>isPerfectSquare</code> procedure.</p>
 <pre><code>function p = isPerfectSquare(n)
   factors = findAllFactors(n);
   p = isOdd(length(factors));
 end</code></pre>
+<p>Note: there are better ways to do this, but this uses something we just created.</p>
 <h4 id="infinite-loops">Infinite Loops</h4>
 <p>Although not what is generally intended, it is common to write a while loop that doesn’t stop (in fact while writing these notes I unintentionally created one). Here’s some things to consider when writing a for loop.</p>
 <ul>
@@ -390,7 +392,7 @@ s</code></pre>
 <p>which returns 58.</p>
 <p>Note: there is a command called <code>sum</code> that will also do the above.</p>
 <pre><code>sum([3,5,7,11,13,19])</code></pre>
-<p>This isn’t a very interesting example, but shows the syntax of a for loop. Often a for loop is used in conjunction with a procedure. Above, we used a <code>while</code> loop to create an integer list. However, it was a loop with a fixed number of steps in which a <code>for</code> loop is better to use. Here’s a different way to create the integer list:</p>
+<p>This isn’t a very interesting example, but shows the syntax of a for loop. Often a for loop is used in conjunction with a function. Above, we used a <code>while</code> loop to create an integer list. However, it was a loop with a fixed number of steps in which a <code>for</code> loop is better to use. Here’s a different way to create the integer list:</p>
 <pre><code>function result = intList2(n)
   result=ones(1);
   for i=2:n
@@ -428,7 +430,7 @@ n\cdot(n-1)!&amp;\text{otherwise}\end{cases}\]</span></p>
   end
 end</code></pre>
 <p>Notice that this looks just like other piecewise functions, like the absolute value, defined above.</p>
-<h3 id="exercise-3">Exercise</h3>
+<h4 id="exercise-3">Exercise</h4>
 <ol type="1">
 <li>Try the function <code>factr</code> for various values of <span class="math inline">\(n\)</span>.<br />
 </li>
@@ -489,5 +491,7 @@ end</code></pre>
 <h4 id="exercise-4">Exercise</h4>
 <p>A fibonacci number is defined as <span class="math inline">\(F(1)=1, F(2)=1\)</span>, then <span class="math inline">\(F(n)=F(n-1)+F(n-2)\)</span> for <span class="math inline">\(n \geq 3\)</span>. This is naturally a recursive function. Write a procedure <span class="math inline">\(F\)</span> that take a positive integer <span class="math inline">\(n\)</span> and returns the <span class="math inline">\(n\)</span>th Fibonacci number using recursion. Find the first 20 Fibonacci number.</p>
 <p>Hint: First, make sure that you return 1 for <code>n==1</code> or <code>n==2</code>, otherwise uses the formula given here. To find the first 20 fibonaaci numbers, after defining the <code>fibonacci</code> function, you can use the <code>arrayfun</code> on the array <code>1:20</code>.</p>
+<pre><code></code></pre>
+<p><a href="ch-05.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-07.html">Next chapter</a></p>
 </body>
 </html>

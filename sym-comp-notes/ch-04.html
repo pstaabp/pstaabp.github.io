@@ -152,7 +152,7 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 4: (Almost) Everything is an (decimal) array in Matlab</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
+<p><a href="ch-03.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-05.html">Next Chapter</a></p>
 <p>So far, we have been using Matlab for doing mathematical operations and showing plots. We’ve been simplifying expressions, solving equations and producing plots. In this chapter, we go beyond the basics of Matlab a bit deeper to show that it is a powerful computing environment and you need to know some deeper computing concepts to take advantage of this.</p>
 <p>We take a step back from doing mathematics with Matlab and explore some of the details of how Matlab works and look at the structure of Matlab commands.</p>
 <h2 id="matlabs-live-editor-documents-and-order-of-entry">Matlab’s Live Editor Documents and Order of Entry</h2>
@@ -183,6 +183,8 @@ fplot(f,[-2 2])</code></pre>
 <figure>
 <img src="images/ch04/insert-text.png" alt="Insert Text" /><figcaption aria-hidden="true">Insert Text</figcaption>
 </figure>
+<h3 id="formatting-mathematics-in-a-matlab-live-document">Formatting Mathematics in a Matlab Live Document</h3>
+<p>We can format mathematics nicely in a live document using LaTeX</p>
 <h2 id="variables-and-the-workspace-pane">Variables and the Workspace Pane</h2>
 <p>As we saw earlier, we can store anything in a variable using the <code>varname=obj</code> syntax where <code>varname</code> is any variable name (it can’t start with a number) and <code>obj</code> is any Matlab object (expression, function, plot, etc.).</p>
 <p>You can think of variables as on a grid on a white board with a column for the name and a column for the object. For example, let’s say you first define a symbolic variable <code>x</code> with <code>syms x</code> and then define a function with <code>f=x^2</code>. Anytime you type in <code>f</code> in an expression, Maple will look up the value of the variable.</p>
@@ -268,7 +270,7 @@ fplot([x^2 x^3], [-2 2])</code></pre>
 \right]\]</span></p>
 <p>We can use this with symbolic variables too. Enetering:</p>
 <pre><code>x.^(1:5)</code></pre>
-<p>returns the array $[x; x^2; x^3; x^4; x^5$ and</p>
+<p>returns the array <span class="math inline">\([x\; x^2\; x^3\; x^4\; x^5]\)</span> and</p>
 <pre><code>fplot(x.^(1:5),[-2 2])</code></pre>
 <p>produces the plot: <img src="images/ch04/powx.png" alt="Plot of the powers of x" /></p>
 <p>###Exercise</p>
@@ -308,5 +310,7 @@ fplot([x^2 x^3], [-2 2])</code></pre>
 <h3 id="when-to-use-what-type">When to use what type?</h3>
 <p>We’ve seen three basic types of numbers in Matlab, doubles, integers (typically <code>int64</code>) and symbolic. When should I use which type?</p>
 <p>The answer is actually complicated. It really depends. Under most situations staying with the standard <code>double</code> type is fine and almost everything we do in this class with stay with this type. However, in some cases one of the other is better. We’ll see some example doing number theory in that we need to use either <code>int64</code> or symbolic.</p>
+<pre><code></code></pre>
+<p><a href="ch-03.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-05.html">Next chapter</a></p>
 </body>
 </html>

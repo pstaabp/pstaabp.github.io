@@ -152,7 +152,7 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 5: Differential Calculus</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
+<p><a href="ch-04.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-05.html">Next Chapter</a></p>
 <p>This chapter covers how to perform many mathematics that arises from Calculus using a CAS like Matlab. As we will see, a CAS will often do limits and derivatives quite easily, allowing us to investigate the geometry of the derivative using a plot or a table of values, which are often helpful for gaining intuition about limits and derivatives.</p>
 <h2 id="limits">Limits</h2>
 <p>You may need to review the basics of a limit from Calculus. If we say <span class="math display">\[L = \lim_{x \rightarrow 1} x^{2}\]</span> then <span class="math inline">\(L\)</span> is the value of the function <span class="math inline">\(x^{2}\)</span> as <span class="math inline">\(x\)</span> approaches 1 (from either side), but not at exactly 1. We can examine this using a plot of the function:</p>
@@ -185,7 +185,8 @@ yvals=double(arrayfun(@(x) f(x),xvals))</code></pre>
 <p>Now, of course, Matlab (and any CAS) will do the limit for us. If we enter</p>
 <pre><code>limit(f(x),x,1)</code></pre>
 <p>then Matlab returns 1.</p>
-<p>###Exercise Try evaluating the following limits:</p>
+<h4 id="exercise-1">Exercise</h4>
+<p>Try evaluating the following limits:</p>
 <ol type="1">
 <li><p><span class="math display">\[ \lim_{x \rightarrow 2} \frac{x^{2}-4}{x-2}\]</span></p></li>
 <li><p><span class="math display">\[\lim_{t \rightarrow 0} \frac{\sin t}{t}\]</span></p></li>
@@ -213,7 +214,7 @@ set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#3
 <pre><code>limit(g(x),x,0,&#39;left&#39;)
 limit(g(x),x,0,&#39;right&#39;)</code></pre>
 <p>returns 1 and 0 respectively.</p>
-<h4 id="exercise-1">Exercise</h4>
+<h4 id="exercise-2">Exercise</h4>
 <p>Let <span class="math display">\[
 h(x) = \begin{cases}
 2x+3 &amp; x &lt; -2 \\
@@ -257,16 +258,16 @@ transpose([xvals;slope_vals])</code></pre>
 \end {array}\]</span></p>
 <p>We can use this to estimate the tangent line of <span class="math inline">\(m=2\)</span> which we will verify below.</p>
 <h3 id="the-tangent-line">The tangent line</h3>
-<p>Recall that the slope of the tangent line to a curve <span class="math inline">\(f(x)\)</span> at <span class="math inline">\(x=c\)</span> is given by [ m = _{x c}  ]</p>
+<p>Recall that the slope of the tangent line to a curve <span class="math inline">\(f(x)\)</span> at <span class="math inline">\(x=c\)</span> is given by <span class="math display">\[m = \lim_{x \rightarrow c} \frac{f(x)-f(c)}{x-c}\]</span></p>
 <p>For the function <span class="math inline">\(f(x) = x^2\)</span>, the slope is <span class="math display">\[m = \lim_{x \rightarrow 1} \frac{x^{2}-1}{x-1}\]</span> which can be done in Matlab with:</p>
-<pre><code>limit(@(x) (x^2-1)/(x-1),x,1)</code></pre>
+<pre><code>limit((x^2-1)/(x-1),x,1)</code></pre>
 <p>and return 2. Therefore the tangent line is</p>
-<pre><code>tanLine:=2*(x-1)+1</code></pre>
+<pre><code>tanLine=2*(x-1)+1</code></pre>
 <p>and a plot of the function with its tangent line at <span class="math inline">\(x=1\)</span> is given as</p>
 <figure>
 <img src="images/ch05/plot04.png" alt="Plot of x^{2} and its tangent line" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> and its tangent line</figcaption>
 </figure>
-<h4 id="exercise-2">Exercise</h4>
+<h4 id="exercise-3">Exercise</h4>
 <p>Use the definition of the tangent line like above to find the tangent line to the curve <span class="math display">\[ y= \frac{1}{x+1}\]</span> at <span class="math inline">\(x=1\)</span>. Plot the function and the tangent line on the same axes.</p>
 <h2 id="asymptotes">Asymptotes</h2>
 <p>In precalculus you were introduced to asymptotes of functions. In generally, an asympote of a function is a line that the function approaches far from the origin. In calculus, there is a more specific definition.</p>
@@ -298,18 +299,18 @@ f(x) = \frac{2x-1}{x-3}\]</span></p>
 <p>The definition of a vertical asymptote is a bit more complicated. The line <span class="math inline">\(x=a\)</span> is a vertical asymptote of the function <span class="math inline">\(f(x)\)</span> if at least one of the following is true</p>
 <ul>
 <li><span class="math inline">\(\lim_{x \rightarrow a} f(x)=\infty\)</span></li>
-<li>$_{x a^{+}} f(x) = $</li>
-<li>$_{x a^{-}} f(x) = $</li>
+<li><span class="math inline">\(\lim_{x \rightarrow a^{+}} f(x)=\infty\)</span></li>
+<li><span class="math inline">\(\lim_{x \rightarrow a^{-}} f(x)=\infty\)</span></li>
 <li><span class="math inline">\(\lim_{x \rightarrow a} f(x)=-\infty\)</span></li>
-<li>$_{x a^{+}} f(x) = -$</li>
-<li>$_{x a^{-}} f(x) = -$</li>
+<li><span class="math inline">\(\lim_{x \rightarrow a^{+}} f(x)=-\infty\)</span></li>
+<li><span class="math inline">\(\lim_{x \rightarrow a^{-}} f(x)=-\infty\)</span></li>
 </ul>
 <p>In other words, the limit (one-sided or both-sided) is infinite.</p>
 <p>For the function seen above, the line <span class="math inline">\(x=3\)</span> is a vertical asympote because it appepars from the plot that <span class="math display">\[\lim_{x \rightarrow 3^{+}} \frac{2x-1}{x-3}=\infty\]</span></p>
 <p>but we can use limits to do this with:</p>
-<pre><code>f(x) = (2*x-1)./(x-3)
-limit(@(x) f(x),x,3,&#39;left&#39;)
-limit(@(x) f(x),x,3,&#39;right&#39;)</code></pre>
+<pre><code>f(x) = (2*x-1)/(x-3)
+limit(f(x),x,3,&#39;left&#39;)
+limit(f(x),x,3,&#39;right&#39;)</code></pre>
 <p>which returns <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span> respectively.</p>
 <p>Now this provides a way to prove that a vertical line is a vertical asymptote, but not how to find them. If you have a rational function (polynomial over a polynomial), then possible vertical asympotes are where the denominator is 0. For example, let’s look at the function <span class="math display">\[R(x)=\frac{x^{2}-1}{x^{3}-13x+12}\]</span></p>
 <p>We can find the possible vertical asymptotes by finding the zeros of the denominator or</p>
@@ -360,42 +361,80 @@ limit(((x+h)^2-x^2)/h,h,0)</code></pre>
 diff(g(x),x,2)
 diff(g(x),x,3)</code></pre>
 <h2 id="plots-of-a-function-with-its-tangent-line">Plots of a function with its tangent line</h2>
-<p>Consider the function <span class="math inline">\(f(x)=x^{2}\)</span>. Above, we saw the details of finding the secant line through this function to approximate the tangent line. Here, however, we will just plot a function and it’s tangent line.</p>
-<p>The tangent line to the function at <span class="math inline">\(x=1\)</span> can be written using the point-slope form as</p>
-<pre><code>tanLine:=f&#39;(1)(x-1)+f(1)</code></pre>
-<p>and then plotting the two is</p>
-<pre><code>plot([f(x), tanLine], x = -1 .. 3, title = typeset(&quot;A plot of %1 and its tangent line&quot;, x^2), legend = [f(x), &quot;tangent line&quot;])</code></pre>
-<p>resulting in the following plot.</p>
+<p>Consider the function <span class="math inline">\(f(x)=x \sin 2x\)</span>. We will find and plot the tangent line at <span class="math inline">\(x=\pi/6\)</span> and <span class="math inline">\(\pi/2\)</span>.</p>
+<pre><code>f(x)=x*sin(2*x)</code></pre>
+<p>Above, we saw the details of finding the secant line through this function to approximate the tangent line. Here, however, we will just plot a function and it’s tangent line.</p>
+<p>Of course, we need the derivative of the function, which we will define as a function:</p>
+<pre><code>df(x) = diff(f(x),x)</code></pre>
+<p>then we can find the tangent lines using the slope-intercept form:</p>
+<pre><code>tanLine1 = df(pi/6)*(x-pi/6)+f(pi/6)
+tanLine2 = df(pi/2)*(x-pi/2)+f(pi/2)</code></pre>
+<p>and then plotting the function and the lines can be done with</p>
+<pre><code>fplot([f(x),tanLine1,tanLine2],[0,pi])
+legend(&quot;x sin(2x)&quot;,&quot;tangent line at \pi/6&quot;,&quot;tangent line at \pi/2&quot;)
+S =  sym(0:pi/6:pi);
+xticks(double(S))
+xticklabels(arrayfun(@texlabel,S,&#39;UniformOutput&#39;,false))</code></pre>
+<p>where the tick labels have been set to be multiples of <span class="math inline">\(\pi/6\)</span>, which we saw in <a href="ch-02.html">Chapter 2</a>. The result is the following plot.</p>
 <figure>
-<img src="images/ch04/plot7.png" alt="Plot of the function x^{2} and its tangent line" /><figcaption aria-hidden="true">Plot of the function <span class="math inline">\(x^{2}\)</span> and its tangent line</figcaption>
+<img src="images/ch05/plot09.png" alt="Plot of the function x^{2} and its tangent line" /><figcaption aria-hidden="true">Plot of the function <span class="math inline">\(x^{2}\)</span> and its tangent line</figcaption>
 </figure>
 <h2 id="implicit-differentiation">Implicit Differentiation</h2>
 <p>If we have a function, then taking the derivative is done by hand using the rules of differentiation and in Maple using one of the techniques above. However, we don’t always have a function to represent a curve. The classic example is a circle. Consider the circle with radius 5: <span class="math display">\[x^{2}+y^{2}=25\]</span> It isn’t a function (why not?), so we can’t differentiate it like we can with a function. And we still would like to find out geometric information like a tangent line to the curve at a point.</p>
 <p>This is where implicit differentiation helps us out. By hand, taking the derivative implicitly on both sides of the equation above, leads to <span class="math display">\[2x+2y\frac{dy}{dx}=0\]</span> and solving for <span class="math inline">\(dy/dx\)</span> leads to <span class="math display">\[\frac{dy}{dx}=-\frac{x}{y}\]</span></p>
-<p>To do this in Maple, there’s only one important difference. We need to tell Maple that the variable <span class="math inline">\(y\)</span> is actually a function of <span class="math inline">\(x\)</span>, so whereever we see a <span class="math inline">\(y\)</span> in the equation, type <span class="math inline">\(y(x)\)</span>.</p>
-<p><span class="math display">\[x^{2}+y(x)^{2}=1\]</span> and then take the derivative of this using the <code>diff</code> ESC version with the line number will result in <span class="math display">\[2x+\left(2y\frac{d}{dx}y(x)\right) = 0\]</span> and then we can use the <code>solve</code> command to find the result for the derivative.</p>
-<pre><code>solve((##),diff(y(x),x))</code></pre>
-<p>where ## is the line number of the equation above and you can leave <code>diff(y(x),x)</code> as is or ESC it to make it look nicer. Either way, you will get: <span class="math display">\[-\frac{x}{y(x)}\]</span></p>
-<p>Lastly, there is another way to do this. Look at the <code>implicitdiff</code> command that is built-in to Maple. See if you can find the derivative of <span class="math inline">\(x^{2}+y^{2}=25\)</span> using this command.</p>
-<p>Let’s say we want to find the tangent line to the curve at the point <span class="math inline">\((3,4)\)</span>. If we plug the point into the derivative we will get <span class="math inline">\(m=-3/4\)</span> so the line will be <span class="math inline">\(y=-\frac{3}{4} (x-3)+4\)</span>.</p>
-<h3 id="finding-second-derivatives-implicitly.">Finding second derivatives implicitly.</h3>
-<p>We can also find second and higher derivatives implicitly using <code>implicitdiff</code>. For example, if we have the curve <span class="math inline">\(x^{2}+y^{2}=25\)</span>, then the second derivative can be found by</p>
-<pre><code>implicitdiff(x^2+y^2=25,y,x,x)</code></pre>
-<p>and the result is: \[-\]</p>
+<p>To do this in Matlab, we can do the following. First define the function like</p>
+<pre><code>circle = x^2+y(x)^2 ==25</code></pre>
+<p>where it is important to write any <span class="math inline">\(y\)</span> terms as <code>y(x)</code>. Now we can take the derivative:</p>
+<pre><code>dcirc = diff(circle,x)</code></pre>
+<p>which returns: <span class="math display">\[2\,y\left(x\right)\,\frac{\partial }{\partial x}\;y\left(x\right)+2\,x=0\]</span> and technically the derivative is what is called a partial derivative. Matlab thinks there are more than 1 variable here.</p>
+<p>Now unfortunately, Matlab doesn’t have the ability to solve for the derivative (or substitute something else for the derivative), so we will retype this:</p>
+<pre><code>dc = 2*y*dy + 2*x == 0</code></pre>
+<p>and then we can solve for <code>dy</code> with</p>
+<pre><code>solve(dc,dy)</code></pre>
+<p>returns <span class="math display">\[-\frac{x}{y\left(x\right)}\]</span> the same result as above.</p>
+<p>Obviously, this is not ideal, because we can make a mistake retyping in. The second section shows an alternative to this</p>
+<h4 id="implicit-function-theorem">Implicit Function Theorem</h4>
+<p>So technically this comes from Multivariate Calculus, but it’s not too difficult.</p>
+<p>If we have an equation of the form <span class="math inline">\(F(x,y)=c\)</span>, for any constant <span class="math inline">\(c\)</span>, then the derivative is <span class="math display">\[\frac{dy}{dx} = -\frac{F_x}{F_y}\]</span> where <span class="math display">\[F_x = \frac{\partial F}{\partial x} \qquad F_y = \frac{\partial F}{\partial y}\]</span> The squiggly d is called partial derivative meaning that you take the derivative with respect to that variable keeping the others constant.</p>
+<p>We can do this in Matlab with</p>
+<pre><code>syms x y
+F(x,y) = x^2+y^2
+dydx = -diff(F(x,y),x)/diff(F(x,y),y)</code></pre>
+<p>where we needed to tell Matlab now <code>y</code> is a symbolic variable (not a function, like it was defined above). The result is <span class="math display">\[
+-\frac{x}{y}
+\]</span> which is the same as above.</p>
 <h2 id="implicit-plots">Implicit Plots</h2>
-<p>Maple can plot curves based on equations in an implicit manner. The command <code>implicitplot</code> is a command in the <code>plots</code> package.</p>
-<pre><code>with(plots):</code></pre>
-<p>then we’ll plot the circle <span class="math inline">\(x^{2}+y^{2}=25\)</span>, then</p>
-<pre><code>implicitplot(x^2+y^2=25,x=-6..6,y=-6..6)</code></pre>
-<p>will give the following result.</p>
+<p>We can plot the implicit equation <span class="math inline">\(x^2+y^2=25\)</span> using the <code>fimplicit</code> command as</p>
+<pre><code>fimplicit(x^2+y^2==25)
+daspect([1 1 1])</code></pre>
+<p>and results in <img src="images/ch05/plot10.png" alt="Plot of a circle of radius 5" /></p>
+<h4 id="finding-and-plotting-the-tangent-line-to-an-implicit-curve">Finding and plotting the tangent line to an implicit curve</h4>
+<p>Now that we have an expression for the derivative, we can find the tangent line as we did above. However, the main difference is that we need a point (both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> coordinates) on the curve to evaluate the slope.</p>
+<p>Consider finding the tangent line to the circle above at the point <span class="math inline">\((3,4)\)</span>. The slope is the point plugged into the derivative that we stored in the variable <code>dydx</code> as</p>
+<p>A plot of both the circle and the tangent line is</p>
+<pre><code>fimplicit(x^2+y^2==25)
+hold on
+fplot(tanline)
+hold off
+xlim([-6 6])
+ylim([-6,8])
+daspect([1 1 1])
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)</code></pre>
+<p>Note that the <code>xlim</code> and <code>ylim</code> lines are there to improve the plotting window, the <code>daspect</code> line sets the aspect ratio to 1 (so the circle looks like a circle) and the <code>set...</code> line makes the origin like we’re used to it.</p>
+<p>The result is</p>
 <figure>
-<img src="images/ch04/plot9.png" alt="Plot of a circle of radius 5" /><figcaption aria-hidden="true">Plot of a circle of radius 5</figcaption>
+<img src="images/ch05/plot11.png" alt="Plot of a circle of radius 5 with the tangent line at (3,4)" /><figcaption aria-hidden="true">Plot of a circle of radius 5 with the tangent line at (3,4)</figcaption>
 </figure>
-<p>If we also plot the tangent line to the curve using:</p>
-<pre><code>implicitplot([x^2+y^2=25,y=-3/4(x-3)+4],x=-6..6,y=-6..6,color=[red,blue],legend=[x^2+y^2=25,&quot;tangent line&quot;])</code></pre>
-<figure>
-<img src="images/ch04/plot10.png" alt="Plot of a circle of radius 5 and its tangent line" /><figcaption aria-hidden="true">Plot of a circle of radius 5 and its tangent line</figcaption>
-</figure>
-<p>Note: if you are plotting curves with the <code>implicitplot</code> command, then all curves need to be as equations. This is different than plotting with the <code>plot</code> command in that all curves must be expressions.</p>
+<h4 id="exercise-4">Exercise</h4>
+<p>There is a class of implicit curves called <em>elliptic curves</em> that have the form <span class="math display">\[y^2=x^3+ax+b\]</span> we will plot the curve <span class="math display">\[y^2=x^3-4x+1\]</span></p>
+<ol type="1">
+<li>Plot the curve. You should see a connected loop as well as a part that looks similar to half a hyperbola.</li>
+<li>Show that the point <span class="math inline">\((-1,2)\)</span> is on the curve. Hint: plug the point into the equation and check if satisfies it.</li>
+<li>Find <span class="math inline">\(\frac{dy}{dx}\)</span> using the implicit function theorem shown above. Define <span class="math inline">\(F(x,y)\)</span> such that the equation is <span class="math inline">\(F(x,y)=c\)</span>.</li>
+<li>Find the tangent line to the curve at <span class="math inline">\((-1,2)\)</span>.</li>
+<li>Plot the curve and the tangent line.</li>
+</ol>
+<pre><code></code></pre>
+<p><a href="ch-04.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-06.html">Next chapter</a></p>
 </body>
 </html>
