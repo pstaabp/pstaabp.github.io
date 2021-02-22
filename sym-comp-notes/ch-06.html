@@ -163,7 +163,7 @@
 <li><em>recursion</em> Recursion is a type of procedure that allows code to call itself. Although often you can generate code that duplicates recursive code, it is often clearer to understand and often come directly from mathematical statements.</li>
 </ul>
 <h2 id="functions">Functions</h2>
-<p>In Matlab, functions (must like in other computer languages) have one ore more inputsand the result is some output (numbers, a plot, an expression). All of the commands that we have seen so far that are built-in to Matlab are functions.</p>
+<p>In Matlab, functions (must like in other computer languages) have one or more inputs and the result is some output (numbers, a plot, an expression). All of the commands that we have seen so far that are built-in to Matlab are functions.</p>
 <p>The mathematical functions that we have encounted in this course are a bit different that what we are talking about here. We can define a square function with</p>
 <pre><code>function y = f(x)
   y = x^2; 
@@ -290,6 +290,7 @@ end</code></pre>
   factors = findAllFactors(n);
   p = factors(2)==n;
 end</code></pre>
+<p>where the boolean <code>factors(2)==n</code> returns logical true if the 2nd element of the factors array is <code>n</code>. This will only occur if the only factors are 1 and n. </p>
 <p>Alternatively, prime numbers have only 2 numbers in factor list and so it can be checked if the length of the factors array is 2.</p>
 <pre><code>function p = isPrime(n)
   p = length(findAllFactors(n)) == 2;
@@ -300,13 +301,13 @@ end</code></pre>
   factors = findAllFactors(n);
   p = isOdd(length(factors));
 end</code></pre>
-<p>Note: there are better ways to do this, but this uses something we just created.</p>
+<p>Note: there are better ways to check if a number is a perfect square, but this illustrates how to use other functions that we have used to create new functionality</p>
 <h4 id="infinite-loops">Infinite Loops</h4>
 <p>Although not what is generally intended, it is common to write a while loop that doesn’t stop (in fact while writing these notes I unintentionally created one). Here’s some things to consider when writing a for loop.</p>
 <ul>
 <li><p>Make sure something is changing in your loop. If you intend to stop the loop on an index, make sure the index is updating.</p></li>
 <li><p>Look at your code and see if you have something that you think will stop the loop. What ever is in the boolean statement needs to eventually switch.</p></li>
-<li><p>Stop the code if you need to. To stop any code running in Matlab, enter CTRL-C (that is, hold the control key, then the <code>C</code> character).</p></li>
+<li><p>Stop the code if you need to. To stop any code running in Matlab, enter CTRL-C (that is, hold the control key, then the <code>C</code> character). You can also like the stop button in the bar a</p></li>
 <li><p>If you can’t figure out why it is in an infinite loop, make sure you don’t have semicolons on lines inside the loop so you can see what’s happening.</p></li>
 </ul>
 <h3 id="compound-booleans-in-an-if-statement-or-while-loop">Compound booleans in an <code>if</code> statement or <code>while</code> loop</h3>
@@ -328,18 +329,15 @@ end</code></pre>
 </ul></li>
 </ul>
 <p>Here’s an example, where we make an array with all odd perfect squares less than 100. (Note: there is a better way to do this, but the point is to show how to use a compound statement)</p>
-<pre><code>odd_perfects=ones(1); % we know 1 is an odd perfect square
-n=2;
-while n&lt;=100
-  if isOdd(n) &amp;&amp; isPerfectSquare(n)
-    odd_perfects(end+1) = n;
+<pre><code>function odd_perfects = oddPerfectSquares(n)
+  odd_perfects=ones(1); % we know 1 is an odd perfect square
+  n=2;
+  while n&lt;=100
+    if isOdd(n) &amp;&amp; isPerfectSquare(n)
+      odd_perfects(end+1) = n;
+    end
+    n=n+1;
   end
-  n=n+1;
-end
-odd_perfects</code></pre>
-<p>In addition, the <code>~</code> operator switches a true to false and a false to true. A simple version of this would be if we had an <code>isOdd</code> function as written above, then the following would be an <code>isEven</code> function:</p>
-<pre><code>function even = isEven(n)
-  even = ~isOdd(n);
 end</code></pre>
 <h3 id="more-functions-with-prime-numbers">More functions with prime numbers</h3>
 <p>We want to find the smallest prime number bigger than a number n. We will make a procedure that return the next prime.</p>

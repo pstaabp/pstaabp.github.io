@@ -152,99 +152,187 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 7: More Plots</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
-<p>We have already seen that Maple has some great plotting capabilities. In this chapter, we will see a number of other plots that Maple (and most CAS programs) can produce.</p>
-<h2 id="function-plots">Function Plots</h2>
-<p>We have seen a function plot in other places and this is a repeat of a lot of that material.</p>
-<p>In order to plot the expression <span class="math inline">\(x^{2}\)</span>, try typing <code>plot(x^2)</code>. You should see a plot similar to</p>
+<p><a href="ch-06.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-08.html">Next chapter</a></p>
+<p>We have already seen that Matlab has some great plotting capabilities. In this chapter, we will see a number of other plots that Matlab (and most CAS programs) can produce. Note: we covered many of these in <a href="ch-02.html">Chapter 2</a>, but are repeated here so everything is in one chapter.</p>
+<h3 id="plotting-functions">Plotting Functions</h3>
+<p>In order to plot the expression <span class="math inline">\(x^{2}\)</span>, try typing <code>fplot(x^2)</code>. You should see a plot similar to</p>
 <figure>
-<img src="images/ch02/plot1.png" alt="Plot of x^{2}" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span></figcaption>
+<img src="images/ch02/plot01.png" alt="Plot of x^{2} using the default plotting range" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> using the default plotting range</figcaption>
 </figure>
-<p>###Changing the Plotting Window of a plot</p>
-<p>Typically, the easiest way to change the plotting window of the plot is to use an option in the plot command. For example, if we want a plot on the domain <span class="math inline">\(\{x \;|\; -2 \leq x \leq 2\}\)</span>, then typing <code>plot(x^2,x=-2..2)</code> will produce the plot:</p>
+<h3 id="changing-the-plotting-window-of-a-plot">Changing the Plotting Window of a plot</h3>
+<p>Typically, the easiest way to change the plotting window of the plot is to use an option in the plot command. For example, if we want a plot on the interval <span class="math inline">\([-2,2]\)</span>, then typing <code>fplot(x^2,[-2 2])</code> will produce the plot:</p>
 <figure>
-<img src="images/ch02/plot2.png" alt="Plot of x^{2} for -2 \leq x \leq 2" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> for <span class="math inline">\(-2 \leq x \leq 2\)</span></figcaption>
+<img src="images/ch02/plot02.png" alt="Plot of x^{2} on [-2,2]" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> on <span class="math inline">\([-2,2]\)</span></figcaption>
 </figure>
-<p>If you want to make sure that the axes include other y values, you can also specify those values. For example, try typing <code>plot(x^2,x=-2..2,y=-2..2)</code>.</p>
+<p>If you want to make sure that the axes include other y values, you can adjust the limits after the fact. After you have the plot, try</p>
+<pre><code>fplot(x^2,[-2 2])
+ylim([-2 2])</code></pre>
+<p>which will generate:</p>
 <figure>
-<img src="images/ch02/plot3.png" alt="Plot of x^{2} for -2 \leq x \leq 2 and -2 \leq y \leq 2" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> for <span class="math inline">\(-2 \leq x \leq 2\)</span> and <span class="math inline">\(-2 \leq y \leq 2\)</span></figcaption>
+<img src="images/ch02/plot03.png" alt="Plot of x^{2} for -2 \leq x \leq 2 and -2 \leq y \leq 2" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> for <span class="math inline">\(-2 \leq x \leq 2\)</span> and <span class="math inline">\(-2 \leq y \leq 2\)</span></figcaption>
 </figure>
-<p>If you’d like a title on your plot, you can add the title option. For example, try <code>plot(x^2,x=-2..2,title="A plot of the square function")</code> and you will see</p>
+<p>If you’d like a title on your plot, you can add the title option. For example, try</p>
+<pre><code>fplot(x^2,[-2 2])
+title(&quot;A plot of x^2&quot;)</code></pre>
+<p>and you will see</p>
 <figure>
-<img src="images/ch02/plot4.png" alt="Plot of x^{2} with a title" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> with a title</figcaption>
+<img src="images/ch02/plot04.png" alt="Plot of x^{2} with a title" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> with a title</figcaption>
 </figure>
-<p>If you try to put the <span class="math inline">\(x^{2}\)</span> function in the title, you will run into problems. This is due to a typesetting issue. You can add the <span class="math inline">\(x^{2}\)</span> function by typing</p>
-<pre><code>plot(x^2,x=-2..2,title=typeset(&quot;A plot of &quot;, x^2))</code></pre>
-<p>You have called a command called <code>typeset</code> that will help Maple understand how to print out what you want. If you search plot in the <strong>Help Browser</strong>, then scroll down to <code>plot,typesetting</code>, you will find more information and examples to typeset.</p>
-<p>###Alternative Way to Change the plotting window of a plot</p>
-<p>Another way to change the plotting window of a plot is to use the <code>view</code> option. If I just want to see the plot of <span class="math inline">\(x^{2}\)</span> in the first quadrant, you can type</p>
-<pre><code>plot(x^2, x=-2..2, view=[0..4,0..4],title=typeset(&quot;Plot of %1 in the first quadrant&quot;, x^2))</code></pre>
-<p>to get:</p>
+<p>Notice that matlab does some fancy formatting in that it formats <code>x^2</code> as a power. You can put latex commands in the title (we will see what latex is later in the course.)</p>
+<h3 id="using-coordinate-axes">Using Coordinate Axes</h3>
+<p>The standard way that Matlab plots functions is to use a box style with the tick marks on the bottom and left of the box. If instead, you desire the standard coordinate axes, you can apply:</p>
+<pre><code>set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)</code></pre>
+<p>after any plot. For example, the plot above with the plotting window adjusted as:</p>
+<pre><code>fplot(x^2,[-2 2])
+ylim([-2 2])
+title(&quot;A plot of x^2&quot;)
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)</code></pre>
+<p>will produce:</p>
 <figure>
-<img src="images/ch02/plot13.png" alt="Plot using the view option" /><figcaption aria-hidden="true">Plot using the view option</figcaption>
+<img src="images/ch07/plot01.png" alt="Plot of x^2 using coordinate axes" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^2\)</span> using coordinate axes</figcaption>
 </figure>
-<p>The view option sets the horizontal and vertical range respectively.</p>
-<p>###Plotting multiple functions Often, we would like to include more that one function on a single set of axes. Maple allows us to do this easily. Plot <span class="math inline">\(x^{2}\)</span> as we did above. To add the plot of <span class="math inline">\(x^{3}\)</span>, enter it as an expression. Then drag the expression until is highlighted in blue. Click and hold the mouse on the expression, until a + appears, then drag and drop onto the other axes. You will see a second plot appear.</p>
-<p>This is a bit complicated and doesn’t always work (or save well). A better way to do this is to use plot command by typing <code>plot([x^2 ,x^3 ],x=-2..2)</code> which results in</p>
+<h3 id="changing-the-tick-marks">Changing the tick marks</h3>
+<p>A plot of <span class="math inline">\(\cos x\)</span> on <span class="math inline">\([-2\pi,2\pi]\)</span>, can be generated with:</p>
+<pre><code>fplot(cos(x),[-2*pi 2*pi])</code></pre>
+<p>and looks like: <img src="images/ch07/plot02.png" alt="Plot of x^2 using coordinate axes" /></p>
+<p>and I’m sure you noticed (since you are quite astute) that the tick marks are in integers and it would be nice to see the function plot in fractions of <span class="math inline">\(\pi\)</span> instead. We can change this with the <code>xticks</code> and <code>xticklabels</code> functions. Here is a cosine plot with some nicer ticks:</p>
+<pre><code>fplot(cos(x),[-2*pi 2*pi])
+S =  sym(-2*pi:pi/2:2*pi);
+xticks(double(S))
+xticklabels(arrayfun(@texlabel,S,&#39;UniformOutput&#39;,false))</code></pre>
+<p>and the result is:</p>
 <figure>
-<img src="images/ch02/plot7.png" alt="Plots of multiple functions on the same axes" /><figcaption aria-hidden="true">Plots of multiple functions on the same axes</figcaption>
+<img src="images/ch02/plot05.png" alt="Plot of \cos(x) on [-2\pi,2\pi]" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(\cos(x)\)</span> on <span class="math inline">\([-2\pi,2\pi]\)</span></figcaption>
 </figure>
-<p>####Adding a Legend</p>
+<p>Before just plowing on, let’s go through those last statements in detail. The line:</p>
+<pre><code>S =  sym(-2*pi:pi/2:2*pi);</code></pre>
+<p>creates an array of symbolic values from <span class="math inline">\(-2\pi\)</span> to <span class="math inline">\(2\pi\)</span> by steps of <span class="math inline">\(\pi/2\)</span>. (Take the semicolon off the end of the line and rerun to see). The line</p>
+<pre><code>xticks(double(S))</code></pre>
+<p>sets the xticks to the numerical values (that’s what the <code>double</code> function does) to the numbers in <code>S</code>. Then</p>
+<pre><code>xticklabels(arrayfun(@texlabel,S,&#39;UniformOutput&#39;,false))</code></pre>
+<p>set’s the tick labels on the x-axis to the values in <code>S</code>. We’ll see the <code>arrayfun</code> later and the <code>@texlabel</code> function is a way to ensure that the latex command is used to make things look better. Again, we’ll talk about latex later in the course.</p>
+<p>Make a mental note that this allows us to change the x-ticks to multiples of <span class="math inline">\(\pi\)</span> is a much nicer way. You’ll need this later.</p>
+<h3 id="plotting-multiple-functions">Plotting multiple functions</h3>
+<p>Often, we would like to include more that one function on a single set of axes. Here is how to plot both <span class="math inline">\(x^2\)</span> and <span class="math inline">\(x^3\)</span>.</p>
+<pre><code>fplot([x^2, x^3],[-3,3])</code></pre>
+<p>The result is:</p>
+<figure>
+<img src="images/ch02/plot06.png" alt="Plots of multiple functions on the same axes" /><figcaption aria-hidden="true">Plots of multiple functions on the same axes</figcaption>
+</figure>
+<h3 id="adding-a-legend">Adding a Legend</h3>
 <p>A legend is important for any plot containing more than one function. This allows you to distinguish between the curves. There is a legend option to the plot function. For example, to add a legend and a title to the plot of <span class="math inline">\(x^{2}\)</span> and <span class="math inline">\(x^{3}\)</span> type:</p>
-<pre><code>plot([x^2, x^3], x = -2..2,legend = [x^2, x^3], title = typeset(&quot;A plot of %1 and %2.&quot;, x^2, x^3))</code></pre>
-<p>and you will see: <img src="images/ch02/plot17.png" alt="A plot of two functions with a legend" /></p>
-<p>###Alternative Way to Add a Legend Alternatively, to add a legend, right-click on the plot, select Legend, then Show Legend, and the legend pops up with the line color of the first curve only. To change the legend on the curve, double click the text next to it.</p>
-<p>If there is more than one curve and you want to add that to the legend, select the curve, then right-click select Legend, then Add Lengend and you should see that added to the Legend. Double-click the new legend and change the label. You can do this again with more curves.</p>
-<p>I recommend the first way to add a legend because when opening a document and rerunning it (which will be discussed below), Maple tends to not mess up the plot when it is all typed out.</p>
-<p>###Changing the Aspect Ratio of a Plot</p>
-<p>Often it is important to have an aspect ratio of 1:1 for a plot. For example, consider a plot of <span class="math inline">\(\sqrt{4-x^{2}}\)</span>, which is the top half of a circle. If it is plotted on <span class="math inline">\(-3 \leq x \leq 3\)</span>, then the curve looks like an ellipse, not a circle as shown below:</p>
-<figure>
-<img src="images/ch02/plot21.png" alt="A plot of a circle that looks like an ellipse" /><figcaption aria-hidden="true">A plot of a circle that looks like an ellipse</figcaption>
-</figure>
-<p>To get the 1:1 aspect ratio on the plot, use the <code>scaling=constrained</code> option on a plot.</p>
-<pre><code>plot(sqrt(4-x^2),x=-3..3,scaling=constrained)</code></pre>
-<p>now results in the following plot:</p>
-<figure>
-<img src="images/ch02/plot22.png" alt="A plot of a circle with a one to one aspect ratio" /><figcaption aria-hidden="true">A plot of a circle with a one to one aspect ratio</figcaption>
-</figure>
-<p>###Piecewise Functions</p>
-<p>Another common plot is that of a piecewise function, consider <span class="math display">\[f(x) = \begin{cases} x &amp; x&lt;0 \newline 3-x^{2} &amp; x \geq 0 \end{cases}\]</span></p>
+<pre><code>fplot([x^2 x^3], [-3,3])
+title(&quot;A plot of x^2 and x^3&quot;)
+legend(&quot;x^2&quot;,&quot;x^3&quot;)</code></pre>
+<p>and you will see: <img src="images/ch02/plot07.png" alt="A plot of two functions with a legend" /></p>
+<h2 id="changing-the-aspect-ratio-of-a-plot">Changing the Aspect Ratio of a Plot</h2>
+<p>Recall that the function <span class="math inline">\(f(x)=\sqrt{4-x^2}\)</span> is the top half of a circle. If we plot this with</p>
+<pre><code>fplot(sqrt(4-x^2),[-2 2])</code></pre>
+<p>we’ll get the following plot: <img src="images/ch02/plot08.png" alt="A plot the top half of a circle" /></p>
+<p>and this just doesn’t look like a circle. This is because the aspect ratio isn’t 1–this means that 1 unit in the x-direction and 1 unit in the y-direction are not equal.</p>
+<p>We can do that in Matlab with the following:</p>
+<pre><code>fplot(sqrt(4-x^2),[-2 2])
+daspect([1 1 1])</code></pre>
+<p>and the result is: <img src="images/ch02/plot09.png" alt="A plot the top half of a circle" /></p>
+<p>Note: there are three numbers here because we will see 3D plots need can have different aspects as well. Matlab does this in general by ensuring that it know the relative sizes of all three axes.</p>
+<h2 id="piecewise-functions">Piecewise Functions</h2>
+<p>Another common plot is that of a piecewise function, consider <span class="math display">\[f(x) = \begin{cases} x &amp; x&lt;0 \\ 3-x^{2} &amp; x \geq 0 \end{cases}\]</span></p>
+<p>Recall that a piecewise function is a function <span class="math inline">\(f\)</span> takes on the values of <span class="math inline">\(x\)</span> when <span class="math inline">\(x&lt;0\)</span> and when <span class="math inline">\(x \geq 0\)</span>, then it has the functional form <span class="math inline">\(3-x^2\)</span>. We wil plot this by creating a plot with two different curves on it.</p>
 <p>The way to enter this in is the following:</p>
-<pre><code>f:=piecewise(x&lt;0,x,3-x^2,x&gt;=0)</code></pre>
-<p>where the interval comes before the function. Notice that Maple formats it like we typically write it out mathematically.</p>
-<p>Then we can plot it like other functions:</p>
-<pre><code>plot(f,x=-2..2,title=&quot;Plot of a piecewise function&quot;)</code></pre>
-<p>results in the following plot: <img src="images/ch02/plot14.png" alt="Plot of a piecewise function" /></p>
-<p>###Plotting Functions with discontinuities</p>
-<p>If you plot the function <span class="math inline">\(\frac{1}{x-1}\)</span> using the command <code>plot(1/(x-1),x=-3..3)</code> the plot will look like:</p>
+<pre><code>f = piecewise(x&lt;0,x,x&gt;=0,3-x^2)
+fplot(f, [-3 3])</code></pre>
+<p>and this results in the following plot: <img src="images/ch02/plot11.png" alt="Plot of a piecewise function" /></p>
+<p>The vertical line connecting (0,0) with (0,3) is not part of the plot. Matlab simply just connects a bunch of points. Sometimes it seems that it can figure out that it’s not part of the plot. Unfortunately, if it doesn’t automatically remove the line, you need to do something different, like the following:</p>
+<pre><code>fplot(f,[0,3])
+hold on
+fplot(f,[-3,-0.0001])
+hold off</code></pre>
+<p>which first plots the function on the interval <span class="math inline">\([0,3]\)</span>, then holds the plot which means that we can add additional graphs on the plot. Then we plot the function on <span class="math inline">\([-3,-0.0001]\)</span>, which is just an approximation of 0–if you put in 0, you get the same results as above. Lastly, <code>hold off</code> switches the plot back to normal (meaning don’t add additional graphs).</p>
+<p>The result is</p>
 <figure>
-<img src="images/ch02/plot8.png" alt="plot of 1/(x-1)" /><figcaption aria-hidden="true">plot of 1/(x-1)</figcaption>
+<img src="images/ch02/plot12.png" alt="Improved plot of a piecewise function" /><figcaption aria-hidden="true">Improved plot of a piecewise function</figcaption>
 </figure>
-<p>The vertical line at <span class="math inline">\(x = 1\)</span> is not part of the graph. The line is only because Maple is just connecting a number of generated points with lines. Maple also has a way to detect the discontinuities using the discont=true option. For example, the above is found with</p>
-<pre><code>plot(1/(x-1),x=-3..3,discont=true)</code></pre>
-<p>the plot will look like:</p>
+<p>which is better but it looks like two different curves becaues the two pieces are different colors. We can set them both to be the same color with:</p>
+<pre><code>fplot(f,[0,3],&#39;blue&#39;)
+hold on
+fplot(f,[-3,-0.0001],&#39;blue&#39;)
+hold off</code></pre>
 <figure>
-<img src="images/ch02/plot9.png" alt="plot of 1/(x-1)" /><figcaption aria-hidden="true">plot of 1/(x-1)</figcaption>
+<img src="images/ch02/plot13.png" alt="Improved plot of a piecewise function" /><figcaption aria-hidden="true">Improved plot of a piecewise function</figcaption>
 </figure>
-<p>and as you can see the line of <span class="math inline">\(x=1\)</span> is not part of the plot. This is a proper plot and anytime that you plot a function with a discontinuity, you should use the <code>discont=true</code> option.</p>
+<h4 id="exercise">Exercise</h4>
+<p>Plot the piecewise function:</p>
+<p><span class="math display">\[
+    f(x) = \begin{cases}
+    1-(x-\pi/2)^2 &amp; x &gt; \frac{\pi}{2} \\
+    1 &amp; -\frac{\pi}{2} \leq x \leq \frac{\pi}{2} \\
+    \sin x &amp; x &lt; -\frac{\pi}{2} \\
+    \end{cases}
+\]</span></p>
+<h2 id="plotting-functions-with-discontinuities">Plotting Functions with discontinuities</h2>
+<p>Although Matlab doesn’t often pick up on jump discontinuities from piecewise functions, it seems to do well with infinite discontinuities. Consider:</p>
+<pre><code>fplot(1/(x-1),[-3,3])</code></pre>
+<p>which has the result:</p>
+<figure>
+<img src="images/ch02/plot14.png" alt="plot of 1/(x-1)" /><figcaption aria-hidden="true">plot of 1/(x-1)</figcaption>
+</figure>
+<p>The vertical dashed line is a vertical asymptote in this case.</p>
+<h4 id="exercise-1">Exercise</h4>
+<p>Plot <span class="math inline">\(f(x) = \tan(x)\)</span> on <span class="math inline">\([-3\pi,3\pi]\)</span> and use multiples of <span class="math inline">\(\pi/2\)</span> for the horizontal labels. Hint: see above to do this. Does Matlab correctly pick up the vertical asymptotes in this case?</p>
+<h2 id="scatter-plots">Scatter Plots</h2>
+<p>A scatter plot is a set of points plotted in the <span class="math inline">\(xy\)</span>-plane. Consider the points <span class="math inline">\((0,1),(1,0),(2,1),(3,0)\)</span>. We will see how to plot this.</p>
+<p>For this, we create a vectors of the x points and y points:</p>
+<pre><code>x=[0,1,2,3]
+y=[1,0,1,0]</code></pre>
+<p>and the call the function <code>scatter</code>:</p>
+<pre><code>scatter(x,y)</code></pre>
+<p>resulting in</p>
+<figure>
+<img src="images/ch02/plot15.png" alt="Example of a scatter plot" /><figcaption aria-hidden="true">Example of a scatter plot</figcaption>
+</figure>
+<p>Notice that the points by default are open circles, which are hard to see. The next exercise goes through how to change the type and size.</p>
+<h4 id="exercise-2">Exercise</h4>
+<ol type="1">
+<li>Search for <code>scatter</code> in the help documentation. There is a number of ways to change the size, shaped and color of the dots.</li>
+<li>Create a plot that looks like:</li>
+</ol>
+<figure>
+<img src="images/ch02/plot16.png" alt="line and point plot" /><figcaption aria-hidden="true">line and point plot</figcaption>
+</figure>
+<p>At the bottom of the <code>scatter</code> documentation has all of the options.</p>
+<h2 id="combining-scatter-and-function-plots">Combining Scatter and Function Plots</h2>
+<p>We can combine a scatter and function plots using the <code>hold</code> command. Let’s say we have the points: (0,10),(2,9),(3,7),(5,6),(7,4),(8,2) and we wish to plot a best fit line as well. First, let’s define the points</p>
+<pre><code>x = [0,2,3,5,7,8];
+y = [10,9,7,6,4,2];</code></pre>
+<p>The best-fit line can be found to be <span class="math inline">\(y=10.8665-0.9680x\)</span> and we will show how to do this later.</p>
+<pre><code>scatter(x,y,100,&#39;blue&#39;,&#39;filled&#39;);
+hold on
+fplot(@(x) 10.8665-0.9680*x,[-0.5,9])
+hold off</code></pre>
+<p>Note: above, we have generally done <code>fplot(10.8665-0.9680*x,[0.5,9])</code> to plot the line. However, becase we defined <code>x</code> to be an array of points, this won’t work. Try it!! The <code>@(x)</code> is way to redeclare <code>x</code> as a different variable. We’ll see this more later.</p>
+<p>This will produce a plot that looks like:</p>
+<figure>
+<img src="images/ch02/plot17.png" alt="Plot with functions and dots" /><figcaption aria-hidden="true">Plot with functions and dots</figcaption>
+</figure>
 <h2 id="implicit-plots">Implicit Plots</h2>
-<p>If a you have a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> and would like to visualize the set of points that satisfy the curve, then <code>implicitplot</code> is what you want to use.</p>
-<p>###Implicit Plot of one equation</p>
-<pre><code>implicitplot(x^2+y^2=25,x=-5..5,y=-5..5)</code></pre>
+<p>If a you have a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> and would like to visualize the set of points that satisfy the curve, then <code>fimplicit</code> is what you want to use. For example, the circle with center of the origin and radius 5 is</p>
+<pre><code>syms x y
+fimplicit(x^2+y^2==25)
+daspect([1 1 1])</code></pre>
 <p>will give the following plot:</p>
 <figure>
-<img src="images/ch06/plot01.png" alt="Plot of a circle written implicitly" /><figcaption aria-hidden="true">Plot of a circle written implicitly</figcaption>
+<img src="images/ch07/plot03.png" alt="Plot of a circle written implicitly" /><figcaption aria-hidden="true">Plot of a circle written implicitly</figcaption>
 </figure>
-<p>If we try the following:</p>
-<pre><code>implicitplot((1/9)*x^2+(1/16)*y^2=1, x=-5..5, y=-5..5)</code></pre>
-<p>then it also looks like a circle, like the plot:</p>
-<figure>
-<img src="images/ch06/plot03.png" alt="Plot of another curve" /><figcaption aria-hidden="true">Plot of another curve</figcaption>
-</figure>
-<p>but the curve is actually an ellipse, but doesn’t look like one. Make sure that you have the 1:1 button hit and it will look like:</p>
-<figure>
-<img src="images/ch06/plot04.png" alt="Plot of same curve as above, but now it looks like an ellipse" /><figcaption aria-hidden="true">Plot of same curve as above, but now it looks like an ellipse</figcaption>
-</figure>
+<p>where the aspect ratio has been set to 1 to make the circle like a circle. Another example where this is needed is:</p>
+<pre><code>fimplicit(x^2/9+y^2/16==1)</code></pre>
+<p>generates <img src="images/ch07/plot04.png" alt="Plot of x^2/9+y^2/16==1" /> and is an ellipse, but just doesn’t look right without changing the plotting window and the aspect ratio.</p>
+<p>The commands:</p>
+<pre><code>fimplicit(x^2/9+y^2/16==1)
+xlim([-5 5])
+ylim([-5 5])
+daspect([1 1 1])
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)</code></pre>
+<p>results in <img src="images/ch07/plot05.png" alt="Plot of x^2/9+y^2/16==1" /></p>
 <p>###Implicit curves don’t always look right</p>
 <p>The following equation <span class="math display">\[circles:=(x^{2}+y^{2}-1)(x^{2}+y^{2}-4)(x^{2}+y^{2}-9)(x^{2}+y^{2}-16) = 0\]</span> is a set of 4 concentric circles because the four terms that are multiplied are each a circle. If any one of them is satisfied, then the equation is zero. (Note: this is a supercool way of putting more than one equation on a plot.)</p>
 <p>However, if we plot the equation, we get the plot:</p>
@@ -304,7 +392,7 @@ t &amp; x &amp; y &amp;  \newline \hline
 <figure>
 <img src="images/ch06/plot07.png" alt="Plot of a parametric Curve" /><figcaption aria-hidden="true">Plot of a parametric Curve</figcaption>
 </figure>
-<h4 id="exercise">Exercise</h4>
+<h4 id="exercise-3">Exercise</h4>
 <p>Replot the curves as above, except place the <code>t=-2..2</code> outside the brackets. What is the difference?</p>
 <p>###Another example</p>
 <p>The parametric curve given by <span class="math display">\[x=\cos t \qquad y=\sin t\]</span> for <span class="math inline">\(0\leq t \leq 2\pi\)</span> is another way to write a circle with center at the origin and radius of 1.</p>
@@ -437,7 +525,7 @@ display(plot1, plot2);</code></pre>
 <li><code>color</code> which changes the color.</li>
 </ul>
 <p>Additionally, look at the help page for plot to determine other helpful options.</p>
-<h2 id="scatter-plots">Scatter Plots</h2>
+<h2 id="scatter-plots-1">Scatter Plots</h2>
 <p>A scatter plot or a point plot is a plot of set of points given as <span class="math inline">\((x,y)\)</span> coordinates. We saw this in Chapter 2, but expand a bit more here.</p>
 <p>Plot a set of discrete points as follows:</p>
 <ol type="1">
