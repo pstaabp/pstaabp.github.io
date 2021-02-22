@@ -333,37 +333,41 @@ ylim([-5 5])
 daspect([1 1 1])
 set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)</code></pre>
 <p>results in <img src="images/ch07/plot05.png" alt="Plot of x^2/9+y^2/16==1" /></p>
-<p>###Implicit curves don’t always look right</p>
-<p>The following equation <span class="math display">\[circles:=(x^{2}+y^{2}-1)(x^{2}+y^{2}-4)(x^{2}+y^{2}-9)(x^{2}+y^{2}-16) = 0\]</span> is a set of 4 concentric circles because the four terms that are multiplied are each a circle. If any one of them is satisfied, then the equation is zero. (Note: this is a supercool way of putting more than one equation on a plot.)</p>
-<p>However, if we plot the equation, we get the plot:</p>
+<h3 id="multiple-implicit-curves">Multiple Implicit Curves</h3>
+<p>If we want to plot the circles <span class="math inline">\(x^2+y^2=r^2\)</span> for <span class="math inline">\(r=1,2,3,4\)</span>, we could do 4 implicit curves. This points out that an alterative is to write then differently. We could write the circle of radius 1 as <span class="math display">\[x^2+y^2-1=0\]</span> instead and recall that this is the set of all points that make this equation 0. If we combine that with the circle of radius 2 by</p>
+<pre><code>two_circles = (x^2+y^2-1)*(x^2+y^2-4)</code></pre>
+<p>then this is still all the points that make this equation zero, but it could be the set of points on the circle of radius 1 or radius 2. If we define:</p>
+<pre><code>circles = (x^2+y^2-1)*(x^2+y^2-4)*(x^2+y^2-9)*(x^2+y^2-16)</code></pre>
+<p>and plot the results with</p>
+<pre><code>fimplicit(circles)
+daspect([1 1 1])</code></pre>
+<p>we get</p>
 <figure>
-<img src="images/ch06/plot05.png" alt="Plot of the equation above" /><figcaption aria-hidden="true">Plot of the equation above</figcaption>
+<img src="images/ch07/plot06.png" alt="Plot of the 4 concentric circles" /><figcaption aria-hidden="true">Plot of the 4 concentric circles</figcaption>
 </figure>
-<p>and you will see that there are jagged edges. The reason that Maple produces the curve like this is that when making the plot, it uses a grid of points to try to determine if a point in on a curve. By default, it uses relative few points for the grid and if this case, we will want more.</p>
-<p>The <code>implicitplot</code> command has an option <code>gridrefine</code> that will help smooth out this curve.</p>
-<p>We can plot the circles above by</p>
-<pre><code>implicitplot(circles,x=-5..5,y=-5..5,gridrefine=2)</code></pre>
-<p>You will get the plot:</p>
+<h3 id="plotting-an-implicit-curve-and-a-tangent-line.">Plotting an implicit curve and a tangent line.</h3>
+<p>In <a href="ch-05.html">Chapter 5</a>, we found the tangent line to the elipitic curve <span class="math display">\[y^2=x^3-4x+1\]</span> at the point <span class="math inline">\((-1,2)\)</span> with the following step. First the plot is</p>
+<pre><code>syms x y
+elliptic_curve = y^2==x^3-4*x+1
+fimplicit(elliptic_curve)
+daspect([1 1 1])</code></pre>
+<p>which is <img src="images/ch07/plot07.png" alt="Plot of the elliptic curve y^2=x^3-4x+1" /></p>
+<p>and we can find the tangent line with</p>
+<pre><code>F(x,y) = lhs(elliptic_curve)-rhs(elliptic_curve)
+dydx = -diff(F(x,y),x)/diff(F(x,y),y)
+m = subs(dydx,[x y], [-1 2])
+tanLine = m*(x+1)+2</code></pre>
+<p>which shows the tangent line is <span class="math display">\[ y = \frac{7}{4}-\frac{x}{4}\]</span> and although we could plot it implicitly with the curve by setting both equal to zero, instead we’ll use the hold function</p>
+<pre><code>fimplicit(elliptic_curve)
+hold on
+fplot(tanLine)
+hold off
+title(&quot;Elliptic curve and the its tangent line&quot;)
+legend(&quot;y^2=x^3-4x+1&quot;,&quot;tangent&quot;,&#39;Location&#39;,&#39;northwest&#39;)
+daspect([1 1 1])</code></pre>
+<p>which shows that</p>
 <figure>
-<img src="images/ch06/plot06.png" alt="Plot of the concentric circles with gridrefine=2" /><figcaption aria-hidden="true">Plot of the concentric circles with gridrefine=2</figcaption>
-</figure>
-<p>(Note: start with gridrefine=1 or 2 and if you need a smoother curve, increase this parameter slowly. A gridrefine of 5 or more can take a long time.)</p>
-<p>###Finding the derivative of an implicit curve</p>
-<p>Recall that we can use the <code>implicitdiff</code> command to find the derivative of an implicit curve at a point. For example, let’s say that we wish to find the tangent line to the circle above at the point <span class="math inline">\((3,4)\)</span>.</p>
-<p>If we define the circle to be</p>
-<pre><code>circle:=x^2+y^2=25</code></pre>
-<p>then we can find the derivative by typing</p>
-<pre><code>implicitdiff(circle,y,x)</code></pre>
-<p>and Maple returns <span class="math display">\[-\frac{x}{y}\]</span> and we can then use the <code>subs</code> command to evaluate this at a point.</p>
-<pre><code>subs([x=3,y=4],(#))</code></pre>
-<p>where (#) is the line number of the derivative. The result should be <span class="math inline">\(-3/4\)</span> and then you can find the tangent line using the point slope form:</p>
-<pre><code>tanLine:=y=-3/4*(x-3)+4</code></pre>
-<p>where the tangent line is put in as an equation.</p>
-<p>###Implicit Plot of more than one equation</p>
-<p>To plot these two on the same axes, use [] like in a standard function plot. The plot of the circle and the tangent line can be found with</p>
-<pre><code>implicitplot([circle,tanLine],x=-1..2,y=-1..2,color=[red,blue],legend=[&quot;circle&quot;,&quot;tangent line&quot;],title=&quot;A plot of a circle and its tangent line.&quot;)</code></pre>
-<figure>
-<img src="images/ch06/plot02.png" alt="Plot of a circle and its tangent line" /><figcaption aria-hidden="true">Plot of a circle and its tangent line</figcaption>
+<img src="images/ch07/plot08.png" alt="Plot of a circle and its tangent line" /><figcaption aria-hidden="true">Plot of a circle and its tangent line</figcaption>
 </figure>
 <p>###Exercise</p>
 <ol type="1">
@@ -373,39 +377,61 @@ set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#3
 <h2 id="parametric-plots">Parametric Plots</h2>
 <p>A parametric graph or parametric curve is one in which the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> coordinates depend on another variable, often <span class="math inline">\(t\)</span>. In general, we write <span class="math display">\[x=f(t) \qquad y=g(t)\]</span></p>
 <p>A nice example is <span class="math display">\[x=t^{2} \qquad y=t^{3}-t\]</span></p>
-<p>For a given set of values of <span class="math inline">\(t\)</span>, the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values can be found by plugging into the functions <span class="math inline">\(x(t)\)</span> and <span class="math inline">\(y(t)\)</span>. Using the command:</p>
-<pre><code>Matrix([[t, x(t), y(t)], seq([t, x(t), y(t)], t = -1.5 .. 1.5, .5)])</code></pre>
-<p>we get the following table:</p>
+<p>For a given set of values of <span class="math inline">\(t\)</span>, the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values can be found by plugging into the functions <span class="math inline">\(x(t)\)</span> and <span class="math inline">\(y(t)\)</span>.</p>
+<p>First define <span class="math inline">\(x(t)\)</span> and <span class="math inline">\(y(t)\)</span> in Matlab:</p>
+<pre><code>syms t
+x(t) = t^2
+y(t) = t^3-t</code></pre>
+<p>and then we can make a table with:</p>
+<pre><code>xvals = arrayfun(@(t) x(t),-2:0.5:2)
+yvals = arrayfun(@(t) y(t),-2:0.5:2)
+[-2:0.5:2; xvals; yvals]&#39;</code></pre>
 <p><span class="math display">\[\begin{array}{c|c|c}
-t &amp; x &amp; y &amp;  \newline \hline
--1.5 &amp; 2.25 &amp; -1.875 \newline
--1 &amp; 1 &amp; 0 \newline
--1/2 &amp; 1/4 &amp; -3/8 \newline
-0 &amp; 0 &amp; 0 \newline
-1/2 &amp; 1/4 &amp; 3/8 \newline
-1 &amp; 1 &amp; 0 \newline
-1.5 &amp; 2.25 &amp; 1.875
+t &amp; x &amp; y &amp;  \\ \hline
+-2 &amp; 4 &amp; -6
+-1.5 &amp; 2.25 &amp; -1.875 \\
+-1 &amp; 1 &amp; 0 \\
+-1/2 &amp; 1/4 &amp; -3/8 \\
+0 &amp; 0 &amp; 0 \\
+1/2 &amp; 1/4 &amp; 3/8 \\
+1 &amp; 1 &amp; 0 \\
+1.5 &amp; 2.25 &amp; 1.875 \\
+2 &amp; 4 &amp; 6 
 \end{array}\]</span></p>
-<p>We can plot this in Maple using the standard <code>plot</code> command:</p>
-<pre><code>plot([t^2,t^3-t,t=-2..2])</code></pre>
-<p>where it is important to note the difference in syntax. The range for <span class="math inline">\(t\)</span> needs to be there and <em>inside</em> the brackets. The plot should look like:</p>
+<p>We can plot the points in Matlab with:</p>
+<pre><code>plot(xvals,yvals)
+daspect([1 1 1])</code></pre>
+<p>and this leads to</p>
 <figure>
-<img src="images/ch06/plot07.png" alt="Plot of a parametric Curve" /><figcaption aria-hidden="true">Plot of a parametric Curve</figcaption>
+<img src="images/ch07/plot09.png" alt="Points from parametric plot" /><figcaption aria-hidden="true">Points from parametric plot</figcaption>
 </figure>
-<h4 id="exercise-3">Exercise</h4>
-<p>Replot the curves as above, except place the <code>t=-2..2</code> outside the brackets. What is the difference?</p>
-<p>###Another example</p>
+<p>Of course Matlab also has the direct way of plotting a parametric curve with</p>
+<pre><code>fplot(x(t),y(t),[-2 2])</code></pre>
+<p>which leads to <img src="images/ch07/plot10.png" alt="parametric plot" /></p>
+<h3 id="another-example">Another example</h3>
 <p>The parametric curve given by <span class="math display">\[x=\cos t \qquad y=\sin t\]</span> for <span class="math inline">\(0\leq t \leq 2\pi\)</span> is another way to write a circle with center at the origin and radius of 1.</p>
 <p>This is because if we plug these functions into the equation <span class="math inline">\(x^{2}+y^{2}=1\)</span>, then <span class="math display">\[
 (\cos t)^{2}+(\sin t)^{2}=1
 \]</span> which is true for all <span class="math inline">\(t\)</span> because <span class="math inline">\(\cos^{2} t + \sin^{2} t =1\)</span>.</p>
-<p>We can shift any curve horizontally and vertically in the following way, which we’ll show using an example. If we shift the circle above right 3 and up 2, we’ll get the circle with center <span class="math inline">\((3,2)\)</span>. This curve can be written: <span class="math display">\[x=3+\cos t \qquad y=2+\sin t\]</span> and plotting with a window that includes the origin is: <img src="images/ch06/plot08.png" alt="Plot of a radius 1 circle with center (3,2)" /></p>
+<p>We can plot this with</p>
+<pre><code>fplot(cos(t),sin(t),[0 2*pi])
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
+daspect([1 1 1])</code></pre>
+<p>which results in <img src="images/ch07/plot11.png" alt="Circle plotted parametrically" /></p>
+<p>We can shift any curve horizontally and vertically in the following way, which we’ll show using an example. If we shift the circle above right 3 and up 2, we’ll get the circle with center <span class="math inline">\((3,2)\)</span>. This curve can be written: <span class="math display">\[x=3+\cos t \qquad y=2+\sin t\]</span> and plotting with a window that includes the origin is:</p>
+<figure>
+<img src="images/ch07/plot12.png" alt="Shifted circle" /><figcaption aria-hidden="true">Shifted circle</figcaption>
+</figure>
 <p>And we can make this an ellipse by multiplying the <span class="math inline">\(\cos t\)</span> and <span class="math inline">\(\sin t\)</span> terms by constants. For example,</p>
 <p><span class="math display">\[x=3+1.5\cos t \qquad y=2+0.8\sin t,\]</span> if we enter</p>
-<pre><code>plot([3+1.5cos(t),2+0.8 sin(t),t=0..2π],scaling=constrained,view=[-1..5,-1..5])</code></pre>
+<pre><code>fplot(1.5*cos(t)+3,0.8*sin(t)+2,[0 2*pi])
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
+xlim([-1 5])
+ylim([-1 5])
+daspect([1 1 1])</code></pre>
 <p>where the scaling is constrained so that the ellipse looks like an ellipse.</p>
 <figure>
-<img src="images/ch06/plot09.png" alt="Plot of a an ellipse written parametrically" /><figcaption aria-hidden="true">Plot of a an ellipse written parametrically</figcaption>
+<img src="images/ch07/plot13.png" alt="Plot of a an ellipse written parametrically" /><figcaption aria-hidden="true">Plot of a an ellipse written parametrically</figcaption>
 </figure>
 <p>###Let’s make a line segment</p>
 <p>Any curve written in terms of <span class="math inline">\(y(x)\)</span> can be written parametrically in the following way. Let <span class="math inline">\(x=t\)</span>, then let <span class="math inline">\(y=y(t)\)</span>. For example, consider the line <span class="math inline">\(y=2x+1\)</span>. This can be written: <span class="math display">\[x=t\qquad y=2t+1\]</span> If we want to plot it from <span class="math inline">\(x=-1\)</span> to <span class="math inline">\(x=1\)</span>, then <span class="math inline">\(t\)</span> will satisfy: <span class="math inline">\(-1 \leq t \leq 1\)</span> and the following command:</p>
@@ -420,7 +446,7 @@ t &amp; x &amp; y &amp;  \newline \hline
 y:=piecewise(0&lt;=t&lt;=2*pi,2+2*sin(t),10&lt;=t&lt;=11,-3*(t-10)+3)</code></pre>
 <p>then if we plot this piecewise:</p>
 <pre><code>plot([x,y,t=0..11],discont=true,view=[0..6,0..6])</code></pre>
-<p>will give the plot: <img src="images/ch06/plot11.png" alt="Plot of a piecewise parametric" /></p>
+<p>will give the plot:</p>
 <p>and make sure that you put <code>discont=true</code> option so the line segment is not connected to the circle.</p>
 <p>###Tangent line to a parametric curve</p>
 <p>Here we reproduce the tangent line to the circle of radius 5 at the point <span class="math inline">\((3,4)\)</span>.</p>

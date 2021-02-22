@@ -329,15 +329,16 @@ end</code></pre>
 </ul></li>
 </ul>
 <p>Here’s an example, where we make an array with all odd perfect squares less than 100. (Note: there is a better way to do this, but the point is to show how to use a compound statement)</p>
-<pre><code>function odd_perfects = oddPerfectSquares(n)
-  odd_perfects=ones(1); % we know 1 is an odd perfect square
-  n=2;
-  while n&lt;=100
-    if isOdd(n) &amp;&amp; isPerfectSquare(n)
-      odd_perfects(end+1) = n;
+<pre><code>% return odd perfect squares up to n 
+function odd_perfects = oddPerfectSquares(n)
+    odd_perfects = ones(1); % 1 is an odd perfect square
+    k=2;
+    while k&lt;n
+        if isOdd(k) &amp;&amp; isPerfectSquare(k)
+            odd_perfects(end+1) = k;
+        end
+        k = k+1;
     end
-    n=n+1;
-  end
 end</code></pre>
 <h3 id="more-functions-with-prime-numbers">More functions with prime numbers</h3>
 <p>We want to find the smallest prime number bigger than a number n. We will make a procedure that return the next prime.</p>
