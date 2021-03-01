@@ -433,88 +433,119 @@ daspect([1 1 1])</code></pre>
 <figure>
 <img src="images/ch07/plot13.png" alt="Plot of a an ellipse written parametrically" /><figcaption aria-hidden="true">Plot of a an ellipse written parametrically</figcaption>
 </figure>
-<p>###Let’s make a line segment</p>
-<p>Any curve written in terms of <span class="math inline">\(y(x)\)</span> can be written parametrically in the following way. Let <span class="math inline">\(x=t\)</span>, then let <span class="math inline">\(y=y(t)\)</span>. For example, consider the line <span class="math inline">\(y=2x+1\)</span>. This can be written: <span class="math display">\[x=t\qquad y=2t+1\]</span> If we want to plot it from <span class="math inline">\(x=-1\)</span> to <span class="math inline">\(x=1\)</span>, then <span class="math inline">\(t\)</span> will satisfy: <span class="math inline">\(-1 \leq t \leq 1\)</span> and the following command:</p>
-<pre><code>plot([t,2t+1,t=-1..1])</code></pre>
-<p>will generate the following plot: <img src="images/ch06/plot10.png" alt="Plot of a line segment" /></p>
-<p>###Parametric piecewise functions</p>
-<p>Mixing parametric functions and piecewise functions gives tons of flexibility. Let’s plot both a circle and a line segment using the same function. First, let’s find the line segment connecting the points <span class="math inline">\((0,3)\)</span> and <span class="math inline">\((1,0)\)</span>. The slope of this is <span class="math inline">\(-3\)</span>, so the function is <span class="math inline">\(y=-3(x-0)+3\)</span>. Parametrically, we can write this <span class="math display">\[x=t \qquad y=-3t+3\]</span></p>
-<p>We will notice later that it will be helpful to use <span class="math inline">\(t\)</span> values bigger than <span class="math inline">\(2\pi\)</span>, so an alternative is to use <span class="math display">\[x=t-10 \qquad y=-3(t-10)+3\]</span></p>
-<p>If we also want a circle of radius 2, centered at (4,2), we can write that as <span class="math display">\[x=4+2\cos t \qquad y=2+2\sin t\]</span></p>
-<p>Then we produce the following piecewise function by defining:</p>
-<pre><code>x:=piecewise(0&lt;=t&lt;=2*pi,4+2*cos(t),10&lt;=t&lt;=11,t-10)
-y:=piecewise(0&lt;=t&lt;=2*pi,2+2*sin(t),10&lt;=t&lt;=11,-3*(t-10)+3)</code></pre>
-<p>then if we plot this piecewise:</p>
-<pre><code>plot([x,y,t=0..11],discont=true,view=[0..6,0..6])</code></pre>
-<p>will give the plot:</p>
-<p>and make sure that you put <code>discont=true</code> option so the line segment is not connected to the circle.</p>
-<p>###Tangent line to a parametric curve</p>
+<h3 id="tangent-line-to-a-parametric-curve">Tangent line to a parametric curve</h3>
 <p>Here we reproduce the tangent line to the circle of radius 5 at the point <span class="math inline">\((3,4)\)</span>.</p>
 <p>The parametric curve given by <span class="math display">\[x=5\cos t \qquad y=5\sin t\]</span> for <span class="math inline">\(0\leq t \leq 2\pi\)</span> is another way to write a circle with center at the origin and radius of 5.</p>
-<p>To plot this in Maple, we use the <code>plot</code> command with a different syntax.</p>
-<pre><code>plot([5*cos(t),5*sin(t),t=0..2pi])</code></pre>
+<p>To plot this in Matlab, we use the <code>fplot</code> command with a different syntax.</p>
+<pre><code>syms t
+fplot(5*cos(t),5*sin(t),[0,2*pi])
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
+daspect([1 1 1])</code></pre>
 <p>will produce the following circle.</p>
 <figure>
-<img src="images/ch06/plot01.png" alt="Plot of a circle written parametrically" /><figcaption aria-hidden="true">Plot of a circle written parametrically</figcaption>
+<img src="images/ch07/plot14.png" alt="Plot of a circle written parametrically" /><figcaption aria-hidden="true">Plot of a circle written parametrically</figcaption>
 </figure>
 <p>which is the same plot as the implicit one above.</p>
 <p>To make some things easier, let’s define</p>
-<pre><code>x:=t-&gt;5*cos(t)
-y:=t-&gt;5*sin(t)</code></pre>
+<pre><code>x(t)=5*cos(t)
+y(t)=5*sin(t)</code></pre>
 <p>We can also find the tangent line to a parametric curve in the following way. The derivative <span class="math inline">\(\frac{dy}{dx}\)</span> to a curve can be written: <span class="math display">\[
 \frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}}
 \]</span></p>
-<p>To find the derivative to the circle above at the point <span class="math inline">\((3,4)\)</span>, we need to find the <span class="math inline">\(t\)</span> value at the point. We can do this by solving for <span class="math inline">\(t\)</span> by setting <span class="math inline">\(x=3\)</span> and <span class="math inline">\(t=4\)</span>. (It’s recommended to use the <code>Roots</code> command on the interval <code>0..</code><span class="math inline">\(\pi/2\)</span> because the point is in the first quadrant.)</p>
-<pre><code>Roots(x(t)=3, t = 0 .. (1/2)*Pi)</code></pre>
-<p>returns <span class="math inline">\([\arccos(3/5)]\)</span> and</p>
-<pre><code>Roots(y(t)=4, t = 0 .. (1/2)*Pi)</code></pre>
-<p>returns <span class="math inline">\([\arcsin(4/5)]\)</span>. They seem to given different answer, but they are equivalent.</p>
-<p>If we substitute either of these into the derivative above:</p>
-<pre><code>subs(t=arccos(3/5),y&#39;(t)/x&#39;(t))</code></pre>
-<p>and then simplify it. The result is <span class="math inline">\(-3/4\)</span>, the same answer as above using implicit differentiation.</p>
+<p>To find the derivative to the circle above at the point <span class="math inline">\((3,4)\)</span>, we need to find the <span class="math inline">\(t\)</span> value at the point. We can do this by solving for <span class="math inline">\(t\)</span> by setting <span class="math inline">\(x=3\)</span> and <span class="math inline">\(y=4\)</span>.</p>
+<pre><code>t1 = solve(x(t)==3)
+t2 = solve(y(t)==4)</code></pre>
+<p>The first returns <span class="math display">\[\left(\begin{array}{c}
+-\mathrm{acos}\left(\frac{3}{5}\right)\\
+\mathrm{acos}\left(\frac{3}{5}\right)
+\end{array}\right)\]</span> and the second returns <span class="math display">\[\left(\begin{array}{c}
+\mathrm{asin}\left(\frac{4}{5}\right)\\
+\pi -\mathrm{asin}\left(\frac{4}{5}\right)
+\end{array}\right)\]</span></p>
+<p>For each, there are two values (remember the way that solving trig functions work from Chapter ??? ). Let’s see which one is correct by plugging back into the functions <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
+<pre><code>x(t1)
+y(t1)</code></pre>
+<p>and the first returns: <span class="math display">\[\left(\begin{array}{c}
+3\\
+3
+\end{array}\right)\]</span> with the second <span class="math display">\[\left(\begin{array}{c}
+-4\\
+4
+\end{array}\right)\]</span> showing that the second value of <code>t1</code> is the correct value of t.</p>
+<p>Alternatively if we look at</p>
+<pre><code>x(t2)
+y(t2)</code></pre>
+<p>the first returns <span class="math display">\[\left(\begin{array}{c}
+3\\
+-3
+\end{array}\right)\]</span> and the second returns <span class="math display">\[\left(\begin{array}{c}
+4\\
+4
+\end{array}\right)\]</span> This shows that the first value of <code>t2</code> is correct.</p>
+<p>To find the derivative at a point, we use the following:</p>
+<pre><code>dydx(t) = diff(y(t),t)/diff(x(t),t)</code></pre>
+<p>which returns: <span class="math display">\[-\frac{\mathrm{cos}\left(t\right)}{\mathrm{sin}\left(t\right)}\]</span> And to find the slope, we need to plug in the value of <span class="math inline">\(t\)</span> found above. It was the second element of <code>t1</code> so</p>
+<pre><code>dydx(t1(2))</code></pre>
+<p>which return <span class="math inline">\(-3/4\)</span>. Alternatively, we can use the first element of <code>t2</code> or</p>
+<pre><code>dydx(t2(1))</code></pre>
+<p>which also returns <span class="math inline">\(-3/4\)</span>.</p>
+<p>Note that if just type out the value of <span class="math inline">\(t\)</span>, we get a bit of a mess:</p>
+<pre><code>dydx(acos(3/5))</code></pre>
+<p>the result is <span class="math display">\[-\frac{\mathrm{cos}\left(\frac{522020799781813}{562949953421312}\right)}{\mathrm{sin}\left(\frac{522020799781813}{562949953421312}\right)}
+\]</span> which isn’t as nice as <span class="math inline">\(-3/4\)</span>. The reason this happened is because <code>acos(3/5)</code> gave a result of 0.9273… which is rounded off a bit and then Matlab using an exact version of that number as a fraction.</p>
 <p>The tangent line then is the curve</p>
-<pre><code>tanLine:=-3/4(x-3)+4</code></pre>
-<p>again, the same as above and can be written parametrically as <span class="math display">\[
-x=t \qquad y=-\frac{3}{4}(x-3)+4\]</span></p>
-<p>and the following will put the circle and the line on the same axes:</p>
-<pre><code>plot([[t, -3/4*(t-3)+4, t=-2..8], [5*cos(t), 5*sin(t), t=0..2*Pi]], view = [-5..8,-5..8])</code></pre>
-<p>with give the following plot (which is identical to others above):</p>
+<pre><code>sym x
+tanLine=-3/4(x-3)+4</code></pre>
+<pre><code>fplot(5*cos(t),5*sin(t),[0,2*pi])
+hold on
+fplot(tanLine)
+hold off
+daspect([1 1 1])
+xlim([-8 8])
+legend(&quot;x^2+y^2==1&quot;,&quot;tangent line&quot;)</code></pre>
+<p>with give the following plot:</p>
 <figure>
-<img src="images/ch06/plot15.png" alt="plot of a circle with its tangent line" /><figcaption aria-hidden="true">plot of a circle with its tangent line</figcaption>
+<img src="images/ch07/plot15.png" alt="plot of a circle with its tangent line" /><figcaption aria-hidden="true">plot of a circle with its tangent line</figcaption>
 </figure>
 <h2 id="polar-plots">Polar Plots</h2>
 <p>It is often that one will use polar coordinates to create a plot. Here are a few examples where this is helpful. If a function is written in polar coordinates, then it is written in the form <span class="math inline">\(r=f(\theta)\)</span>.</p>
-<p>This is a specific form of a parametric curve with the form: <span class="math display">\[x=r \cos \theta \qquad y=r\sin \theta\]</span></p>
-<p>For example, the cardioid that you plotted above can be written: <span class="math display">\[r=1+\cos(\theta)\]</span> and we can plot it using the <code>polarplot</code> command</p>
-<pre><code>polarplot(1+cos(theta), theta = 0 .. 2*Pi)</code></pre>
-<p>(and note that you can get theta to look like the greek letter, by hitting ESC after typing <code>theta</code>)</p>
-<p>The plot will look like: <img src="images/ch06/plot12.png" alt="A cardioid plotting in polar coords" /></p>
-<p>And alternatively, if you don’t want the polar axes shown, you can use the regular plot command with the <code>coord=polar</code> option:</p>
-<pre><code>plot(1+cos(theta),theta=0..2*Pi,coords=polar)</code></pre>
-<p>which will generate the plot: <img src="images/ch06/plot13.png" alt="A cardioid plotting in polar coords" /></p>
-<p>###A tangent line to a polar plot.</p>
+<p>This is a specific form of a parametric curve with the form: <span class="math display">\[x=f(\theta) \cos \theta \qquad y=f(\theta)\sin \theta\]</span></p>
+<p>For example, the cardioid that you plotted above can be written: <span class="math display">\[r=1+\cos(\theta)\]</span> and we can plot it using the <code>ezpolar</code> command</p>
+<pre><code>syms th
+ezplot(1+cos(th))</code></pre>
+<p>The plot will look like: <img src="images/ch07/plot16.png" alt="A cardioid plotting in polar coords" /></p>
+<h3 id="a-tangent-line-to-a-polar-plot.">A tangent line to a polar plot.</h3>
 <p>The curve <span class="math inline">\(r=1+2\sin \theta\)</span> passes through the origin. We will find the tangent line to the curve at the point.</p>
-<p>First, a plot of the curve is</p>
+<p>First, a plot of the curve is found by</p>
+<pre><code>ezpolar(1+2*sin(th))</code></pre>
+<p>resulting in</p>
 <figure>
-<img src="images/ch06/plot14.png" alt="Plot of the curve r=1+2\sin \theta" /><figcaption aria-hidden="true">Plot of the curve <span class="math inline">\(r=1+2\sin \theta\)</span></figcaption>
+<img src="images/ch07/plot17.png" alt="Plot of the curve r=1+2\sin \theta" /><figcaption aria-hidden="true">Plot of the curve <span class="math inline">\(r=1+2\sin \theta\)</span></figcaption>
 </figure>
 <p>We now seek the tangent line to the curve at the point <span class="math inline">\(P(1,0)\)</span>. It’s helpful to define the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> coordinates parametrically using <span class="math inline">\(x=r \cos \theta\)</span> and <span class="math inline">\(y=r \sin \theta\)</span> for <span class="math inline">\(r=1+2\sin \theta\)</span>:</p>
-<pre><code>x(theta) := (1+2*sin(theta))*cos(theta)
-y(theta) := (1+2*sin(theta))*sin(theta)</code></pre>
+<pre><code>x(th) = (1+2*sin(th))*cos(th)
+y(th) = (1+2*sin(th))*sin(th)</code></pre>
 <p>And then to find the value of <span class="math inline">\(\theta\)</span> at the point <span class="math inline">\(P(1,0)\)</span>, we set <span class="math inline">\(x=1\)</span> and <span class="math inline">\(y=0\)</span>.</p>
-<pre><code>Roots(x(theta)=1,theta=0..Pi/2)</code></pre>
-<p>(where we use 0..Pi/2 because the point <span class="math inline">\(P(1,0)\)</span> is in the first quadrant), results in <span class="math display">\[[0,\arctan \left( 1/3\,{\frac { \left( 28+3\,\sqrt {87} \right) ^{2/3}
-+4\,\sqrt [3]{28+3\,\sqrt {87}}+1}{\sqrt [3]{28+3\,\sqrt {87}}}}
- \right) ]
-\]</span> (and recall these are values for <span class="math inline">\(\theta\)</span>.) The first one is what we want because <span class="math inline">\(\theta=0\)</span> is the horizontal axis. Note: if you are interested in the other point where <span class="math inline">\(x=1\)</span>, then substitue the other value into <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> above as <code>x((#)[2])</code> and <code>y((#)[2])</code>, for (#) the line number of the expression. You may need to use simplify or <code>evalf</code> to get an approximate value. The result is approximately <span class="math inline">\((1,2.6956)\)</span>.</p>
-<p>Also, to double check, solve for <span class="math inline">\(y=0\)</span> using</p>
-<pre><code>Roots(y(theta)=0,theta=0..Pi/2)</code></pre>
-<p>then we get <code>[0]</code>, which is consistent with above. The slope of the tangent line at the point <span class="math inline">\((1,0)\)</span>, where <span class="math inline">\(\theta=0\)</span> is</p>
-<pre><code>y&#39;(0)/x&#39;(0)</code></pre>
+<pre><code>th1 = solve(x(th)==1,&#39;Real&#39;,true)</code></pre>
+<p>which returns <span class="math display">\[\left(\begin{array}{c}
+2\,\mathrm{atan}\left(\frac{1}{9\,{{\left(\frac{\sqrt{27}\,\sqrt{29}}{27}+\frac{28}{27}\right)}}^{1/3} }+{{\left(\frac{\sqrt{27}\,\sqrt{29}}{27}+\frac{28}{27}\right)}}^{1/3} -\frac{2}{3}\right)\\
+0
+\end{array}\right)\]</span> which looks like a bit of a mess. Note we have used the option <code>'Real',true</code> in the <code>solve</code> command to ensure we only get real (not complex) numbers for a solution.</p>
+<p>As we do before, we’d like to know if either of these are the right values for <code>th</code>, so we plug into <code>x(t)</code> and <code>y(t)</code> with</p>
+<pre><code>x(th1)
+y(th1)</code></pre>
+<p>and we get a bit of a mess, but the second value gives <span class="math inline">\(x=1\)</span> and <span class="math inline">\(y=0\)</span>, the point we want, so <code>th=0</code> is the right point.</p>
+<p>The slope of the tangent line at the point <span class="math inline">\((1,0)\)</span>, where <span class="math inline">\(\theta=0\)</span> is</p>
+<pre><code>dydx(th) = diff(y(th),th)/diff(x(th),th)
+m = dydx(0)</code></pre>
 <p>which is <span class="math inline">\(\frac{1}{2}\)</span>. Then using the point-slope formula for the tangent line, we get: <span class="math display">\[y=\frac{1}{2}(x-1)+0\]</span></p>
 <p>To plot both, we’ll use the parametric form (an alternative way will be presented below):</p>
-<pre><code>plot([[x(theta),y(theta),theta=0..2*Pi],[t,1/2*(t-1)+0,t=-1..2]])</code></pre>
-<p>to get the plot: <img src="images/ch06/plot16.png" alt="A plot of a polar curve and its tangent line" /></p>
+<pre><code>syms x
+ezpolar(1+2*sin(th))
+hold on
+fplot(m*(x-1))
+hold off</code></pre>
+<p>to get the plot: <img src="images/ch07/plot18.png" alt="A plot of a polar curve and its tangent line" /></p>
 <p>###Exercise Find the tangent line to the cardioid <span class="math inline">\(r=1+\cos(\theta)\)</span> at the point <span class="math inline">\((0,1)\)</span>. Plot both on the same axes.</p>
 <h2 id="multiple-plot-types-and-the-display-command">Multiple plot types and the <code>display</code> command</h2>
 <p>We have seen above that if we want to plot more that one curve on the same axes.</p>

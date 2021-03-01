@@ -1,7 +1,8 @@
-Appendix A: LaTeX, a typesetting System
-=====
+---
+title: 'CAppendix A: LaTeX, a typesetting System'
+---
 
-[Return to all notes](index.html)
+[Previous Chapter](ch-17.html) | [Return to all notes](index.html) | [Next chapter](appendix-B.html)
 
 LaTeX is a typesetting system or software to create high-quality printed documents.  It dates to the 1970s and predates many word-processing programs like Microsoft Word.  LaTeX is also the goto software for people in STEM fields to produce mathematics and high-quality graphs.  
 
@@ -217,7 +218,7 @@ Type `\usepackage{amsmath}` in the preamble.   This has a lot of helpful mathema
 
   will generate
   $$
-  \begin{array}{rl}2x_1 + 3x_2 =& 6, \\newline
+  \begin{array}{rl}2x_1 + 3x_2 =& 6, \\
   3x_1+4x_2 = & 8.
   \end{array}$$
 
@@ -240,8 +241,8 @@ Type `\usepackage{amsmath}` in the preamble.   This has a lot of helpful mathema
   will generate
 
   $$\left[\begin{array}{ccc}
-  1 & 2 & 3 \newline
-  4 & 5 & 6 \newline
+  1 & 2 & 3 \\
+  4 & 5 & 6 \\
   7 & 8 & 9
   \end{array}\right]$$
 
@@ -260,8 +261,8 @@ Type `\usepackage{amsmath}` in the preamble.   This has a lot of helpful mathema
   will generate
 
   $$\left|\begin{array}{ccc}
-  1 & 2 & 3 \newline
-  4 & 5 & 6 \newline
+  1 & 2 & 3 \\
+  4 & 5 & 6 \\
   7 & 8 & 9
   \end{array}\right|$$
 
@@ -279,8 +280,8 @@ Type `\usepackage{amsmath}` in the preamble.   This has a lot of helpful mathema
   will generate
 
   $$\left(\begin{array}{ccc}
-  1 & 2 & 3 \newline
-  4 & 5 & 6 \newline
+  1 & 2 & 3 \\
+  4 & 5 & 6 \\
   7 & 8 & 9
   \end{array}\right)$$
 
@@ -309,36 +310,11 @@ There is a huge number of websites available for latex.  Some of the more helpfu
 * [A discussion board with helpful Q&A](https://tex.stackexchange.com) although sometimes you get into way into the LaTeX weeds here.
 
 
-Maple with LaTeX
+Getting LaTeX from Matlab
 -----
 
-Maple can export mathematics in LaTeX form as well using the `latex` command.  For example typing `latex(`$x^{2}$`)` returns
+First, as we have shown, you can add latex to Matlab live scripts by putting the code in math mode (inside matching $$). 
 
-```
-{x}^{2}
-```
+Also, another nice feature is any output from the symbolic part of Matlab can be right clicked (control-click or double-tapped on Macs) and select _Copy as LaTeX_
 
-which has extra curly braces, but still okay.
-
-However, if you want to latex $\int x^{2} \, dx$, you get
-```
-1/3\,{x}^{3}
-```
-
-which is true, but perhaps not what you want.  Many standard Maple commands have an inert form which doesn't do anything.  For example, typing
-```
-Int(x^2,x)
-```
-
-returns
-$$ \int x^{2} \,dx$$
-
-and note that you can get a nicer version of this by typing `Int` then hitting escape.  
-
-Typing `latex(#)` on the line number returns:
-
-```
-\int \!{x}^{2}\,{\rm d}x
-```
-
-There are many other commands with inert forms like limits, derivatives, etc.  
+[Previous Chapter](ch-17.html) | [Return to all notes](index.html) | [Next chapter](appendix-B.html)
