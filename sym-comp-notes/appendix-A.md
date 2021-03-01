@@ -1,5 +1,5 @@
 ---
-title: 'CAppendix A: LaTeX, a typesetting System'
+title: 'Appendix A: LaTeX, a typesetting System'
 ---
 
 [Previous Chapter](ch-17.html) | [Return to all notes](index.html) | [Next chapter](appendix-B.html)
