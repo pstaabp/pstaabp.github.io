@@ -546,88 +546,66 @@ hold on
 fplot(m*(x-1))
 hold off</code></pre>
 <p>to get the plot: <img src="images/ch07/plot18.png" alt="A plot of a polar curve and its tangent line" /></p>
-<p>###Exercise Find the tangent line to the cardioid <span class="math inline">\(r=1+\cos(\theta)\)</span> at the point <span class="math inline">\((0,1)\)</span>. Plot both on the same axes.</p>
-<h2 id="multiple-plot-types-and-the-display-command">Multiple plot types and the <code>display</code> command</h2>
-<p>We have seen above that if we want to plot more that one curve on the same axes.</p>
-<p>If we want to plot the parametric curve <span class="math display">\[x=2\sin 2t \quad y=2\sin t,\]</span> with the implicit curve given by <span class="math display">\[(x^{2}+y^{2})^{2}-2(x^{2}-y^{2}) = 1\]</span></p>
-<p>then so far we would have to turn the parametric curve into an implicit one or the implicit one into a parametric curve. Neither may be easy or possible. Instead, here we will plot both and then put them together with the <code>display</code> command.</p>
-<p>###Plot of the first curve</p>
-<p>Since the first curve is parametric, let’s plot it like:</p>
-<pre><code>plot1:=plot([2*sin(2*t), 2*sin(t),t=0..2*Pi])</code></pre>
-<p>where we have given the plot a variable name. The plot is</p>
-<figure>
-<img src="images/ch06/plot17.png" alt="Plot of a parametric curve" /><figcaption aria-hidden="true">Plot of a parametric curve</figcaption>
-</figure>
-<p>###Plot of the 2nd curve</p>
-<p>And the second curve is implicit so</p>
-<pre><code>plot2:=implicitplot((x^2+y^2)^2-2(x^2-y^2)=1,x=-2..2,y=-2..2)</code></pre>
-<figure>
-<img src="images/ch06/plot18.png" alt="Plot of an implicit curve" /><figcaption aria-hidden="true">Plot of an implicit curve</figcaption>
-</figure>
-<p>and as you can see, we’ll adjust it with the <code>gridrefine</code> option by setting it to 1.</p>
-<p>To put these together, we’ll use the <code>display</code> command and adjust some colors and add a legend for each.</p>
-<pre><code>plot1 := plot([2*sin(2*t), 2*sin(t), t = 0 .. 2*Pi], legend = [&quot;parametric curve&quot;]):
-plot2 := implicitplot((x^2+y^2)^2-2*(x^2-y^2) = 1, x = -2 .. 2, y = -2 .. 2, color = blue, legend = &quot;implicit curve&quot;, gridrefine = 1):
-display(plot1, plot2);</code></pre>
-<p>Notice that the two plot commands have a colon at the end now so the plots aren’t actually shown. Only the plot via the <code>display</code> command is shown. The plot is</p>
-<figure>
-<img src="images/ch06/plot19.png" alt="Plot of a parametric and an implicit curve" /><figcaption aria-hidden="true">Plot of a parametric and an implicit curve</figcaption>
-</figure>
-<h2 id="common-options">Common Options</h2>
-<p>Recall that the following options are available for all plots.</p>
-<ul>
-<li><code>view</code> which changes the viewing window. Note: you should change the plotting domain as well with this.<br />
-</li>
-<li><code>legend</code> which adds a legend.</li>
-<li><code>color</code> which changes the color.</li>
-</ul>
-<p>Additionally, look at the help page for plot to determine other helpful options.</p>
-<h2 id="scatter-plots-1">Scatter Plots</h2>
-<p>A scatter plot or a point plot is a plot of set of points given as <span class="math inline">\((x,y)\)</span> coordinates. We saw this in Chapter 2, but expand a bit more here.</p>
-<p>Plot a set of discrete points as follows:</p>
+<h3 id="exercise-3">Exercise</h3>
+<p>Find the tangent line to the cardioid <span class="math inline">\(r=1+\cos(\theta)\)</span> at the point <span class="math inline">\((0,1)\)</span>. Plot both on the same axes.</p>
+<h2 id="putting-multiple-plots-together">Putting multiple plots together</h2>
+<p>There have a been a few examples earlier about putting multiple plots together and Matlab has a very robust way to do this. This section explains it.</p>
+<p>In generally, command that produce plots, like <code>fplot</code>, <code>plot</code>,<code>ezpolar</code>,<code>scatter</code> other will simply just produce a new plot of what you requested.</p>
+<p>Instead, if you want to superimpose plots, then the <code>hold</code> command is necessary. Let’s look at an example that we did earlier:</p>
+<pre><code>fplot(5*cos(t),5*sin(t),[0,2*pi])
+hold on
+fplot(-3/4*(x-3)+4)
+hold off
+daspect([1 1 1])
+xlim([-8 8])
+legend(&quot;x^2+y^2==1&quot;,&quot;tangent line&quot;)</code></pre>
 <ol type="1">
-<li>Enter the expression:<code>dots:=[[0,1],[1,0],[2,1],[3,0]]</code></li>
-<li>Enter the expression: <code>plot(dots,style=point)</code></li>
+<li>The first line plots a function parametrically.<br />
+</li>
+<li><code>hold on</code> tells Matlab that any subsequent plots will go on the same axes (superimpose) on this plot.</li>
+<li>plots the tangent line</li>
+<li><code>hold off</code> says to go back to the orignal way of plotting in which subsequent plotting commands produces a new plot.</li>
 </ol>
-<p>and you should see the following plot:</p>
-<figure>
-<img src="images/ch02/plot11.png" alt="plot of a few points" /><figcaption aria-hidden="true">plot of a few points</figcaption>
-</figure>
-<p>The points will be plotted as what is called a scatter plot. In order to connect the dots, add the style=line option to the end of the command.</p>
-<p>We can also use the <code>pointplot</code> command in the plots package.</p>
-<pre><code>pointplot(dots)</code></pre>
-<p>which generates the same picture as above. Let’s generate the following plot using the <code>symbol</code> and <code>symbolsize</code> options.</p>
-<figure>
-<img src="images/ch02/plot12.png" alt="line and point plot" /><figcaption aria-hidden="true">line and point plot</figcaption>
-</figure>
-<p>First, let’s define the points as</p>
-<pre><code>pts:=[[1,1],[2,1],[1,2]]</code></pre>
-<p>and we can plot these with large filled in circles with</p>
-<pre><code>plot(pts, style = point, view = [0 .. 2, 0 .. 2], symbol = solidcircle, symbolsize = 15)</code></pre>
-<p>and similarly, we can create a line plot with the same points except that we need to repeat the first one to get a complete triangle</p>
-<pre><code>pts1 := [[1, 1], [2, 1], [1, 2]];
-pts2 := [[1, 1], [2, 1], [1, 2], [1, 1]];
-plot([pts1, pts2], style = [point, line], color = [&quot;DarkRed&quot;, &quot;DarkRed&quot;], view = [0 .. 2, 0 .. 2], symbol = solidcircle, symbolsize = 15)</code></pre>
-<p>will reproduce the picture above. You can also produce two separate plots and put them together.</p>
-<pre><code>plot1 := pointplot(pts, symbol = solidcircle, symbolsize = 15):
-plot2 := plot(pts2):
-display(plot1, plot2, view = [0 .. 2, 0 .. 2])</code></pre>
-<p>will also produce the picture. Note: for this plot the <code>view</code> option needs to be on the display command not the plot command.</p>
-<h2 id="animated-plots">animated plots</h2>
+<h2 id="scatter-plots-1">Scatter Plots</h2>
+<p>A scatter plot or a point plot is a plot of set of points given as <span class="math inline">\((x,y)\)</span> coordinates. We saw this in Chapter 2, but here’s a different example.</p>
+<p>If the number of points is small and easy to type in. Let’s consider the following: <span class="math inline">\((1,2), (2,3), (5,5), (8,6), (9,7), (12,9)\)</span>. We can plot these by make a vector of the <span class="math inline">\(x\)</span>-values and one of the <span class="math inline">\(y\)</span>-values:</p>
+<pre><code>x=[1 2 5 8 9 12]
+y=[2 3 5 6 7 9]
+scatter(x,y)</code></pre>
+<p>results in <img src="images/ch07/plot19.png" alt="scatter plot of a few points" /></p>
+<h3 id="changing-the-size-shape-and-other-attributes-of-the-points">Changing the size, shape and other attributes of the points</h3>
+<p>Personally, I don’t think open circles are very good visually even though this is the default in Matlab. This section shows how to change attributes of the points.</p>
+<h4 id="point-size">point size</h4>
+<p>Adding a number in the scatter changes the point size. For example:</p>
+<pre><code>scatter(x,y,50)</code></pre>
+<p>roughly doubles the size of the points. Try increasing or decreasing the point size.</p>
+<h4 id="filled-in-points">Filled in Points</h4>
+<p>Add the option <code>'filled'</code> inside the <code>scatter</code> command to fill in the circles.</p>
+<pre><code>scatter(x,y,&#39;filled&#39;)</code></pre>
+<p>and you can using both the size and <code>'filled'</code> together.</p>
+<h4 id="change-the-marker">Change the marker</h4>
+<p>Here’s a list of different types of markers for each of the points: * <code>'o'</code> circle * <code>'d'</code> diamond * <code>'*'</code> asterisk (star) * <code>'.'</code> point * <code>'x'</code> cross</p>
+<p>and there are others. See the help page for <code>scatter</code> for all of the options</p>
+<h4 id="marker-color">Marker color</h4>
+<p>You can change the marker color by adding the following to the <code>scatter</code> plot: * <code>'r'</code> red * <code>'g'</code> green * <code>'b'</code> blue * <code>'c'</code> cyan * <code>'m'</code> magenta * <code>'y'</code> yellow * <code>'k'</code> black * <code>'w'</code> white</p>
+<p>Also, you can put in a hexadecimal value with a <code>#</code>. For example <code>'#A21142F'</code> is a dark red.</p>
+<h4 id="example">Example</h4>
+<h2 id="animated-plots">Animated Plots</h2>
 <p>Animated plot are often helpful to visualize if you have a parameter in a plot and you want to view what’s happening to it. Consider the following: How does the parameter <span class="math inline">\(a\)</span> affect the graph of <span class="math inline">\(y=(x-a)^{2}\)</span>. Examine <span class="math inline">\(a\)</span> from <span class="math inline">\(-3\)</span> to <span class="math inline">\(3\)</span>.</p>
 <p>Note: a standard plot cannot handle with because there is both a variable <span class="math inline">\(x\)</span> and one called <span class="math inline">\(a\)</span>. If you just try to plot <span class="math inline">\((x-a)^{2}\)</span>, you will get an error. However, an animated one will help with this.</p>
-<p>If we enter:</p>
-<pre><code>animate(plot, [(x-a)^2, x = -5 .. 5], a = -3 .. 3)</code></pre>
-<p>and then hit the play button on the toolbar, you will see the parameter <span class="math inline">\(a\)</span> change as listed in the title of the plot. In general, there are three parts of the animate command (check out the Help Browser):</p>
-<ul>
-<li><p>the first parameter is the plotting command (this is just <code>plot</code>, but you can do other plots)</p></li>
-<li><p>the second parameter is a list that is passed to the command in the 1st parameter. In this case this would be <code>plot((x-a)^2,x=-5..5)</code></p>
-<p>and this is where any other options should be put as well. (Look below for examples)</p></li>
-<li><p>The third parameter is the range on the animation parameter. For what values is the animation made.</p></li>
-</ul>
-<p>It’s a bit hard to see what happens though because of the plotting window, so let’s add a view option to the animation:</p>
-<pre><code>animate(plot,[(x-a)^2,x=-5..5,view=[-5..5,-1..10]],a=-3..3)</code></pre>
-<p>and if you run this you can see that as <span class="math inline">\(a\)</span> increases the vertex shifts to the right.</p>
+<pre><code>hplot = plot(NaN,NaN);
+x=-3:0.1:3;
+
+for t=0:50
+    for a=-2:0.1:2
+        y=(x-a).^2;
+        set(hplot,&#39;XData&#39;,x,&#39;YData&#39;,y);
+        xlim([-3 3]);
+        ylim([-2 4]);
+        drawnow
+    end
+    drawnow
+end</code></pre>
 <p>The following animation is the result:</p>
 <figure>
 <img src="images/ch06/animation01.gif" alt="plot of (x-a)^{2}" /><figcaption aria-hidden="true">plot of <span class="math inline">\((x-a)^{2}\)</span></figcaption>
@@ -652,38 +630,62 @@ x=5\cos(t)\qquad y=b\sin t\]</span> for some <span class="math inline">\(b\)</sp
 <h2 id="three-dimensional-plots">Three Dimensional Plots</h2>
 <p>Maple also handles some plots in three dimensions. This is just a few examples. Take a look at the Help Browser for more information on these.</p>
 <p>Notice after plotting each of these, you can use your mouse to spin the plot around getting a better perspective.</p>
-<p>###Three-D Function plot</p>
+<h3 id="three-d-function-plot-surface-plot">Three-D Function plot (Surface Plot)</h3>
 <p>This is plot of the function <span class="math inline">\(z=x^{2}+y^{2}\)</span>.</p>
-<pre><code>plot3d(x^2+y^2, x = -2 .. 2, y = -2 .. 2)</code></pre>
+<pre><code>syms x y
+fsurf(x^2+y^2)</code></pre>
 <figure>
-<img src="images/ch06/plot20.png" alt="3D plot of z=x^{2}+y^{2}" /><figcaption aria-hidden="true">3D plot of <span class="math inline">\(z=x^{2}+y^{2}\)</span></figcaption>
+<img src="images/ch07/plot25.png" alt="3D plot of z=x^{2}+y^{2}" /><figcaption aria-hidden="true">3D plot of <span class="math inline">\(z=x^{2}+y^{2}\)</span></figcaption>
 </figure>
-<p>###Three-D parametric plot</p>
+<p>And if you click on the plot there is a cube with a rotating arrow button at the top. Click that and you can rotate the plot.</p>
+<h3 id="three-d-parametric-plot">Three-D parametric plot</h3>
 <p>This is a plot of a helix written parametrically: <span class="math display">\[x=\cos t \qquad y=\sin t \qquad z=t/10\]</span></p>
-<pre><code>spacecurve([cos(t), sin(t), t/10], t = 0 .. 4*Pi)</code></pre>
+<pre><code>syms t
+fplot3(cos(t),sin(t),t,[0,4*pi])</code></pre>
 <p>which results in</p>
 <figure>
-<img src="images/ch06/plot21.png" alt="plot of the helix" /><figcaption aria-hidden="true">plot of the helix</figcaption>
+<img src="images/ch07/plot26.png" alt="plot of the helix" /><figcaption aria-hidden="true">plot of the helix</figcaption>
 </figure>
-<p>###Implicit plot in 3 variables</p>
+<h3 id="implicit-plot-in-3-variables">Implicit plot in 3 variables</h3>
 <p>Here’s a plot of the sphere <span class="math display">\[x^{2}+y^{2}+z^{2}=1\]</span></p>
 <pre><code>implicitplot3d(x^2+y^2+z^2 = 1, x = -1 .. 1, y = -1 .. 1, z = -1 .. 1)</code></pre>
-<p>which produces the plot: <img src="images/ch06/plot22.png" alt="plot of a sphere" /></p>
+<p>which produces the plot: <img src="images/ch07/plot27.png" alt="plot of a sphere" /></p>
+<p>And the following plots both an ellipsoid and a plane that cuts through it:</p>
+<pre><code>syms x y z
+fimplicit3(x^2/4+y^2/9+z^2==1)
+hold on
+fimplicit3(x+2*y+3*z==1)
+hold off
+daspect([1 1 1])
+view([-99.57 27.87])
+exportgraphics(fig,&quot;/Users/pstaab/code/pstaabp.github.io/sym-comp-notes/images/ch07/plot28.png&quot;)</code></pre>
+<p>where the <code>view([-99.57 27.87])</code> line was created when rotating and inserted. The resulting plot is: <img src="images/ch07/plot28.png" alt="plot of an ellipsoid and a Plane" /></p>
 <h3 id="vector-field-plots">Vector Field plots</h3>
 <p>A basic plot of the field <span class="math inline">\(\textbf{F} = y \hat{i}-x \hat{j}\)</span> is</p>
-<pre><code>fieldplot([y,-x], x=-10..10,y=-10..10)</code></pre>
+<pre><code>[X,Y] = meshgrid(-2:0.25:2);
+DX = Y;
+DY = -X;
+quiver(X,Y,DX,DY)</code></pre>
 <p>gives the plot:</p>
 <figure>
-<img src="images/ch06/plot23.png" alt="Plot of a vector field" /><figcaption aria-hidden="true">Plot of a vector field</figcaption>
+<img src="images/ch07/plot29.png" alt="Plot of a vector field" /><figcaption aria-hidden="true">Plot of a vector field</figcaption>
 </figure>
 <p>and if you want a direction field (in that the length of the vectors are all the same)</p>
-<pre><code>fieldplot([y,-x],x=-10..10,y=-10..10,fieldstrength=fixed)</code></pre>
-<p>and the result is <img src="images/ch06/plot24.png" alt="Plot of a vector field" /></p>
+<pre><code>[X,Y] = meshgrid(-2:0.25:2);
+DX = Y;
+DY = -X;
+L = sqrt(DX.^2+DY.^2);
+quiver(X,Y,DX./L,DY./L)</code></pre>
+<p>and the result is <img src="images/ch07/plot30.png" alt="Plot of a vector field" /></p>
 <p>If we want a 3D plot of a vector field, say <span class="math display">\[\vec{F}(x,y,z) = x \hat{i}+y \hat{j} + z \hat{k}\]</span></p>
-<pre><code>fieldplot3d([x, y, z], x = 0 .. 2, y = 0 .. 2, z = 0 .. 2)</code></pre>
+<pre><code>[X,Y,Z] = meshgrid(-2:0.5:2,-2:0.5:2,-2:0.5:2);
+DX = X;
+DY = Y;
+DZ = Z;
+quiver3(X,Y,Z,DX,DY,DZ)</code></pre>
 <p>produces</p>
 <figure>
-<img src="images/ch06/plot25.png" alt="Plot of a 3D vector field" /><figcaption aria-hidden="true">Plot of a 3D vector field</figcaption>
+<img src="images/ch07/plot31.png" alt="Plot of a 3D vector field" /><figcaption aria-hidden="true">Plot of a 3D vector field</figcaption>
 </figure>
 </body>
 </html>
