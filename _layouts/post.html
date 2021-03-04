@@ -3,8 +3,10 @@ layout: default
 ---
 
 <html>
-  <head>
-    <script>
+  <body>
+    {{ content }}
+  </body>
+  <script>
       MathJax = {
         tex: {
           inlineMath: [ ['$', '$'] ],   // start/end delimiter pairs for in-line math
@@ -17,8 +19,4 @@ layout: default
       <script id="MathJax-script" async
               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
       </script>
-  </head>
-  <body>
-    {{ content }}
-  </body>
 </html>
