@@ -1,4 +1,6 @@
-### Symbolic Computation Notes (FSU, Spring 2021)
+---
+title: Symbolic Computation Notes (FSU, Spring 2021)
+---
 
 * [Chapter 1: Introduction to Symbolic Computing and Computer Algebra Systems](ch-01.html)
 * [Chapter 2: Plotting Basics](ch-02.html)

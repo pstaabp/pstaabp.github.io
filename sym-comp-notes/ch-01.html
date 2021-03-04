@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ch-01</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td>layout: post</td>
+</tr>
+<tr class="even">
+<td>title: Chapter 1: Introduction to Symbolic Computing and Computer Algebra Systems</td>
+</tr>
+</tbody>
+</table>
+<p><a href="index.html">Return to all notes</a> | <a href="ch-02.html">Next Chapter</a></p>
+<p>This chapter explains what symbolic computing and computer algebra systems (CAS) are. It’s easier to understand these terms in context. If we consider a basic calculator, typically numbers are put in and you get numbers out. The numbers are what are called floating point numbers, but they look like decimals. For example if you enter 2, then the square root button, you will see</p>
+<pre><code>1.414213562</code></pre>
+<p>Alternatively, in a CAS, if you enter the square root of two, you will get <span class="math display">\[ \sqrt{2} \]</span> The difference is that the decimal number above truncates to 10 or 12 decimal places, whereas the output of the CAS is exactly the square root of two. You can see that if you square each of these. Using the calculator by starting with 2, then taking the square root, then squaring, you might get</p>
+<pre><code>1.9999999989</code></pre>
+<p>which is close to 2, but not exactly, whereas in the CAS, the answer will be 2.</p>
+<p>Additionally, a CAS allows one to enter in mathematical expressions and manipulate them. For example if you enter <span class="math display">\[(x+2)^{2}\]</span></p>
+<p>and then have the CAS expand it (skipping exactly how to do this until later), the CAS will return: <span class="math display">\[x^{2}+4x+4\]</span> which is how to expand it via the distributive law (or doing FOIL). Standard calculators can’t handle such an operation.</p>
+<p>Another classic example of a CAS is that of precision of numbers. Later in the course, we will discuss the number of digits in an approximation, say in finding <span class="math inline">\(\sqrt{2}\)</span> , but recall that the factorial of a positive integer is the product of the number and all subsequence smaller integers until reaching one. For example 5!=5·4·3·2·1=120. Matlab will compute factorials easily, note that</p>
+<p><span class="math display">\[10! = 3628800\]</span> <span class="math display">\[20! = 2432902008176640000\]</span></p>
+<p>and so on. Most calculators cannot display more that 12-15 digits, so 20! may not be represented accuracy. Matlab however can display as many digits as there are. Note that <span class="math display">\[50! = 30414093201713378043612608166064768844377641568960512000000000000\]</span></p>
+<p><span class="math display">\[100!=93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000\]</span></p>
+<p>Again, this is a big difference between a calculator and a CAS. If you try these on a calculator, you will probably get an error (typically an overflow error).</p>
+<h2 id="computer-algebra-software">Computer Algebra Software</h2>
+<p>Before we venture too much into the realm of CAS, we need to discuss some specifics of software. There are a lot of programs that fall into Computer Algebra Systems, and if you are interested in seeing the breadth of such software, visit the <a href="https://en.wikipedia.org/wiki/List_of_computer_algebra_systems">Wikipedia site that lists CAS’s</a>. The major commercial ones are <a href="http://www.wolfram.com/mathematica/">Mathematica</a> and <a href="http://www.maplesoft.com/">Maple</a> and a nice open source one is <a href="http://sagemath.org">Sage</a>.</p>
+<p>We are going to use Matlab in this course, which can do symbolic computations.</p>
+<h2 id="types-of-objects-in-a-cas">Types of Objects in a CAS</h2>
+<p>As we saw above with the <span class="math inline">\(\sqrt{2}\)</span> example, a CAS is more complicated than a calculator and a firm understanding of the basics of a CAS is needed. Before we dive into things, let’s look at some basic objects in a CAS.</p>
+<ul>
+<li><strong>Integer:</strong> As with mathematics, an integer in a CAS is whole number with the negative whole numbers. Examples are 10,0,-25,1234313</li>
+<li><strong>Floating Point:</strong> If a number has a decimal point, we will call this a floating-point number, which is a standard way that computers store decimals numbers. We won’t get into details in this course. Examples of floating-points are 1.0, -17.34, 3.14159, 1.234e+05 (which is shorthand for <span class="math inline">\(1.234 \times 10^5\)</span>)</li>
+<li><strong>Rational:</strong> A rational number (like mathematically) is the quotient of two integers (the divisor can’t be zero). Examples are <span class="math inline">\(\frac{1}{2}, -\frac{7}{3}\)</span></li>
+<li><strong>Expression:</strong> An expression is a combination of variables (like <span class="math inline">\(x\)</span>) and numbers with standard mathematical operators. Examples are <span class="math inline">\(2x\)</span>, <span class="math inline">\(\dfrac{x}{x^{2}+1}, \sqrt{7y+2x}, t^{3}-\sqrt[3]{t}\)</span></li>
+<li><strong>Equation:</strong> One expression that equals another. Examples include <span class="math inline">\(x=2, 2x^{3}-8x=0\)</span>.</li>
+<li><strong>Functions:</strong> This is much like a mathematical function in which you have an input (or inputs) and there is an output. An example is <span class="math inline">\(x^{2}\)</span>, which is the square function. Mathematically, we write this <span class="math inline">\(f(x)=x^{2}\)</span>.</li>
+<li><strong>Matrices:</strong> These are like matrices from linear algebra. An example is <span class="math display">\[\left[ \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ 4 &amp; 5 &amp; 6 \\ 7 &amp; 8 &amp; 9 \end{array}\right] \]</span></li>
+<li><strong>Other:</strong> This is not an exhaustive list. There are things like lists, arrays and plots that can be manipulated.</li>
+</ul>
+<h2 id="live-editor-in-matlab">Live Editor in Matlab</h2>
+<p>Matlab has a lot of features. We’re going to start using what is called the <em>Live Editor</em> which mixes commands, plots and mathematics in a nice-looking manner.</p>
+<p>Once you open up Matlab, there is a toolbar at the top. Under the <em>Home</em> tab, click the <em>New Live Script</em> button.</p>
+<h3 id="entering-expressions-in-matlab">Entering Expressions in Matlab</h3>
+<p>When opening a file in <em>Live Editor</em> mode, you’ll see a gray cell. This is where we can enter code.</p>
+<ol type="1">
+<li><p>To enter an integer number, just type it in: 123 and hit CTRL-ENTER (on Windows) or CMD-ENTER (on MacOS). Alternatively, you can click on the gray and white striped bar to the left of the numbers. You’ll see <code>ans = 123</code> in an area to the right. There is a matlab variable (which we’ll talk about soon) called <code>ans</code> which has the value 123.</p></li>
+<li><p>To enter <span class="math inline">\(\sqrt{2}\)</span>, type <code>sqrt(2)</code>. You’ll see <code>ans = 1.4142</code>. Note: this is an approximate value of the square root of 2.</p></li>
+<li><p>If instead, you want the symbolic version of the square root of 2, type: <code>sym(sqrt(2))</code>. And you’ll see <span class="math inline">\(\sqrt{2}\)</span>.</p></li>
+<li><p>To enter the expression: <span class="math inline">\((x + 2)(x + 5)\)</span>, we first need to tell matlab to create a variable named <span class="math inline">\(x\)</span>. First type <code>syms x</code>. It doesn’t return anything, but you’ll see in the <code>Workspace</code> pane on the lower right corner of the app, there is now <code>x</code> which is a <code>1x1 sym</code>–we’ll explain this later.</p>
+<p>Now you should type <code>(x+2)*(x+5)</code>. Note if you don’t type the <code>*</code>, you’ll get an error. In short, in Matlab, any implict multiplication needs to be entered explicitly.</p></li>
+<li><p>The easiest way to enter the expression: <span class="math inline">\(\displaystyle \frac{x+5}{2-x} + 3\)</span> is to type</p>
+<pre><code>(x+5)/(2-x)+3    </code></pre>
+<p>Note: you must use parentheses in the numerator.</p></li>
+<li><p>The transcendental functions must be written with parentheses around the argument. In other words, <span class="math inline">\(\sin x\)</span> must be typed <code>sin(x)</code> in Maple. Many of these functions also appear in the Expression Palette or other palettes.</p></li>
+<li><p>The exponential function seems like we should type in <code>e^x</code>, but we’ll get the error <code>Unrecognized function or variable 'e'</code>. Basically this means that e isn’t defined. Alternatively, type in <code>exp(x)</code></p></li>
+<li><p>The natural log, <span class="math inline">\(\ln x\)</span> is defined in Matlab as <code>log(x)</code>.</p></li>
+<li><p>The absolute value of x or <span class="math inline">\(|x|\)</span> needs to entered as <code>abs(x)</code>.</p></li>
+<li><p>If we just enter <code>pi</code>, you’ll get a floating-point approximation of <span class="math inline">\(\pi\)</span>. If you want the symbolic version of it, enter <code>sym(pi)</code>.</p></li>
+</ol>
+<h3 id="exercise">Exercise</h3>
+<p>Put the following into Matlab:</p>
+<ol type="1">
+<li><p><span class="math inline">\((x-3)^{3}\)</span></p></li>
+<li><p><span class="math inline">\(\displaystyle \frac{7+3x}{11+x}\)</span></p></li>
+<li><p><span class="math inline">\(\tan 3x\)</span></p></li>
+<li><p><span class="math inline">\(\cos^{2}(\frac{1}{x})\)</span></p></li>
+<li><p><span class="math inline">\(\sqrt{3-\frac{4}{x^{2}+1}}\)</span></p></li>
+<li><p><span class="math inline">\({\rm e} ^{\sqrt{x}}\)</span></p></li>
+</ol>
+<h2 id="commands-in-matlab">Commands in Matlab</h2>
+<p>Generally to get Matlab to do something, we will use a command. All commands in Matlab have the form <code>name(param1,param2,...)</code> where <code>name</code> is the name of the command and there are some number of parameters or arguments (the things inside the parentheses) separated by commas.</p>
+<p>There are thousands of commands in Matlab and obviously, we won’t be going over all of them. It is good to be able to understand in general about a Matlab command and the many options available as well as where to get extended help. We will cover more of this later in the course.</p>
+<p>Generally Matlab does something to a parameter (or argument) and returns an object of a certain type.</p>
+<h3 id="examples">Examples</h3>
+<ul>
+<li><p>The following expands the expression <span class="math inline">\((x+1)(x+2)\)</span>:</p>
+<pre><code>expand((x+1)*(x+2))</code></pre>
+<p>which will be <span class="math inline">\(x^{2}+3x+2\)</span>.</p></li>
+<li><p>To find a common denominator of the expression <span class="math inline">\(\dfrac{1}{2} + \dfrac{x}{x+1} + \dfrac{3}{x+1}\)</span></p>
+<pre><code>simplifyFraction(1/2 + x/(x+1) + 3/(x+1))</code></pre>
+<p>which results in <span class="math inline">\(\dfrac{x^2+11x+12}{2(x+1)(x+2)}\)</span>.</p></li>
+<li><p>To factor the polynomial (or at least attempt to) <span class="math inline">\(x^2-x-20\)</span>, enter <code>factor(x^2-x-20)</code> which returns <span class="math inline">\((x+4)(x-5)\)</span></p></li>
+</ul>
+<h2 id="help-pages-in-matlab">Help Pages in Matlab</h2>
+<p>Maple has a good set of help pages built-in. It is highly recommended that you use it often. There are two standard ways to ask for help.</p>
+<ol type="1">
+<li><p>There is a <code>Search Documentation</code> field in the top right corner of the app. You can click in there to search</p></li>
+<li><p>In the the main window for entering commands, typing <code>help(command)</code> will show a short description of the command. Note that the command must be in double quotes. For example</p>
+<pre><code>help(&quot;expand&quot;)</code></pre>
+<p>opens up information about the expand command.</p></li>
+<li><p>Inside the main window for entering commands, typing <code>doc(command)</code> will open the help browser. Note that the command must be in double quotes. For example</p>
+<pre><code>doc(&quot;expand&quot;)</code></pre>
+<p>opens up information about the expand command in the help documentation browser.</p></li>
+<li><p>Of course googling is natural for anyone–although I prefer to use <a href="http://duckduckgo.com">Duck Duck go</a> for search, just make sure that you put in matlab in your search term. I finally generally when searching on the web, the Matlab help pages pop up first anyway.</p></li>
+</ol>
+<p><a href="index.html">Return to all notes</a> | <a href="ch-02.html">Next Chapter</a></p>
+</body>
+</html>

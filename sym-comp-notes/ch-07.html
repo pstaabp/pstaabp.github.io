@@ -280,40 +280,56 @@ hold off</code></pre>
 <h4 id="exercise-1">Exercise</h4>
 <p>Plot <span class="math inline">\(f(x) = \tan(x)\)</span> on <span class="math inline">\([-3\pi,3\pi]\)</span> and use multiples of <span class="math inline">\(\pi/2\)</span> for the horizontal labels. Hint: see above to do this. Does Matlab correctly pick up the vertical asymptotes in this case?</p>
 <h2 id="scatter-plots">Scatter Plots</h2>
-<p>A scatter plot is a set of points plotted in the <span class="math inline">\(xy\)</span>-plane. Consider the points <span class="math inline">\((0,1),(1,0),(2,1),(3,0)\)</span>. We will see how to plot this.</p>
+<p>A scatter plot is a set of points plotted in the <span class="math inline">\(xy\)</span>-plane. Consider the points <span class="math inline">\((0,1), (1,3), (3,4), (6,5), (8,8), (10,9)\)</span>. We will see how to plot this.</p>
 <p>For this, we create a vectors of the x points and y points:</p>
-<pre><code>x=[0,1,2,3]
-y=[1,0,1,0]</code></pre>
+<pre><code>xvals=[0 1 3 6 8 10]
+yvals=[1 3 4 5 8 9]</code></pre>
 <p>and the call the function <code>scatter</code>:</p>
-<pre><code>scatter(x,y)</code></pre>
+<pre><code>scatter(xvals,yvals)</code></pre>
 <p>resulting in</p>
 <figure>
 <img src="images/ch02/plot15.png" alt="Example of a scatter plot" /><figcaption aria-hidden="true">Example of a scatter plot</figcaption>
 </figure>
 <p>Notice that the points by default are open circles, which are hard to see. The next exercise goes through how to change the type and size.</p>
-<h4 id="exercise-2">Exercise</h4>
-<ol type="1">
-<li>Search for <code>scatter</code> in the help documentation. There is a number of ways to change the size, shaped and color of the dots.</li>
-<li>Create a plot that looks like:</li>
-</ol>
-<figure>
-<img src="images/ch02/plot16.png" alt="line and point plot" /><figcaption aria-hidden="true">line and point plot</figcaption>
-</figure>
-<p>At the bottom of the <code>scatter</code> documentation has all of the options.</p>
-<h2 id="combining-scatter-and-function-plots">Combining Scatter and Function Plots</h2>
+<h3 id="changing-the-size-shape-and-other-attributes-of-the-points">Changing the size, shape and other attributes of the points</h3>
+<p>Personally, I don’t think open circles are very good visually even though this is the default in Matlab. This section shows how to change attributes of the points.</p>
+<h4 id="point-size">point size</h4>
+<p>Adding a number in the scatter changes the point size. For example:</p>
+<pre><code>scatter(xvals,yvals,50)</code></pre>
+<p>roughly doubles the size of the points. Try increasing or decreasing the point size.</p>
+<h4 id="filled-in-points">Filled in Points</h4>
+<p>Add the option <code>'filled'</code> inside the <code>scatter</code> command to fill in the circles.</p>
+<pre><code>scatter(xvals,yvals,&#39;filled&#39;)</code></pre>
+<p>and you can using both the size and <code>'filled'</code> together.</p>
+<h4 id="change-the-marker">Change the marker</h4>
+<p>Here’s a list of different types of markers for each of the points: * <code>'o'</code> circle * <code>'d'</code> diamond * <code>'*'</code> asterisk (star) * <code>'.'</code> point * <code>'x'</code> cross</p>
+<p>and there are others. See the help page for <code>scatter</code> for all of the options</p>
+<h4 id="marker-color">Marker color</h4>
+<p>You can change the marker color both the edge and face by adding the following to the <code>scatter</code> plot: * <code>'r'</code> or <code>'red'</code> — red * <code>'g'</code> or <code>'green'</code> — green * <code>'b'</code> or <code>'blue'</code> — blue * <code>'c'</code> or <code>'cyan'</code> — cyan * <code>'m'</code> or <code>'magenta'</code> — magenta * <code>'y'</code> or <code>'yellow'</code> — yellow * <code>'k'</code> or <code>'black'</code> — black * <code>'w'</code> or <code>'white'</code> — white</p>
+<h4 id="example">Example</h4>
+<p>The following changes the size, shaped, fills the marker and change the color:</p>
+<pre><code>scatter(xvals,yvals,150,&#39;d&#39;,&#39;filled&#39;,&#39;MarkerFaceColor&#39;,&#39;magenta&#39;)</code></pre>
+<h3 id="combining-scatter-and-function-plots">Combining Scatter and Function Plots</h3>
 <p>We can combine a scatter and function plots using the <code>hold</code> command. Let’s say we have the points: (0,10),(2,9),(3,7),(5,6),(7,4),(8,2) and we wish to plot a best fit line as well. First, let’s define the points</p>
-<pre><code>x = [0,2,3,5,7,8];
-y = [10,9,7,6,4,2];</code></pre>
+<pre><code>xvals = [0,2,3,5,7,8];
+yvals = [10,9,7,6,4,2];</code></pre>
 <p>The best-fit line can be found to be <span class="math inline">\(y=10.8665-0.9680x\)</span> and we will show how to do this later.</p>
-<pre><code>scatter(x,y,100,&#39;blue&#39;,&#39;filled&#39;);
+<pre><code>syms x
+scatter(xvals,yvals,100,&#39;blue&#39;,&#39;filled&#39;);
 hold on
-fplot(@(x) 10.8665-0.9680*x,[-0.5,9])
+fplot(10.8665-0.9680*x,[-0.5,9])
 hold off</code></pre>
-<p>Note: above, we have generally done <code>fplot(10.8665-0.9680*x,[0.5,9])</code> to plot the line. However, becase we defined <code>x</code> to be an array of points, this won’t work. Try it!! The <code>@(x)</code> is way to redeclare <code>x</code> as a different variable. We’ll see this more later.</p>
 <p>This will produce a plot that looks like:</p>
 <figure>
-<img src="images/ch02/plot17.png" alt="Plot with functions and dots" /><figcaption aria-hidden="true">Plot with functions and dots</figcaption>
+<img src="images/ch07/plot20.png" alt="Plot with functions and dots" /><figcaption aria-hidden="true">Plot with functions and dots</figcaption>
 </figure>
+<h3 id="loading-a-file-for-a-scatter-plot">Loading a file for a scatter plot</h3>
+<p>First, download the file <a href="iris.csv">iris.csv</a> and save the file in the directory where you are working.</p>
+<pre><code>iris = readmatrix(&#39;iris.csv&#39;)</code></pre>
+<p>and you should see that it loaded a file that has 150 rows and 5 columns. And then we can plot individual columns:</p>
+<pre><code>scatter(iris(:,1),iris(:,2),50,&#39;filled&#39;,&#39;r&#39;)
+axis equal</code></pre>
+<p>plots the first and second columns. The result is <img src="images/ch07/plot21.png" alt="Scatter plot from a file" /></p>
 <h2 id="implicit-plots">Implicit Plots</h2>
 <p>If a you have a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> and would like to visualize the set of points that satisfy the curve, then <code>fimplicit</code> is what you want to use. For example, the circle with center of the origin and radius 5 is</p>
 <pre><code>syms x y
@@ -528,7 +544,7 @@ y(th) = (1+2*sin(th))*sin(th)</code></pre>
 <p>And then to find the value of <span class="math inline">\(\theta\)</span> at the point <span class="math inline">\(P(1,0)\)</span>, we set <span class="math inline">\(x=1\)</span> and <span class="math inline">\(y=0\)</span>.</p>
 <pre><code>th1 = solve(x(th)==1,&#39;Real&#39;,true)</code></pre>
 <p>which returns <span class="math display">\[\left(\begin{array}{c}
-2\,\mathrm{atan}\left(\frac{1}{9\,{{\left(\frac{\sqrt{27}\,\sqrt{29}}{27}+\frac{28}{27}\right)}}^{1/3} }+{{\left(\frac{\sqrt{27}\,\sqrt{29}}{27}+\frac{28}{27}\right)}}^{1/3} -\frac{2}{3}\right)\\
+2\,\mathrm{atan}\left(\frac{1}{9\,\left(\frac{\sqrt{27}\,\sqrt{29}}{27}+\frac{28}{27}\right)^{1/3} }+\left(\frac{\sqrt{27}\,\sqrt{29}}{27}+\frac{28}{27}\right)^{1/3} -\frac{2}{3}\right)\\
 0
 \end{array}\right)\]</span> which looks like a bit of a mess. Note we have used the option <code>'Real',true</code> in the <code>solve</code> command to ensure we only get real (not complex) numbers for a solution.</p>
 <p>As we do before, we’d like to know if either of these are the right values for <code>th</code>, so we plug into <code>x(t)</code> and <code>y(t)</code> with</p>
@@ -546,7 +562,7 @@ hold on
 fplot(m*(x-1))
 hold off</code></pre>
 <p>to get the plot: <img src="images/ch07/plot18.png" alt="A plot of a polar curve and its tangent line" /></p>
-<h3 id="exercise-3">Exercise</h3>
+<h3 id="exercise-2">Exercise</h3>
 <p>Find the tangent line to the cardioid <span class="math inline">\(r=1+\cos(\theta)\)</span> at the point <span class="math inline">\((0,1)\)</span>. Plot both on the same axes.</p>
 <h2 id="putting-multiple-plots-together">Putting multiple plots together</h2>
 <p>There have a been a few examples earlier about putting multiple plots together and Matlab has a very robust way to do this. This section explains it.</p>
@@ -566,66 +582,63 @@ legend(&quot;x^2+y^2==1&quot;,&quot;tangent line&quot;)</code></pre>
 <li>plots the tangent line</li>
 <li><code>hold off</code> says to go back to the orignal way of plotting in which subsequent plotting commands produces a new plot.</li>
 </ol>
-<h2 id="scatter-plots-1">Scatter Plots</h2>
-<p>A scatter plot or a point plot is a plot of set of points given as <span class="math inline">\((x,y)\)</span> coordinates. We saw this in Chapter 2, but here’s a different example.</p>
-<p>If the number of points is small and easy to type in. Let’s consider the following: <span class="math inline">\((1,2), (2,3), (5,5), (8,6), (9,7), (12,9)\)</span>. We can plot these by make a vector of the <span class="math inline">\(x\)</span>-values and one of the <span class="math inline">\(y\)</span>-values:</p>
-<pre><code>x=[1 2 5 8 9 12]
-y=[2 3 5 6 7 9]
-scatter(x,y)</code></pre>
-<p>results in <img src="images/ch07/plot19.png" alt="scatter plot of a few points" /></p>
-<h3 id="changing-the-size-shape-and-other-attributes-of-the-points">Changing the size, shape and other attributes of the points</h3>
-<p>Personally, I don’t think open circles are very good visually even though this is the default in Matlab. This section shows how to change attributes of the points.</p>
-<h4 id="point-size">point size</h4>
-<p>Adding a number in the scatter changes the point size. For example:</p>
-<pre><code>scatter(x,y,50)</code></pre>
-<p>roughly doubles the size of the points. Try increasing or decreasing the point size.</p>
-<h4 id="filled-in-points">Filled in Points</h4>
-<p>Add the option <code>'filled'</code> inside the <code>scatter</code> command to fill in the circles.</p>
-<pre><code>scatter(x,y,&#39;filled&#39;)</code></pre>
-<p>and you can using both the size and <code>'filled'</code> together.</p>
-<h4 id="change-the-marker">Change the marker</h4>
-<p>Here’s a list of different types of markers for each of the points: * <code>'o'</code> circle * <code>'d'</code> diamond * <code>'*'</code> asterisk (star) * <code>'.'</code> point * <code>'x'</code> cross</p>
-<p>and there are others. See the help page for <code>scatter</code> for all of the options</p>
-<h4 id="marker-color">Marker color</h4>
-<p>You can change the marker color by adding the following to the <code>scatter</code> plot: * <code>'r'</code> red * <code>'g'</code> green * <code>'b'</code> blue * <code>'c'</code> cyan * <code>'m'</code> magenta * <code>'y'</code> yellow * <code>'k'</code> black * <code>'w'</code> white</p>
-<p>Also, you can put in a hexadecimal value with a <code>#</code>. For example <code>'#A21142F'</code> is a dark red.</p>
-<h4 id="example">Example</h4>
 <h2 id="animated-plots">Animated Plots</h2>
-<p>Animated plot are often helpful to visualize if you have a parameter in a plot and you want to view what’s happening to it. Consider the following: How does the parameter <span class="math inline">\(a\)</span> affect the graph of <span class="math inline">\(y=(x-a)^{2}\)</span>. Examine <span class="math inline">\(a\)</span> from <span class="math inline">\(-3\)</span> to <span class="math inline">\(3\)</span>.</p>
-<p>Note: a standard plot cannot handle with because there is both a variable <span class="math inline">\(x\)</span> and one called <span class="math inline">\(a\)</span>. If you just try to plot <span class="math inline">\((x-a)^{2}\)</span>, you will get an error. However, an animated one will help with this.</p>
-<pre><code>hplot = plot(NaN,NaN);
-x=-3:0.1:3;
-
-for t=0:50
-    for a=-2:0.1:2
-        y=(x-a).^2;
-        set(hplot,&#39;XData&#39;,x,&#39;YData&#39;,y);
-        xlim([-3 3]);
-        ylim([-2 4]);
-        drawnow
-    end
-    drawnow
-end</code></pre>
+<p>Animated plot are often helpful to visualize if you have a parameter in a plot and you want to view what’s happening to it. Consider the following: How does the parameter <span class="math inline">\(a\)</span> affect the graph of <span class="math inline">\(y=(x-t)^{2}\)</span>. Examine <span class="math inline">\(t\)</span> from <span class="math inline">\(-3\)</span> to <span class="math inline">\(3\)</span>.</p>
+<pre><code>syms t x
+fanimator(@fplot,(x-t)^2,[-6 6],&#39;AnimationRange&#39;,[-3 3])
+xlim([-4 4])
+ylim([-2 6])
+axis equal
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
+playAnimation</code></pre>
+<p>where primarily the <code>fanimator</code> function is the important thing here. The arguments of this are * plotting function handle. Any of the plotting functions in Matlab are valid here. Just remember, you need a handle, that is, put a <code>@</code> in front. * The next two arguments are the plotting arguments. In this case, the function and the plotting range.<br />
+* The last two argument are the options that set the values of <span class="math inline">\(t\)</span> (by default)</p>
+<p>Also, the command <code>playAnimation</code> simply just plays the animation.</p>
 <p>The following animation is the result:</p>
 <figure>
-<img src="images/ch06/animation01.gif" alt="plot of (x-a)^{2}" /><figcaption aria-hidden="true">plot of <span class="math inline">\((x-a)^{2}\)</span></figcaption>
+<img src="images/ch07/animation01.gif" alt="plot of (x-a)^{2}" /><figcaption aria-hidden="true">plot of <span class="math inline">\((x-a)^{2}\)</span></figcaption>
 </figure>
-<p>###A Parametric Example</p>
+<h3 id="a-parametric-example">A Parametric Example</h3>
 <p>Perhaps we want to see what happens to the parametric curve <span class="math display">\[
-x=5\cos(t)\qquad y=b\sin t\]</span> for some <span class="math inline">\(b\)</span> values. We also use the animate with plot, but the 2nd parameter needs to be written in a different way:</p>
-<pre><code>animate(plot, [[5*cos(t), b*sin(t), t = 0 .. 2*Pi]], b = 1 .. 8)</code></pre>
-<p>where the 2nd parameter needs to be in 2 sets of square brackets because for a parametric plot the functions needs to be a list.</p>
-<p>The animation, which is below, shows that the parameter <span class="math inline">\(b\)</span> is the height of the ellipse and you should set the plotting to be 1:1 for an accurate view of this.</p>
+x=5\cos(t)\qquad y=b\sin t\]</span> for some <span class="math inline">\(b\)</span> values.</p>
+<p>Since this is a paramtric plot, we need to include both <span class="math inline">\(x(t)\)</span> and <span class="math inline">\(y(t)\)</span>. Also, we need to tell <code>fanimator</code> that we are using <code>b</code> as the parameter.</p>
+<pre><code>syms t b
+fanimator(@fplot,5*cos(t),b*sin(t),[0, 2*pi],&#39;AnimationRange&#39;,[1 8],&#39;AnimationParameter&#39;,sym(&#39;b&#39;))
+hold on
+fanimator(@(b) text(6,7,&quot;b=&quot;+num2str(b,2)+&quot; &quot;),&#39;AnimationRange&#39;,[1 8],&#39;AnimationParameter&#39;,sym(&#39;b&#39;));
+hold off
+
+xlim([-8 8])
+ylim([-8 8])
+axis equal
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
+playAnimation</code></pre>
+<p>The result is</p>
 <figure>
-<img src="images/ch06/animation02.gif" alt="plot of the parametric curve x(t) = 5 \cos t, y(t)=b\sin(t)" /><figcaption aria-hidden="true">plot of the parametric curve <span class="math inline">\(x(t) = 5 \cos t\)</span>, <span class="math inline">\(y(t)=b\sin(t)\)</span></figcaption>
+<img src="images/ch07/animation03.gif" alt="plot of the parametric curve x(t) = 5 \cos t, y(t)=b\sin(t)" /><figcaption aria-hidden="true">plot of the parametric curve <span class="math inline">\(x(t) = 5 \cos t\)</span>, <span class="math inline">\(y(t)=b\sin(t)\)</span></figcaption>
 </figure>
-<p>###An polar plot example</p>
-<p>We can also make a animation based on a polar plot. Take for example,</p>
-<pre><code>animate(polarplot, [1-a*sin(theta), theta = 0 .. 2*Pi], a = -4 .. 4)</code></pre>
+<p>You can see that this is an ellipse in which the <span class="math inline">\(y\)</span>-range of the ellipse is the valid of <span class="math inline">\(b\)</span>.</p>
+<h3 id="an-polar-plot-example">An polar plot example</h3>
+<p>We can also make a animation based on a polar plot. Consider <span class="math display">\[r(\theta)=1-a\sin \theta\]</span> for <span class="math inline">\(-4 \leq a \leq 4\)</span>.</p>
+<p>Unfortunatetly, it doesn’t appear that ezpolar and fanimator play nice together, so recall that a polar plot is just a parametric plot of a particular form, so we’ll plot that:</p>
+<p>The following will produce an animation of this:</p>
+<pre><code>syms th a x y
+x(th) = (1-a*sin(th))*cos(th);
+y(th) = (1-a*sin(th))*sin(th);
+fanimator(@fplot,x(th),y(th),[0 2*pi],&#39;AnimationRange&#39;,[-4 4],&#39;AnimationParameter&#39;,sym(&#39;a&#39;))
+hold on
+fanimator(@(a) text(4,4,&quot;a=&quot;+num2str(a,2)+&quot; &quot;),&#39;AnimationRange&#39;,[-4 4],&#39;AnimationParameter&#39;,sym(&#39;a&#39;));
+hold off
+
+xlim([-5 5])
+ylim([-5 5])
+axis equal
+set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
+playAnimation</code></pre>
 <figure>
-<img src="images/ch06/animation03.gif" alt="plot of the polar curve$ r=1-a()$" /><figcaption aria-hidden="true">plot of the polar curve$ r=1-a()$</figcaption>
+<img src="images/ch07/animation04.gif" alt="plot of the polar curve$ r=1-a()$" /><figcaption aria-hidden="true">plot of the polar curve$ r=1-a()$</figcaption>
 </figure>
-<p>###Exercise</p>
+<h3 id="exercise-3">Exercise</h3>
 <p>The set of points defined by <span class="math display">\[y^{2} (y^{2}-a^{2})=x^{2}(x^{2}-b^{2})\]</span> are called the Devil’s curve. Let <span class="math inline">\(b=1\)</span>, and let <span class="math inline">\(a\)</span> range from 0.1 to 2.1 in an animated plot.</p>
 <h2 id="three-dimensional-plots">Three Dimensional Plots</h2>
 <p>Maple also handles some plots in three dimensions. This is just a few examples. Take a look at the Help Browser for more information on these.</p>
