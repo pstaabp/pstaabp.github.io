@@ -1,5 +1,6 @@
 ---
 title: This is a test
+layout: post
 ---
 
 ### A test
