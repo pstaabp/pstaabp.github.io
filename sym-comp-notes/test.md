@@ -6,3 +6,17 @@ layout: test
 ### A test
 
 \[ \int x^2 \, dx \]
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [ ['$', '$'] ],   // start/end delimiter pairs for in-line math
+    displayMath: [ ['$$','$$'], ['\[','\]'] ], // start/end delimiter pairs for display math
+    processEscapes: true,         // use \$ to produce a literal dollar sign
+    tags: 'ams'                   // or 'ams' or 'all'
+  }
+};
+</script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
