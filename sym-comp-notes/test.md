@@ -1,11 +1,8 @@
 ---
 title: This is a test
-layout: post
+layout: test
 ---
 
 ### A test
 
 \[ \int x^2 \, dx \]
-
-
-{{ include mathjax.html }}
