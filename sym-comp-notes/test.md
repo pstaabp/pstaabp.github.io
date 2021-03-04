@@ -7,7 +7,7 @@ layout: post
 
 \[ \int x^2 \, dx \]
 
-<script>
+<!--<script>
 MathJax = {
   tex: {
     inlineMath: [ ['$', '$'] ],   // start/end delimiter pairs for in-line math
@@ -19,4 +19,6 @@ MathJax = {
 </script>
 <script id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script>
+</script> -->
+
+{{ include mathjax.html }}
