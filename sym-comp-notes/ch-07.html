@@ -523,6 +523,12 @@ legend(&quot;x^2+y^2==1&quot;,&quot;tangent line&quot;)</code></pre>
 <figure>
 <img src="images/ch07/plot15.png" alt="plot of a circle with its tangent line" /><figcaption aria-hidden="true">plot of a circle with its tangent line</figcaption>
 </figure>
+<h4 id="plotting-a-line-segment-parametrically">Plotting a Line Segment parametrically</h4>
+<p>Often it is nice to plot a line segment. Consider the line segment between points <span class="math display">\[P(x_1,y_1) \qquad\text{and}\qquad Q(x_2,y_1)\]</span> one way to do this is to find the line between these and the plot the line only on the values of x that are value.</p>
+<p>There are a couple of problems with this: 1. You’d have to find the slope of the line. Even though this isn’t too hard, it’s a calculation that would need to happen. 1. If the two points have the same <span class="math inline">\(x\)</span>-coordinate, then the slope isn’t defined and you couldn’t do it.</p>
+<p>Instead, we’re going to define the line segment using a paramtric curve as: <span class="math display">\[ x(t)  =  x_2 t + (1-t) x_1 \qquad y(t) = y_2 t + (1-t) y_1\]</span></p>
+<p>In short, this works because when <span class="math inline">\(t=0\)</span>, then <span class="math inline">\(x(0) = x_2 \cdot (0) + 1 \cdot x_1 = x_1\)</span> and <span class="math inline">\(y(0) = y_2 \cdot (0) + 1 \cdot y_1 = y_1\)</span>. Similarly, when <span class="math inline">\(t=1\)</span>, <span class="math inline">\(x(1)=x_2\)</span> and <span class="math inline">\(y(1)=y_2\)</span>, so if we plot this parametrically for <span class="math inline">\(0 \leq t \leq 1\)</span>, then we get all the points on line between <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span>.</p>
+<p>An example plotted would be the point between <span class="math inline">\((-2,1)\)</span> and <span class="math inline">\((3,4)\)</span> would be the parametric curve: <span class="math display">\[ x(t) = 3 t + (-2)(1-t) \qquad y(t) = 4 t + 1(1-t) \]</span></p>
 <h2 id="polar-plots">Polar Plots</h2>
 <p>It is often that one will use polar coordinates to create a plot. Here are a few examples where this is helpful. If a function is written in polar coordinates, then it is written in the form <span class="math inline">\(r=f(\theta)\)</span>.</p>
 <p>This is a specific form of a parametric curve with the form: <span class="math display">\[x=f(\theta) \cos \theta \qquad y=f(\theta)\sin \theta\]</span></p>
@@ -591,8 +597,13 @@ ylim([-2 6])
 axis equal
 set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
 playAnimation</code></pre>
-<p>where primarily the <code>fanimator</code> function is the important thing here. The arguments of this are * plotting function handle. Any of the plotting functions in Matlab are valid here. Just remember, you need a handle, that is, put a <code>@</code> in front. * The next two arguments are the plotting arguments. In this case, the function and the plotting range.<br />
-* The last two argument are the options that set the values of <span class="math inline">\(t\)</span> (by default)</p>
+<p>where primarily the <code>fanimator</code> function is the important thing here. The arguments of this are</p>
+<ul>
+<li>plotting function handle. Any of the plotting functions in Matlab are valid here. Just remember, you need a handle, that is, put a <code>@</code> in front.</li>
+<li>The next two arguments are the plotting arguments. In this case, the function and the plotting range.<br />
+</li>
+<li>The last two argument are the options that set the values of <span class="math inline">\(t\)</span> (by default)</li>
+</ul>
 <p>Also, the command <code>playAnimation</code> simply just plays the animation.</p>
 <p>The following animation is the result:</p>
 <figure>
@@ -636,7 +647,7 @@ axis equal
 set(gca, &#39;XAxisLocation&#39;, &#39;origin&#39;, &#39;YAxisLocation&#39;, &#39;origin&#39;)
 playAnimation</code></pre>
 <figure>
-<img src="images/ch07/animation04.gif" alt="plot of the polar curve$ r=1-a()$" /><figcaption aria-hidden="true">plot of the polar curve$ r=1-a()$</figcaption>
+<img src="images/ch07/animation04.gif" alt="plot of the polar curve r=1-a\sin(\theta)" /><figcaption aria-hidden="true">plot of the polar curve <span class="math inline">\(r=1-a\sin(\theta)\)</span></figcaption>
 </figure>
 <h3 id="exercise-3">Exercise</h3>
 <p>The set of points defined by <span class="math display">\[y^{2} (y^{2}-a^{2})=x^{2}(x^{2}-b^{2})\]</span> are called the Devil’s curve. Let <span class="math inline">\(b=1\)</span>, and let <span class="math inline">\(a\)</span> range from 0.1 to 2.1 in an animated plot.</p>
@@ -671,7 +682,7 @@ fimplicit3(x+2*y+3*z==1)
 hold off
 daspect([1 1 1])
 view([-99.57 27.87])
-exportgraphics(fig,&quot;/Users/pstaab/code/pstaabp.github.io/sym-comp-notes/images/ch07/plot28.png&quot;)</code></pre>
+plot28.png&quot;)</code></pre>
 <p>where the <code>view([-99.57 27.87])</code> line was created when rotating and inserted. The resulting plot is: <img src="images/ch07/plot28.png" alt="plot of an ellipsoid and a Plane" /></p>
 <h3 id="vector-field-plots">Vector Field plots</h3>
 <p>A basic plot of the field <span class="math inline">\(\textbf{F} = y \hat{i}-x \hat{j}\)</span> is</p>
