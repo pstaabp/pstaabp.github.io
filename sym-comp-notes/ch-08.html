@@ -388,18 +388,18 @@ solve(df(x)=0)</code></pre>
 <figure>
 <img src="images/ch08/plot08.png" alt="Plot of the function g" /><figcaption aria-hidden="true">Plot of the function <span class="math inline">\(g\)</span></figcaption>
 </figure>
-<p>How do we know if this is correct. A little knowledge of a function with <span class="math inline">\(x^{5}\)</span> as the leading term means that it could be right because it may look like <span class="math inline">\(x^{3}\)</span>, but it’s hard to tell. Let’s check for critical points.</p>
+<p>How do we know if this is correct? A little knowledge of a function with <span class="math inline">\(x^{5}\)</span> as the leading term means that it could be right because it may look like <span class="math inline">\(x^{3}\)</span>, but it’s hard to tell. Let’s check for critical points.</p>
 <pre><code>dg(x) = diff(g(x),x)
 crit_pts = solve(dg(x)==0)</code></pre>
 <p>results in <span class="math display">\[0, 0, \frac{\sqrt{15}}{500}, -\frac{\sqrt{15}}{500}\]</span> and then making this a decimal approximation</p>
 <pre><code>double(crit_pts)</code></pre>
-<p>and the result is <span class="math display">\[[0 0 0.0077 -0.0077]\]</span> so the critical points are not visible on the previous plot. In this case, if we change the plotting window using</p>
-<pre><code>plot(g(x), x = -0.011..0.011)</code></pre>
+<p>and the result is <span class="math display">\[\left[\begin{array}{rrrr}0 &amp; 0 &amp; 0.0077 &amp;  -0.0077\end{array}\right]\]</span> so the critical points are not visible on the previous plot. In this case, if we change the plotting window using</p>
+<pre><code>fplot(g(x), [-0.011 0.011])</code></pre>
 <p>we get the plot</p>
 <figure>
 <img src="images/ch08/plot09.png" alt="Plot of g with a better plotting window" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(g\)</span> with a better plotting window</figcaption>
 </figure>
-<p>###One more example</p>
+<h3 id="one-more-example">One more example</h3>
 <p>Lastly, let’s look at the plot of <span class="math display">\[h(x)=\frac{1}{x^{8}}-200000000\frac{1}{x^{4}}\]</span> where the standard plot looks like:</p>
 <figure>
 <img src="images/ch08/plot10.png" alt="Plot of the function h" /><figcaption aria-hidden="true">Plot of the function <span class="math inline">\(h\)</span></figcaption>
@@ -408,12 +408,25 @@ crit_pts = solve(dg(x)==0)</code></pre>
 <p>Let’s start looking for the <span class="math inline">\(x\)</span>-intercepts.</p>
 <pre><code>[num,den] = numden(h(x))
 vpasolve(num==0)</code></pre>
-<p>where we have used <code>vpasolve</code> because an approximate location is sufficient and the function is 0 where the numerator is 0. The result is <span class="math display">\[-0.008408964153, 0.008408964153\]</span> and there were two others that are imaginary.</p>
+<p>where we have used <code>vpasolve</code> because an approximate location is sufficient and the function is 0 where the numerator is 0. The result is <span class="math display">\[\left(\begin{array}{c}
+-0.0084089641525371454303112547623321\\
+0.0084089641525371454303112547623321\\
+-0.0084089641525371454303112547623321\,\mathrm{i}\\
+0.0084089641525371454303112547623321\,\mathrm{i}
+\end{array}\right)
+\]</span> and there were two others that are imaginary.</p>
 <p>The critical points:</p>
-<pre><code>evalf(solve(h&#39;(x)=0))</code></pre>
-<p>results in <span class="math display">\[0.010 -0.0100, 0.0100i, -0.0100i\]</span> where the last two are imaginary.</p>
+<pre><code>dh(x) = diff(h(x),x)
+vpasolve(dh(x)==0)</code></pre>
+<p>results in <span class="math display">\[\left(\begin{array}{c}
+-0.01\\
+0.01\\
+-0.01\,\mathrm{i}\\
+0.01\,\mathrm{i}
+\end{array}\right)
+\]</span> where the last two are imaginary.</p>
 <p>If we plot to include these points,</p>
-<pre><code>plot(h(x),x=-0.011..0.011)</code></pre>
+<pre><code>fplot(h(x),[-0.012 0.012])</code></pre>
 <p>we get:</p>
 <p><img src="images/ch08/plot11.png" alt="Another plot of h" /> also I don’t see any of the critical points. Notice the y range on this is HUGE.</p>
 <p>Next, let’s change the vertical range. We want to make sure that we are including the <span class="math inline">\(y\)</span>-values of the critical points.</p>
