@@ -152,7 +152,7 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 9: Integral Calculus</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
+<p><a href="ch-08.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-10.html">Next chapter</a></p>
 <p>Naturally, Matlab and most CAS find antiderviatives. There are a few ways to do this. If we want the antiderivative of a function like <span class="math inline">\(x^{2}\)</span>, then we can type:</p>
 <pre><code>syms x
 int(x^2,x)</code></pre>
@@ -171,7 +171,7 @@ int(x^2,x)</code></pre>
 <p>You can find definite integrals also with the <code>int</code> command. To enter <span class="math inline">\(\displaystyle \int_0^{1} x^{2} \, dx\)</span>, type</p>
 <pre><code>int(x^2,x,[0,1])</code></pre>
 <p>and it will return <span class="math inline">\(\frac{1}{3}\)</span>.</p>
-<h4 id="exercise">Exercise</h4>
+<h3 id="exercise">Exercise</h3>
 <p>Try the following:</p>
 <ul>
 <li><span class="math inline">\(\displaystyle \int_0^{\pi/2} \sin x \, dx\)</span></li>
@@ -189,7 +189,7 @@ int(x^2,x)</code></pre>
 <pre><code>syms b
 limit(F(b)-F(0),b,inf)</code></pre>
 <p>returns 1.</p>
-<p>###Exercise</p>
+<h3 id="exercise-1">Exercise</h3>
 <p>Find the following:</p>
 <ul>
 <li><span class="math inline">\(\displaystyle \int_1^{\infty} \frac{1}{x} \, dx\)</span></li>
@@ -204,24 +204,67 @@ limit(F(b)-F(0),b,inf)</code></pre>
 \int_a^{b} f(x) \,dx={\lim_{\Delta x \rightarrow 0}}\sum_{i=1}^{N} f(x_i^{\star}) \Delta x
 \]</span></p>
 <p>where <span class="math inline">\(\Delta x=(b-a)/N\)</span> and <span class="math inline">\(x_i^{\star}\)</span> is a number in the ith subinterval. Generally, <span class="math inline">\(x_i^{\star}\)</span> can be the left endpoint, the right end point, the mid point or a value at the minimum or maximum of the function in the subinterval.</p>
-<p>Maple allows us to visualize all of these. If we load the <code>Student[Caclulus1]</code> package, then</p>
-<pre><code>RiemannSum(1+x^2,x=0..1,output=plot)</code></pre>
-<p>will return the following plot: <img src="images/ch09/plot02.png" alt="Plot of x^{2}+1 and a Riemann Sum" /></p>
-<p>Take a look at the options for the <code>RiemannSum</code> command for other options.</p>
-<p>###Exercises:</p>
+<p>Matlab doesn’t have this built-in, but here’s a function that will plot the function and the rectangles:</p>
+<pre><code>function riemannSum(f,a,b,options)
+    arguments
+        f function_handle
+        a (1,1) {mustBeNumeric}
+        b (1,1) {mustBeNumeric}
+        options.n (1,1) {mustBePositive,mustBeInteger} = 10
+        options.style {mustBeMember(options.style,[&quot;left&quot;,&quot;midpoint&quot;,&quot;right&quot;])} = &quot;midpoint&quot;
+        options.output {mustBeMember(options.output,[&quot;value&quot;,&quot;plot&quot;])} = &quot;plot&quot;
+    end
+  dx = (b-a)/options.n;
+  if strcmp(options.style,&#39;left&#39;)
+    xval = linspace(a,b-dx,options.n);
+    x = xval;
+  elseif strcmp(options.style, &#39;right&#39;)
+    xval = linspace(a+dx,b,options.n);
+    x = xval-dx;
+  else
+    xval = linspace(a+0.5*dx,b-0.5*dx,options.n);
+    x = xval-0.5*dx;
+  end
+  y =arrayfun(f,xval);
+  
+  if strcmp(options.output,&#39;plot&#39;)
+    g = bar(x,y,&#39;histc&#39;); % Moves labels to the left
+    g.FaceColor = &#39;none&#39;;    % Changes the fill of bars
+    g.EdgeColor = &#39;b&#39;;       % Changes edge color of bars
+    hold on
+    fplot(f,[a b]);
+    hold off
+  else
+    dx*sum(y)
+  end
+end</code></pre>
+<p>and remember to put this at the bottom of your live script to use it.</p>
+<p>The above plot was made with</p>
+<pre><code>riemannSum(@(x) 1+x^2,0,2,&#39;style&#39;,&#39;left&#39;,&#39;n&#39;,10)</code></pre>
+<p>and if we want to use the right endpoints then:</p>
+<pre><code>riemannSum(@(x) 1+x^2,0,2,&#39;style&#39;,&#39;right&#39;,&#39;n&#39;,10)</code></pre>
+<p>which returns: <img src="images/ch09/plot02.png" alt="Plot of x^{2}+1 and a Riemann Sum" /></p>
+<p>and midpoints can be found using:</p>
+<pre><code>riemannSum(@(x) 1+x^2,0,2,&#39;style&#39;,&#39;midpoint&#39;,&#39;n&#39;,10)</code></pre>
+<p>will return the following plot: <img src="images/ch09/plot03.png" alt="Plot of x^{2}+1 and a Riemann Sum" /></p>
+<p>You can also get the value of the Riemann sum from the same function by use the ‘output’,‘value’ options, like</p>
+<pre><code>riemannSum(@(x) 1+x^2,0,2,&#39;style&#39;,&#39;left&#39;,&#39;n&#39;,10,&#39;output&#39;,&#39;value&#39;)</code></pre>
+<p>which returns 4.2800, and this is the area of the rectangles for the left Riemann sum.</p>
+<h3 id="exercises">Exercises:</h3>
 <ol type="1">
 <li><p>Find the Riemann sum for 15 subintervals for <span class="math inline">\(f(x)=\sin x\)</span> on <span class="math inline">\([0,1]\)</span> using the left, right and midpoints.</p></li>
 <li><p>Find the exact answer for the area (using the definite integral.)</p></li>
 </ol>
 <h2 id="numerical-integration">Numerical Integration</h2>
 <p>As we have mentioned above often it is impossible to find the value of an integral or that a new function is defined to be the antiderivative (like the error function). However, it’s fairly clear that for many functions, that the area under the curve is well defined and we should be able to find an answer or at least an approximate answer.</p>
-<p>For example, what if we want to find the area under <span class="math inline">\(e^{-x^{2}}\)</span> on the interval <span class="math inline">\([0,1]\)</span>. From a plot: <img src="images/ch09/plot03.png" alt="Plot of e^{-x^{2}} on the interval [0,1]" /> it appears to have an answer is probably between 0.5 and 1.</p>
+<p>For example, what if we want to find the area under <span class="math inline">\(e^{-x^{2}}\)</span> on the interval <span class="math inline">\([0,1]\)</span>. From a plot: <img src="images/ch09/plot04.png" alt="Plot of e^{-x^{2}} on the interval [0,1]" /> it appears to have an answer is probably between 0.5 and 1.</p>
 <p>One way to find an approximate answer would be to use the Riemann sum. For example,</p>
-<pre><code>RiemannSum(e^(-x^2),x=0..1)</code></pre>
-<p>returns an algebraic expression and can be approximated using <code>evalf</code> to 0.74713 which is an approximation using midpoints and 10 subintervals.</p>
+<pre><code>riemannSum(@(x) exp(x^2),0,1,&#39;style&#39;,&#39;midpoint&#39;,&#39;n&#39;,10,&#39;output&#39;,&#39;value&#39;)
+</code></pre>
+<p>and this returns 0.7471</p>
 <p>Recall that in the limit as the number of subintervals goes to <span class="math inline">\(\infty\)</span> that the approximation equals the actual area, so this method can lead to better approximation, however there are better techniques.</p>
-<p>###Trapezoid Method</p>
-<p>Instead of approximating the area with rectangles, we can use trapezoids to do this. A plot of the approximate integral of <span class="math inline">\(\sin x\)</span> on the interval <span class="math inline">\([0,\pi]\)</span> is given by <img src="images/ch08/plot04.png" alt="Plot of the trapezoid approximation of \sin x on [0,\pi]" /></p>
+<h3 id="trapezoid-method">Trapezoid Method</h3>
+<p>Instead of approximating the area with rectangles, we can use trapezoids to do this. A plot of the approximate integral of <span class="math inline">\(\sin x\)</span> on the interval <span class="math inline">\([0,\pi]\)</span> is given by <img src="images/ch09/plot05.png" alt="Plot of the trapezoid approximation of \sin x on [0,\pi]" /></p>
 <p>The basic part of the trapezoid method is to use the area of a trapezoid on an interval with width <span class="math inline">\(h\)</span>. The area of one of the trapezoids is</p>
 <p><span class="math display">\[A_i = \frac{1}{2}(f(x_i)+f(x_{i+1})) h\]</span></p>
 <p>and then a full approximation will be the sum of these: <span class="math display">\[A={\sum_{i=1}^{n-1}} \frac{h}{2}(f(x_i)+f(x\_{i+1}))\]</span></p>
@@ -229,19 +272,41 @@ limit(F(b)-F(0),b,inf)</code></pre>
 <p><span class="math display">\[A=\frac{h}{2}\left( f(x_0) + 2\sum_{i=1}^{n-1} f(x_i) + f(x_n)\right)\]</span></p>
 <p>As an example above, if we use 4 subintervals, the approximation is <span class="math display">\[A=\frac{h}{2}\left(f(0)+2f(\pi/4)+2f(\pi/2)+2f(3\pi/4)+f(\pi)\right)\]</span> where there are 2’s in front of most of the <span class="math inline">\(f\)</span>’s is that the interior ones are counted twice.<br />
 <span class="math display">\[A=\frac{\pi/4}{2}\left(0+2\frac{\sqrt{2}}{2} + 2(1) + 2\frac{\sqrt{2}}{2} + 0 \right)\]</span> <span class="math display">\[A= \frac{\pi}{8}\left(2\sqrt{2}+2\right) \approx 1.896\]</span></p>
-<p>We can do this in Maple using the <code>ApproximateInt</code> command which has numerous options. The way to get the plot above is:</p>
-<pre><code>ApproximateInt(sin(x), x = 0 .. Pi, output = plot, method = trapezoid, partition = 4, boxoptions = [filled = [color = pink, transparency = .5]])</code></pre>
+<p>We can do this in Matlab using the <code>trapezoid</code> function that we defined here:</p>
+<pre><code>function output = trapezoid(f,a,b,options)
+    arguments
+        f function_handle
+        a (1,1) {mustBeNumeric}
+        b (1,1) {mustBeNumeric}
+        options.n (1,1) {mustBePositive,mustBeInteger} = 10
+        options.output {mustBeMember(options.output,[&quot;value&quot;,&quot;plot&quot;])} = &quot;plot&quot;
+    end
+  dx = (b-a)/options.n;
+  xvals = linspace(a,b,options.n+1);
+  fvals = arrayfun(@(x) f(x),xvals);
+  if strcmp(options.output,&#39;plot&#39;)
+    fplot(f,[a b])
+    hold on
+    plot(xvals,fvals,&#39;red&#39;)
+    for i=1:length(xvals)
+      plot([xvals(i) xvals(i)],[0 fvals(i)],&#39;red&#39;)
+    end
+    hold off
+  else
+    output = 0.5*dx*(sum(fvals(1:options.n))+sum(fvals(2:options.n+1)));  
+  end
+end</code></pre>
+<p>The way to get the plot above is:</p>
+<pre><code>trapezoid(@(x) f(x),0,pi,&#39;n&#39;,4)</code></pre>
 <p>and it is helpful to get the approximate value by:</p>
-<pre><code>ApproximateInt(sin(x), x = 0 .. Pi, output = sum, method = trapezoid, partition = 4)</code></pre>
+<pre><code>val = trapezoid(@(x) f(x),0,pi,&#39;n&#39;,4,&#39;output&#39;,&#39;value&#39;)</code></pre>
 <p>which returns:</p>
-<p><span class="math display">\[\frac{\pi}{8} \left(\sum_{i=0}^{3}\sin \left( \frac{1}{4}\,i\pi  \right) +\sin \left(\frac{1}{4}\, \left( i+1 \right) \pi  \right)\right)\]</span></p>
-<p>and if we want to evaluate this, type <code>value((#))</code> on the line number above to return: <span class="math display">\[\frac{\pi}{8}\left(2\sqrt{2}+2\right)\]</span> and recall use <code>evalf((#))</code> to get 1.896118.</p>
-<p>If you just need the value of the integral using the trapezoid method, type</p>
-<pre><code>ApproximateInt(sin(x), x = 0 .. Pi, method = trapezoid, partition = 4)</code></pre>
-<p>and then use <code>evalf</code>.</p>
-<p>###Exercise</p>
+<p><span class="math display">\[\frac{\pi \,{\left(2\,\sqrt{2}+2\right)}}{8}\]</span> the same as we did by hand above. To get a decimal value of this:</p>
+<pre><code>double(val)</code></pre>
+<p>returns 1.8961.</p>
+<h3 id="exercise-2">Exercise</h3>
 <p>Find <span class="math inline">\(\int_0^{1} {\rm e}^{-x^{2}}\,dx\)</span> using the trapezoid method for <span class="math inline">\(4, 10\)</span> and <span class="math inline">\(20\)</span> points.</p>
-<p>###Simpson’s Rule</p>
+<h2 id="simpsons-rule">Simpson’s Rule</h2>
 <p>The trapezoid rule uses straight lines to approximate the function and then integrates the line (or finds the area of the trapezoid). To find a better approximation if we use a quadratic function (parabola) to esimate the function.</p>
 <p>For example, if we use the function <span class="math inline">\(f(x)=x {\rm e}^{-x}\)</span>, on the interval <span class="math inline">\(0 \leq x \leq 2\)</span>, we find a quadratic of the form: <span class="math display">\[Q(x)=a + b x + c x^{2}\]</span> that passes through the points <span class="math inline">\((0,f(0))\)</span>, <span class="math inline">\((1,f(1))\)</span>, <span class="math inline">\((2,f(2))\)</span>. A plot of the function and the points is: <img src="images/ch08/plot05.png" alt="Plot of f(x) and the point x=0,1,2" /></p>
 <p>We then find the quadratic (meaning we find the constants <span class="math inline">\(a, b\)</span> and <span class="math inline">\(c\)</span> of <span class="math inline">\(Q(x)\)</span>) or</p>
@@ -253,14 +318,14 @@ a(2)+b\frac{4}{2} + c\frac{8}{3}\]</span> and substituting the values of <span c
 <p>and in this case, the actual value of the integral <span class="math inline">\(A^{\star}\)</span> is <span class="math display">\[A^{\star}=\int_0^{2} f(x) \,dx = 1-3{\rm e}^{-2} \approx 0.59399\]</span></p>
 <p>###Exercise</p>
 <p>Find <span class="math inline">\(\int_0^{1} {\rm e}^{-x^{2}} \,dx\)</span> using Simpson’s rule for <span class="math inline">\(n=4, 10\)</span> and 20 subintervals.</p>
-<p>###Simpson’s Rule in Maple</p>
+<h3 id="simpsons-rule-in-maple">Simpson’s Rule in Maple</h3>
 <p>The <code>ApproximateInt</code> command in Maple is similar to that using the trapezoid rule, by just using the <code>method=simpson</code> option. For example,</p>
 <pre><code>ApproximateInt(f(x), x = 0 .. 2, output = plot, method = simpson, partition = 1, boxoptions = [filled = [color = pink, transparency = .5]])</code></pre>
 <p>does what we saw above and yields the plot: <img src="images/ch08/plot07.png" alt="Simpson’s rule plot of f(x)=x{\rm e}^{-x}" /></p>
 <p>and to find the value of the approximation, use</p>
 <pre><code>ApproximateInt(f(x), x = 0 .. 2, partition = 1, output = sum, method = simpson)</code></pre>
 <p>then <code>value((#))</code> of the line above and you will get: <span class="math display">\[\frac{4}{3}{\rm e}^{-1} + \frac{2}{3}{\rm e}^{-2}\]</span></p>
-<p>###General Form of Simpson’s Rule</p>
+<h3 id="general-form-of-simpsons-rule">General Form of Simpson’s Rule</h3>
 <p>The following is a derivation of Simpson’s rule for <span class="math inline">\(n\)</span> subintervals. First, we are going to going to consider just 1 subinterval. Let the function we are trying to integrate be <span class="math inline">\(f(x)\)</span> on the interval <span class="math inline">\([a,b]\)</span>. We are going to call <span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_2\)</span> the endpoints of this interval and <span class="math inline">\(x_1\)</span>, the midpoint or <span class="math display">\[x_1=\frac{a+b}{2}\]</span></p>
 <p>Recall above that we sought a quadratic that passes through these points. If we define:</p>
 <pre><code>Q:=x-&gt;c0+c1*x+c2*x^2</code></pre>
@@ -275,7 +340,7 @@ a(2)+b\frac{4}{2} + c\frac{8}{3}\]</span> and substituting the values of <span c
 <p>and this is still a little bit of a mess because we have the relationship that <span class="math inline">\(b=a+h\)</span> and if we substitute this in</p>
 <pre><code>simplify(subs(b=a+h,(#)))</code></pre>
 <p>for the line number above, then the result can be written: <span class="math display">\[I =\frac{h}{6}\left(f(a)+4f\left(a+\frac{h}{2}\right)+f(a+h)\right)\]</span></p>
-<p>###Simpson’s Rule for <span class="math inline">\(n\)</span> subintervals:</p>
+<h3 id="simpsons-rule-for-n-subintervals">Simpson’s Rule for <span class="math inline">\(n\)</span> subintervals:</h3>
 <p>If we break up the interval <span class="math inline">\([a,b]\)</span> into <span class="math inline">\(n\)</span> subintervals, we can write: <span class="math display">\[x_i = a+\frac{ih}{2}\qquad\text{where}\qquad h=\frac{b-a}{n}\]</span> then <span class="math display">\[I =\frac{h}{6}\left(f(x\_0) + 4 f(x\_1) + f(x\_2) + f(x\_2) + 4 f(x\_3) + f(x\_4)+ \cdots + f(x\_{2n-2})+4f(x\_{2n-1})+f(x\_{2n})\right)\]</span> or <span class="math display">\[I = \frac{h}{6} \left(f(x\_0)+ f(x\_{2n}) + 4 \sum_{k=1}^{n} f(x\_{2k-1}) + 2\sum\_{k=1}^{n+1} x\_{2k} \right)\]</span></p>
 <p>###Example</p>
 <p>Use the formula above to approximate <span class="math inline">\(\int_0^{2} x{\rm e}^{-x}\)</span> using <span class="math inline">\(n=4\)</span> subintervals.</p>
@@ -285,7 +350,7 @@ a(2)+b\frac{4}{2} + c\frac{8}{3}\]</span> and substituting the values of <span c
 }+5\,{ {\rm e}^{-5/4}}+3\,{ {\rm e}^{-3/2}}+7\,{ {\rm e}^{-7/4}}+2\,{
 {\rm e}^{-2}}
 \right)\approx 0.59393\]</span></p>
-<p>###Simpson’s 3/8-rule and Boole’s Rule</p>
+<h3 id="simpsons-38-rule-and-booles-rule">Simpson’s 3/8-rule and Boole’s Rule</h3>
 <p>If a cubic function is used to approximate the function, then the approximate method becomes Simpson’’s 3/8 rule and if a quartic is used is called Boole’s Rule.</p>
 <p>The following command</p>
 <pre><code>ApproximateInt(x*exp(-x), x = 0 .. 2, partition = 1, method = simpson[3/8], output = plot, boxoptions = [filled = [color = pink, transparency = .5]])</code></pre>
@@ -295,7 +360,7 @@ a(2)+b\frac{4}{2} + c\frac{8}{3}\]</span> and substituting the values of <span c
 <pre><code>ApproximateInt(x*exp(-x), x = 0 .. 2, partition = 1, method = boole, output = plot, boxoptions = [filled = [color = pink, transparency = .5]])</code></pre>
 <p>produces the following plot: <img src="images/ch08/plot09.png" alt="Approximating \int_0^{2} x{\rm e}^{-x} \, dx using Simpson’s 3/8 rule" /></p>
 <p>which shows that the quartic approximation is very good for this function.</p>
-<p>###Example</p>
+<h3 id="example">Example</h3>
 <p>Reproduce <span class="math inline">\(\int_0^{2} x {\rm e}^{-x} \,dx\)</span> using 4 subintervals using Simpson’s 3/8-rule and Boole’s Rule</p>
 <pre><code>evalf(ApproximateInt(x*e^(-x),x=0..2,partition=4,method=simpson[3/8]))</code></pre>
 <p>returns <code>0.5939668110</code> and we can check the error by typing:</p>
@@ -315,7 +380,8 @@ a(2)+b\frac{4}{2} + c\frac{8}{3}\]</span> and substituting the values of <span c
 <p>and the result is 0.7468241328. If we want more digits of accuracy, we can type:</p>
 <pre><code>int(exp(-x^2), x = 0 .. 1, numeric = true, digits = 20)</code></pre>
 <p>which will return the answer to 20 digits. (Pretty cool!!)</p>
-<p>###Exercise</p>
+<h3 id="exercise-3">Exercise</h3>
 <p>Evaluate <span class="math inline">\(\int_0^{2} \sqrt{4-x^{2}}\,dx\)</span> to 20 digits. Is that what you expected? Why?</p>
+<p><a href="ch-08.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-10.html">Next chapter</a></p>
 </body>
 </html>
