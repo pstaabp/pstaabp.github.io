@@ -162,7 +162,7 @@
 <p>To help find the appropriate integral to use we can solve for the intersection points:</p>
 <pre><code>solve(x^2=4-x^2,x)</code></pre>
 <p>which returns <span class="math inline">\(\sqrt{2},-\sqrt{2}\)</span>. So the area is the top curve in this interval (<span class="math inline">\(4-x^{2}\)</span>) minus the other one on this interval: <span class="math display">\[\int_{-\sqrt{2}}^{\sqrt{2}} (4-x^{2}-x^{2}) \, dx\]</span> and Maple returns <span class="math display">\[\frac{16}{3}\sqrt{2}\]</span> and if we use <code>evalf</code> to find the decimal approximation of about 7.54, which looks about right from the plot.</p>
-<p>###Another Example</p>
+<h3 id="another-example">Another Example</h3>
 <p>Find the area bounded by the curves <span class="math inline">\(x=y^{2}−1\)</span> and <span class="math inline">\(x=y+1\)</span>.</p>
 <p>Notice in this case these need to be plotted implicitly and you get the following plot:</p>
 <figure>
@@ -174,15 +174,15 @@
 <p>If we slice in the vertical direction, it would be require that we write the integral in a couple of pieces. Let <span class="math inline">\(A_1\)</span> be the area above that is bound by the curve <span class="math inline">\(x=y^{2}-1\)</span> and <span class="math inline">\(x=0\)</span>. Solving for <span class="math inline">\(y\)</span>, we get <span class="math inline">\(y=\pm\sqrt{x+1}\)</span> and the area would be <span class="math display">\[A_1 = 2 \int_{-1}^0 \sqrt{x+1} \, dx\]</span> which is <span class="math inline">\(4/3\)</span></p>
 <p>and then the rest of the sought after area is <span class="math display">\[A_2 = \int_0^{3} (\sqrt{x+1} - (x-1)) \,dx\]</span> which is <span class="math inline">\(19/6\)</span>. The total area that we’re looking for is <span class="math display">\[A_1 +A_2 = \frac{9}{2}\]</span></p>
 <p>An alternative way to tackle this is to slice this horizontally. The area can then be written: <span class="math display">\[\int_{-1}^{2} (y+1)-(y^{2}-1))\,dx\]</span> and the result is <span class="math inline">\(9/2\)</span>, just as above and easier to do.</p>
-<p>###Exercises</p>
+<h4 id="exercises">Exercises</h4>
 <ul>
 <li>The area between the curves <span class="math inline">\(y=x^{3}+7x^{2}+2x-37\)</span> and <span class="math inline">\(y=-2x^{2}-4x+19\)</span></li>
 <li>The area between the line <span class="math inline">\(x=1\)</span>, the curve <span class="math inline">\(y={\rm e}^{-x}\)</span> and the <span class="math inline">\(x\)</span>-axis.</li>
 </ul>
-<p>###Volumes of Revolution</p>
+<h3 id="volumes-of-revolution">Volumes of Revolution</h3>
 <p>Another standard application of integration is finding volumes. This will be a big topic in Multivariate Calculus, but in single variable Calculus, we can find volumes by revolving a curve <span class="math inline">\(y=f(x)\)</span> about an axis of revolution. Maple has some nice visualization tools to help understand this. These are located in the <code>Student[Calculus1]</code> package, so make sure that you load it.</p>
 <pre><code>with(Student[Calculus1]):</code></pre>
-<p>####Example</p>
+<h4 id="example">Example</h4>
 <p>Find the volume formed by rotated the region bound by <span class="math inline">\(y=(x-1)^{2}\)</span>, the <span class="math inline">\(x\)</span>-axis and the <span class="math inline">\(y\)</span>-axis, and rotating the region around the <span class="math inline">\(x\)</span>-axis.</p>
 <p>First plot the region in the <span class="math inline">\(xy\)</span>-plane:</p>
 <figure>
@@ -197,7 +197,7 @@
 <p>evaluates the same integral above with the same answer.</p>
 <p>Another interesting option is <code>output=animate</code> which will show either disks, washers or cylinders in an animated way. Try</p>
 <pre><code>VolumeOfRevolution((x-1)^2, x=0..1,output=animate)</code></pre>
-<p>####Example that uses cylinders</p>
+<h4 id="example-that-uses-cylinders">Example that uses cylinders</h4>
 <p>Find the volume of the solid of revolution that by rotating the region bounded by <span class="math inline">\(y=1-x\)</span>, <span class="math inline">\(y=1-x^{2}\)</span> in the first quadrant around the <span class="math inline">\(y\)</span>-axis.</p>
 <figure>
 <img src="images/ch09/plot05.png" alt="region for the example above" /><figcaption aria-hidden="true">region for the example above</figcaption>
@@ -209,7 +209,7 @@
 <figure>
 <img src="images/ch09/plot06.png" alt="Volume of revolution for the region above" /><figcaption aria-hidden="true">Volume of revolution for the region above</figcaption>
 </figure>
-<p>####Exercise</p>
+<h4 id="exercise">Exercise</h4>
 <ul>
 <li><p>Try to use the ouput=animation option on the example above.</p></li>
 <li><p>Find the volume formed by rotating the region bounded by <span class="math inline">\(y=\sqrt{x}\)</span> and <span class="math inline">\(y=x\)</span> about the line <span class="math inline">\(x=2\)</span>. (Hint: look at the <code>distancefromaxis</code> options)</p></li>
@@ -224,7 +224,7 @@
 <p>will give <span class="math display">\[\ln(y) + C_1 = x + C_2\]</span> (again, we need to put in the constants since Maple won’t do this for us). We can combine the two constants on the right side and call these <span class="math inline">\(C\)</span> or <span class="math display">\[\ln(y) = x + C\]</span> and solving for <span class="math inline">\(y\)</span> result in <span class="math display">\[y= {\rm e}^{x+C}\]</span></p>
 <p>We can do this all in one shot in Maple, by entering</p>
 <pre><code>solve(int(1/y,y)=int(1,x)+C,y)</code></pre>
-<p>###Solving a differential equation using <code>dsolve</code></p>
+<h3 id="solving-a-differential-equation-using-dsolve">Solving a differential equation using <code>dsolve</code></h3>
 <p>Lastly, we can let Maple solve the differential equation itself. If we type</p>
 <pre><code>dsolve(y&#39;(x)=y(x))</code></pre>
 <p>then Maple returns <span class="math display">\[y(x) = \\_ C1 {\rm e}^x\]</span></p>
@@ -241,7 +241,7 @@
 <p>We can let Maple do all this work for us via the <code>dsolve</code> command.</p>
 <pre><code>dsolve([y&#39;(x)=y(x)^2/x,y(1)=1])</code></pre>
 <p>spits out the result right away.</p>
-<p>###Exercise</p>
+<h4 id="exercise-1">Exercise</h4>
 <p>Solve the following differential equation <span class="math display">\[y&#39;=-\frac{x}{y}\]</span></p>
 <ol type="1">
 <li><p>First, by using separation of variables and going through all of the steps. Make sure that you include the integration constant.</p></li>
@@ -260,7 +260,7 @@
 <p>where the distance formula has been used. We can factor out <span class="math inline">\((x\_{i+1}-x\_i)^{2}\)</span></p>
 <p><span class="math display">\[L\_i = \sqrt{\left(1 +\frac{(f(x\_{i+1})-f(x\_i))^{2}}{(x\_{i+1}-x\_i)^{2}}\right)(x\_{i+1}-x\_i)^{2}}\]</span> and pulling the <span class="math inline">\((x\_{i+1}-x\_i)^{2}\)</span> term out of the square root, one gets: <span class="math display">\[L\_i = \sqrt{1 +\frac{(f(x\_{i+1})-f(x\_i))^{2}}{(x\_{i+1}-x\_i)^{2}}}(x\_{i+1}-x\_i)\]</span> or <span class="math display">\[L\_i = \sqrt{1 +\left(\frac{f(x\_{i+1})-f(x\_i)}{x\_{i+1}-x\_i}\right)^{2}}(x\_{i+1}-x\_i)\]</span></p>
 <p>Next, we sum up <span class="math inline">\(N\)</span> of these line segments and take the limit as <span class="math inline">\(N \rightarrow \infty\)</span> <span class="math display">\[L = \lim\_{N \rightarrow \infty}\sum\_{i=1}^N L\_i\]</span> or <span class="math display">\[L=\lim\_{N \rightarrow \infty}\sum\_{i=1}^N L\_i\sqrt{1 +\left(\frac{f(x\_{i+1})-f(x\_i)}{x\_{i+1}-x\_i}\right)^{2}}(x\_{i+1}-x\_i)\]</span> and as <span class="math inline">\(N \rightarrow \infty\)</span>, then <span class="math inline">\(x_{i+1}-x_i \rightarrow 0\)</span>, so the square term inside square root becomes <span class="math inline">\(f&#39;(x)\)</span>, so this can be written: <span class="math display">\[L=\int\_a^{b}\sqrt{1+(f&#39;(x))^{2}}\, dx\]</span></p>
-<p>###Example</p>
+<h4 id="example-1">Example</h4>
 <p>Find the arc length of <span class="math inline">\(y=x^{2}\)</span> on the interval <span class="math inline">\([0,1]\)</span>.</p>
 <p>This is <span class="math display">\[L=\int_0^{1} \sqrt{1+(2x)^{2}} \, dx\]</span></p>
 <p>and lettting Maple do this: <span class="math display">\[L=\frac{\sqrt{5}}{2}-\frac{1}{4}\ln(-2+\sqrt{5})\]</span></p>
@@ -268,19 +268,19 @@
 <p>There is also an <code>ArcLength</code> command in the <code>Student[Calculus1]</code> package. If you enter</p>
 <pre><code>ArcLength(x^2,x=0..1)</code></pre>
 <p>then Maple will return the same result as above. As with other commands like <code>ApproximateInt</code> and <code>RiemannSum</code>, therre are other output options. Check out <code>integral</code> and <code>plot</code> for example.</p>
-<p>###Exercise</p>
+<h4 id="exercise-2">Exercise</h4>
 <p>Find the circumference of a circle of radius 4 by 1) find the equation of the circle, 2) writing it as a function and 3) using the arc length formula or <code>ArcLength</code> command to find the result.</p>
 <h2 id="surface-area">Surface Area</h2>
 <p>Recall that if region in the plane is rotated about a line, it produces a volume and we can use the techniques explained above to find the volume it creates. Similarly, we can do the same for the surface area.</p>
 <p>If a function <span class="math inline">\(y=f(x)\)</span> on the line segment <span class="math inline">\(a \leq x \leq b\)</span> is rotated about the line <span class="math inline">\(y=0\)</span> (<span class="math inline">\(x\)</span>-axis) or the line <span class="math inline">\(x=0\)</span> (the <span class="math inline">\(y\)</span>-axis), then the surface area is given by <span class="math display">\[S=\int\_a^{b} 2 \pi r \sqrt{1+(f&#39;(x))^{2}} \, dx\]</span> where <span class="math inline">\(r=x\)</span> if rotating about the <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(r=f(x)\)</span> if rotating about the <span class="math inline">\(x\)</span>-axis.</p>
-<p>###Example</p>
+<h4 id="example-2">Example</h4>
 <p>Find the surface area found by taking the arc <span class="math inline">\(y=x^{2}\)</span> on <span class="math inline">\([0,1]\)</span> about the <span class="math inline">\(y\)</span>-axis.</p>
 <p><span class="math display">\[S=\int_0^{1} 2 \pi x \sqrt{1+(2x)^{2}} \, dx = \frac{\pi}{6} ( 5 \sqrt{5}-1)\]</span></p>
 <p>You can also use the command <code>SurfaceOfRevolution</code> to produce plots and other helpful output forms. For example, the surface of revolution above can be plotted as</p>
 <pre><code>SurfaceOfRevolution(x^2, x = 0..1, axis = vertical, output = plot)</code></pre>
 <p>where the <code>axis=vertical</code> is needed to rotate about the <span class="math inline">\(y\)</span>-axis. (The default is to rotate about the <span class="math inline">\(x\)</span>-axis.)</p>
 <p>and the result is <img src="images/ch09/plot07.png" alt="Surface of Revolution for y=x^{2}" /></p>
-<p>###Exercise</p>
+<h4 id="exercise-3">Exercise</h4>
 <p>Find the surface area of the sphere of radius 4 (see the above exercise) to get the function.</p>
 </body>
 </html>
