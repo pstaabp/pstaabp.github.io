@@ -158,7 +158,7 @@
 int(x^2,x)</code></pre>
 <p>which returns <span class="math inline">\(\dfrac{x^{3}}{3}\)</span> And note that there is no integration constant.</p>
 <p>Matlab has many standard integration techniques (subsitution, trig substitution, by parts, among others). For example, evaluating: <span class="math display">\[\int {\frac {x\cos \left( \sqrt {x^{2}+1} \right) }{\sqrt {x^{2}+1}}}\, dx\]</span> results in <span class="math inline">\(\sin(\sqrt{x^{2}+1})\)</span> (where subsitution has been used).</p>
-<p>Another example is the antiderivative of <span class="math inline">\(x^{7}{\rm e}^{2x}\)</span> which results in <span class="math display">\[\frac{{\mathrm{e}}^{2\,x} \,{\left(128\,x^7 -448\,x^6 +1344\,x^5 -3360\,x^4 +6720\,x^3 -10080\,x^2 +10080\,x-5040\right)}}{256}\]</span> in which the integration by parts formula has been applied 7 times.</p>
+<p>Another example is the antiderivative of <span class="math inline">\(x^{7}{\rm e}^{2x}\)</span> which results in <span class="math display">\[\frac{ {\mathrm{e}}^{2\,x} \,{\left(128\,x^7 -448\,x^6 +1344\,x^5 -3360\,x^4 +6720\,x^3 -10080\,x^2 +10080\,x-5040\right)}}{256}\]</span> in which the integration by parts formula has been applied 7 times.</p>
 <p>Other times, you might get strange results. If we find the antiderivative of <span class="math inline">\({\rm e}^{-x^{2}}\)</span>, Maple returns <span class="math display">\[\frac{\sqrt{\pi }\,\mathrm{erf}\left(x\right)}{2} \]</span></p>
 <p>What is this erf? Take a look in the Help Browser.</p>
 <p>Quite amazingly, very few functions have a nice antiderivative, where nice means that you can write the result as a algebraic combination of functions that we know from Precalc and Calculus. Instead, functions, like <code>erf</code> (otherwise known as the error function), are defined as solutions to a differential equation or as an antiderivative. Here’s a list of a few</p>
@@ -316,11 +316,11 @@ f(x) = exp(-x^2)
 s= solve([Q(0)==f(0),Q(1)==f(1),Q(2)==f(2)])</code></pre>
 <p>and the vales are stored in <code>s.a</code>, <code>s.b</code>, <code>s.c</code>.</p>
 <p>and returns <span class="math inline">\(1\)</span>,</p>
-<p><span class="math display">\[2\,{\mathrm{e}}^{-1} -\frac{{\mathrm{e}}^{-4} }{2}-\frac{3}{2}\]</span> and <span class="math display">\[\frac{{\mathrm{e}}^{-4} }{2}-{\mathrm{e}}^{-1} +\frac{1}{2}
+<p><span class="math display">\[2\,{\mathrm{e}}^{-1} -\frac{ {\mathrm{e}}^{-4} }{2}-\frac{3}{2}\]</span> and <span class="math display">\[\frac{ {\mathrm{e}}^{-4} }{2}-{\mathrm{e}}^{-1} +\frac{1}{2}
 \]</span></p>
 <p>and then a plot of the quadratic that passes through these points is: <img src="images/ch09/plot07.png" alt="Plot of f, Q and the points through which they pass" /></p>
 <p>To estimate the integral <span class="math inline">\(\int_0^{2} f(x)\,dx\)</span>, we instead find <span class="math display">\[A=\int_0^{2} Q(x)\,dx = \int_0^{2} (a + b x + cx^{2}) \,dx\]</span> <span class="math display">\[A= \left. ax+\frac{bx^{2}}{2} + \frac{cx^{3}}{3} \right|_0^{2} =
-a(2)+b\frac{4}{2} + c\frac{8}{3}\]</span> and substituting the values of <span class="math inline">\(a, b, c\)</span> in, <span class="math display">\[A = \frac{4\,{\mathrm{e}}^{-1} }{3}+\frac{{\mathrm{e}}^{-4} }{3}+\frac{1}{3}\approx 0.8299\]</span></p>
+a(2)+b\frac{4}{2} + c\frac{8}{3}\]</span> and substituting the values of <span class="math inline">\(a, b, c\)</span> in, <span class="math display">\[A = \frac{4\,{\mathrm{e}}^{-1} }{3}+\frac{ {\mathrm{e}}^{-4} }{3}+\frac{1}{3}\approx 0.8299\]</span></p>
 <h3 id="simpsons-rule-in-matlab">Simpson’s Rule in Matlab</h3>
 <p>Similar to above, we have the following function to plot and calculate simpson’s rule:</p>
 <pre><code>function output = simpson(f,a,b,options)
@@ -365,7 +365,7 @@ Q(x)=c0+c1*x+c2*x^2</code></pre>
 <pre><code>s=solve([Q(a)==f(a),Q((a+b)/2)==f((a+b)/2),Q(b)==f(b)],[c0,c1,c2])</code></pre>
 <p>You can look at the solution, but it’s pretty ugly and we don’t care what the coefficients of the quadratic is, we want to know what the integral is.</p>
 <pre><code>int(subs(Q(x),[c0 c1 c2],[s.c0 s.c1 s.c2]),x, [a b])</code></pre>
-<p>where we first substitute in the coefficients into the quadratic formula and then integrate. The result is <span class="math display">\[-\frac{{\left(a-b\right)}\,{\left(4\,f\left(\frac{a}{2}+\frac{b}{2}\right)+f\left(a\right)+f\left(b\right)\right)}}{6}
+<p>where we first substitute in the coefficients into the quadratic formula and then integrate. The result is <span class="math display">\[-\frac{ { \left(a-b\right)}\,{\left(4\,f\left(\frac{a}{2}+\frac{b}{2}\right)+f\left(a\right)+f\left(b\right)\right)}}{6}
 \]</span> which is pretty simple, however, we going to let <span class="math inline">\(b=a+h\)</span> and make this a bit cleaner.</p>
 <p><span class="math display">\[\frac{h\,{\left(f\left(a+h\right)+f\left(a\right)+4\,f\left(a+\frac{h}{2}\right)\right)}}{6}\]</span></p>
 <h3 id="simpsons-rule-for-n-subintervals">Simpson’s Rule for <span class="math inline">\(n\)</span> subintervals:</h3>

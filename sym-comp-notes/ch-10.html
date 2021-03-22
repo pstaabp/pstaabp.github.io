@@ -160,17 +160,19 @@
 <img src="images/ch10/plot01.png" alt="Plot of x^{2} and 4-x^{2}" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x^{2}\)</span> and <span class="math inline">\(4-x^{2}\)</span></figcaption>
 </figure>
 <p>To help find the appropriate integral to use we can solve for the intersection points:</p>
-<pre><code>solve(x^2=4-x^2,x)</code></pre>
-<p>which returns <span class="math inline">\(\sqrt{2},-\sqrt{2}\)</span>. So the area is the top curve in this interval (<span class="math inline">\(4-x^{2}\)</span>) minus the other one on this interval: <span class="math display">\[\int_{-\sqrt{2}}^{\sqrt{2}} (4-x^{2}-x^{2}) \, dx\]</span> and Maple returns <span class="math display">\[\frac{16}{3}\sqrt{2}\]</span> and if we use <code>evalf</code> to find the decimal approximation of about 7.54, which looks about right from the plot.</p>
+<pre><code>solve(f(x)==g(x))</code></pre>
+<p>which returns <span class="math inline">\(\sqrt{2},-\sqrt{2}\)</span>. So the area is the top curve in this interval (<span class="math inline">\(4-x^{2}\)</span>) minus the other one on this interval: <span class="math display">\[\int_{-\sqrt{2}}^{\sqrt{2}} (4-x^{2}-x^{2}) \, dx\]</span> and Matlab returns <span class="math display">\[\frac{16}{3}\sqrt{2}\]</span> and if we use <code>double(ans)</code> to find the decimal approximation of about 7.54, which looks about right from the plot.</p>
 <h3 id="another-example">Another Example</h3>
 <p>Find the area bounded by the curves <span class="math inline">\(x=y^{2}−1\)</span> and <span class="math inline">\(x=y+1\)</span>.</p>
 <p>Notice in this case these need to be plotted implicitly and you get the following plot:</p>
 <figure>
-<img src="images/ch09/plot02.png" alt="Plot of x=y^{2}−1 and x=y+1" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x=y^{2}−1\)</span> and <span class="math inline">\(x=y+1\)</span></figcaption>
+<img src="images/ch10/plot02.png" alt="Plot of x=y^{2}−1 and x=y+1" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(x=y^{2}−1\)</span> and <span class="math inline">\(x=y+1\)</span></figcaption>
 </figure>
 <p>Even though it seems clear from the plot of the intersection points, let’s make sure</p>
-<pre><code>solve([x=y^2-1,x=y+1])</code></pre>
-<p>returns <code>{x = 0, y = -1}, {x = 3, y = 2}</code> or the points <span class="math inline">\((0,-1)\)</span> and <span class="math inline">\((3,2)\)</span>.</p>
+<pre><code>s = solve([x==y^2-1,x==y+1])
+s.x
+s.y</code></pre>
+<p>returns the points <span class="math inline">\((0,-1)\)</span> and <span class="math inline">\((3,2)\)</span>.</p>
 <p>If we slice in the vertical direction, it would be require that we write the integral in a couple of pieces. Let <span class="math inline">\(A_1\)</span> be the area above that is bound by the curve <span class="math inline">\(x=y^{2}-1\)</span> and <span class="math inline">\(x=0\)</span>. Solving for <span class="math inline">\(y\)</span>, we get <span class="math inline">\(y=\pm\sqrt{x+1}\)</span> and the area would be <span class="math display">\[A_1 = 2 \int_{-1}^0 \sqrt{x+1} \, dx\]</span> which is <span class="math inline">\(4/3\)</span></p>
 <p>and then the rest of the sought after area is <span class="math display">\[A_2 = \int_0^{3} (\sqrt{x+1} - (x-1)) \,dx\]</span> which is <span class="math inline">\(19/6\)</span>. The total area that we’re looking for is <span class="math display">\[A_1 +A_2 = \frac{9}{2}\]</span></p>
 <p>An alternative way to tackle this is to slice this horizontally. The area can then be written: <span class="math display">\[\int_{-1}^{2} (y+1)-(y^{2}-1))\,dx\]</span> and the result is <span class="math inline">\(9/2\)</span>, just as above and easier to do.</p>
