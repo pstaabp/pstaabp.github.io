@@ -183,21 +183,40 @@
 
 end</code></pre>
 <p>This will just do that.</p>
-<p>Save the script as <code>bisect.m</code> in the directory where you have added other scripts for this class. Earlier we put them in a directory called <code>ext_functions</code>. This isn’t required, but if the name is different, make sure you adapt. Then try to run the function: <code>addpath("ext_functions/")  bisect(@(x) x^2-2,0,2)</code> and if all goes well, there won’t be errors. If you get errors, double check that the function name is correct and the directory is correct.</p></li>
-<li><p>Add in some checking on the arguments. Matlab has some nice ways to make sure that the inputs are correct. Here’s how to do that: <code>function result = bisect(f,a,b,options)       arguments         f function_handle         a (1,1) {mustBeReal}         b (1,1) {mustBeReal}       end     end</code></p>
+<p>Save the script as <code>bisect.m</code> in the directory where you have added other scripts for this class. Earlier we put them in a directory called <code>ext_functions</code>. This isn’t required, but if the name is different, make sure you adapt. Then try to run the function:</p>
+<pre><code>addpath(&quot;ext_functions/&quot;)
+bisect(@(x) x^2-2,0,2)</code></pre>
+<p>and if all goes well, there won’t be errors. If you get errors, double check that the function name is correct and the directory is correct.</p></li>
+<li><p>Add in some checking on the arguments. Matlab has some nice ways to make sure that the inputs are correct. Here’s how to do that:</p>
+<pre><code>function result = bisect(f,a,b,options)
+  arguments
+    f function_handle
+    a (1,1) {mustBeReal}
+    b (1,1) {mustBeReal}
+  end
+end</code></pre>
 <p>where all of the arugments are listed in the <code>arguments</code> block and</p>
 <ul>
 <li><code>f</code> is checked to make sure it is a function handle</li>
 <li><code>a</code> and <code>b</code> are numbers (or in Matlab-speak 1 by 1 matrices) the <code>mustBeReal</code> in the braces ensure you are not putting in things like complex numbers.</li>
 </ul>
 <p>Let’s check to make sure this is okay.<br />
-If we result the function: <code>bisect(@(x) x^2-2,0,2)</code> you shouldn’t see any errors. However,</p>
+If we result the function:</p>
+<pre><code>bisect(@(x) x^2-2,0,2)</code></pre>
+<p>you shouldn’t see any errors. However,</p>
 <pre><code>syms x
 bisect(x^2-2,0,2)</code></pre>
-<p>returns an error that is like: <code>Error using bisect    Invalid argument at position 1. Value must be of type function_handle or be convertible to function_handle.</code></p></li>
+<p>returns an error that is like:</p>
+<pre><code>Error using bisect
+  Invalid argument at position 1. Value must be of type function_handle or be convertible to function_handle.</code></pre></li>
 <li><p>Define the midpoint and return it.</p>
-<p>Next, let’s do something super simple and define the midpoint and then return it. Add the lines: <code>c = 0.5*(a+b); % calculate the midpoint of [a,b]    result = c;</code> after the <code>end</code> that ends the arguments block of code (or between the two <code>end</code>s).</p>
-<p>Try running this block of code. Make sure there are no errors. <code>bisect(@(x) x^2-2,0,2)</code> and you should get the answer 1. Note: if you don’t see any output, double-check that you included the <code>result=c</code> line. To get a function to return a value, you must assign output variable (on the top line of the function) to a value.</p></li>
+<p>Next, let’s do something super simple and define the midpoint and then return it. Add the lines:</p>
+<pre><code>  c = 0.5*(a+b); % calculate the midpoint of [a,b]
+  result = c;</code></pre>
+<p>after the <code>end</code> that ends the arguments block of code (or between the two <code>end</code>s).</p>
+<p>Try running this block of code. Make sure there are no errors.</p>
+<pre><code>bisect(@(x) x^2-2,0,2)</code></pre>
+<p>and you should get the answer 1. Note: if you don’t see any output, double-check that you included the <code>result=c</code> line. To get a function to return a value, you must assign output variable (on the top line of the function) to a value.</p></li>
 <li><p><em>Create a new interval</em></p>
 <p>Now, let’s assign the <code>result</code> variable to an interval instead. Recall that you want to make sure that the endpoints of the new interval are opposite signs. The easiest way to check this is to determine if the product of the function values is negative and we’ll make and <code>if</code> block like:</p>
 <pre><code>function result = bisect(f,a,b) %options)
@@ -213,7 +232,8 @@ bisect(x^2-2,0,2)</code></pre>
     result = [c b];%bisect(f,c,b,&#39;eps&#39;,options.eps);
   end
 end</code></pre>
-<p>If we test this with <code>bisect(@(x) x^2-2,0..2)</code> we get <code>[1  2]</code></p>
+<p>If we test this with <code>bisect(@(x) x^2-2,0..2)</code> we get</p>
+<pre><code>[1  2]</code></pre>
 <p>which means that the root is in the interval [1,2].</p></li>
 <li><p><em>Use recursion to do a number of steps</em> We will call the bisect function inside <code>if</code> block instead. Consider</p>
 <pre><code>function result = bisect(f,a,b) %options)
@@ -230,14 +250,55 @@ end</code></pre>
   end
 end</code></pre>
 <p>and notice that in the <code>if</code> block we call bisect again (this makes it resursive) on the interval either <span class="math inline">\([a,c]\)</span> or <span class="math inline">\([c,b]\)</span>. <strong>Don’t run this yet</strong></p>
-<p>If you do, you’ll get an error (about a limit of the number of recursive calls, which isn’t the end of the work). This is because remember that with a recursive function you always need a way to stop the recursion. What we’ll do is if the interval is small enough, we’ll stop and return the root. <code>function result = bisect(f,a,b) %options)    arguments      f function_handle      a (1,1) {mustBeReal}      b (1,1) {mustBeReal}    end    c = 0.5*(a+b); % calculate the midpoint of [a,b]    if (b-a)&lt;0.0001      result = c;    elseif (f(c)*f(a)&lt;0)      result = bisect(f,a,c);    else      result = bisect(f,c,b);     end  end</code></p>
+<p>If you do, you’ll get an error (about a limit of the number of recursive calls, which isn’t the end of the work). This is because remember that with a recursive function you always need a way to stop the recursion. What we’ll do is if the interval is small enough, we’ll stop and return the root.</p>
+<pre><code>function result = bisect(f,a,b) %options)
+  arguments
+    f function_handle
+    a (1,1) {mustBeReal}
+    b (1,1) {mustBeReal}
+  end
+  c = 0.5*(a+b); % calculate the midpoint of [a,b]
+  if (b-a)&lt;0.0001
+    result = c;
+  elseif (f(c)*f(a)&lt;0)
+    result = bisect(f,a,c);
+  else
+    result = bisect(f,c,b); 
+  end
+end</code></pre>
 <p>Let’s give this one a go: <code>bisect(@(x) x^2-2,0..2)</code> and the answer is returned 1.4142</p></li>
 <li><p><em>Allow more robust cutoff values</em></p>
-<p>In the example above, the bisection method stops when the interval length reaches 0.0001, but what if we want it more precise. We can add an optional argument in the following way: <code>function result = bisect(f,a,b, options)    arguments      f function_handle      a (1,1) {mustBeReal}      b (1,1) {mustBeReal}      options.eps (1,1) {mustBePositive} = 1e-4     end    c = 0.5*(a+b); % calculate the midpoint of [a,b]    options.eps    if b-a&lt; options.eps        result = c;    elseif (f(c)*f(a)&lt;0)      result = bisect(f,a,c,'eps',options.eps);    else      result = bisect(f,c,b,'eps',options.eps);    end  end</code> and notice that it is important that we send the options to the function recursively in the <code>if</code> block.</p>
+<p>In the example above, the bisection method stops when the interval length reaches 0.0001, but what if we want it more precise. We can add an optional argument in the following way:</p>
+<pre><code>function result = bisect(f,a,b, options)
+  arguments
+    f function_handle
+    a (1,1) {mustBeReal}
+    b (1,1) {mustBeReal}
+    options.eps (1,1) {mustBePositive} = 1e-4 
+  end
+  c = 0.5*(a+b); % calculate the midpoint of [a,b]
+  options.eps
+  if b-a&lt; options.eps
+      result = c;
+  elseif (f(c)*f(a)&lt;0)
+    result = bisect(f,a,c,&#39;eps&#39;,options.eps);
+  else
+    result = bisect(f,c,b,&#39;eps&#39;,options.eps);
+  end
+end</code></pre>
+<p>and notice that it is important that we send the options to the function recursively in the <code>if</code> block.</p>
 <p>If we run the function again, it will be exactly the same, but we will see below that we optionally throw in a way to get more accurate numbers.</p>
-<p>First, if we change the output format to <code>format long</code> and rerun the same command above, we’ll get 1.414215087890625. How accurate is this?</p>
-<p>In this case, we know the exact answer is <span class="math inline">\(\sqrt{2}\)</span>, so we can do <code>x0 = bisect(f,0,2)  abs(x0-sqrt(2))</code> which returns 1.525517529854525e-06, meaning that it is about 6 digits accurate.</p>
-<p>If we run: <code>x0 = bisect(@(x) x^2-2,0,2,'eps',1e-10)  abs(x0-sqrt(2))</code> we get 1.795119608516416e-11, which is nearly 11 digits of accuracy.</p></li>
+<p>First, if we change the output format to</p>
+<pre><code>format long</code></pre>
+<p>and rerun the same command above, we’ll get 1.414215087890625. How accurate is this?</p>
+<p>In this case, we know the exact answer is <span class="math inline">\(\sqrt{2}\)</span>, so we can do</p>
+<pre><code>x0 = bisect(f,0,2)
+abs(x0-sqrt(2))</code></pre>
+<p>which returns 1.525517529854525e-06, meaning that it is about 6 digits accurate.</p>
+<p>If we run:</p>
+<pre><code>x0 = bisect(@(x) x^2-2,0,2,&#39;eps&#39;,1e-10)
+abs(x0-sqrt(2))</code></pre>
+<p>we get 1.795119608516416e-11, which is nearly 11 digits of accuracy.</p></li>
 </ol>
 <h3 id="exercise-1">Exercise</h3>
 <p>Find the solution to <span class="math inline">\(\cos x = x\)</span> using the bisection method. Hint: use algebra to get all terms to one side. You may need to plot the function to get an idea where the solution is.</p>
