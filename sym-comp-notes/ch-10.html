@@ -152,7 +152,12 @@
 <header id="title-block-header">
 <h1 class="title">Chapter 10: Applications of Definite Integrals</h1>
 </header>
-<p><a href="index.html">Return to all notes</a></p>
+<p><a href="ch-09.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-11.html">Next chapter</a></p>
+<h2 id="putting-functions-in-an-external-file.">Putting functions in an external file.</h2>
+<p>We are going to use a few other functions to handle some visualization in this chapter. First, download <embed src="ext_functions.zip" /> and unzip to a folder and put in a directory where you usually work.</p>
+<p>Then you can use all of the functions in that folder by including</p>
+<pre><code>addpath(&#39;ext_functions/&#39;)</code></pre>
+<p>as long as the folder <code>ext_functions</code> is in the same folder. We will see these functions below.</p>
 <h2 id="area-between-curves">Area between curves</h2>
 <p>Find the area bounded by the curves <span class="math inline">\(y=x^{2}\)</span> and <span class="math inline">\(y=4-x^{2}\)</span>.</p>
 <p>First, a plot of these two curves is helpful. Here’s the following plot:</p>
@@ -182,68 +187,71 @@ s.y</code></pre>
 <li>The area between the line <span class="math inline">\(x=1\)</span>, the curve <span class="math inline">\(y={\rm e}^{-x}\)</span> and the <span class="math inline">\(x\)</span>-axis.</li>
 </ul>
 <h3 id="volumes-of-revolution">Volumes of Revolution</h3>
-<p>Another standard application of integration is finding volumes. This will be a big topic in Multivariate Calculus, but in single variable Calculus, we can find volumes by revolving a curve <span class="math inline">\(y=f(x)\)</span> about an axis of revolution. Maple has some nice visualization tools to help understand this. These are located in the <code>Student[Calculus1]</code> package, so make sure that you load it.</p>
-<pre><code>with(Student[Calculus1]):</code></pre>
-<h4 id="example">Example</h4>
+<p>Another standard application of integration is finding volumes. This will be a big topic in Multivariate Calculus, but in single variable Calculus, we can find volumes by revolving a curve <span class="math inline">\(y=f(x)\)</span> about an axis of revolution.</p>
+<h4 id="rotating-about-the-x-axis-disk-method">Rotating about the <span class="math inline">\(x\)</span>-axis (Disk Method)</h4>
+<p>First, we’ll consider rotating a function about the <span class="math inline">\(x\)</span>-axis. How about the function <span class="math inline">\(y=\sqrt{x}\)</span> between <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=4\)</span>. Make sure you have downloaded the external files and done the <code>addpath</code> as explained at the top of this page. Then,</p>
+<pre><code>VolumeOfRevolution(@(x) sqrt(x),0,4)</code></pre>
+<p>will produce <img src="images/ch10/plot03.png" alt="Plot of the region in the Example above" /> and if you click the little button with a circular arrow, you can rotated the plot to view it.</p>
+<p>In the case of rotating the function <span class="math inline">\(f(x)&gt;0\)</span> around the <span class="math inline">\(x\)</span>-axis from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span>, the volume is <span class="math display">\[ V = \int_a^b \pi f(x)^2 \, dx\]</span></p>
+<p>In this case, we can use Matlab to find the integral as</p>
+<pre><code>int(pi*(sqrt(x))^2,0,4)</code></pre>
+<p>resulting in <span class="math inline">\(8\pi\)</span>.</p>
+<h4 id="rotating-about-the-x-axis-washer-method">Rotating about the <span class="math inline">\(x\)</span>-axis (Washer Method)</h4>
+<p>If instead we have a bounded region bounded and then rotated, we get the washer method. If the region can be written: <span class="math display">\[ \{ (x,y) \, | \, f(x) \leq y \leq g(x), a \leq x \leq b\}\]</span></p>
+<p>Consider the functions <span class="math inline">\(g(x) = \sqrt{x}\)</span> and <span class="math inline">\(f(x) = x^2\)</span> and <span class="math inline">\(0 \leq x \leq 1\)</span>, then in the <span class="math inline">\(xy\)</span>-plane. A plot of the region is <img src="images/ch10/plot04.png" alt="Plot of the region bounded by \sqrt{x} and x^2" /></p>
+<pre><code>VolumeOfRevolution(@(x) sqrt(x),0,1,&#39;inner&#39;,@(x) x.^2)</code></pre>
+<p>and rotating around results in <img src="images/ch10/plot05.png" alt="Plot of the region bounded by \sqrt{x} and x^2" /></p>
+<p>In general a volume with this region is <span class="math display">\[
+V  = \int_a^b \pi (g(x)^2-f(x)^2)\, dx
+\]</span> and then for this example:</p>
+<pre><code>int(pi*((sqrt(x))^2-(x^2)^2),0,1)</code></pre>
+<p>results in <span class="math inline">\(\frac{3\pi}{10}\)</span></p>
+<h4 id="exercise">Exercise</h4>
 <p>Find the volume formed by rotated the region bound by <span class="math inline">\(y=(x-1)^{2}\)</span>, the <span class="math inline">\(x\)</span>-axis and the <span class="math inline">\(y\)</span>-axis, and rotating the region around the <span class="math inline">\(x\)</span>-axis.</p>
-<p>First plot the region in the <span class="math inline">\(xy\)</span>-plane:</p>
+<h3 id="example-that-uses-cylinders">Example that uses cylinders</h3>
+<p>Find the volume of the solid of revolution that by rotating the region bounded by <span class="math inline">\(y=1-x\)</span>, <span class="math inline">\(y=1-x^{2}\)</span> in the first quadrant around the <span class="math inline">\(y\)</span>-axis. A plot in the <span class="math inline">\(xy\)</span>-plane of the region is:</p>
 <figure>
-<img src="images/ch09/plot03.png" alt="Plot of the region in the Example above" /><figcaption aria-hidden="true">Plot of the region in the Example above</figcaption>
-</figure>
-<p>and this region will be rotated about the <span class="math inline">\(x\)</span>-axis. You can visualize this with the following command:</p>
-<pre><code>VolumeOfRevolution((x-1)^2, x = 0 .. 1, output = plot)</code></pre>
-<p>and the result is: <img src="images/ch09/plot04.png" alt="Plot of the volume of revolution of the example above" /></p>
-<p>For this situation, this is a disk method problem and the formula is <span class="math display">\[V = \int_a^{b} \pi r(x)^{2} \,dx\]</span> or in this example <span class="math display">\[V=\int_0^{1} \pi ((x-1)^{2})^{2}\,dx\]</span> and using Maple, we get <span class="math inline">\(\pi/5\)</span>.</p>
-<p>The command <code>VolumeOfRevolution</code> will also give the answer as well:</p>
-<pre><code>VolumeOfRevolution((x-1)^2,x=0..1)</code></pre>
-<p>evaluates the same integral above with the same answer.</p>
-<p>Another interesting option is <code>output=animate</code> which will show either disks, washers or cylinders in an animated way. Try</p>
-<pre><code>VolumeOfRevolution((x-1)^2, x=0..1,output=animate)</code></pre>
-<h4 id="example-that-uses-cylinders">Example that uses cylinders</h4>
-<p>Find the volume of the solid of revolution that by rotating the region bounded by <span class="math inline">\(y=1-x\)</span>, <span class="math inline">\(y=1-x^{2}\)</span> in the first quadrant around the <span class="math inline">\(y\)</span>-axis.</p>
-<figure>
-<img src="images/ch09/plot05.png" alt="region for the example above" /><figcaption aria-hidden="true">region for the example above</figcaption>
+<img src="images/ch10/plot06.png" alt="region for the example above" /><figcaption aria-hidden="true">region for the example above</figcaption>
 </figure>
 <p>This example is a cylinder method problem, with the height of each cylinder <span class="math inline">\(h=(1-x^{2})-(1-x)=x-x^{2}\)</span> and radius <span class="math inline">\(r=x\)</span>. The volume is <span class="math display">\[V=\int_a^{b} 2\pi r h \, dx=\int_0^{1} 2\pi x (x-x^{2}) \,dx\]</span> which is <span class="math inline">\(\pi/6\)</span>.</p>
 <p>We can visualize this with the following command</p>
-<pre><code>VolumeOfRevolution(-x^2+1, 1-x, x = 0 .. 1, axis = vertical, output = plot)</code></pre>
-<p>where both functions have been put in and the option <code>axis=vertical</code> is used because the function is rotated around the <span class="math inline">\(y\)</span>-axis (which is the vertical axis). The result is:</p>
+<pre><code>VolumeOfRevolution(@(x) 1-x^2+1,0,1,&#39;inner&#39;,@(x) 1-x,&#39;axis&#39;,&#39;vertical&#39;)</code></pre>
+<p>where both functions have been put in and the option <code>'axis','vertical'</code> is added because the function is rotated around the <span class="math inline">\(y\)</span>-axis (which is the vertical axis). The result is:</p>
 <figure>
-<img src="images/ch09/plot06.png" alt="Volume of revolution for the region above" /><figcaption aria-hidden="true">Volume of revolution for the region above</figcaption>
+<img src="images/ch10/plot07.png" alt="Volume of revolution for the region above" /><figcaption aria-hidden="true">Volume of revolution for the region above</figcaption>
 </figure>
-<h4 id="exercise">Exercise</h4>
-<ul>
-<li><p>Try to use the ouput=animation option on the example above.</p></li>
-<li><p>Find the volume formed by rotating the region bounded by <span class="math inline">\(y=\sqrt{x}\)</span> and <span class="math inline">\(y=x\)</span> about the line <span class="math inline">\(x=2\)</span>. (Hint: look at the <code>distancefromaxis</code> options)</p></li>
-</ul>
+<h4 id="exercise-1">Exercise</h4>
+<p>Find the volume of the region bounded by the curve <span class="math inline">\(y=x\)</span>, <span class="math inline">\(y=10-x^2\)</span> and the <span class="math inline">\(y\)</span>-axis, then rotated around the <span class="math inline">\(y\)</span>-axis.</p>
 <h2 id="differential-equations">Differential Equations</h2>
 <p>Recall that a differential equation is an equation containing derivatives. A simple example is <span class="math display">\[\frac{dy}{dx} = y\]</span></p>
 <p>The field of differential equations is extremely important and differential equations appears in all areas of mathematics as well as nearly every science and technology field.</p>
 <p>To solve the differential equation above we typically use the technique of <em>separation of variables</em> in that we write all of the <span class="math inline">\(y\)</span> terms on the left and the <span class="math inline">\(x\)</span> terms on the right. We can rearrange the one above to the following: <span class="math display">\[\frac{1}{y} \, dy = dx \qquad \qquad (1)\]</span></p>
-<p>and then we integrate. Doing this (perhaps with Maple’s help), we get <span class="math display">\[\ln(y) = x\]</span> and then often we want to solve for <span class="math inline">\(y\)</span>, which (again with Maple’s help) we get: <span class="math display">\[y = {\rm e}^x\]</span></p>
+<p>and then we integrate. Doing this (perhaps with Matlabs’s help), we get <span class="math display">\[\ln(y) = x\]</span> and then often we want to solve for <span class="math inline">\(y\)</span>, which (again with Matlab’s help) we get: <span class="math display">\[y = {\rm e}^x\]</span></p>
 <p>and this makes sense because this function is its own derivative. (which is how you can interpret <span class="math inline">\(y&#39;=y\)</span>).</p>
 <p>Now, we’re missing some functions because we ignored the integration constant above. To do a little better job, if we include the integration constant when integrating equation (1) above, then <span class="math display">\[\int \frac{1}{y} \, dy = \int dx\]</span></p>
-<p>will give <span class="math display">\[\ln(y) + C_1 = x + C_2\]</span> (again, we need to put in the constants since Maple won’t do this for us). We can combine the two constants on the right side and call these <span class="math inline">\(C\)</span> or <span class="math display">\[\ln(y) = x + C\]</span> and solving for <span class="math inline">\(y\)</span> result in <span class="math display">\[y= {\rm e}^{x+C}\]</span></p>
-<p>We can do this all in one shot in Maple, by entering</p>
-<pre><code>solve(int(1/y,y)=int(1,x)+C,y)</code></pre>
+<p>will give <span class="math display">\[\ln(y) + C_1 = x + C_2\]</span> (again, we need to put in the constants since Matlab won’t do this for us). We can combine the two constants on the right side and call these <span class="math inline">\(C\)</span> or <span class="math display">\[\ln(y) = x + C\]</span> and solving for <span class="math inline">\(y\)</span> result in <span class="math display">\[y= {\rm e}^{x+C}\]</span></p>
+<p>We can do this all in one shot in Matlab, by entering</p>
+<pre><code>syms y C
+solve(int(1/y,y)==int(1,x)+C,y)</code></pre>
 <h3 id="solving-a-differential-equation-using-dsolve">Solving a differential equation using <code>dsolve</code></h3>
-<p>Lastly, we can let Maple solve the differential equation itself. If we type</p>
+<p>Lastly, we can let Matlab solve the differential equation itself. If we type</p>
 <pre><code>dsolve(y&#39;(x)=y(x))</code></pre>
-<p>then Maple returns <span class="math display">\[y(x) = \\_ C1 {\rm e}^x\]</span></p>
-<p>which is the same as above because <span class="math inline">\({\rm e}^{x+C}={\rm e}^x {\rm e}^C\)</span> and then Maple using the constant <span class="math inline">\(\\_ C1={\rm e}^C\)</span>.</p>
+<p>then Matlab returns <span class="math display">\[C_1 \,{\mathrm{e}}^x\]</span></p>
+<p>which is the same as above because <span class="math inline">\({\rm e}^{x+C}={\rm e}^x {\rm e}^C\)</span> and then Matlab using the constant $ C_1={}^C$.</p>
 <p>Note: when entering a differential equation, you need to explicitly put in the dependent variable. So instead of writing <span class="math inline">\(y&#39;=y\)</span>, you need to say <span class="math inline">\(y&#39;(x)=y(x)\)</span>.</p>
 <h3 id="differential-equation-with-an-initial-conditions">Differential Equation with an initial conditions</h3>
 <p>Often a point will be given with a differential equation. This point is called an <em>initial condition</em>. Here we will solve <span class="math display">\[ y&#39; = \frac{y^{2}}{x}, \qquad y(1)=1\]</span></p>
 <h4 id="using-separation-of-variables">Using separation of variables</h4>
-<p>Write the differential equation above as <span class="math display">\[ \frac{dy}{y^{2}} = \frac{dx}{x}\]</span> and let Maple integrate each side. The result is: <span class="math display">\[-\frac{1}{y}  = \ln x + C\]</span> remembering to add the <span class="math inline">\(+C\)</span>. Solve for <span class="math inline">\(y\)</span> to get <span class="math display">\[ y  = -\frac{1}{\ln x + C} \]</span></p>
+<p>Write the differential equation above as <span class="math display">\[ \frac{dy}{y^{2}} = \frac{dx}{x}\]</span> and let Matlab integrate each side. The result is: <span class="math display">\[-\frac{1}{y}  = \ln x + C\]</span> remembering to add the <span class="math inline">\(+C\)</span>. Solve for <span class="math inline">\(y\)</span> to get <span class="math display">\[ y  = -\frac{1}{\ln x + C} \]</span></p>
 <p>Now using the initial conditions</p>
 <pre><code>solve(subs([x=1,y=1],(#)),C)</code></pre>
 <p>where (#) is the line number above, the result should be <span class="math inline">\(C=-1\)</span> so the result is <span class="math display">\[ y = -\frac{1}{\ln x -1}\]</span></p>
 <h4 id="using-the-built-in-command-dsolve">Using the built-in command <code>dsolve</code></h4>
-<p>We can let Maple do all this work for us via the <code>dsolve</code> command.</p>
-<pre><code>dsolve([y&#39;(x)=y(x)^2/x,y(1)=1])</code></pre>
+<p>We can let Matlab do all this work for us via the <code>dsolve</code> command.</p>
+<pre><code>syms y(x)
+dsolve(diff(y(x),x)==y(x)^2/x,y(1)==1)</code></pre>
 <p>spits out the result right away.</p>
-<h4 id="exercise-1">Exercise</h4>
+<h4 id="exercise-2">Exercise</h4>
 <p>Solve the following differential equation <span class="math display">\[y&#39;=-\frac{x}{y}\]</span></p>
 <ol type="1">
 <li><p>First, by using separation of variables and going through all of the steps. Make sure that you include the integration constant.</p></li>
@@ -251,38 +259,27 @@ s.y</code></pre>
 <li><p>Next find the function that satisfies the differential equation with <span class="math inline">\(y(3)=4\)</span>.</p></li>
 </ol>
 <h2 id="arc-length">Arc Length</h2>
-<p>It’s quite nice to use a CAS to find arc length. Most integrals that arise from arc length are difficult to do. Even a relative simple function like <span class="math inline">\(y=x^{2}\)</span> results in an integral with a difficult antiderivative. But that’s okay–let Maple do the hard work.</p>
-<p>Consider that if we have a function <span class="math inline">\(y=f(x)\)</span> on the interval <span class="math inline">\(a \leq x \leq b\)</span>, then we can consider that we find a few points on the curve, like the following plot: <img src="images/ch09/plot08.png" alt="A curve and points used to find the length of the curve" /></p>
+<p>It’s quite nice to use a CAS to find arc length. Most integrals that arise from arc length are difficult to do. Even a relative simple function like <span class="math inline">\(y=x^{2}\)</span> results in an integral with a difficult antiderivative. But that’s okay–let Matlab do the hard work.</p>
+<p>Consider that if we have a function <span class="math inline">\(y=f(x)\)</span> on the interval <span class="math inline">\(a \leq x \leq b\)</span>, then we can consider that we find a few points on the curve, like the following plot: <img src="images/ch10/plot08.png" alt="A curve and points used to find the length of the curve" /> where we show <span class="math inline">\(f(x)=x^2\)</span> for example.</p>
 <p>We can estimate the length of the curve above by finding the length of the line segments or the following plot where we have used <span class="math inline">\(N=4\)</span> line segments:</p>
 <figure>
-<img src="images/ch09/plot09.png" alt="Plot of a curve and line segments for a few points" /><figcaption aria-hidden="true">Plot of a curve and line segments for a few points</figcaption>
+<img src="images/ch10/plot09.png" alt="Plot of a curve and line segments for a few points" /><figcaption aria-hidden="true">Plot of a curve and line segments for a few points</figcaption>
 </figure>
+<p>An approximation to the arc length is the sum of the distances between these points.</p>
+<h3 id="derivative-of-arc-length-formula">Derivative of Arc Length Formula</h3>
 <p>The length of one of the line segments (say from <span class="math inline">\(x_i\)</span> to <span class="math inline">\(x_{i+1}\)</span>) is</p>
-<p><span class="math display">\[L_i = \sqrt{(x\_{i+1}-x\_i)^{2}+(f(x\_{i+1})-f(x\_i))^{2}}\]</span></p>
-<p>where the distance formula has been used. We can factor out <span class="math inline">\((x\_{i+1}-x\_i)^{2}\)</span></p>
-<p><span class="math display">\[L\_i = \sqrt{\left(1 +\frac{(f(x\_{i+1})-f(x\_i))^{2}}{(x\_{i+1}-x\_i)^{2}}\right)(x\_{i+1}-x\_i)^{2}}\]</span> and pulling the <span class="math inline">\((x\_{i+1}-x\_i)^{2}\)</span> term out of the square root, one gets: <span class="math display">\[L\_i = \sqrt{1 +\frac{(f(x\_{i+1})-f(x\_i))^{2}}{(x\_{i+1}-x\_i)^{2}}}(x\_{i+1}-x\_i)\]</span> or <span class="math display">\[L\_i = \sqrt{1 +\left(\frac{f(x\_{i+1})-f(x\_i)}{x\_{i+1}-x\_i}\right)^{2}}(x\_{i+1}-x\_i)\]</span></p>
-<p>Next, we sum up <span class="math inline">\(N\)</span> of these line segments and take the limit as <span class="math inline">\(N \rightarrow \infty\)</span> <span class="math display">\[L = \lim\_{N \rightarrow \infty}\sum\_{i=1}^N L\_i\]</span> or <span class="math display">\[L=\lim\_{N \rightarrow \infty}\sum\_{i=1}^N L\_i\sqrt{1 +\left(\frac{f(x\_{i+1})-f(x\_i)}{x\_{i+1}-x\_i}\right)^{2}}(x\_{i+1}-x\_i)\]</span> and as <span class="math inline">\(N \rightarrow \infty\)</span>, then <span class="math inline">\(x_{i+1}-x_i \rightarrow 0\)</span>, so the square term inside square root becomes <span class="math inline">\(f&#39;(x)\)</span>, so this can be written: <span class="math display">\[L=\int\_a^{b}\sqrt{1+(f&#39;(x))^{2}}\, dx\]</span></p>
-<h4 id="example-1">Example</h4>
+<p><span class="math display">\[L_i = \sqrt{(x_{i+1}-x_i)^{2}+(f(x_{i+1})-f(x_i))^{2}}\]</span></p>
+<p>where the distance formula has been used. We can factor out <span class="math inline">\((x_{i+1}-x_i)^{2}\)</span></p>
+<p><span class="math display">\[L_i = \sqrt{\left(1 +\frac{(f(x_{i+1})-f(x_i))^{2}}{(x_{i+1}-x_i)^{2}}\right)(x_{i+1}-x_i)^{2}}\]</span> and pulling the <span class="math inline">\((x_{i+1}-x_i)^{2}\)</span> term out of the square root, one gets: <span class="math display">\[L_i = \sqrt{1 +\frac{(f(x_{i+1})-f(x_i))^{2}}{(x_{i+1}-x_i)^{2}}}(x_{i+1}-x_i)\]</span> or <span class="math display">\[L_i = \sqrt{1 +\left(\frac{f(x_{i+1})-f(x_i)}{x_{i+1}-x_i}\right)^{2}}(x_{i+1}-x_i)\]</span></p>
+<p>Next, we sum up <span class="math inline">\(N\)</span> of these line segments and take the limit as <span class="math inline">\(N \rightarrow \infty\)</span> <span class="math display">\[L = \lim_{N \rightarrow \infty}\sum_{i=1}^N L_i\]</span> or <span class="math display">\[L=\lim_{N \rightarrow \infty}\sum_{i=1}^N \sqrt{1 +\left(\frac{f(x_{i+1})-f(x_i)}{x_{i+1}-x_i}\right)^{2}}(x_{i+1}-x_i)\]</span> and as <span class="math inline">\(N \rightarrow \infty\)</span>, then <span class="math inline">\(x_{i+1}-x_i \rightarrow 0\)</span>, so the square term inside square root becomes <span class="math inline">\(f&#39;(x)\)</span>, so this can be written: <span class="math display">\[L=\int_a^{b}\sqrt{1+(f&#39;(x))^{2}}\, dx\]</span></p>
+<h4 id="example">Example</h4>
 <p>Find the arc length of <span class="math inline">\(y=x^{2}\)</span> on the interval <span class="math inline">\([0,1]\)</span>.</p>
 <p>This is <span class="math display">\[L=\int_0^{1} \sqrt{1+(2x)^{2}} \, dx\]</span></p>
-<p>and lettting Maple do this: <span class="math display">\[L=\frac{\sqrt{5}}{2}-\frac{1}{4}\ln(-2+\sqrt{5})\]</span></p>
+<p>and lettting Matlab do this: <span class="math display">\[L=\frac{\mathrm{log}\left(\sqrt{5}+2\right)}{4}+\frac{\sqrt{5}}{2}\]</span></p>
 <p>(and note that doing this antiderivative by hand requires trig substitution).</p>
-<p>There is also an <code>ArcLength</code> command in the <code>Student[Calculus1]</code> package. If you enter</p>
-<pre><code>ArcLength(x^2,x=0..1)</code></pre>
-<p>then Maple will return the same result as above. As with other commands like <code>ApproximateInt</code> and <code>RiemannSum</code>, therre are other output options. Check out <code>integral</code> and <code>plot</code> for example.</p>
-<h4 id="exercise-2">Exercise</h4>
-<p>Find the circumference of a circle of radius 4 by 1) find the equation of the circle, 2) writing it as a function and 3) using the arc length formula or <code>ArcLength</code> command to find the result.</p>
-<h2 id="surface-area">Surface Area</h2>
-<p>Recall that if region in the plane is rotated about a line, it produces a volume and we can use the techniques explained above to find the volume it creates. Similarly, we can do the same for the surface area.</p>
-<p>If a function <span class="math inline">\(y=f(x)\)</span> on the line segment <span class="math inline">\(a \leq x \leq b\)</span> is rotated about the line <span class="math inline">\(y=0\)</span> (<span class="math inline">\(x\)</span>-axis) or the line <span class="math inline">\(x=0\)</span> (the <span class="math inline">\(y\)</span>-axis), then the surface area is given by <span class="math display">\[S=\int\_a^{b} 2 \pi r \sqrt{1+(f&#39;(x))^{2}} \, dx\]</span> where <span class="math inline">\(r=x\)</span> if rotating about the <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(r=f(x)\)</span> if rotating about the <span class="math inline">\(x\)</span>-axis.</p>
-<h4 id="example-2">Example</h4>
-<p>Find the surface area found by taking the arc <span class="math inline">\(y=x^{2}\)</span> on <span class="math inline">\([0,1]\)</span> about the <span class="math inline">\(y\)</span>-axis.</p>
-<p><span class="math display">\[S=\int_0^{1} 2 \pi x \sqrt{1+(2x)^{2}} \, dx = \frac{\pi}{6} ( 5 \sqrt{5}-1)\]</span></p>
-<p>You can also use the command <code>SurfaceOfRevolution</code> to produce plots and other helpful output forms. For example, the surface of revolution above can be plotted as</p>
-<pre><code>SurfaceOfRevolution(x^2, x = 0..1, axis = vertical, output = plot)</code></pre>
-<p>where the <code>axis=vertical</code> is needed to rotate about the <span class="math inline">\(y\)</span>-axis. (The default is to rotate about the <span class="math inline">\(x\)</span>-axis.)</p>
-<p>and the result is <img src="images/ch09/plot07.png" alt="Surface of Revolution for y=x^{2}" /></p>
+<p>then Matlab will return the same result as above.</p>
 <h4 id="exercise-3">Exercise</h4>
-<p>Find the surface area of the sphere of radius 4 (see the above exercise) to get the function.</p>
+<p>Find the circumference of a circle of radius 4 by 1) find the equation of the circle, 2) writing it as a function and 3) using the arc length formula to find the result.</p>
+<p><a href="ch-09.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-11.html">Next chapter</a></p>
 </body>
 </html>
