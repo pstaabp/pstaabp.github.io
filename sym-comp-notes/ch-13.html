@@ -170,7 +170,7 @@
 <p>And then we repeat. The midpoint of this interval is 1.5 and <span class="math inline">\(f(1.5)=1.5^{2}-2=0.25\)</span> and since this is positive, we replace the 2 with 1.5 and our new interval is <span class="math inline">\([1,1.5]\)</span>.</p>
 <h4 id="exercise">Exercise</h4>
 <p>Find the next 3 intervals using this technique. Recall that you always need to have the function value of one side be less than and the other be greater than 0.</p>
-<p>###Stop this crazy thing!!!</p>
+<h3 id="stop-this-crazy-thing">Stop this crazy thing!!!</h3>
 <p>Since you are wise, you notice that you can continue this process forever and you just don’t have that much time. For example, on the tenth iteration, you should have the interval</p>
 <pre><code>[1.41406250,1.416015625]</code></pre>
 <p>and as long as the condition that the function values of two endpoints are opposite signs, then there is a guarantee of a root inside this interval.</p>
@@ -178,7 +178,8 @@
 <h3 id="creating-a-function-to-do-this">Creating a Function to do this</h3>
 <p>This section will slowly build up a procedure that does this. The goal of this section is to learn how to take an algorithm (explained above) and make a function that does this. Make a new Script (not a live script)</p>
 <ol type="1">
-<li><p>Let’s start with a template. We want to take a function and an interval (that is two numbers) in and return an approximate root.</p>
+<li><p><em>Start with a template</em></p>
+<p>We want to take a function and an interval (that is two numbers) in and return an approximate root.</p>
 <pre><code>function result = bisect(f,a,b)
 
 end</code></pre>
@@ -187,8 +188,9 @@ end</code></pre>
 <pre><code>addpath(&quot;ext_functions/&quot;)
 bisect(@(x) x^2-2,0,2)</code></pre>
 <p>and if all goes well, there won’t be errors. If you get errors, double check that the function name is correct and the directory is correct.</p></li>
-<li><p>Add in some checking on the arguments. Matlab has some nice ways to make sure that the inputs are correct. Here’s how to do that:</p>
-<pre><code>function result = bisect(f,a,b,options)
+<li><p><em>Add in some checking on the arguments</em></p>
+<p>Matlab has some nice ways to make sure that the inputs are correct. Here’s how to do that:</p>
+<pre><code>function result = bisect(f,a,b)
   arguments
     f function_handle
     a (1,1) {mustBeReal}
@@ -209,7 +211,7 @@ bisect(x^2-2,0,2)</code></pre>
 <p>returns an error that is like:</p>
 <pre><code>Error using bisect
   Invalid argument at position 1. Value must be of type function_handle or be convertible to function_handle.</code></pre></li>
-<li><p>Define the midpoint and return it.</p>
+<li><p><em>Define the midpoint and return it</em></p>
 <p>Next, let’s do something super simple and define the midpoint and then return it. Add the lines:</p>
 <pre><code>  c = 0.5*(a+b); % calculate the midpoint of [a,b]
   result = c;</code></pre>
@@ -219,7 +221,7 @@ bisect(x^2-2,0,2)</code></pre>
 <p>and you should get the answer 1. Note: if you don’t see any output, double-check that you included the <code>result=c</code> line. To get a function to return a value, you must assign output variable (on the top line of the function) to a value.</p></li>
 <li><p><em>Create a new interval</em></p>
 <p>Now, let’s assign the <code>result</code> variable to an interval instead. Recall that you want to make sure that the endpoints of the new interval are opposite signs. The easiest way to check this is to determine if the product of the function values is negative and we’ll make and <code>if</code> block like:</p>
-<pre><code>function result = bisect(f,a,b) %options)
+<pre><code>function result = bisect(f,a,b)
   arguments
     f function_handle
     a (1,1) {mustBeReal}
@@ -236,7 +238,7 @@ end</code></pre>
 <pre><code>[1  2]</code></pre>
 <p>which means that the root is in the interval [1,2].</p></li>
 <li><p><em>Use recursion to do a number of steps</em> We will call the bisect function inside <code>if</code> block instead. Consider</p>
-<pre><code>function result = bisect(f,a,b) %options)
+<pre><code>function result = bisect(f,a,b)
   arguments
     f function_handle
     a (1,1) {mustBeReal}
@@ -251,14 +253,14 @@ end</code></pre>
 end</code></pre>
 <p>and notice that in the <code>if</code> block we call bisect again (this makes it resursive) on the interval either <span class="math inline">\([a,c]\)</span> or <span class="math inline">\([c,b]\)</span>. <strong>Don’t run this yet</strong></p>
 <p>If you do, you’ll get an error (about a limit of the number of recursive calls, which isn’t the end of the work). This is because remember that with a recursive function you always need a way to stop the recursion. What we’ll do is if the interval is small enough, we’ll stop and return the root.</p>
-<pre><code>function result = bisect(f,a,b) %options)
+<pre><code>function result = bisect(f,a,b)
   arguments
     f function_handle
     a (1,1) {mustBeReal}
     b (1,1) {mustBeReal}
   end
   c = 0.5*(a+b); % calculate the midpoint of [a,b]
-  if (b-a)&lt;0.0001
+  if (b-a)&lt;0.0001 % if the interval is small enough, stop and return the midpoint
     result = c;
   elseif (f(c)*f(a)&lt;0)
     result = bisect(f,a,c);
@@ -316,7 +318,7 @@ a</code></pre>
 <h2 id="finding-sqrta">Finding <span class="math inline">\(\sqrt{a}\)</span></h2>
 <p>Another useful iterative sequence is the following: <span class="math display">\[x_{n+1} = \frac{x_n^{2}+a}{2x_n}\qquad x_0=a\]</span></p>
 <p>for a positive number <span class="math inline">\(a\)</span>. We will show that this converges to <span class="math inline">\(\sqrt{a}\)</span>. For example, if <span class="math inline">\(a=2\)</span>, then</p>
-<pre><code>xval = zeros(10,1,&quot;sym&quot;)  % make a zero 
+<pre><code>xval = zeros(10,1,&quot;sym&quot;)  % make an array of zeros 
 xval(1)=1
 for i=2:10
   xval(i) = (xval(i-1)^2+2)/(2*xval(i-1))
@@ -325,7 +327,7 @@ xval</code></pre>
 <p>The first few terms of this we get: <span class="math display">\[1,\frac{3}{2},\frac{17}{12},\frac{577}{408},\frac{665857}{470832},\frac{886731088897}{627013566048},\ldots\]</span></p>
 <p>and then the fraction gets quite large because we declared a symbolic array, so everything is rational. If instead, we use numeric array, like:</p>
 <pre><code>format long
-xval = zeros(6,1);  % make a zero 
+xval = zeros(6,1);  % make an array of zeros 
 xval(1)=2;
 for i=2:length(xval)
   xval(i) = (xval(i-1)^2+2)/(2*xval(i-1));
@@ -351,7 +353,7 @@ xval</code></pre>
 <p>Next, if we let <span class="math inline">\(a=x_0\)</span>, our initial point and <span class="math inline">\(x\)</span> be <span class="math inline">\(x_1\)</span>, the next point: <span class="math display">\[x_1=x_0+\frac{f(x_0)}{f&#39;(x_0)}\]</span></p>
 <p>or in general: <span class="math display">\[x_{n+1}=x_n+\frac{f(x_n)}{f&#39;(x_n)}\]</span></p>
 <p>and this last equation is called <em>Newton’s rootfinding method</em> (or just <em>Newton’s method</em>)</p>
-<p>###Example</p>
+<h4 id="example">Example</h4>
 <p>Use Newton’s method to find the solution to <span class="math inline">\(\cos x = x\)</span>.</p>
 <p>If we let <span class="math inline">\(f(x)=x-\cos x\)</span> and perform Newton’s method. Since, <span class="math inline">\(f&#39;(x)=1+\sin x\)</span>, this means that <span class="math display">\[x_{n+1} = x_n - \frac{x_n-\cos x_n}{1+\sin x_n}\]</span> and let’s use <span class="math inline">\(x_0=0\)</span> as an initial guess.</p>
 <p>If we enter:</p>
@@ -432,6 +434,9 @@ end</code></pre>
     b (1,1) {mustBeReal}
     options.eps (1,1) {mustBePositive} = 1e-4 
   end
+  if f(a)*f(b)&gt;0
+    error(&quot;A root is not guaranteed on the given interval.&quot;)
+  end
   c = 0.5*(a+b); % calculate the midpoint of [a,b]
 
   if b-a&lt; options.eps
@@ -442,7 +447,9 @@ end</code></pre>
     result = bisect(f,c,b,&#39;eps&#39;,options.eps);
   end
 end</code></pre>
-<p>Where all of the help is written in comments at the top of the funciton. If you type: <code>help bisect</code> you will see the help text shown.</p></li>
+<p>Where all of the help is written in comments at the top of the funciton. If you type:</p>
+<pre><code>help bisect</code></pre>
+<p>you will see the help text shown.</p></li>
 </ol>
 <h2 id="using-the-built-in-matlab-methods">Using the built-in Matlab methods</h2>
 <p>Finding roots of functions or solutions of equations can be done with <code>solve</code> or <code>vpasolve</code>. First, consider solving <span class="math inline">\(\cos(x) = x\)</span> that we saw above. If we use the <code>solve</code> command with</p>
