@@ -153,39 +153,57 @@
 <h1 class="title">Chapter 11: Sequences and Series</h1>
 </header>
 <p><a href="ch-10.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-12.html">Next chapter</a></p>
-<p>Maple and other CAS programs are powerful and helpful tools when performing mathematics involving sequences and series.</p>
+<p>Matlab and other CAS programs are powerful and helpful tools when performing mathematics involving sequences and series.</p>
 <h2 id="sequences">Sequences</h2>
 <p>Recall that a sequence is a function that is defined on the nonnegative integers. For example if <span class="math display">\[a_n = \frac{(-1)^{n}}{n}\]</span></p>
-<p>Then one can generate the first few terms of the sequence. Doing this in Maple involves the <code>seq</code> command:</p>
-<pre><code>seq((-1)^n/n,n=1..10)</code></pre>
+<p>Then one can generate the first few terms of the sequence. We can do this in Matlab by first defining <span class="math inline">\(n\)</span> and then applying the formula:</p>
+<pre><code>n=sym(1:10)
+((-1).^n)./n</code></pre>
+<p>where we need to tell Matlab to do things element by element with a . in front of the power and division.</p>
 <p>shows the first 10 terms and returns: <span class="math display">\[-1,\frac{1}{2},-\frac{1}{3},\frac{1}{4},-\frac{1}{5},\frac{1}{6},-\frac{1}{7},\frac{1}{8},-\frac{1}{9},\frac{1}{10}\]</span></p>
 <p>We often are interested in finding the limit of this sequence, which is found by the command:</p>
-<pre><code>limit((-1)^n/n,n=infinity)</code></pre>
+<pre><code>syms n
+limit((-1)^n/n,n,inf)</code></pre>
 <p>and returns 0. (Note: doing this by hand requires the squeeze theorem.)</p>
-<p>###Sequences using a Recursive Definition</p>
+<h3 id="sequences-using-a-recursive-definition">Sequences using a Recursive Definition</h3>
 <p>It is common to define sequences recursively. We could say <span class="math inline">\(a_0=1\)</span> and then <span class="math inline">\(a_n=\frac{1}{a_{n-1}+1}\)</span>.</p>
 <p>Doing this by hand, would result in <span class="math display">\[a_0=1\]</span> <span class="math display">\[a_1=\frac{1}{1+1}=\frac{1}{2}\]</span> <span class="math display">\[a_2=\frac{1}{1+\frac{1}{2}} = \frac{2}{3}\]</span> <span class="math display">\[a_3=\frac{1}{1+\frac{2}{3}} = \frac{3}{5}\]</span></p>
 <p>What would the limit of this be?</p>
-<p>Before getting to this, we can use Maple to generate these in the following way:</p>
-<pre><code>a:=n-&gt;1/(1+a(n-1))
-a(0):=1</code></pre>
-<p>and it is very important that the order goes as above, that is the general formula is entered first and then the <span class="math inline">\(a_0\)</span> term is listed. If then we use the <code>seq</code> command:</p>
-<pre><code>seq(a(n),n=1..10)</code></pre>
+<p>Before getting to this, we can use Matlab to generate these in the following way:</p>
+<pre><code>a = zeros(10,1,&quot;sym&quot;);
+a(1)=1;
+for n=2:10
+    a(n)=1/(a(n-1)+1);
+end
+a</code></pre>
+<ul>
+<li>The first line generates a vector of zeros.<br />
+</li>
+<li>The second line starts the sequence as given</li>
+<li>The for loop generates the other terms based on the term before it.</li>
+</ul>
 <p>which generates: <span class="math display">\[1,\frac{1}{2},\frac{2}{3},\frac{3}{5},\frac{5}{8},{\frac {8}{13}},{\frac {13}{21}},{\frac {21}{34}},{\frac {34}{55}},{\frac {55}{89}},{\frac {89}{144}}\]</span></p>
 <p>and the terms in the fraction may be recognizable as the Fibonacci numbers.</p>
-<p>To find the limit, however, if we type:</p>
-<pre><code>lim(a(n),n=infinity)</code></pre>
-<p>we get the error: <code>Error, (in f) too many levels of recursion</code> so Maple can’t handle this instead, we need to do this as we would without a CAS in the following way. Assume that the sequence has a limit, that is <span class="math display">\[L=\lim_{n \rightarrow \infty} a(n)\]</span></p>
-<p>Then we take the limit of both sides of <span class="math display">\[a_n=\frac{1}{a\_{n-1}+1}\]</span> to get: <span class="math display">\[L=\frac{1}{L+1}\]</span> and we can let Maple solve this and it returns: <span class="math display">\[\frac{1}{2}\sqrt{5}-\frac{1}{2}, -\frac{1}{2}\sqrt{5}-\frac{1}{2}\]</span> and since the first term is positive and it is fairly clear that the limit should be positive, then <span class="math display">\[\lim_{n \rightarrow \infty} a_n = \frac{\sqrt{5}-1}{2}\]</span> (BTW: this is a very famous number called the golden ratio. The <a href="https://en.wikipedia.org/wiki/Golden_ratio">golden ratio wikipedia page</a> is a good source.)</p>
+<p>However, since there is no formula for <code>a(n)</code>, we can’t find the limit using the built-in function. Here’s a method instead:</p>
+<p>Assume that the sequence has a limit, that is <span class="math display">\[L=\lim_{n \rightarrow \infty} a(n)\]</span></p>
+<p>Then we take the limit of both sides of <span class="math display">\[a_n=\frac{1}{a_{n-1}+1}\]</span> to get: <span class="math display">\[L=\frac{1}{L+1}\]</span> and we can let Matlab solve this for us and it returns: <span class="math display">\[\frac{1}{2}\sqrt{5}-\frac{1}{2}, -\frac{1}{2}\sqrt{5}-\frac{1}{2}\]</span> and since the first term is positive and it is fairly clear that the limit should be positive, then <span class="math display">\[\lim_{n \rightarrow \infty} a_n = \frac{\sqrt{5}-1}{2}\]</span> (BTW: this is a very famous number called the golden ratio. The <a href="https://en.wikipedia.org/wiki/Golden_ratio">golden ratio wikipedia page</a> is a good source.)</p>
 <h2 id="introduction-to-series">Introduction to Series</h2>
 <p>A series is a sum of all terms in an infinite sequence. For example,</p>
 <p><span class="math display">\[1+\frac{1}{2}+\frac{1}{4}+\frac{1}{8}+ \cdots\]</span></p>
-<p>and is also written as <span class="math display">\[\sum\_{n=0}^{\infty} \frac{1}{2^{n}}\]</span> We won’t cover all of the details of series here, but will look at some of the capabilities that Maple and other CAS software can lend to this.</p>
+<p>and is also written as <span class="math display">\[\sum_{n=0}^{\infty} \frac{1}{2^{n}}\]</span> We won’t cover all of the details of series here, but will look at some of the capabilities that Matlab and other CAS software can lend to this.</p>
+<p>First, let’s look at a plot of this situation for a few values of <span class="math inline">\(n\)</span>.</p>
+<pre><code>n=0:10
+plot(cumsum(1./2.^n),&#39;*-&#39;)</code></pre>
+<p>the <code>cumsum</code> makes the cumulative sum of the terms <code>1./2.^n</code> which is how <span class="math inline">\(\dfrac{1}{2^n}\)</span> needs to be written using vectors. The result plot is</p>
+<figure>
+<img src="images/ch11/plot01.png" alt="Plot of the first few terms of the infinite sum" /><figcaption aria-hidden="true">Plot of the first few terms of the infinite sum</figcaption>
+</figure>
 <p>Often, we’d love to be able to determine the value of a series. For example, the series above is a geometric series with <span class="math inline">\(a=1\)</span> and <span class="math inline">\(r=1/2\)</span>. The sum is given by <span class="math display">\[S=\frac{a}{1-r}= \frac{1}{1-\frac{1}{2}} =2\]</span></p>
-<p>Maple is capable of finding the value of some series. For example,</p>
-<pre><code>sum(1/2^n, n=0..infinity)</code></pre>
-<p>will return 2. (Note: to pretty up the sum, you can use the palette or hit ESC after the sum command.)</p>
-<p>###Exercise</p>
+<p>Matlab is capable of finding the value of some series. For example,</p>
+<pre><code>syms n
+symsum(1/2^n,n,0,inf)</code></pre>
+<p>will return 2.</p>
+<h4 id="exercise">Exercise</h4>
 <p>Try evaluating the following series:</p>
 <ol type="1">
 <li><span class="math inline">\(\displaystyle \sum_{n=1}^{\infty} \frac{1}{n}\)</span></li>
@@ -202,34 +220,31 @@ a(0):=1</code></pre>
 <p>###Example</p>
 <p>Determine if <span class="math display">\[\sum_{n=1}^{\infty} \frac{1}{3n+1}\]</span> converges or diverges.</p>
 <ol type="1">
-<li><p>First, we note that <span class="math inline">\(f(n)&gt;0\)</span> for on the interval. We can let Maple help us by doing <code>solve(f(n)&gt;0)</code></p>
+<li><p>First, we note that <span class="math inline">\(f(n)&gt;0\)</span> for on the interval. We can let Matlab help us by doing <code>syms x     f(x) = 1/(3*x+1)     S = solve(f(x)&gt;0,'ReturnConditions',true)     S.conditions</code></p>
 <p>and getting the result <span class="math inline">\((-\frac{1}{3},\infty)\)</span>, so this means that the function is also positive on a subset like <span class="math inline">\((1,\infty)\)</span>.</p></li>
-<li><p>Next, we need to determine that the function is decreasing on the interval. <code>solve(f'(n)&lt; 0)</code></p>
-<p>and this shows everything except <span class="math inline">\(n=-1/3\)</span>, so again, it is decreasing on the interval <span class="math inline">\([1,\infty)\)</span></p></li>
-<li><p>Lastly, evaluate the integral: <span class="math display">\[\int_1^{\infty} f(x) \, dx\]</span></p>
-<p>results in <span class="math inline">\(\infty\)</span>. This means that the series diverges too.</p></li>
+<li><p>Next, we need to determine that the function is decreasing on the interval. <code>df(x) = diff(f(x),x)     S = solve(df(x)&lt;0,'ReturnConditions',true)     S.conditions</code></p>
+<p>and this shows everything except <span class="math inline">\(x=-1/3\)</span>, so again, it is decreasing on the interval <span class="math inline">\([1,\infty)\)</span></p></li>
+<li><p>Lastly, evaluate the integral: <code>int(f(x),x,1,inf)</code> results in <span class="math inline">\(\infty\)</span>. Since the integral diverges, by the integral test, the series diverges too.</p></li>
 </ol>
-<p>###Exercise</p>
-<p>Determine if <span class="math inline">\(\sum_{n=1}^{\infty} \frac{1}{n^{2}+1}\)</span> converges or diverges by the integral test. (Just for fun, see what Maple returns it as)</p>
+<h4 id="exercise-1">Exercise</h4>
+<p>Determine if <span class="math display">\[\sum_{n=1}^{\infty} \frac{1}{n^{2}+1}\]</span> converges or diverges by the integral test. Also, see if Matlab can evaluate it with the <code>symsum</code> function.</p>
 <h2 id="ratio-test-ratface">Ratio Test (RATFACE)</h2>
 <p>Another important test for convergence is the Ratio Test for Absolute Convergence (affectionately known as RATFACE).</p>
-<p>First, recall that a series of the form: <span class="math display">\[\sum\_{n=1}^{\infty} a_n\]</span> converge absolutely if <span class="math display">\[\sum\_{n=1}^{\infty} |a_n|\]</span> converges.</p>
-<p>The Ratio Test is: Let <span class="math display">\[L=\lim\_{n \rightarrow \infty} \left|\frac{a\_{n+1}}{a_n}\right|\]</span> The series <span class="math inline">\(\sum_{n=1}^{\infty} a_n\)</span> converges if <span class="math inline">\(L\lt1\)</span>, it diverges if <span class="math inline">\(L&gt;1\)</span> and is inconclusive if <span class="math inline">\(L=1\)</span>.</p>
-<p>###Example</p>
-<p>Use RATFACE to determine if <span class="math inline">\(\sum_{n=0}^{\infty}\frac{1}{n!}\)</span> converges or diverges.</p>
+<p>First, recall that a series of the form: <span class="math display">\[\sum_{n=1}^{\infty} a_n\]</span> converge absolutely if <span class="math display">\[\sum_{n=1}^{\infty} |a_n|\]</span> converges.</p>
+<p>The Ratio Test is: Let <span class="math display">\[L=\lim_{n \rightarrow \infty} \left|\frac{a_{n+1}}{a_n}\right|\]</span> The series <span class="math inline">\(\sum_{n=1}^{\infty} a_n\)</span> converges if <span class="math inline">\(L&lt;1\)</span>, it diverges if <span class="math inline">\(L&gt;1\)</span> and is inconclusive if <span class="math inline">\(L=1\)</span>.</p>
+<h3 id="example">Example</h3>
+<p>Use RATFACE to determine if <span class="math display">\[\sum_{n=0}^{\infty}\frac{1}{n!}\]</span> converges or diverges.</p>
 <p>Let’s define</p>
-<pre><code>a:=n-&gt;1/n!</code></pre>
-<p>And then we need the ratio:</p>
-<pre><code>simplify(a(n+1)/a(n))</code></pre>
-<p>which returns <span class="math inline">\(\frac{1}{n+1}\)</span></p>
-<p>Taking the limit of the absolute value we get</p>
-<pre><code>limit(|1/(n+1)|,n=infinity)</code></pre>
-<p>returns 0. Since this is less than 1, then series converges. Above you found that this converges to <span class="math inline">\(e\)</span>.</p>
-<p>###Exercise</p>
-<p>Use RATFACE to determine if <span class="math display">\[\sum\_{n=0}^{\infty} \frac{(-1)^{n}}{(n+3)^{n}}\]</span></p>
-<p>converges or diverges. Does Maple find a value for this?</p>
+<pre><code>syms n
+a(n) = 1/factorial(n)</code></pre>
+<p>And then taking the limit of the absolute value of the ratio, or</p>
+<pre><code>limit(abs(a(n+1)/a(n)),n,inf)</code></pre>
+<p>returns 0. Since this is less than 1, then series converges.</p>
+<h4 id="exercise-2">Exercise</h4>
+<p>Use RATFACE to determine if <span class="math display">\[\sum_{n=0}^{\infty} \frac{(-1)^{n}}{(n+3)^{n}}\]</span></p>
+<p>converges or diverges. Can Matlab find a value for this?</p>
 <h2 id="power-and-taylor-series">Power and Taylor Series</h2>
-<p>A power series is a series of the form: <span class="math display">\[\sum\_{n=0}^{\infty} c\_n (x-a)^{n}\]</span> for known values <span class="math inline">\(c_n\)</span> and the number <span class="math inline">\(a\)</span> is called the <em>center</em>. For example, <span class="math display">\[\sum\_{n=0}^{\infty} \frac{(-1)^{n}}{n!}x^{n}\]</span> The first few terms of this power series: <span class="math display">\[1-x+\frac{x^{2}}{2!}-\frac{x^{3}}{3!}+\frac{x^{4}}{4!}-\frac{x^{5}}{5!}+\cdots\]</span> We can’t plot a full power series because there are an infinite number of terms, but Maple allows us to plot 10, 20 or 100 terms quite easily. These are called the <em>partial sums</em> or <em>partial series</em>.</p>
+<p>A power series is a series of the form: <span class="math display">\[\sum_{n=0}^{\infty} c_n (x-a)^{n}\]</span> for known values <span class="math inline">\(c_n\)</span> and the number <span class="math inline">\(a\)</span> is called the <em>center</em>. For example, <span class="math display">\[\sum_{n=0}^{\infty} \frac{(-1)^{n}}{n!}x^{n}\]</span> The first few terms of this power series: <span class="math display">\[1-x+\frac{x^{2}}{2!}-\frac{x^{3}}{3!}+\frac{x^{4}}{4!}-\frac{x^{5}}{5!}+\cdots\]</span> We can’t plot a full power series because there are an infinite number of terms, but Matlab allows us to plot 10, 20 or 100 terms quite easily. These are called the <em>partial sums</em> or <em>partial series</em>.</p>
 <p>To plot up to <span class="math inline">\(n=10\)</span>, we can define</p>
 <pre><code>f:=sum((-1)^n*x^n/n!,n=0..10)</code></pre>
 <p>and then plot <span class="math inline">\(f\)</span>. The result is</p>
@@ -237,33 +252,33 @@ a(0):=1</code></pre>
 <img src="images/ch10/plot01.png" alt="The partial series up to n=10 of the series above" /><figcaption aria-hidden="true">The partial series up to <span class="math inline">\(n=10\)</span> of the series above</figcaption>
 </figure>
 <p>###The Center of a series</p>
-<p>If a series is written in the form: <span class="math display">\[\sum\_{n=0}^{\infty} c_n (x-a)^{n}\]</span></p>
-<p>then the constant <span class="math inline">\(a\)</span> is said to be the center of the series. For example, the series <span class="math display">\[\sum\_{n=0}^{\infty} \frac{3^{n}}{n}(x+2)^{n}\]</span> has a center of <span class="math inline">\(a=-2\)</span>.</p>
+<p>If a series is written in the form: <span class="math display">\[\sum_{n=0}^{\infty} c_n (x-a)^{n}\]</span></p>
+<p>then the constant <span class="math inline">\(a\)</span> is said to be the center of the series. For example, the series <span class="math display">\[\sum_{n=0}^{\infty} \frac{3^{n}}{n}(x+2)^{n}\]</span> has a center of <span class="math inline">\(a=-2\)</span>.</p>
 <p>###Interval and Radius of convergence</p>
 <p>The <em>interval of convergence</em> is the set of all points on which a power series converges. The center of the series will also be the center of the interval.</p>
 <p>The <em>radius of convergence</em> is half of the total length of the interval of convergence.</p>
 <p>###Example</p>
-<p>Consider the series, <span class="math display">\[\sum\_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}\]</span></p>
+<p>Consider the series, <span class="math display">\[\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}\]</span></p>
 <p>Find the center, interval of convergence and radius of convergence.</p>
 <p>First, the center is <span class="math inline">\(a=3\)</span>, because of the form of the series. To find the interval of convergence, we will use RATFACE:</p>
 <pre><code>c:=n-&gt;(-1)^n*(x-3)^n/(n*2^n)</code></pre>
 <p>and if we</p>
 <pre><code>simplify(c(n+1)/c(n))</code></pre>
-<p>the result is <span class="math display">\[-\frac{1}{2}\frac{n(x-3)}{n+1}\]</span> The rule for RATFACE is that if <span class="math display">\[L=\lim\_{n \rightarrow \infty} \left|\frac{c_{n+1}}{c\_n}\right|\]</span> is less than 1, then the series converges absolutely. Therefore taking the limit of the absolute value of the above expression yields <span class="math display">\[\frac{1}{2}|x-3|\]</span></p>
+<p>the result is <span class="math display">\[-\frac{1}{2}\frac{n(x-3)}{n+1}\]</span> The rule for RATFACE is that if <span class="math display">\[L=\lim_{n \rightarrow \infty} \left|\frac{c_{n+1}}{c_n}\right|\]</span> is less than 1, then the series converges absolutely. Therefore taking the limit of the absolute value of the above expression yields <span class="math display">\[\frac{1}{2}|x-3|\]</span></p>
 <p>To check if the endpoints are in the interval as well, we need to check the endpoints or where <span class="math inline">\(x=1\)</span> and <span class="math inline">\(x=5\)</span>. First, the left one. Substitute <span class="math inline">\(x=1\)</span> into <span class="math inline">\(c_n\)</span> or</p>
 <pre><code>simplify(subs(x=1,c(n)))</code></pre>
 <p>returns <span class="math inline">\(\dfrac{(-1)^{2n}}{n}\)</span> or <span class="math inline">\(\dfrac{1}{n}\)</span>. Recall that this means that when <span class="math inline">\(x=1\)</span>, we have the series: <span class="math display">\[\sum_{n=1}^{\infty} \frac{1}{n}\]</span> which diverges (it is the harmonic series).</p>
 <p>When <span class="math inline">\(x=5\)</span>,</p>
 <pre><code>simplify(subs(x = 5, c(n)))</code></pre>
-<p>return <span class="math inline">\(\dfrac{(-1)^{n}}{n}\)</span> so this means when <span class="math inline">\(x=5\)</span>, we have the series <span class="math display">\[\sum\_{n=1}^{\infty} \frac{(-1)^{n}}{n}\]</span> and this series converges by the alternating series remainder theorem. So the series <span class="math display">\[\sum\_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}\]</span> converges on the interval <span class="math inline">\((1,5]\)</span>.</p>
+<p>return <span class="math inline">\(\dfrac{(-1)^{n}}{n}\)</span> so this means when <span class="math inline">\(x=5\)</span>, we have the series <span class="math display">\[\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n}\]</span> and this series converges by the alternating series remainder theorem. So the series <span class="math display">\[\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}\]</span> converges on the interval <span class="math inline">\((1,5]\)</span>.</p>
 <p>The radius of convergence of this series is half of the total length or half of <span class="math inline">\(5-1=4\)</span>. Thus <span class="math inline">\(R=2\)</span>.</p>
 <p>###Exercise</p>
-<p>Find the center, interval of convergence and radius of convergence of <span class="math display">\[\sum\_{n=1}^{\infty} \frac{(x+2)^{n}}{5^{n}\sqrt{n}}\]</span></p>
+<p>Find the center, interval of convergence and radius of convergence of <span class="math display">\[\sum_{n=1}^{\infty} \frac{(x+2)^{n}}{5^{n}\sqrt{n}}\]</span></p>
 <p>###Taylor Series</p>
-<p>A function <span class="math inline">\(f(x)\)</span> has a power series defined at <span class="math inline">\(a\)</span>. It can be represented by <span class="math display">\[f(x) = \sum\_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^{n}\]</span></p>
+<p>A function <span class="math inline">\(f(x)\)</span> has a power series defined at <span class="math inline">\(a\)</span>. It can be represented by <span class="math display">\[f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^{n}\]</span></p>
 <p>###Example</p>
 <p>Find the first 5 terms (up to <span class="math inline">\(n=4\)</span>) of the Taylor Series of <span class="math inline">\(f(x)=\sqrt{x}\)</span> using the center <span class="math inline">\(a=1\)</span>.</p>
-<p>In Maple, we can do higher level derivatives, with a strange notation. The third derivative of <span class="math inline">\(\sqrt{x}\)</span> can be</p>
+<p>In Matlab, we can do higher level derivatives, with a strange notation. The third derivative of <span class="math inline">\(\sqrt{x}\)</span> can be</p>
 <pre><code>diff(sqrt(x),x$3)</code></pre>
 <p>and this returns: <span class="math display">\[\frac{3}{8x^{5/2}}\]</span></p>
 <p>So to do the first few terms of the Taylor series,</p>
@@ -271,7 +286,7 @@ a(0):=1</code></pre>
 <p>and this returns: <span class="math display">\[\frac{1}{2}+\frac{x}{2}-\frac{1}{8}\, \left( x-1 \right) ^{2}+\frac{1}{16}\, \left( x-1 \right) ^{3}-{
 \frac {5\, \left( x-1 \right) ^{4}}{128}}
 \]</span></p>
-<p>However, Maple also has this as a built-in command called <code>series</code>. Typing</p>
+<p>However, Matlab also has this as a built-in command called <code>series</code>. Typing</p>
 <pre><code>s:=series(f(x), x = 1, 5)</code></pre>
 <p>where <span class="math inline">\(x=1\)</span>, means the center is at <span class="math inline">\(a=1\)</span> and we have 5 terms.</p>
 <p>The command returns <span class="math display">\[\frac{1}{2}+\frac{x}{2}-\frac{1}{8}\, \left( x-1 \right) ^{2}+\frac{1}{16}\, \left( x-1 \right) ^{3}-{
@@ -292,8 +307,8 @@ a(0):=1</code></pre>
 <img src="images/ch10/plot03.png" alt="A plot of \sqrt{x} and it’s 50th order Taylor polynomial" /><figcaption aria-hidden="true">A plot of <span class="math inline">\(\sqrt{x}\)</span> and it’s 50th order Taylor polynomial</figcaption>
 </figure>
 <p>You can see the interval of convergence from the plot in that the two functions are nearly identical on the interval <span class="math inline">\((0,2)\)</span> and then the two functions are not equal beyond that. In addition, the radius of convergence is 1.</p>
-<h3 id="exercise">Exercise</h3>
-<p>Let <span class="math inline">\(f(x)=\frac{1}{x+3}\)</span>. Find <span class="math inline">\(T\_5(x),T\_{10}(x),T\_{100}(x)\)</span> if <span class="math inline">\(a=0\)</span> and plot <span class="math inline">\(f(x), T\_5(x),T\_{10}(x),T\_{100}(x)\)</span>.</p>
+<h3 id="exercise-3">Exercise</h3>
+<p>Let <span class="math inline">\(f(x)=\frac{1}{x+3}\)</span>. Find <span class="math inline">\(T_5(x),T_{10}(x),T_{100}(x)\)</span> if <span class="math inline">\(a=0\)</span> and plot <span class="math inline">\(f(x), T_5(x),T_{10}(x),T_{100}(x)\)</span>.</p>
 <p><a href="ch-10.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-12.html">Next chapter</a></p>
 </body>
 </html>

@@ -374,18 +374,19 @@ xval</code></pre>
 <p>There are two <span class="math inline">\(x\)</span> values such that <span class="math inline">\(1-x^{2}=\sin x\)</span>. Find the solution that satisfies <span class="math inline">\(x\lt 0\)</span>. Plot the two function to see if your answer is reasonable.</p>
 <h3 id="creating-a-newtons-method-function">Creating a Newton’s Method function</h3>
 <p>The following function:</p>
-<pre><code>function result = newton(f,df,x0,options)
+<pre><code>function result = newton(f,x0,options)
   arguments
     f function_handle
-    df function_handle
     x0 (1,1) {mustBeReal}
     options.eps (1,1) {mustBePositive} = 1e-6 
   end
 
+  syms x
+  df(x) = diff(f(x),x)
   x1=x0;
   
   dx=1; % this will be a step, just initialized to 1 to get the while loop started
-  while(abs(dx)&gt;options.eps)
+  while abs(dx)&gt;options.eps
     dx=f(x1)/df(x1);
     x1 = x1-dx;
   end
