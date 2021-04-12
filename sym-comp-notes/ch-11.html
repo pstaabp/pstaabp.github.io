@@ -204,7 +204,7 @@ plot(cumsum(1./2.^n),&#39;*-&#39;)</code></pre>
 symsum(1/2^n,n,0,inf)</code></pre>
 <p>will return 2.</p>
 <h4 id="exercise">Exercise</h4>
-<p>Try evaluating the following series:</p>
+<p>Use <code>symsum</code> to evaluate the following series:</p>
 <ol type="1">
 <li><span class="math inline">\(\displaystyle \sum_{n=1}^{\infty} \frac{1}{n}\)</span></li>
 <li><span class="math inline">\(\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^{2}}\)</span></li>
@@ -217,7 +217,7 @@ symsum(1/2^n,n,0,inf)</code></pre>
 <p>Recall that if the value of the sum is finite, then we say that the series <em>converges</em>. Otherwise, we say that the series <em>diverges</em>.</p>
 <h2 id="integral-test">Integral Test</h2>
 <p>Let <span class="math inline">\(a\)</span> be an integer and <span class="math inline">\(f\)</span> is a non-negative, decreasing function on <span class="math inline">\([a,\infty)\)</span>. Then <span class="math display">\[\sum_{n=a}^{\infty} f(n)\]</span> converges if <span class="math display">\[\int_a^{\infty} f(x) \, dx\]</span> converges. Conversely, if the integral diverges, then the series diverges.</p>
-<p>###Example</p>
+<h4 id="example">Example</h4>
 <p>Determine if <span class="math display">\[\sum_{n=1}^{\infty} \frac{1}{3n+1}\]</span> converges or diverges.</p>
 <ol type="1">
 <li><p>First, we note that <span class="math inline">\(f(n)&gt;0\)</span> for on the interval. We can let Matlab help us by doing <code>syms x     f(x) = 1/(3*x+1)     S = solve(f(x)&gt;0,'ReturnConditions',true)     S.conditions</code></p>
@@ -231,8 +231,8 @@ symsum(1/2^n,n,0,inf)</code></pre>
 <h2 id="ratio-test-ratface">Ratio Test (RATFACE)</h2>
 <p>Another important test for convergence is the Ratio Test for Absolute Convergence (affectionately known as RATFACE).</p>
 <p>First, recall that a series of the form: <span class="math display">\[\sum_{n=1}^{\infty} a_n\]</span> converge absolutely if <span class="math display">\[\sum_{n=1}^{\infty} |a_n|\]</span> converges.</p>
-<p>The Ratio Test is: Let <span class="math display">\[L=\lim_{n \rightarrow \infty} \left|\frac{a_{n+1}}{a_n}\right|\]</span> The series <span class="math inline">\(\sum_{n=1}^{\infty} a_n\)</span> converges if <span class="math inline">\(L&lt;1\)</span>, it diverges if <span class="math inline">\(L&gt;1\)</span> and is inconclusive if <span class="math inline">\(L=1\)</span>.</p>
-<h3 id="example">Example</h3>
+<p>The Ratio Test is: Let <span class="math display">\[L=\lim_{n \rightarrow \infty} \left|\frac{a_{n+1}}{a_n}\right|\]</span> The series <span class="math inline">\(\sum_{n=1}^{\infty} a_n\)</span> converges absolutely if <span class="math inline">\(L&lt;1\)</span>, it diverges if <span class="math inline">\(L&gt;1\)</span> and is inconclusive if <span class="math inline">\(L=1\)</span>.</p>
+<h3 id="example-1">Example</h3>
 <p>Use RATFACE to determine if <span class="math display">\[\sum_{n=0}^{\infty}\frac{1}{n!}\]</span> converges or diverges.</p>
 <p>Let’s define</p>
 <pre><code>syms n
@@ -243,72 +243,101 @@ a(n) = 1/factorial(n)</code></pre>
 <h4 id="exercise-2">Exercise</h4>
 <p>Use RATFACE to determine if <span class="math display">\[\sum_{n=0}^{\infty} \frac{(-1)^{n}}{(n+3)^{n}}\]</span></p>
 <p>converges or diverges. Can Matlab find a value for this?</p>
-<h2 id="power-and-taylor-series">Power and Taylor Series</h2>
+<h2 id="power-series">Power Series</h2>
 <p>A power series is a series of the form: <span class="math display">\[\sum_{n=0}^{\infty} c_n (x-a)^{n}\]</span> for known values <span class="math inline">\(c_n\)</span> and the number <span class="math inline">\(a\)</span> is called the <em>center</em>. For example, <span class="math display">\[\sum_{n=0}^{\infty} \frac{(-1)^{n}}{n!}x^{n}\]</span> The first few terms of this power series: <span class="math display">\[1-x+\frac{x^{2}}{2!}-\frac{x^{3}}{3!}+\frac{x^{4}}{4!}-\frac{x^{5}}{5!}+\cdots\]</span> We can’t plot a full power series because there are an infinite number of terms, but Matlab allows us to plot 10, 20 or 100 terms quite easily. These are called the <em>partial sums</em> or <em>partial series</em>.</p>
 <p>To plot up to <span class="math inline">\(n=10\)</span>, we can define</p>
-<pre><code>f:=sum((-1)^n*x^n/n!,n=0..10)</code></pre>
-<p>and then plot <span class="math inline">\(f\)</span>. The result is</p>
+<pre><code>syms x
+pow_series10 = symsum((-1)^n*x^n/factorial(n),n,0,10)</code></pre>
+<p>which returns: <span class="math display">\[
+\frac{x^{10} }{3628800}-\frac{x^9 }{362880}+\frac{x^8 }{40320}-\frac{x^7 }{5040}+\frac{x^6 }{720}-\frac{x^5 }{120}+\frac{x^4 }{24}-\frac{x^3 }{6}+\frac{x^2 }{2}-x+1
+\]</span> and then plot the series. The result is</p>
 <figure>
-<img src="images/ch10/plot01.png" alt="The partial series up to n=10 of the series above" /><figcaption aria-hidden="true">The partial series up to <span class="math inline">\(n=10\)</span> of the series above</figcaption>
+<img src="images/ch11/plot02.png" alt="The partial series up to n=10 of the series above" /><figcaption aria-hidden="true">The partial series up to <span class="math inline">\(n=10\)</span> of the series above</figcaption>
 </figure>
-<p>###The Center of a series</p>
+<h4 id="changing-the-output-preference">Changing the output preference</h4>
+<pre><code>sympref(&#39;PolynomialDisplayStyle&#39;,&#39;ascend&#39;);</code></pre>
+<p>will instruct Matlab to order the polynomial from smallest power to largest power.</p>
+<h3 id="the-center-of-a-series">The Center of a series</h3>
 <p>If a series is written in the form: <span class="math display">\[\sum_{n=0}^{\infty} c_n (x-a)^{n}\]</span></p>
 <p>then the constant <span class="math inline">\(a\)</span> is said to be the center of the series. For example, the series <span class="math display">\[\sum_{n=0}^{\infty} \frac{3^{n}}{n}(x+2)^{n}\]</span> has a center of <span class="math inline">\(a=-2\)</span>.</p>
-<p>###Interval and Radius of convergence</p>
+<h3 id="interval-and-radius-of-convergence">Interval and Radius of convergence</h3>
 <p>The <em>interval of convergence</em> is the set of all points on which a power series converges. The center of the series will also be the center of the interval.</p>
 <p>The <em>radius of convergence</em> is half of the total length of the interval of convergence.</p>
 <p>###Example</p>
 <p>Consider the series, <span class="math display">\[\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}\]</span></p>
 <p>Find the center, interval of convergence and radius of convergence.</p>
 <p>First, the center is <span class="math inline">\(a=3\)</span>, because of the form of the series. To find the interval of convergence, we will use RATFACE:</p>
-<pre><code>c:=n-&gt;(-1)^n*(x-3)^n/(n*2^n)</code></pre>
-<p>and if we</p>
-<pre><code>simplify(c(n+1)/c(n))</code></pre>
-<p>the result is <span class="math display">\[-\frac{1}{2}\frac{n(x-3)}{n+1}\]</span> The rule for RATFACE is that if <span class="math display">\[L=\lim_{n \rightarrow \infty} \left|\frac{c_{n+1}}{c_n}\right|\]</span> is less than 1, then the series converges absolutely. Therefore taking the limit of the absolute value of the above expression yields <span class="math display">\[\frac{1}{2}|x-3|\]</span></p>
+<pre><code>syms n x
+c(n) = (-1)^n/(n*2^n)*(x-3)^n</code></pre>
+<p>and then take the limit of the absolute value or</p>
+<pre><code>r = limit(abs(c(n+1)/c(n)),n,inf)</code></pre>
+<p>the result is <span class="math display">\[\frac{\left|x-3\right|}{2}\]</span>.</p>
+<p>The rule for RATFACE is that if <span class="math display">\[L=\lim_{n \rightarrow \infty} \left|\frac{c_{n+1}}{c_n}\right|\]</span> is less than 1, then the series converges absolutely. So let’s solve for that:</p>
+<pre><code>S = solve(r&lt;1,x,&#39;ReturnConditions&#39;,true,&#39;Real&#39;,true)
+S.conditions</code></pre>
+<p>and this returns the interval <span class="math inline">\((1,5)\)</span>.</p>
 <p>To check if the endpoints are in the interval as well, we need to check the endpoints or where <span class="math inline">\(x=1\)</span> and <span class="math inline">\(x=5\)</span>. First, the left one. Substitute <span class="math inline">\(x=1\)</span> into <span class="math inline">\(c_n\)</span> or</p>
-<pre><code>simplify(subs(x=1,c(n)))</code></pre>
+<pre><code>simplify(subs(c(n),x,1))</code></pre>
 <p>returns <span class="math inline">\(\dfrac{(-1)^{2n}}{n}\)</span> or <span class="math inline">\(\dfrac{1}{n}\)</span>. Recall that this means that when <span class="math inline">\(x=1\)</span>, we have the series: <span class="math display">\[\sum_{n=1}^{\infty} \frac{1}{n}\]</span> which diverges (it is the harmonic series).</p>
 <p>When <span class="math inline">\(x=5\)</span>,</p>
-<pre><code>simplify(subs(x = 5, c(n)))</code></pre>
+<pre><code>simplify(subs(c(n),x,5))</code></pre>
 <p>return <span class="math inline">\(\dfrac{(-1)^{n}}{n}\)</span> so this means when <span class="math inline">\(x=5\)</span>, we have the series <span class="math display">\[\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n}\]</span> and this series converges by the alternating series remainder theorem. So the series <span class="math display">\[\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n2^{n}}(x-3)^{n}\]</span> converges on the interval <span class="math inline">\((1,5]\)</span>.</p>
 <p>The radius of convergence of this series is half of the total length or half of <span class="math inline">\(5-1=4\)</span>. Thus <span class="math inline">\(R=2\)</span>.</p>
-<p>###Exercise</p>
+<h4 id="exercise-3">Exercise</h4>
 <p>Find the center, interval of convergence and radius of convergence of <span class="math display">\[\sum_{n=1}^{\infty} \frac{(x+2)^{n}}{5^{n}\sqrt{n}}\]</span></p>
-<p>###Taylor Series</p>
+<h2 id="taylor-series">Taylor Series</h2>
 <p>A function <span class="math inline">\(f(x)\)</span> has a power series defined at <span class="math inline">\(a\)</span>. It can be represented by <span class="math display">\[f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^{n}\]</span></p>
-<p>###Example</p>
+<h3 id="example-2">Example</h3>
 <p>Find the first 5 terms (up to <span class="math inline">\(n=4\)</span>) of the Taylor Series of <span class="math inline">\(f(x)=\sqrt{x}\)</span> using the center <span class="math inline">\(a=1\)</span>.</p>
-<p>In Matlab, we can do higher level derivatives, with a strange notation. The third derivative of <span class="math inline">\(\sqrt{x}\)</span> can be</p>
-<pre><code>diff(sqrt(x),x$3)</code></pre>
+<p>In Matlab, remember how to take higher order derivatives. Recall that the 3rd derivative of <span class="math inline">\(\sqrt{x}\)</span> can be</p>
+<pre><code>diff(sqrt(x),x,3)</code></pre>
 <p>and this returns: <span class="math display">\[\frac{3}{8x^{5/2}}\]</span></p>
-<p>So to do the first few terms of the Taylor series,</p>
-<pre><code>sum(subs(x=1, diff(f(x), x$n))*(x-1)^n/n!, n=0..4)</code></pre>
-<p>and this returns: <span class="math display">\[\frac{1}{2}+\frac{x}{2}-\frac{1}{8}\, \left( x-1 \right) ^{2}+\frac{1}{16}\, \left( x-1 \right) ^{3}-{
-\frac {5\, \left( x-1 \right) ^{4}}{128}}
+<p>So to do the first few terms of the Taylor series, we’ll first find the coefficients <span class="math inline">\(f^{(n)}(a)\)</span></p>
+<pre><code>syms x n
+a=1
+f(x) = sqrt(x)
+coeffs5 = arrayfun(@(n) subs(diff(f(x),x,n),x,a),0:5)</code></pre>
+<p>and this returns an array of the coeffients or: <span class="math display">\[\left(\begin{array}{cccccc}
+1 &amp; \dfrac{1}{2} &amp; -\dfrac{1}{4} &amp; \dfrac{3}{8} &amp; -\dfrac{15}{16} &amp; \dfrac{105}{32}
+\end{array}\right)\]</span></p>
+<p>and the to do the sum, it appears that <code>symsum</code> doesn’t work well with arrays like this, so we’ll resort to <code>sum</code> via:</p>
+<pre><code>ts5 = sum(coeffs5.*(x-1).^(0:5)./factorial(0:5))</code></pre>
+<p>and note that the . above are important to do element-by-element operations. The result is <span class="math display">\[
+\frac{x}{2}-\frac{{{\left(x-1\right)}}^2 }{8}+\frac{{{\left(x-1\right)}}^3 }{16}-\frac{5\,{{\left(x-1\right)}}^4 }{128}+\frac{7\,{{\left(x-1\right)}}^5 }{256}+\frac{1}{2}
 \]</span></p>
-<p>However, Matlab also has this as a built-in command called <code>series</code>. Typing</p>
-<pre><code>s:=series(f(x), x = 1, 5)</code></pre>
-<p>where <span class="math inline">\(x=1\)</span>, means the center is at <span class="math inline">\(a=1\)</span> and we have 5 terms.</p>
-<p>The command returns <span class="math display">\[\frac{1}{2}+\frac{x}{2}-\frac{1}{8}\, \left( x-1 \right) ^{2}+\frac{1}{16}\, \left( x-1 \right) ^{3}-{
-\frac {5\, \left( x-1 \right) ^{4}}{128}} + O((x-1)^{5})
+<h3 id="plotting-a-taylor-series">Plotting a Taylor Series</h3>
+<p>One of the important parts of Taylor Series is that for the interval of convergence as the number of terms taken increases, the taylor series approaches the function. (Discuss the Taylor Remainder Theorem).</p>
+<p>Let’s take a look at the plot of the Taylor Series and the function above with</p>
+<pre><code>fplot([ts sqrt(x)],[0 3])</code></pre>
+<p>and the resulting plot is <img src="images/ch11/plot03.png" alt="The first 5 terms of the Taylor Series of f(x)=\sqrt{x} at a=1" /></p>
+<p>Let’s see what happens if we take more terms. Repeating the steps for <span class="math inline">\(T_{10}(x)\)</span>, meaning the highest term is a 10th degree.</p>
+<pre><code>coeffs10 = arrayfun(@(n) subs(diff(f(x),x,n),x,a),0:10)
+ts10 = sum(coeffs10.*(x-1).^(0:10)./factorial(0:10))</code></pre>
+<p>results in <span class="math display">\[
+\frac{x}{2}-\frac{{{\left(x-1\right)}}^2 }{8}+\frac{{{\left(x-1\right)}}^3 }{16}-\frac{5\,{{\left(x-1\right)}}^4 }{128}+\frac{7\,{{\left(x-1\right)}}^5 }{256}-\frac{21\,{{\left(x-1\right)}}^6 }{1024}+\frac{33\,{{\left(x-1\right)}}^7 }{2048}-\frac{429\,{{\left(x-1\right)}}^8 }{32768}+\frac{715\,{{\left(x-1\right)}}^9 }{65536}-\frac{2431\,{{\left(x-1\right)}}^{10} }{262144}+\frac{1}{2}
 \]</span></p>
-<p>which is nearly identical to that above, except the final term, which means that the next larger power has the form <span class="math inline">\((x-1)^{5}\)</span>.</p>
-<p>###Plotting a Taylor Series</p>
-<p>If you try to plot the series (result from the <code>series</code> command), you will get the following error:</p>
-<p><code>Warning, unable to evaluate the function to numeric values in the region; see the plotting command's help page to ensure the calling sequence is correct</code></p>
-<p>This is because of the last term. You can remove it using</p>
-<pre><code>convert(s,polynom)</code></pre>
-<p>which converts this to a polynomial (or just removes the last term) and then plotting this and the original function is</p>
-<figure>
-<img src="images/ch10/plot02.png" alt="A plot of \sqrt{x} and it’s 4th order Taylor polynomial" /><figcaption aria-hidden="true">A plot of <span class="math inline">\(\sqrt{x}\)</span> and it’s 4th order Taylor polynomial</figcaption>
-</figure>
-<p>If we repeat the steps however use 50 terms, and replot, here are the results:</p>
-<figure>
-<img src="images/ch10/plot03.png" alt="A plot of \sqrt{x} and it’s 50th order Taylor polynomial" /><figcaption aria-hidden="true">A plot of <span class="math inline">\(\sqrt{x}\)</span> and it’s 50th order Taylor polynomial</figcaption>
-</figure>
-<p>You can see the interval of convergence from the plot in that the two functions are nearly identical on the interval <span class="math inline">\((0,2)\)</span> and then the two functions are not equal beyond that. In addition, the radius of convergence is 1.</p>
-<h3 id="exercise-3">Exercise</h3>
-<p>Let <span class="math inline">\(f(x)=\frac{1}{x+3}\)</span>. Find <span class="math inline">\(T_5(x),T_{10}(x),T_{100}(x)\)</span> if <span class="math inline">\(a=0\)</span> and plot <span class="math inline">\(f(x), T_5(x),T_{10}(x),T_{100}(x)\)</span>.</p>
+<p>and a plot of the function <span class="math inline">\(\sqrt{x}\)</span> along with the two Taylor Series that we found is: <img src="images/ch11/plot04.png" alt="The partial series up to n=10 of the series above" /></p>
+<h3 id="using-the-built-in-taylor-series-command">Using the built-in Taylor Series command</h3>
+<p>The <code>taylor</code> function will do all of these steps for you. For example:</p>
+<pre><code>taylor(exp(x))</code></pre>
+<p>returns the Taylor Series for <span class="math inline">\(e^x\)</span> using the default <span class="math inline">\(a=0\)</span> as the center and <span class="math inline">\(n=5\)</span> as the degree of the polynomial. It returns: <span class="math display">\[
+1+x+\frac{x^2 }{2}+\frac{x^3 }{6}+\frac{x^4 }{24}+\frac{x^5 }{120}
+\]</span></p>
+<p>If we want to change this to a degree <span class="math inline">\(N=10\)</span> polynomials, we can enter</p>
+<pre><code>taylor(exp(x),&#39;Order&#39;,10)</code></pre>
+<h4 id="changing-the-center-of-the-taylor-expansion">Changing the Center of the taylor expansion</h4>
+<p>We can also change the center of the expansion using the option <code>ExpansionPoint</code>. The following finds the 5th degree Taylor Polynomial for <span class="math inline">\(\sqrt{x}\)</span> at <span class="math inline">\(a=1\)</span>.</p>
+<pre><code>taylor(sqrt(x),&#39;ExpansionPoint&#39;,1)</code></pre>
+<h4 id="estimating-the-radius-of-convergence-of-a-taylor-series-visually">Estimating the Radius of Convergence of a Taylor Series Visually</h4>
+<p>We can determing the radius of convergence visually by plotting taylor series with higher values of <span class="math inline">\(N\)</span>. Consider taylor series of <span class="math inline">\(f(x) = \ln x\)</span> with center <span class="math inline">\(a=2\)</span>. We can produce these easier for various orders, consider <span class="math inline">\(n=5,10,25\)</span> using:</p>
+<pre><code>ts5=taylor(log(x),x,2)
+ts10=taylor(log(x),x,2,&#39;Order&#39;,10)
+ts25=taylor(log(x),x,2,&#39;Order&#39;,25)
+fplot([log(x),ts5,ts10,ts25],[0,5])</code></pre>
+<p>and you should see <img src="images/ch11/plot05.png" alt="The taylor series of \ln x for n=5,10,25" /></p>
+<p>You can see that as the <span class="math inline">\(n\)</span> is larger is is closer to the function <span class="math inline">\(f(x)\)</span> until right around 4. From the plot, the best guess for the radius of convergence would be from 2 to 4 or a radius of 2. Also, it appears that the taylor series is a good fit between 0 and 2.</p>
+<h4 id="exercise-4">Exercise</h4>
+<p>Let <span class="math inline">\(f(x)=\dfrac{1}{x+3}\)</span>. Find <span class="math inline">\(T_5(x),T_{10}(x),T_{100}(x)\)</span> if <span class="math inline">\(a=0\)</span> and plot <span class="math inline">\(f(x), T_5(x),T_{10}(x),T_{100}(x)\)</span>.</p>
 <p><a href="ch-10.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-12.html">Next chapter</a></p>
 </body>
 </html>
