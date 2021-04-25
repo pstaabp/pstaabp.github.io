@@ -175,7 +175,7 @@
 <pre><code>cross(v,w)</code></pre>
 <p>which returns the vector <span class="math display">\[\left[\begin{array}{r} -26 \\ -25 \\ 18 \end{array}\right]\]</span></p>
 <h2 id="matrices">Matrices</h2>
-<p>To enter a matrix in Maple, it is entered row by row. Consider the matrix: <span class="math display">\[A=\left[\begin{array}{cccc} 1 &amp; 2 &amp; 3 &amp; 4 \\ 5 &amp; 6 &amp; 7 &amp; 8 \\ 9 &amp; 10 &amp; 11 &amp; 12 \end{array} \right]\]</span> you can enter this as</p>
+<p>To enter a matrix in Matlab, it is entered row by row. Consider the matrix: <span class="math display">\[A=\left[\begin{array}{cccc} 1 &amp; 2 &amp; 3 &amp; 4 \\ 5 &amp; 6 &amp; 7 &amp; 8 \\ 9 &amp; 10 &amp; 11 &amp; 12 \end{array} \right]\]</span> you can enter this as</p>
 <pre><code>A=[1,2,3,4;5,6,7,8;9,10,11,12]</code></pre>
 <p>Let’s also define the matrix <span class="math inline">\(B\)</span> to be a 3 by 4 matrix of all ones, which can be done with</p>
 <pre><code>B=ones(3,4)</code></pre>
@@ -195,7 +195,7 @@
 \end{array} \right]\]</span></p>
 <p>and if we subtract</p>
 <pre><code>A-B</code></pre>
-<p>Maple returns <span class="math display">\[\left[\begin{array}{cccc} 
+<p>Matlab returns <span class="math display">\[\left[\begin{array}{cccc} 
 0 &amp; 1 &amp; 2 &amp; 3 \\ 
 4 &amp; 5 &amp; 6 &amp; 7 \\ 
 8 &amp; 9 &amp; 10 &amp; 11  \end{array} \right]\]</span></p>
@@ -245,7 +245,7 @@ second matrix. To perform elementwise multiplication, use &#39;.*&#39;.</code></
 \left[\begin{array}{cc}1&amp;0\\0&amp;1\end{array}\right]&amp;\left[\begin{array}{ccc}1&amp;0&amp;0\\0&amp;1&amp;0\\0&amp;0&amp;1\end{array}\right]&amp;
 \left[\begin{array}{cccc}1&amp;0&amp;0&amp;0\\0&amp;1&amp;0&amp;0\\0&amp;0&amp;1&amp;0\\0&amp;0&amp;0&amp;1\end{array}\right]\end{array}\]</span></p>
 <p>An identity matrix has the property that if you mulitply a matrix or a vector by the identity matrix, the matrix or vector is returned. More particularly, <span class="math display">\[\begin{array}{cccc}IA=A &amp; AI=A &amp; I\vec{v}=\vec{v} &amp; \vec{v}I=\vec{v}\end{array}\]</span></p>
-<p>To get an Identity matrix in Maple, use the <code>eye</code> command. For example</p>
+<p>To get an Identity matrix in Matlab, use the <code>eye</code> command. For example</p>
 <pre><code>eye(3)</code></pre>
 <p>returns a 3 by 3 identity matrix.</p>
 <h4 id="exercise-1">Exercise</h4>
@@ -269,7 +269,7 @@ second matrix. To perform elementwise multiplication, use &#39;.*&#39;.</code></
 <h2 id="gaussian-elimination">Gaussian Elimination</h2>
 <p>One of the first concepts in linear algebra is how to solve linear systems. For example, <span class="math display">\[\begin{array}{rl} 3x- 2y &amp; = 4 \\
 x + 5y &amp; = 7 \end{array}\]</span></p>
-<p>Maple can solve this by using the <code>solve</code> command such as</p>
+<p>Matlab can solve this by using the <code>solve</code> command such as</p>
 <pre><code>syms x y
 [x_ans,y_ans]=solve([3*x-2*y==4,x+5*y==7])</code></pre>
 <p>which returns <span class="math inline">\(\{x=2,y=1\}\)</span>. In linear algebra, we find the augmented coefficient matrix as <span class="math display">\[\left[\begin{array}{ccc} 3 &amp; -2 &amp; 4 \\ 1 &amp; 5 &amp; 7 \end{array}\right]\]</span></p>
@@ -354,7 +354,7 @@ I\vec{x}&amp;=A^{-1}\vec{b}\qquad
 \text{since $I\vec{x}=\vec{x}\qquad\qquad$}&amp;\\
 \vec{x}&amp;=A^{-1}\vec{b}\end{array}\]</span></p>
 <p>Use this to solve the linear system above.</p>
-<p>First, we will find <span class="math inline">\(A^{-1}\)</span> using the <code>MatrixInverse</code> command:</p>
+<p>First, we will find <span class="math inline">\(A^{-1}\)</span> using the <code>inv</code> command:</p>
 <pre><code>Ainv=inv(sym(A))</code></pre>
 <p>which returns <span class="math display">\[\left[ \begin {array}{ccc} {\frac {5}{36}}&amp;-\frac{1}{9}&amp;{\frac {7}{
 36}}\\ -{\frac {7}{72}}&amp;-\frac{2}{9}&amp;-{\frac {17}{72}}
@@ -420,12 +420,8 @@ x -\frac{1}{2}y = 0
 <p>Use the steps above to find the eigenvalues and eigenvectors of <span class="math display">\[A=\left[\begin{array}{cc}6&amp;2\\4&amp;4\end{array}\right]\]</span></p>
 <h3 id="finding-the-eigenvalues-and-eigenvectors-with-a-single-command">Finding the Eigenvalues and Eigenvectors with a single command</h3>
 <p>Matlab (along with many related software packages) will find the eigenvalues and eigenvectors of a matrix. Technically, they are usually approximations because the general eigenvalue problem is hard to do from a computational point of view as the matrices get large.</p>
-<p>Of course, Maple can just find the eigenvalues and eigenvectors as well.</p>
-<p>Returning to the matrix:<span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\ -2&amp;3\end{array}\right]\]</span> type</p>
-<pre><code>Eigenvalues(A)</code></pre>
-<p>and one gets: <span class="math display">\[\left[\begin{array}{c}5\\2\end{array}\right]\]</span></p>
-<p>Note: this is not a vector, but the two eigenvectors are just 5 and 2 as we saw above.</p>
-<p>To find the eigenvalues, type</p>
+<p>Of course, Matlab can just find the eigenvalues and eigenvectors as well.</p>
+<p>Returning to the matrix:<span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\ -2&amp;3\end{array}\right]\]</span> we can let Matlab find the eigenvalues directly with</p>
 <pre><code>eig(A)</code></pre>
 <p>and you get: <span class="math display">\[\left[\begin{array}{c}5\\2\end{array}\right]\]</span> which are the roots of the characteristic polynomial. If you enter:</p>
 <pre><code>[v,s] = eig(A)</code></pre>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>ch-14</title>
+  <title>Chapter 14: Curvature of Plane curves</title>
   <style>
     html {
       line-height: 1.5;
@@ -149,33 +149,96 @@
   <![endif]-->
 </head>
 <body>
-<h1 id="chapter-13-curvature-of-plane-curves">Chapter 13: Curvature of Plane curves</h1>
-<p><a href="index.html">Return to all notes</a></p>
+<header id="title-block-header">
+<h1 class="title">Chapter 14: Curvature of Plane curves</h1>
+</header>
+<p><a href="ch-13.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-15.html">Next chapter</a></p>
 <p>An interesting topic related to derivatives is that of the curvature of a curve at a point, called <span class="math inline">\(\kappa\)</span>, the greek letter kappa, which is <span class="math display">\[
 \kappa = \frac{|f^{\prime\prime}(a)|}{(1+f&#39;(a)^{2})^{3/2}}
 \]</span></p>
 <p>Geometrically, the curvature is <span class="math display">\[ \kappa = \frac{1}{R}\]</span> where <span class="math inline">\(R\)</span> is the radius of the circle that is tangent to the curve at the point <span class="math inline">\((a,f(a))\)</span></p>
-<p>As an example, let’s take <span class="math inline">\(f(x)=x^{2}\)</span> and find the curvature at <span class="math inline">\(x=0\)</span>. Plugging into Maple, we get: <span class="math inline">\(\kappa = 2\)</span>. Thus the radius of the circle that is tangent to this is <span class="math inline">\(R=1/2\)</span> and since <span class="math inline">\(x=0\)</span>, then the circle is <span class="math inline">\(x^{2}+(y-1/2)^{2} =(1/2)^{2}\)</span>. A plot of this is</p>
+<p>As an example, let’s take <span class="math inline">\(f(x)=x^{2}\)</span> and find the curvature at <span class="math inline">\(x=0\)</span>. Evaluating <span class="math inline">\(\kappa\)</span>, we get: <span class="math inline">\(\kappa = 2\)</span>. Thus the radius of the circle that is tangent to this is <span class="math inline">\(R=1/2\)</span> and since <span class="math inline">\(x=0\)</span>, then the circle is <span class="math inline">\(x^{2}+(y-1/2)^{2} =(1/2)^{2}\)</span>. A plot of this is</p>
 <figure>
-<img src="images/ch13/plot02.png" alt="Plot of y=x^2 and its tangent circle" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(y=x^2\)</span> and its tangent circle</figcaption>
+<img src="images/ch14/plot01.png" alt="Plot of y=x^2 and its tangent circle" /><figcaption aria-hidden="true">Plot of <span class="math inline">\(y=x^2\)</span> and its tangent circle</figcaption>
 </figure>
 <h3 id="example">Example</h3>
 <p>Find the tangent circle to the curve <span class="math inline">\(y=x^{2}\)</span> at <span class="math inline">\(x=1\)</span>. Plot the curve and the circle.</p>
+<pre><code>syms x a
+f(x) = x^2
+df(x) = diff(f(x),x)
+d2f(x) = diff(f(x),x,2)
+kappa(a) = abs(d2f(a))/nthroot((1+df(a)^2)^3,2)
+simplify(kappa(1))</code></pre>
 <p>The curvature in this case is <span class="math inline">\(\kappa = 2\sqrt{5}/25\)</span>. To find the circle, it is a bit more challenging since it is not clear where the center of the circle is. The center of the circle will be on the line that is perpendicular to the curve at the point. Since <span class="math inline">\(f&#39;(a)=2a\)</span>, the perpendicular line is <span class="math display">\[ y=-\frac{1}{2}(x-1)+1 \]</span></p>
 <p>To find the center of the circle, we seek the intersection of the this line and the circle <span class="math inline">\((x-1)^{2}+(y-1)^{2} = (25/(2\sqrt{5})^{2}\)</span>, since the distance along the line is <span class="math inline">\(1/\kappa\)</span>. If we let <span class="math inline">\(a=1\)</span>, then</p>
-<pre><code>solve([y = -1/(f&#39;(a))*(x-a)+f(a), (x-a)^2+(y-f(a))^2 = 1/kappa(a)^2])</code></pre>
-<p>returns</p>
-<pre><code>{x = 6, y = -3/2}, {x = -4, y = 7/2}</code></pre>
-<p>We seek the point above and left of the point. Plotting the curve <span class="math inline">\(y=x^{2}\)</span> and the circle with the center <span class="math inline">\((-4,7/2)\)</span> is</p>
+<pre><code>S = solve([y==-1/df(1)*(x-1)+f(1),(x-1)^2+(y-1)^2==1/(kappa(1)^2)])
+S.x
+S.y</code></pre>
+<p>results in the two points <span class="math inline">\((6,-3/2)\)</span> and <span class="math inline">\((-4,7/2)\)</span>. Because of the way the graph is curving, we seek the point above and left of the point. Plotting the curve <span class="math inline">\(y=x^{2}\)</span> and the circle with the center <span class="math inline">\((-4,7/2)\)</span> is</p>
 <figure>
-<img src="images/ch13/plot03.png" alt="A plot of y=x^{2} and its tangent circle" /><figcaption aria-hidden="true">A plot of <span class="math inline">\(y=x^{2}\)</span> and its tangent circle</figcaption>
+<img src="images/ch14/plot02.png" alt="A plot of y=x^{2} and its tangent circle" /><figcaption aria-hidden="true">A plot of <span class="math inline">\(y=x^{2}\)</span> and its tangent circle</figcaption>
 </figure>
 <h3 id="exercise">Exercise</h3>
 <p>Find the curvature of <span class="math inline">\(y=\cos x\)</span> at <span class="math inline">\(x=0\)</span>. Find the tangent circle and plot both the function and the circle.</p>
 <p>Repeat for <span class="math inline">\(x=\pi/4\)</span>.</p>
-<h3 id="a-very-cool-animation-of-curvature">A very cool animation of curvature</h3>
-<p>The following in an animation of the circle.</p>
-<p><img src="images/ch13/plot04.gif" /></p>
-<p>Note: to create this, a procedure was written to find the equation of the circle for a given function and point. Then the animate function of the plots package was used. The exact code isn’t presented, because that would overly simplify the homework.</p>
+<!-- ### A very cool animation of curvature
+
+We can try this for a bunch of values and create an animation:
+
+
+![](images/ch13/plot04.gif)
+
+Note: to create this, a procedure was written to find the equation of the circle for a given function and point.  Then the animate function of the plots package was used.  The exact code isn't presented, because that would overly simplify the homework. -->
+<h2 id="curvature-of-parametric-curves">Curvature of Parametric Curves</h2>
+<p>If we have a parametric curve of the form <span class="math inline">\((x(t),y(t))\)</span>, then the curvature at the value <span class="math inline">\(t\)</span> is <span class="math display">\[\kappa = \frac{|x&#39;(t)y&#39;&#39;(t)-x&#39;&#39;(t)y&#39;(t)|}{(x&#39;(t)^2+y&#39;(t)^2)^{3/2}}\]</span></p>
+<p>Consider <span class="math display">\[x(t) = 2\cos t + 5 \cos\biggl(\frac{2t}{3}\biggr) \qquad
+y(t) = 2\sin t + 5 \sin\biggl(\frac{2t}{3}\biggr)\]</span> and a plot of this on the interval <span class="math inline">\([0,2\pi]\)</span> is</p>
+<figure>
+<img src="images/ch14/plot03.png" alt="A plot of a Hypotrochoid" /><figcaption aria-hidden="true">A plot of a Hypotrochoid</figcaption>
+</figure>
+<p>We can find the curvature in the following way:</p>
+<pre><code>syms t
+x(t) = 2*cos(t)+5*cos(2*t/3)
+y(t) = 2*sin(t)-5*sin(2*t/3)
+
+dx(t) = diff(x(t),t);
+dy(t) = diff(y(t),t);
+d2x(t) = diff(x(t),t,2);
+d2y(t) = diff(y(t),t,2);
+kappa(t) = abs(dx(t)*d2y(t)-d2x(t)*dy(t))/sqrt((dx(t)^2+dy(t)^2)^3)</code></pre>
+<p>and for example the curvature when <span class="math inline">\(t=0\)</span> (which is the point <span class="math inline">\((7,0)\)</span>) is</p>
+<pre><code>kappa(0)</code></pre>
+<p>which returns <span class="math inline">\(\dfrac{19}{8}\)</span>, so a tangent circle at this point would have a radius of <span class="math inline">\(\dfrac{8}{19}\)</span>.</p>
+<p>It looks from the plot that the curve is nearly linear. We can see how close it is to linear using the curvature. Looking at a plot of the curvature on <span class="math inline">\([0,6\pi]\)</span> is given with</p>
+<pre><code>fplot(kappa(t),[0 6*pi])</code></pre>
+<p>which is <img src="images/ch14/plot04.png" alt="A plot of the curvature of the hypotrochoid" /></p>
+<p>and looking near <span class="math inline">\(t=2\)</span> (and 4 other places) it looks to be nearly flat. Let’s find the value of <span class="math inline">\(t\)</span> that is minimum there.</p>
+<p>First we need the derivative:</p>
+<pre><code>dk(t) = diff(kappa(t),t)</code></pre>
+<p>and this returns: <span class="math display">\[
+\begin{array}{l}
+\frac{\mathrm{sign}\left(\sigma_1 \right)\,{\left(\sigma_6 \,{\left(\frac{40\,\sigma_7 }{27}+2\,\mathrm{sin}\left(t\right)\right)}-{\left(\frac{40\,\sigma_8 }{27}-2\,\mathrm{cos}\left(t\right)\right)}\,\sigma_5 \right)}}{\sqrt{{\sigma_2 }^3 }}+\frac{3\,\left|\sigma_1 \right|\,{\left(2\,\sigma_6 \,\sigma_3 -2\,\sigma_4 \,\sigma_5 \right)}\,{\sigma_2 }^2 }{2\,{{\left({\sigma_2 }^3 \right)}}^{3/2} }\\
+\mathrm{}\\
+\textrm{where}\\
+\mathrm{}\\
+\;\;\sigma_1 =-\sigma_6 \,\sigma_4 -\sigma_5 \,\sigma_3 \\
+\mathrm{}\\
+\;\;\sigma_2 ={\sigma_6 }^2 +{\sigma_5 }^2 \\
+\mathrm{}\\
+\;\;\sigma_3 =\frac{20\,\sigma_7 }{9}-2\,\mathrm{sin}\left(t\right)\\
+\mathrm{}\\
+\;\;\sigma_4 =\frac{20\,\sigma_8 }{9}+2\,\mathrm{cos}\left(t\right)\\
+\mathrm{}\\
+\;\;\sigma_5 =\frac{10\,\sigma_7 }{3}+2\,\mathrm{sin}\left(t\right)\\
+\mathrm{}\\
+\;\;\sigma_6 =\frac{10\,\sigma_8 }{3}-2\,\mathrm{cos}\left(t\right)\\
+\mathrm{}\\
+\;\;\sigma_7 =\mathrm{sin}\left(\frac{2\,t}{3}\right)\\
+\mathrm{}\\
+\;\;\sigma_8 =\mathrm{cos}\left(\frac{2\,t}{3}\right)
+\end{array}
+\]</span> which is quite complicated and Matlab probably can’t solve it. However, let’s get an approximation using Newton’s method.</p>
+<pre><code>t0 = newton(@(t) dk(t),2)</code></pre>
+<p>which returns 1.8850 and then evaluating the curvature there with <code>kappa(t0)</code> is 0.0078, so nearly linear, but not. The radius of the tangent would be the reciprocal of this or 128, a fairly large circle relative to the size of this figure.</p>
 </body>
 </html>
