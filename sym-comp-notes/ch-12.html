@@ -322,8 +322,8 @@ x + 5y &amp; = 7 \end{array}\]</span></p>
 <p>One way to find the matrix inverse of <span class="math inline">\(A\)</span> is write the matrix augmented with the identity matrix and then put it in Reduced Row echelon form.</p>
 <p>For example, consider the matrix</p>
 <p><span class="math display">\[A=\left[\begin{array}{ccc}-3&amp;4&amp;-5\\-4&amp;-2&amp;-1\\5&amp;-4&amp;3\end{array}\right]\]</span> then we write the augmented matrix where the 3 by 3 identity matrix is append on the right side. We can to this using the command:</p>
-<pre><code>Aug:=cat(2,A,eye(3))</code></pre>
-<p>where the 2 means to concatenate by colums (dimension 2), the two matrices <code>A</code> and <code>eye(3)</code>, 3 by 3 identity matrix. This returns <span class="math display">\[\left[\begin{array}{ccc}-3&amp;4&amp;-5&amp;1&amp;0&amp;0\\-4&amp;-2&amp;-1&amp;0&amp;1&amp;0\\5&amp;-4&amp;3&amp;0&amp;0&amp;1\end{array}\right]\]</span> We can then use <code>rref(Aug)</code> to get</p>
+<pre><code>aug=cat(2,A,eye(3))</code></pre>
+<p>where the 2 means to concatenate by colums (dimension 2), the two matrices <code>A</code> and <code>eye(3)</code>, 3 by 3 identity matrix. This returns <span class="math display">\[\left[\begin{array}{ccc}-3&amp;4&amp;-5&amp;1&amp;0&amp;0\\-4&amp;-2&amp;-1&amp;0&amp;1&amp;0\\5&amp;-4&amp;3&amp;0&amp;0&amp;1\end{array}\right]\]</span> We can then use <code>rref(aug)</code> to get</p>
 <p><span class="math display">\[\left[ \begin {array}{cccccc} 1&amp;0&amp;0&amp;{\frac {5}{36}}&amp;-\frac{1}{9}&amp;{\frac {7}{
 36}}\\ 0&amp;1&amp;0&amp;-{\frac {7}{72}}&amp;-\frac{2}{9}&amp;-{\frac {17}{72}}
 \\ 0&amp;0&amp;1&amp;-{\frac {13}{36}}&amp;-\frac{1}{9}&amp;-{\frac {11}{36}}
@@ -335,7 +335,7 @@ x + 5y &amp; = 7 \end{array}\]</span></p>
 <p>We can also get the same result from the command <code>inv</code>:</p>
 <pre><code>inv(sym(A))</code></pre>
 <p>returns the same matrix above.</p>
-<p>###Exercise</p>
+<h4 id="exercise-2">Exercise</h4>
 <ol type="1">
 <li>Find the inverse of <span class="math display">\[C=\left[ \begin {array}{ccc} -1&amp;-3&amp;0\\-3&amp;2&amp;-1\\1&amp;-3&amp;0\end {array} \right]\]</span> using the augmented matrix with the identity matrix.</li>
 <li>Find the inverse of <span class="math inline">\(C\)</span> using the command <code>inv</code></li>
@@ -370,7 +370,7 @@ I\vec{x}&amp;=A^{-1}\vec{b}\qquad
 <li><p>The eigenvalues can be found by solving <span class="math display">\[|A-\lambda I|=0\]</span>where the vertical lines is the determinant of the matrix.</p></li>
 <li><p>For each eigenvalue, you seek for a vector <span class="math inline">\(\vec{v}\)</span> such that <span class="math display">\[(A-I\lambda)\vec{v}=\vec{0}\]</span></p></li>
 </ol>
-<p>###Example</p>
+<h4 id="example">Example</h4>
 <p>Find the eigenvalues and eigenvectors of the matrix <span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\-2&amp;3\end{array}\right]\]</span></p>
 <p>Step 1: Solve <span class="math inline">\(|A-\lambda I|=0\)</span>, the <em>characteristic equation</em> of the matrix <span class="math inline">\(A\)</span>.</p>
 <pre><code>syms s
@@ -416,7 +416,7 @@ x -\frac{1}{2}y = 0
 <p>The first row of the equation, means that <span class="math inline">\(x+y=0\)</span>. We seek any nonzero solution to this, if <span class="math inline">\(y=-1\)</span> and <span class="math inline">\(x=1\)</span>, then the vector is <span class="math display">\[\vec{v}_2=\left[\begin{array}{c}1\\-1\end{array}\right]\]</span>.</p>
 <p>In summary for the matrix <span class="math display">\[A=\left[\begin{array}{cc}4&amp;-1\\-2&amp;3\end{array}\right]\]</span></p>
 <p>The eigenvalues are 5 and 2 and the associated eigenvectors are <span class="math display">\[\begin{array}{rl}\vec{v}_1=\left[\begin{array}{c}1\\-1\end{array}\right]&amp; \vec{v}_2=\left[\begin{array}{c}1\\2\end{array}\right]\end{array}\]</span></p>
-<h4 id="exercise-2">Exercise</h4>
+<h4 id="exercise-3">Exercise</h4>
 <p>Use the steps above to find the eigenvalues and eigenvectors of <span class="math display">\[A=\left[\begin{array}{cc}6&amp;2\\4&amp;4\end{array}\right]\]</span></p>
 <h3 id="finding-the-eigenvalues-and-eigenvectors-with-a-single-command">Finding the Eigenvalues and Eigenvectors with a single command</h3>
 <p>Matlab (along with many related software packages) will find the eigenvalues and eigenvectors of a matrix. Technically, they are usually approximations because the general eigenvalue problem is hard to do from a computational point of view as the matrices get large.</p>

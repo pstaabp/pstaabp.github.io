@@ -149,14 +149,14 @@
   <![endif]-->
 </head>
 <body>
-<h1 id="chapter-15-complex-numbers">Chapter 15: Complex Numbers</h1>
+<h1 id="chapter-16-complex-numbers">Chapter 16: Complex Numbers</h1>
 <p><a href="index.html">Return to all notes</a></p>
 <p>Recall that the imaginary unit <span class="math inline">\(i\)</span> is defined as the number such that <span class="math inline">\(i^{2}=-1\)</span>. In Maple, this is a built-the constant <span class="math inline">\(I\)</span>. Just for kicks, try it:</p>
 <pre><code>I^2</code></pre>
 <p>and you get <span class="math inline">\(-1\)</span>.</p>
 <h2 id="the-complex-plane">The Complex Plane</h2>
 <p>The complex plane is just like the <span class="math inline">\(xy\)</span>-plane in which the horizontal axis is the real axis and the vertical one is the imaginary axis.<br />
-We can plot any point <span class="math inline">\(x\_1+i y\_1\)</span> as the point <span class="math inline">\((x\_1,y\_1)\)</span> on the standard <span class="math inline">\(xy\)</span>-plane.</p>
+We can plot any point <span class="math inline">\(x_1+i y_1\)</span> as the point <span class="math inline">\((x_1,y_1)\)</span> on the standard <span class="math inline">\(xy\)</span>-plane.</p>
 <p>(add a plot)</p>
 <h2 id="the-real-an-imaginary-parts-of-a-complex-number">The real an imaginary parts of a complex number</h2>
 <p>If <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are real numbers and we define <span class="math inline">\(z=x+iy\)</span>, then there are functions that return the real and imaginary parts of <span class="math inline">\(z\)</span>. Mathematically, we use <span class="math inline">\(\Re(z)\)</span> and <span class="math inline">\(\Im(z)\)</span> to represent these and they are defined as</p>
@@ -193,22 +193,22 @@ z &amp; = r (\cos \theta + i \sin \theta) \newline
 &amp; = x + i y
 \end{array} \]</span></p>
 <h2 id="arithmetic-with-complex-numbers.">Arithmetic with complex numbers.</h2>
-<p>Maple can handle standard arithmetic operations with complex nubmers. Just to recall if <span class="math display">\[z_1=x\_1+i y\_1 \qquad z_2 = x\_2 + i y\_2\]</span></p>
+<p>Maple can handle standard arithmetic operations with complex nubmers. Just to recall if <span class="math display">\[z_1=x_1+i y_1 \qquad z_2 = x_2 + i y_2\]</span></p>
 <p>then <span class="math display">\[\begin{array}{rl}
-z\_1 + z\_2 &amp; = (x\_1+x\_2) + i(y\_1+y\_2)\newline
-z\_1 - z\_2 &amp; = (x\_1-x\_2) + i(y\_1-y\_2) \newline
-z\_1 z\_2 &amp; = (x\_1+iy\_1)(x\_2+iy\_2) \newline
-&amp; = (x\_1x\_2+iy\_1x\_2+ix\_1y\_2+i^\{2}y\_1y\_2)\newline
-&amp; = (x\_1x\_2-y\_1y\_2)+i(x\_1y\_2+x\_2y\_1)
+z_1 + z_2 &amp; = (x_1+x_2) + i(y_1+y_2)\newline
+z_1 - z_2 &amp; = (x_1-x_2) + i(y_1-y_2) \newline
+z_1 z_2 &amp; = (x_1+iy_1)(x_2+iy_2) \newline
+&amp; = (x_1x_2+iy_1x_2+ix_1y_2+i^\{2}y_1y_2)\newline
+&amp; = (x_1x_2-y_1y_2)+i(x_1y_2+x_2y_1)
 \end{array}\]</span></p>
 <p>Also, if we have <span class="math inline">\(1/z_1\)</span>, then we can write this as <span class="math display">\[\begin{array}{rl}
-\dfrac{1}{z\_1} &amp; = \dfrac{1}{x\_1+iy\_1} \end{array}\]</span> mulitply top and bottom by <span class="math inline">\(\overline{z_1}\)</span> <span class="math display">\[\begin{array}{rl}
-\dfrac{1}{z_1} = \dfrac{1}{z_1}\dfrac{\overline{z_1}}{\overline{z_1}} &amp; = \dfrac{1}{x\_1+iy\_1} \dfrac{x\_1-iy\_1}{x\_1-iy\_1} \\
-&amp;= \dfrac{x\_1-iy\_1}{x\_1^{2}+y\_1^{2}}
+\dfrac{1}{z_1} &amp; = \dfrac{1}{x_1+iy_1} \end{array}\]</span> mulitply top and bottom by <span class="math inline">\(\overline{z_1}\)</span> <span class="math display">\[\begin{array}{rl}
+\dfrac{1}{z_1} = \dfrac{1}{z_1}\dfrac{\overline{z_1}}{\overline{z_1}} &amp; = \dfrac{1}{x_1+iy_1} \dfrac{x_1-iy_1}{x_1-iy_1} \\
+&amp;= \dfrac{x_1-iy_1}{x_1^{2}+y_1^{2}}
 \end{array}\]</span> and in a similar manner: <span class="math display">\[\begin{array}{rl}
-\dfrac{z_1}{z_2} &amp; = \dfrac{x\_1+iy\_1}{x\_2+iy\_2} \\
-&amp; = \dfrac{x\_1+iy\_1}{x\_2+iy\_2} \dfrac{x\_2-iy\_2}{x\_2-iy\_2} \\
-&amp; = \dfrac{x\_1x\_2+y\_1y\_2+i(y\_1x\_2-y\_2x\_1)}{x\_2^{2}+y\_2^{2}}
+\dfrac{z_1}{z_2} &amp; = \dfrac{x_1+iy_1}{x_2+iy_2} \\
+&amp; = \dfrac{x_1+iy_1}{x_2+iy_2} \dfrac{x_2-iy_2}{x_2-iy_2} \\
+&amp; = \dfrac{x_1x_2+y_1y_2+i(y_1x_2-y_2x_1)}{x_2^{2}+y_2^{2}}
 \end{array}\]</span></p>
 <p>An integer power of a number is found by successive multiplications. For example, <span class="math display">\[
 z^{2} = (x+iy)(x+iy)=x^{2}-y^{2}+2xy i
@@ -219,21 +219,21 @@ z2:=2-2i</code></pre>
 <p>Then <code>z1+z2</code> returns <span class="math inline">\(5+2I\)</span>, <code>z1-x2</code> returns <span class="math inline">\(1+6I\)</span>, <code>z1*z2</code> returns <span class="math inline">\(14+2I\)</span> and <code>z1/z2</code> returns <span class="math display">\[-\frac{1}{4}+\frac{7}{4}I\]</span></p>
 <p><code>z1^2</code> returns <span class="math inline">\(-7+24I\)</span>.</p>
 <h3 id="multiplication-and-powers-of-complex-numbers-in-polar-form">Multiplication and Powers of Complex Numbers in Polar Form</h3>
-<p>If we write <span class="math display">\[ z\_1 = r\_1 e^{i \theta\_1} \qquad
-z\_2 = r\_2 e^{i \theta\_2}\]</span></p>
+<p>If we write <span class="math display">\[ z_1 = r_1 e^{i \theta_1} \qquad
+z_2 = r_2 e^{i \theta_2}\]</span></p>
 <p>then <span class="math display">\[
 \begin{array}{rl}
-z\_1 z\_2 &amp; = r\_1 e^{i \theta\_1} r\_2 e^{i \theta\_2} \newline
-&amp; = r_1 r_2 e^{i(\theta\_1+\theta\_2)}
+z_1 z_2 &amp; = r_1 e^{i \theta_1} r_2 e^{i \theta_2} \newline
+&amp; = r_1 r_2 e^{i(\theta_1+\theta_2)}
 \end{array}
 \]</span> or in other words, the product of two complex numbers is found by multiplying the distances and the angle is the sum.</p>
-<p>We can find the product of <span class="math inline">\(z_1 = 1+i\)</span> and <span class="math inline">\(z\_2 = 2i\)</span> using the above method, or write <span class="math display">\[
-z\_1 = \sqrt{2} e^{i\pi/4}
-\qquad z\_2 = 2 e^{i\pi/2}
+<p>We can find the product of <span class="math inline">\(z_1 = 1+i\)</span> and <span class="math inline">\(z_2 = 2i\)</span> using the above method, or write <span class="math display">\[
+z_1 = \sqrt{2} e^{i\pi/4}
+\qquad z_2 = 2 e^{i\pi/2}
 \]</span></p>
 <p>and <span class="math display">\[
 \begin{array}{rl}
-z\_1z\_2 &amp; = r_1 r_2 e^{i(\theta\_1+\theta\_2)} \newline
+z_1z_2 &amp; = r_1 r_2 e^{i(\theta_1+\theta_2)} \newline
 &amp; = 2\sqrt{2} e^{i 3\pi/4}
 \end{array}
 \]</span></p>
@@ -372,7 +372,7 @@ z(0):=0</code></pre>
 <p>and <code>seq(z(n),n=0..5)</code> returns <span class="math inline">\(0, I, -1+I, -I, -1+I, -I\)</span> and notice that the last two term will continue under repetition.</p>
 <p>If <span class="math inline">\(C=1+I\)</span>, then the first 6 terms is: <span class="math display">\[0, 1+I, 1+3I, -7+7I, 1-97I, -9407-193I\]</span> and then the terms get further from the the origin.</p>
 <p>We say that the sequence when <span class="math inline">\(C=I\)</span> is bounded and when <span class="math inline">\(C=1+I\)</span>, the sequence is unbounded. The set <span class="math inline">\(M=\{C \; | \; \lim_{n \rightarrow \infty} z_n\;\; \mbox{is bounded}\}\)</span> is called the <em>Mandelbrot Set</em> and is the set of all values of <span class="math inline">\(C\)</span> such that the iteration of the iteration is bounded. For example <span class="math inline">\(I\)</span> is in <span class="math inline">\(M\)</span>, but <span class="math inline">\(1+I\)</span> is not.</p>
-<p>There is a theorem (that we won’t prove) that states: If <span class="math inline">\(|z_n|&gt;2\)</span>, then <span class="math inline">\(|z\_{n+1}| \rightarrow \infty\)</span> if <span class="math inline">\(z\_{n+1} = z\_n^{2}+C\)</span> for any value of <span class="math inline">\(C\)</span>.</p>
+<p>There is a theorem (that we won’t prove) that states: If <span class="math inline">\(|z_n|&gt;2\)</span>, then <span class="math inline">\(|z_{n+1}| \rightarrow \infty\)</span> if <span class="math inline">\(z_{n+1} = z_n^{2}+C\)</span> for any value of <span class="math inline">\(C\)</span>.</p>
 <p>Basically, this means that if there is a complex number <span class="math inline">\(z_n\)</span> such that <span class="math inline">\(|z_n|&gt;2\)</span>, then the sequence will diverge and it is not in the mandelbrot set.</p>
 <p>It’s helpful to have a procedure that determines the number of steps such that <span class="math inline">\(|z_n|&gt;2\)</span>.</p>
 <pre><code>mandelSteps := proc (c::complex, { maxsteps::posint := 50 })::posint;
