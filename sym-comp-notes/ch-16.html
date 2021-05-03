@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>ch-16</title>
+  <title>Chapter 16: Newton’s Method in the Complex Plane</title>
   <style>
     html {
       line-height: 1.5;
@@ -149,10 +149,14 @@
   <![endif]-->
 </head>
 <body>
-<h1 id="chapter-16-complex-numbers">Chapter 16: Complex Numbers</h1>
-<p><a href="index.html">Return to all notes</a></p>
-<p>Recall that the imaginary unit <span class="math inline">\(i\)</span> is defined as the number such that <span class="math inline">\(i^{2}=-1\)</span>. In Maple, this is a built-the constant <span class="math inline">\(I\)</span>. Just for kicks, try it:</p>
-<pre><code>I^2</code></pre>
+<header id="title-block-header">
+<h1 class="title">Chapter 16: Newton’s Method in the Complex Plane</h1>
+</header>
+<p><a href="ch-15.html">Previous Chapter</a> | <a href="index.html">Return to all notes</a> | <a href="ch-17.html">Next chapter</a></p>
+<p>Recall that the imaginary unit <span class="math inline">\(i\)</span> is defined as the number such that <span class="math inline">\(i^{2}=-1\)</span>. In Matlab, we create imaginary number with</p>
+<pre><code>im = complex(0,1)</code></pre>
+<p>which returns <code>0.0000+1.000i</code>. The <code>complex</code> function creates a complex number where the first argument is the real part and the second argument is the imagainary part. If we square this with</p>
+<pre><code>im^2</code></pre>
 <p>and you get <span class="math inline">\(-1\)</span>.</p>
 <h2 id="the-complex-plane">The Complex Plane</h2>
 <p>The complex plane is just like the <span class="math inline">\(xy\)</span>-plane in which the horizontal axis is the real axis and the vertical one is the imaginary axis.<br />
@@ -162,29 +166,23 @@ We can plot any point <span class="math inline">\(x_1+i y_1\)</span> as the poin
 <p>If <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are real numbers and we define <span class="math inline">\(z=x+iy\)</span>, then there are functions that return the real and imaginary parts of <span class="math inline">\(z\)</span>. Mathematically, we use <span class="math inline">\(\Re(z)\)</span> and <span class="math inline">\(\Im(z)\)</span> to represent these and they are defined as</p>
 <p><span class="math display">\[\Re(z)=x \qquad \Im(z)=y\]</span></p>
 <p>and note that the imaginary part of a complex number is a real number.</p>
-<p>In Maple, we use the commands <code>Re</code> and <code>Im</code>. If we define</p>
-<pre><code>z:=3+4I</code></pre>
-<p>Then <code>Re(z)</code> returns 3 and <code>Im(z)</code> returns 4.</p>
+<p>In Matlab, we use the commands <code>real</code> and <code>imag</code> return the real and imaginary parts of a complex number.</p>
+<pre><code>z = complex(3,4)</code></pre>
+<p>then <code>real(z)</code> returns 3 and <code>imag(z)</code> returns 4.</p>
 <h2 id="the-polar-form-of-a-complex-number">The Polar Form of a complex number</h2>
 <p>Another important form of a complex number is called the <em>polar form</em>. If we find <span class="math inline">\(r\)</span>, the distance from the origin to the point <span class="math inline">\((x,y)\)</span> and <span class="math inline">\(\theta\)</span>, the counterclockwise angle between the positive <span class="math inline">\(x\)</span> axis and the line segment as shown</p>
-<figure>
-<img src="images/ch15/plot01.png" alt="Polar form of z" /><figcaption aria-hidden="true">Polar form of <span class="math inline">\(z\)</span></figcaption>
-</figure>
+<p>(NEED A PLOT)</p>
 <p>The distance <span class="math inline">\(r\)</span> is defined as <span class="math inline">\(r=\sqrt{x^{2}+y^{2}}\)</span> and <span class="math inline">\(\theta = \tan^{-1} (y/x)\)</span> (and it might need to be shifted depending on the quadrant of the point.)</p>
 <p>In addition, the distance <span class="math inline">\(r\)</span> is often denoted as <span class="math inline">\(|z|\)</span>, where the standard absolute value symbol is used.</p>
-<p>Maple uses the absolute value symbol for the distance and the <code>argument</code> command for the angle. For example, if</p>
-<pre><code>z:=3+4*I</code></pre>
-<p>then <code>|z|</code> returns 5 and <code>argument(z)</code> returns <span class="math inline">\(\arctan(4/3)\)</span>. The argument of <span class="math inline">\(2+2I\)</span> is <span class="math inline">\(\pi/4\)</span>.</p>
-<p>(complex exponential form)</p>
+<p>Matlab uses the absolute value function <code>abs</code> for the distance and the <code>angle</code> command for the angle. For example, <code>abs(z)</code> returns 5 and <code>angle(z)</code> returns 0.9273, the angle (in radians).</p>
 <h2 id="complex-conjugate">Complex Conjugate</h2>
 <p>If <span class="math inline">\(z=x+iy\)</span>, then the complex conjugate of <span class="math inline">\(z\)</span>, denoted <span class="math inline">\(\overline{z}\)</span> is <span class="math inline">\(x-iy\)</span>. In short, it switches the sign of the imaginary term.</p>
-<p>In Maple, the command <code>conjugate</code> will return the complex conjugate.</p>
-<pre><code>conjugate(z)</code></pre>
-<p>returns <span class="math inline">\(3-4i\)</span>.</p>
-<p>You can enter the conjugate by typing the first of <code>conjugate</code>, hitting ESC and selecting <span class="math inline">\(\overline{x}\)</span>.</p>
+<p>In Matlab, the command <code>conj</code> will return the complex conjugate.</p>
+<pre><code>conj(z)</code></pre>
+<p>returns <code>3.0000 - 4.0000i</code></p>
 <p>Note that it is common that a complex number is mutiplied by its conjugate, so <span class="math display">\[\begin{array}{rl} z \overline{z} &amp; = (x+iy)(x-iy)  \\
 &amp; = x^{2} +ixy-ixy-i^{2}y^{2} = x^{2}+y^{2}\end{array}\]</span></p>
-<p>which is <span class="math inline">\(|z|^2\)</span>.</p>
+<p>which is <span class="math inline">\(|z|^2\)</span>, the square of the distance.</p>
 <h3 id="complex-exponential-form">Complex Exponential form</h3>
 <p>Using the distance and angle of a complex number, we can write a number <span class="math inline">\(z\)</span> as <span class="math display">\[ z = r e^{i \theta}\]</span> because <span class="math display">\[e^{i \theta} = \cos \theta + i \sin \theta\]</span> so, <span class="math display">\[
 \begin{array}{rl}
@@ -193,12 +191,12 @@ z &amp; = r (\cos \theta + i \sin \theta) \newline
 &amp; = x + i y
 \end{array} \]</span></p>
 <h2 id="arithmetic-with-complex-numbers.">Arithmetic with complex numbers.</h2>
-<p>Maple can handle standard arithmetic operations with complex nubmers. Just to recall if <span class="math display">\[z_1=x_1+i y_1 \qquad z_2 = x_2 + i y_2\]</span></p>
+<p>Matlab can handle standard arithmetic operations with complex nubmers. Just to recall if <span class="math display">\[z_1=x_1+i y_1 \qquad z_2 = x_2 + i y_2\]</span></p>
 <p>then <span class="math display">\[\begin{array}{rl}
 z_1 + z_2 &amp; = (x_1+x_2) + i(y_1+y_2)\newline
 z_1 - z_2 &amp; = (x_1-x_2) + i(y_1-y_2) \newline
 z_1 z_2 &amp; = (x_1+iy_1)(x_2+iy_2) \newline
-&amp; = (x_1x_2+iy_1x_2+ix_1y_2+i^\{2}y_1y_2)\newline
+&amp; = (x_1x_2+iy_1x_2+ix_1y_2+i^{2}y_1y_2)\newline
 &amp; = (x_1x_2-y_1y_2)+i(x_1y_2+x_2y_1)
 \end{array}\]</span></p>
 <p>Also, if we have <span class="math inline">\(1/z_1\)</span>, then we can write this as <span class="math display">\[\begin{array}{rl}
@@ -213,11 +211,11 @@ z_1 z_2 &amp; = (x_1+iy_1)(x_2+iy_2) \newline
 <p>An integer power of a number is found by successive multiplications. For example, <span class="math display">\[
 z^{2} = (x+iy)(x+iy)=x^{2}-y^{2}+2xy i
 \]</span></p>
-<p>Maple can do all of these operations naturally. For example, if</p>
-<pre><code>z1:=3+4i
-z2:=2-2i</code></pre>
-<p>Then <code>z1+z2</code> returns <span class="math inline">\(5+2I\)</span>, <code>z1-x2</code> returns <span class="math inline">\(1+6I\)</span>, <code>z1*z2</code> returns <span class="math inline">\(14+2I\)</span> and <code>z1/z2</code> returns <span class="math display">\[-\frac{1}{4}+\frac{7}{4}I\]</span></p>
-<p><code>z1^2</code> returns <span class="math inline">\(-7+24I\)</span>.</p>
+<p>Matlab can do all of these operations naturally. For example, if</p>
+<pre><code>z1=complex(3,4)
+z2=complex(2,-2)</code></pre>
+<p>Then <code>z1+z2</code> returns <code>ans = 5.0000 + 2.0000i</code>, <code>z1-x2</code> returns <code>ans = 1.0000 + 6.0000i</code>, <code>z1*z2</code> returns <code>ans = 14.0000 + 2.0000i</code> and <code>z1/z2</code> returns <code>ans = -0.2500 + 1.7500i</code></p>
+<p><code>z1^2</code> returns <code>ans = -7.0000 + 24.0000i</code></p>
 <h3 id="multiplication-and-powers-of-complex-numbers-in-polar-form">Multiplication and Powers of Complex Numbers in Polar Form</h3>
 <p>If we write <span class="math display">\[ z_1 = r_1 e^{i \theta_1} \qquad
 z_2 = r_2 e^{i \theta_2}\]</span></p>
@@ -237,7 +235,6 @@ z_1z_2 &amp; = r_1 r_2 e^{i(\theta_1+\theta_2)} \newline
 &amp; = 2\sqrt{2} e^{i 3\pi/4}
 \end{array}
 \]</span></p>
-<p>A plot of this is: <img src="images/ch15/plot03.png" alt="Plot of the product of two complex numbers" /></p>
 <p>The two numbers on the right side of the plot are multiplied. The sum of the angle is <span class="math inline">\(3\pi/4\)</span>, which is the angle of the resultant. The distance of the resultant is the product of the two <span class="math inline">\(\sqrt{2}\)</span> and <span class="math inline">\(2\)</span>.</p>
 <p>The powers of a complex number also have an interesting geometry. If <span class="math inline">\(z=1+i=\sqrt{2}e^{i\pi/4}\)</span>, then powers of <span class="math inline">\(z\)</span> can be written as <span class="math display">\[z^{n} = (\sqrt{2})^{n} e^{i n \pi/4}\]</span></p>
 <p>This can be interpreted as raising the distance to the <span class="math inline">\(n\)</span>th power and rotating the angle <span class="math inline">\(n\)</span> times around. For example, the plot about actually shows the number and its 2nd and 3rd power.</p>
@@ -250,57 +247,83 @@ z_1z_2 &amp; = r_1 r_2 e^{i(\theta_1+\theta_2)} \newline
 \sqrt{z} = \sqrt{2}e^{i\pi/3}\]</span></p>
 <h2 id="newtons-method-in-the-complex-plane">Newton’s Method in the Complex Plane</h2>
 <p>In <a href="ch13.html">Chapter 13</a>, we met Newton’s method. It works with complex numbers as well. For example, consider the function <span class="math display">\[ f(x)=x^{2}+4\]</span> which does not have a root in the reals. If we use</p>
-<pre><code>NewtonsMethod(x^2+4, x = 1)</code></pre>
-<p>in Maple with this function, we get: <code>1.683061201</code> which is clearly not right. If instead we plot it: <code>NewtonsMethod(x^2+4, x = 1,output=plot)</code></p>
-<p>we get the plot: <img src="images/ch15/plot02.png" alt="Plot of Newton’s method on f(x)=x^{2}+4" /></p>
-<p>And if you follow the plot starting at <span class="math inline">\(x=1\)</span>, it ends up at <span class="math inline">\(x=1.68\)</span> and will never converge.</p>
-<p>If we return to an alternative way of writing Newton’s method for this, <span class="math display">\[ x_{n+1} = x_n - \frac{f(x_n)}{f&#39;(x_n)}\]</span></p>
-<p>and in Maple, we can do</p>
-<pre><code>x(n):=x(n-1)-(x(n-1)^2+4)/(2x(n-1))
-x(1):=1.0</code></pre>
-<p>and then</p>
-<pre><code>seq(x(n),n=0..5)</code></pre>
-<p>we get:</p>
-<pre><code>1.0, -1.500000000, .583333333, -3.136904764, -.930881225, 1.683061201</code></pre>
-<p>which is the same result as above. If instead, we start with a complex number,</p>
-<pre><code>x(0)=1.0I</code></pre>
-<p>and then</p>
-<pre><code>seq(x(n),n=0..5)</code></pre>
-<p>results in</p>
-<pre><code>1.0I, 2.500000000I, 2.050000000I, 2.000609756I, 2.000000093I, 2.000000000I</code></pre>
-<p>We can find the other root <span class="math inline">\(-2i\)</span> if we let <code>x(0):=-1.0I</code></p>
-<p>and note that <span class="math inline">\(2i\)</span> is the root of the function.</p>
-<h3 id="a-procedure-to-do-newtons-method">A Procedure to do Newton’s method</h3>
-<p>Before continuing on, we will write a procedure to do Newton’s method.</p>
-<pre><code>newton := proc (f::procedure, x0::complex, { eps::numeric := 10^(-4), maxsteps::posint := 100 })
-  local x1, x2, n;
-  x1 := x0:
-  for n to maxsteps do
-    x2 := x1-f(x1)/f&#39;(x1):
-    if abs(x2-x1) &lt; eps then
-      return x2:
-    end if:
-    x1 := x2:
-  end do;
-  error &quot;The maximum number of steps %1 reached without convergence&quot;, maxsteps :
-end proc:</code></pre>
-<p>If we do</p>
-<pre><code>newton(x-&gt;x^2-2,1.0)</code></pre>
-<p>we get <code>1.414213562</code> and if we do <code>newton(x-&gt;x^2+4,1.0)</code> we get</p>
-<pre><code>Error, (in newton) The maximum number of steps 100 reached without convergence</code></pre>
-<p>However, we can also add a complex number to the initial point.</p>
-<pre><code>newton(x-&gt;x^2+4, 1.0*I)</code></pre>
-<p>and get <code>2.0000I</code>.</p>
+<pre><code>newton(x^2+4, 1)</code></pre>
+<p>we get the warning: The maximum number of steps have been reached and a result <code>-4.8018</code>.</p>
+<!-- 
+And if you follow the plot starting at $x=1$, it ends up at $x=1.68$ and will never converge.  
+
+If we return to an alternative way of writing Newton's method for this,
+$$ x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+
+and in Matlab, we can do
+```
+x(n):=x(n-1)-(x(n-1)^2+4)/(2x(n-1))
+x(1):=1.0
+```
+
+and then
+```
+seq(x(n),n=0..5)
+```
+
+we get:
+```
+1.0, -1.500000000, .583333333, -3.136904764, -.930881225, 1.683061201
+```
+
+which is the same result as above.  If instead, we start with a complex number,
+```
+x(0)=1.0I
+```
+
+and then
+```
+seq(x(n),n=0..5)
+```
+
+results in
+```
+1.0I, 2.500000000I, 2.050000000I, 2.000609756I, 2.000000093I, 2.000000000I
+```
+
+We can find the other root $-2i$ if we let `x(0):=-1.0I`
+
+and note that $2i$ is the root of the function.   -->
+<h3 id="newtons-method-with-complex-numbers">Newton’s method with Complex numbers</h3>
+<p>I have updated the Newton’s method function as the following:</p>
+<pre><code>function result = newton(f,x0,options)
+  arguments
+    f function_handle
+    x0 (1,1) {mustBeNumeric}
+    options.eps (1,1) {mustBePositive} = 1e-6 
+    options.max_steps (1,1) {mustBePositive} = 10
+  end
+  syms x
+  df(x) = diff(f(x),x);
+  x1=x0;
+  steps=0;
+  
+  dx=double(1); % this will be a step, just initialized to 1 to get the while loop started
+  while abs(dx)&gt;options.eps &amp;&amp; steps &lt; options.max_steps
+    dx=double(f(x1)/df(x1));
+    x1 = x1-dx;
+    steps = steps + 1;
+    if steps == options.max_steps
+        warning(&quot;The maximum number of steps have been reached.&quot;);
+    end
+  end
+  result = x1;
+end</code></pre>
+<p>and again, it is preferable to save this as a <code>.m</code> file and if it is in a separate directory don’t forget the <code>addpath</code> function.</p>
+<p>This updated version of newton’s method allows us to use complex numbers so if we put in a complex number as an input then we will get a complex result.</p>
+<pre><code>newton(@(x) x.^2+4,complex(0,1))</code></pre>
+<p>we now get <code>0.0000 + 2.0000i</code> as the result and this makes since because <span class="math inline">\((2i)^2+4 = -4+4=0\)</span>.</p>
 <h3 id="roots-of-unity">Roots of Unity</h3>
 <p>An interesting function to study in complex numbers is <span class="math inline">\(f(z)=z^{n}-1\)</span> for positive integers <span class="math inline">\(n\)</span>. When <span class="math inline">\(n=2\)</span>, we get the function <span class="math inline">\(x^{2}-1\)</span> which isn’t that interesting, but not bad. Note that the roots of this are <span class="math inline">\(x=\pm 1\)</span>. Let’s look at the solution to <span class="math inline">\(f(z)=z^{3}-1\)</span>.</p>
 <p>A good way to do this is to recall that we can write <span class="math inline">\(z\)</span> in its polar form or <span class="math display">\[z=re^{i\theta}\]</span> and then we want to solve <span class="math display">\[ z^{3}-1 = r^{3} e^{3i\theta}-1\]</span> Since we can write <span class="math inline">\(1=1e^{0 i}\)</span>, then <span class="math display">\[
 r^{3} e^{3i\theta} = e^{0i}\]</span> results in <span class="math inline">\(r^{3}=1\)</span> or <span class="math inline">\(r=1\)</span> and <span class="math inline">\(\theta=0\)</span>. This is the number <span class="math inline">\(z_1=1\)</span> and we know that <span class="math inline">\(1^{3}-1=0\)</span>. What else?</p>
 <p>We can also write <span class="math inline">\(1=e^{2\pi i}\)</span> so <span class="math display">\[3i \theta = 2\pi i\]</span> or <span class="math inline">\(\theta=2\pi/3\)</span>, so another root of <span class="math inline">\(f\)</span> is <span class="math display">\[z_2=e^{2\pi/3 i}\]</span></p>
 <p>and lastly, we can also write <span class="math inline">\(1=e^{4\pi i}\)</span> so another root when <span class="math inline">\(\theta=4\pi/3\)</span> or the number <span class="math display">\[z_3= e^{4 \pi i/3}\]</span>.</p>
-<p>If we plot these three points, we get:</p>
-<figure>
-<img src="images/ch15/plot04.png" alt="Plot of the roots of f(z)=z^{3}-1" /><figcaption aria-hidden="true">Plot of the roots of <span class="math inline">\(f(z)=z^{3}-1\)</span></figcaption>
-</figure>
 <p>These points are on the unit circle and equally spaced with <span class="math inline">\(z=1\)</span> a root. This is true in general for functions of the form <span class="math inline">\(f(z)=z^{n}-1\)</span>, which will have the roots on the unit circle equally spaced <span class="math inline">\(2\pi/n\)</span> radians apart from each other.</p>
 <h3 id="return-to-newtons-method">Return to Newton’s method</h3>
 <p>We’re going to apply Newton’s method to find roots of <span class="math inline">\(f(z)=z^{3}-1\)</span>.</p>
@@ -366,7 +389,7 @@ end proc</code></pre>
 <p>This section explore a very interesting visual look at an iteration of complex numbers.</p>
 <p>We consider the iteration</p>
 <p><span class="math display">\[z_{n+1}=z_n^{2} + C \qquad z_0 = 0\]</span> for some complex number <span class="math inline">\(C\)</span>. Let’s examine a few examples.</p>
-<p>If <span class="math inline">\(C=i\)</span>, then using Maple, if we type</p>
+<p>If <span class="math inline">\(C=i\)</span>, then using Matlab, if we type</p>
 <pre><code>z:=n-&gt;z(n-1)^2+I
 z(0):=0</code></pre>
 <p>and <code>seq(z(n),n=0..5)</code> returns <span class="math inline">\(0, I, -1+I, -I, -1+I, -I\)</span> and notice that the last two term will continue under repetition.</p>

@@ -231,21 +231,29 @@ V  = \int_a^b \pi (g(x)^2-f(x)^2)\, dx
 <p>Now, we’re missing some functions because we ignored the integration constant above. To do a little better job, if we include the integration constant when integrating equation (1) above, then <span class="math display">\[\int \frac{1}{y} \, dy = \int dx\]</span></p>
 <p>will give <span class="math display">\[\ln(y) + C_1 = x + C_2\]</span> (again, we need to put in the constants since Matlab won’t do this for us). We can combine the two constants on the right side and call these <span class="math inline">\(C\)</span> or <span class="math display">\[\ln(y) = x + C\]</span> and solving for <span class="math inline">\(y\)</span> result in <span class="math display">\[y= {\rm e}^{x+C}\]</span></p>
 <p>We can do this all in one shot in Matlab, by entering</p>
-<pre><code>syms y C
-solve(int(1/y,y)==int(1,x)+C,y)</code></pre>
+<pre><code>syms x y C
+solve(int(1/y,y)==int(1,x)+C,y,&#39;Real&#39;,true)</code></pre>
+<p>which returns <span class="math display">\[ e^{C+x}\]</span> the same as doing this by hand.</p>
 <h3 id="solving-a-differential-equation-using-dsolve">Solving a differential equation using <code>dsolve</code></h3>
 <p>Lastly, we can let Matlab solve the differential equation itself. If we type</p>
-<pre><code>dsolve(y&#39;(x)=y(x))</code></pre>
+<pre><code>syms x y(x) C
+de = diff(y(x),x)==y(x)
+dsolve(de)</code></pre>
 <p>then Matlab returns <span class="math display">\[C_1 \,{\mathrm{e}}^x\]</span></p>
 <p>which is the same as above because <span class="math inline">\({\rm e}^{x+C}={\rm e}^x {\rm e}^C\)</span> and then Matlab using the constant $ C_1={}^C$.</p>
 <p>Note: when entering a differential equation, you need to explicitly put in the dependent variable. So instead of writing <span class="math inline">\(y&#39;=y\)</span>, you need to say <span class="math inline">\(y&#39;(x)=y(x)\)</span>.</p>
 <h3 id="differential-equation-with-an-initial-conditions">Differential Equation with an initial conditions</h3>
 <p>Often a point will be given with a differential equation. This point is called an <em>initial condition</em>. Here we will solve <span class="math display">\[ y&#39; = \frac{y^{2}}{x}, \qquad y(1)=1\]</span></p>
 <h4 id="using-separation-of-variables">Using separation of variables</h4>
-<p>Write the differential equation above as <span class="math display">\[ \frac{dy}{y^{2}} = \frac{dx}{x}\]</span> and let Matlab integrate each side. The result is: <span class="math display">\[-\frac{1}{y}  = \ln x + C\]</span> remembering to add the <span class="math inline">\(+C\)</span>. Solve for <span class="math inline">\(y\)</span> to get <span class="math display">\[ y  = -\frac{1}{\ln x + C} \]</span></p>
+<p>Write the differential equation above as <span class="math display">\[ \frac{dy}{y^{2}} = \frac{dx}{x}\]</span> and let Matlab integrate each side using</p>
+<pre><code>eq = int(1/y^2,y) == int(1/x,x) +C</code></pre>
+<p>The result is: <span class="math display">\[-\frac{1}{y}  = \log(x) + C\]</span> remembering to add the <span class="math inline">\(+C\)</span>. Solve for <span class="math inline">\(y\)</span> using</p>
+<pre><code>result = y == solve(eq,y)</code></pre>
+<p><span class="math display">\[ y  = -\frac{1}{\log(x) + C} \]</span></p>
 <p>Now using the initial conditions</p>
-<pre><code>solve(subs([x=1,y=1],(#)),C)</code></pre>
-<p>where (#) is the line number above, the result should be <span class="math inline">\(C=-1\)</span> so the result is <span class="math display">\[ y = -\frac{1}{\ln x -1}\]</span></p>
+<pre><code>solve(subs(result,[x y], [1 1]),C)
+subs(result,C,-1)</code></pre>
+<p>the result should be <span class="math inline">\(C=-1\)</span> so the result is <span class="math display">\[ y = -\frac{1}{\ln x -1}\]</span></p>
 <h4 id="using-the-built-in-command-dsolve">Using the built-in command <code>dsolve</code></h4>
 <p>We can let Matlab do all this work for us via the <code>dsolve</code> command.</p>
 <pre><code>syms y(x)
@@ -275,7 +283,9 @@ dsolve(diff(y(x),x)==y(x)^2/x,y(1)==1)</code></pre>
 <h4 id="example">Example</h4>
 <p>Find the arc length of <span class="math inline">\(y=x^{2}\)</span> on the interval <span class="math inline">\([0,1]\)</span>.</p>
 <p>This is <span class="math display">\[L=\int_0^{1} \sqrt{1+(2x)^{2}} \, dx\]</span></p>
-<p>and lettting Matlab do this: <span class="math display">\[L=\frac{\mathrm{log}\left(\sqrt{5}+2\right)}{4}+\frac{\sqrt{5}}{2}\]</span></p>
+<p>and letting Matlab do this with</p>
+<pre><code>int(sqrt(1+(2*x)^2),[0,1])</code></pre>
+<p><span class="math display">\[L=\frac{\mathrm{log}\left(\sqrt{5}+2\right)}{4}+\frac{\sqrt{5}}{2}\]</span></p>
 <p>(and note that doing this antiderivative by hand requires trig substitution).</p>
 <p>then Matlab will return the same result as above.</p>
 <h4 id="exercise-3">Exercise</h4>
