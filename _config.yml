@@ -1,1 +1,4 @@
-Name: Peter Staab's Github Pages
+theme: jekyll-theme-minimal
+title: Course Notes of Peter Staab
+description: This is where Symbolic Computation class notes are found.
+
