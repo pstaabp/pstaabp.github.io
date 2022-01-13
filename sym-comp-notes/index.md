@@ -15,11 +15,11 @@ title: Symbolic Computation Notes (FSU, Spring 2021)
 * [Chapter 11: Sequences and Series](ch-11.html)
 * [Chapter 12: Linear Algebra](ch-12.html)
 * [Chapter 13: Recursive Iterations and Newton's Method](ch-13.html)
-* [Chapter 14: Curvature of Plane Curves](ch-14.html)  
-* [Chapter 15: Data Analysis](ch-15.html)
-* [Chapter 16: Newton's method in the Complex Plane](ch-16.html)
-* [Chapter 17: Pseudorandom Numbers and Simulation](ch-17.html)
+* [Chapter 14: Curvature of Plane Curves](ch-14.html)
 
+<!-- * [Chapter 15: Data Analysis](ch-15.html)
+* [Chapter 16: Newton's method in the Complex Plane](ch-16.html)
+* [Chapter 17: Pseudorandom Numbers and Simulation](ch-17.html) -->
 
 Appendices
 -----
