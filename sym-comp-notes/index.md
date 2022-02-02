@@ -24,5 +24,6 @@ title: Symbolic Computation Notes (FSU, Spring 2021)
 Appendices
 -----
 
-* [Appendix A: Getting Started with LaTeX](appendix-A.html)
-* [Appendix B: Floating Point Numbers](appendix-B.html)
+* [Appendix A: LaTeX in Matlab Live Scripts](appendix-A.html)
+* [Appendix B: produce LaTeX documents](appendix-B.html)
+* [Appendix C: Floating Point Numbers](appendix-C.html)
