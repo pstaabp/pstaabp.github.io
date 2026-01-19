@@ -5,4 +5,5 @@ The following is a list of most notes and books written for various courses at [
 * [Scientific Computing and Visualization (Fall 2024)](https://pstaabp.github.io/sci-comp-book/)
 * [Symbolic Computation (Spring 2025)](sym-comp-notes/index.html)
 * [Operations Research (Linear Optimization, Fall 2025)](https://pstaabp.github.io/linear-optimization-book)
-* [Applied Mathematics (Spring 2024)](https://pstaabp.github.io/applied-math-book/frontmatter.html)
+* [Applied Mathematics (Spring 2026)](https://pstaabp.github.io/applied-math-book/frontmatter.html)
+* [Numerical Analysis (Spring 2026)](https://pstaabp.github.io/numerical-analysis-book/)
